@@ -5,7 +5,9 @@ Tables (attributes only, unclipped layers):
   individuals1 usually resident population, 5-year age groups
   individuals2 personal income bands + median, income sources (incl. NZ Super, main benefits)
 And SA2 2023 boundaries clipped to the coastline (mapping) and territorial authority 2025
-boundaries (to assign each SA2 to its council).
+boundaries (to assign each SA2 to its council), and Stats NZ Urban Rural 2023 areas (to
+split urban from rural land where a council layer has no property category), and DOC public
+conservation land (exempt from the land value tax).
 
 Stats NZ confidentialises small counts by random rounding and suppresses some cells with
 negative codes (e.g. -999); those are kept as-is here and cleaned in build scripts.
@@ -35,6 +37,8 @@ KEEP = re.compile(
 )
 BOUNDARIES = f"{STATSNZ}/2023_Census_totals_by_topic_for_households_by_SA2/FeatureServer/0"
 # Stats NZ territorial authority 2025 boundaries, republished on Wellington City Council's GIS.
+DOC_LAND = "https://services1.arcgis.com/3JjYDyG3oajxU6HO/arcgis/rest/services/DOC_Public_Conservation_Land/FeatureServer/0"
+URBAN_RURAL = f"{STATSNZ}/Urban_Rural_Areas_2023/FeatureServer/0"
 TA_BOUNDARIES = "https://gis.wcc.govt.nz/arcgis/rest/services/StateOfHousing/StateOfHousing/MapServer/59"
 PAGE = 1000
 RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
@@ -52,14 +56,14 @@ def get(url, params, tries=4):
             time.sleep(2 ** (i + 1))
 
 
-def pages(url, fields, geometry=False, fmt="json"):
+def pages(url, fields, geometry=False, fmt="json", extra=None):
     count = get(f"{url}/query", {"where": "1=1", "returnCountOnly": "true", "f": "json"})["count"]
     out = []
     for offset in range(0, count, PAGE):
         page = get(f"{url}/query", {
             "where": "1=1", "outFields": fields, "returnGeometry": str(geometry).lower(),
             "orderByFields": "OBJECTID", "resultOffset": offset, "resultRecordCount": PAGE,
-            "outSR": 4326, "geometryPrecision": 5, "f": fmt,
+            "outSR": 4326, "geometryPrecision": 5, "f": fmt, **(extra or {}),
         })
         out.extend(page["features"])
         time.sleep(0.3)
@@ -87,6 +91,14 @@ def fetch_boundaries():
     feats = pages(TA_BOUNDARIES, "ta_code,ta_name,rc_code,rc_name", geometry=True, fmt="geojson")
     (RAW / "ta_2025.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": feats}))
     print(f"territorial authorities: {len(feats)}")
+    feats = pages(URBAN_RURAL, "UR2023_V1_00,UR2023_V1_00_NAME_ASCII,IUR2023_V1_00,IUR2023_V1_00_NAME",
+                  geometry=True, fmt="geojson")
+    (RAW / "urban_rural_2023.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": feats}))
+    print(f"urban/rural areas: {len(feats)}")
+    # Generalised to ~0.0005 deg (~50 m): only used to exempt rating units inside it.
+    feats = pages(DOC_LAND, "Type,Name", geometry=True, fmt="geojson", extra={"maxAllowableOffset": 0.0005})
+    (RAW / "doc_conservation_land.geojson").write_text(json.dumps({"type": "FeatureCollection", "features": feats}))
+    print(f"DOC public conservation land: {len(feats)}")
 
 
 if __name__ == "__main__":

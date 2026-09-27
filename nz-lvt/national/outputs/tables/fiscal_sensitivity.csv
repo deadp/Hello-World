@@ -1,0 +1,8 @@
+scenario,income_side_cost_bn,lvt_bn,fiscal_balance_bn
+Base,34.4,20.8,-11.9
+Incomes +10% (2023 -> 2026 wage growth),34.0,20.8,-11.5
+Top band mean $150k,34.5,20.8,-12.0
+Top band mean $190k,34.6,20.8,-12.1
+No exemption haircut on LVT,34.4,22.4,-10.3
+TOP revenue claim ($24.3bn),34.4,24.3,-8.4
+28% bracket to $70k (alt. threshold),36.0,20.8,-13.5
