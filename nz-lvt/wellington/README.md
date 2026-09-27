@@ -72,12 +72,76 @@ and excluded.
 
 Tables behind every number are in [`outputs/tables/`](outputs/tables/).
 
+## Land value and rates by block
+
+`scripts/blocks.py` groups land into blocks two ways: regular grids (100 m, 250 m,
+500 m, 1 km), Stats NZ SA2s, and SA2 × district plan zone "value districts". It then
+answers two questions.
+
+**1. How much land value, and how much land value rate, sits in each block?**
+[`outputs/blocks/`](outputs/blocks/) has GeoJSON for the 250 m grid, the 500 m grid and
+the SA2s, ready for QGIS or a web map. [`blocks_sa2.csv`](outputs/tables/blocks_sa2.csv)
+is the table version. Each block has:
+- land value per m² of private land, and per hectare of block (including roads);
+- today's general-rate take;
+- the take under land value rating (3.7× kept), both in total and per m² of land.
+
+For example, Wellington Central land averages $6,022/m², which would carry about
+$114/m² a year in general rates on land value. Mt Victoria North is $3,346/m² (about
+$21/m² a year) and Grenada North $142/m² (about $1.40/m² a year).
+
+![Land value per hectare, 250 m blocks](outputs/figures/map_blocks_250m_land_value_per_ha.png)
+
+**2. Could a council value land with one rate per block instead of parcel by parcel?**
+This is the Qingdao and Somers approach Doucet describes: every parcel in a block gets
+the same $/m², optionally adjusted for lot size.
+
+The test works like this:
+- Each urban parcel (≤ 2 ha, land value ≥ $50k) is valued with its block's rate,
+  calculated *without* that parcel (leave-one-out), so no parcel sets its own value.
+- The result is compared with its official 2024 land value using IAAO ratio-study
+  statistics: COD measures how scattered the valuations are, and PRD measures whether
+  they are fair between cheap and expensive land.
+- About 2% of extreme ratios are trimmed.
+
+| Blocks | Flat $/m²: COD | + lot-size adjustment: COD | Within ±20% | PRD |
+|---|---|---|---|---|
+| 100 m grid | 23.5 | **14.6** | 75% | 1.08 |
+| 250 m grid | 26.3 | 16.7 | 70% | 1.13 |
+| 500 m grid | 27.9 | 18.5 | 66% | 1.18 |
+| SA2 × zone | 29.2 | 19.3 | 64% | 1.17 |
+| SA2 | 30.1 | 20.3 | 62% | 1.20 |
+| 1 km grid | 30.6 | 20.9 | 61% | 1.22 |
+
+IAAO targets are COD ≤ 15 for residential land (≤ 20 for vacant land) and PRD between
+0.98 and 1.03.
+
+- **Lot size matters more than block size.** Land $/m² falls roughly with the square
+  root of lot area (slope about −0.5), so a large section is worth about 1.4× a section
+  half its size, not 2×. Adding this one citywide adjustment cuts COD by about a third
+  at every block size.
+- **Small blocks with a size adjustment are nearly as good as parcel-by-parcel
+  valuation:** 100 m blocks meet the IAAO residential COD standard.
+- **Coarse blocks are regressive.** PRD rises from 1.08 to 1.22 as blocks grow: modest
+  land is over-valued and premium land (views, sun, frontage) under-valued within the
+  block. A block-rate system would need small blocks, or a premium/discount layer, to
+  avoid shifting rates onto cheaper sections.
+- This compares block rates with QV's parcel mass appraisal, not with sale prices, so it
+  measures how much parcel-level detail a block rate keeps. It isn't a test of market
+  accuracy.
+
+Full results, including how rates bills would differ, are in
+[`blocks_valuation_accuracy.csv`](outputs/tables/blocks_valuation_accuracy.csv).
+
+![Block valuation accuracy](outputs/figures/blocks_valuation_accuracy.png)
+
 ## Data
 
 | Source | What | Notes |
 |---|---|---|
 | WCC `PropertyAndBoundaries/Property` (public ArcGIS layer) | 88,070 rating-unit records with capital, land and improvements value | Valuation date 1 Sept 2024, used for rates from 1 July 2025 |
 | WCC 2024 District Plan zones | Operative zones | Used for the commercial and non-rateable proxies |
+| Stats NZ SA2 2025 (via WCC GIS) | 86 Wellington City statistical areas | Used for block aggregation |
 | WCC 2025/26 Rating Policy | General rate on CV, no UAGC, 3.7× commercial and 5× downtown vacant/derelict differentials | Base rate 0.301493 c/$ incl. GST |
 
 ## Method
@@ -135,6 +199,7 @@ python scripts/build_dataset.py   # data/processed/units.parquet
 python scripts/model.py           # outputs/tables/*.csv, data/processed/results.parquet
 python scripts/uniformity.py      # outputs/tables/uniformity_*.csv
 python scripts/figures.py         # outputs/figures/*.png
+python scripts/blocks.py          # outputs/blocks/*.geojson, outputs/tables/blocks_*.csv
 ```
 
 ## Possible next steps

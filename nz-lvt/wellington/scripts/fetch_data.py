@@ -4,6 +4,7 @@ Sources (WCC ArcGIS REST services, public):
   - PropertyAndBoundaries/Property/MapServer/0: one row per rating unit with
     CapitalValue, LandValue, ImprovementsValue (2024 revaluation, rates from 1 July 2025).
   - 2024DistrictPlan/2024DistrictPlan/MapServer/122: operative district plan zones.
+  - StateOfHousing/StateOfHousing/MapServer/57: Stats NZ SA2 2025 boundaries (Wellington City only).
 
 Writes GeoJSON files to data/raw/.
 """
@@ -16,8 +17,9 @@ import requests
 
 BASE = "https://gis.wcc.govt.nz/arcgis/rest/services"
 LAYERS = {
-    "property": f"{BASE}/PropertyAndBoundaries/Property/MapServer/0",
-    "zones": f"{BASE}/2024DistrictPlan/2024DistrictPlan/MapServer/122",
+    "property": (f"{BASE}/PropertyAndBoundaries/Property/MapServer/0", "1=1"),
+    "zones": (f"{BASE}/2024DistrictPlan/2024DistrictPlan/MapServer/122", "1=1"),
+    "sa2": (f"{BASE}/StateOfHousing/StateOfHousing/MapServer/57", "ta_name = 'Wellington City'"),
 }
 PAGE = 2000
 RAW = Path(__file__).resolve().parents[1] / "data" / "raw"
@@ -35,14 +37,14 @@ def get(url, params, tries=4):
             time.sleep(2 ** (i + 1))
 
 
-def fetch_layer(name, url):
-    count = get(f"{url}/query", {"where": "1=1", "returnCountOnly": "true", "f": "json"})["count"]
+def fetch_layer(name, url, where):
+    count = get(f"{url}/query", {"where": where, "returnCountOnly": "true", "f": "json"})["count"]
     features = []
     for offset in range(0, count, PAGE):
         page = get(
             f"{url}/query",
             {
-                "where": "1=1",
+                "where": where,
                 "outFields": "*",
                 "returnGeometry": "true",
                 "outSR": 4326,
@@ -65,5 +67,5 @@ def fetch_layer(name, url):
 
 if __name__ == "__main__":
     RAW.mkdir(parents=True, exist_ok=True)
-    for name, url in LAYERS.items():
-        fetch_layer(name, url)
+    for name, (url, where) in LAYERS.items():
+        fetch_layer(name, url, where)
