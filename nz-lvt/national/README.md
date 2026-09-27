@@ -95,6 +95,29 @@ Other patterns:
 - By council: [`net_change_by_ta.csv`](outputs/tables/net_change_by_ta.csv). Every SA2:
   [`sa2_results.csv`](outputs/tables/sa2_results.csv).
 
+## Regional land value map: Wellington Region
+
+[`scripts/map_region.py`](scripts/map_region.py) re-downloads the region's council layers
+with parcel shapes. It spreads each rating unit's land value over its parcels (a farm
+split across several parcels, or unit titles sharing one) and maps land value per m² for
+185,000 parcels ($115bn of land across the region's eight councils).
+
+![Wellington Region land value](outputs/figures/map_wellington_region_land_value.png)
+
+| Council | Land value | Average $/m² of private land |
+|---|---|---|
+| Wellington City | $51.0bn | $180 |
+| Lower Hutt | $19.5bn | $51 |
+| Kāpiti Coast | $13.5bn | $18 |
+| Porirua | $10.0bn | $63 |
+| Upper Hutt (land value estimated from capital value) | $7.4bn | $13 |
+| Masterton | $5.8bn | $2.8 |
+| South Wairarapa | $5.2bn | $2.8 |
+| Carterton | $2.5bn | $3.3 |
+
+Averages per m² are pulled down heavily by large rural parcels. Median urban
+residential land is roughly $400–1,600/m².
+
 ## Policy parameters
 
 Parameters are in [`scripts/policy.py`](scripts/policy.py). TOP's own
