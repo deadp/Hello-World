@@ -157,6 +157,107 @@ Full results, including how rates bills would differ, are in
 
 ![Block valuation accuracy](outputs/figures/blocks_valuation_accuracy.png)
 
+## Rates vs cost of service (Urban3-style)
+
+[`scripts/fiscal.py`](scripts/fiscal.py) sets each property's estimated 2025/26 rates bill
+against an estimate of what it costs the council to serve. It follows Urban3's "fiscal
+productivity" method: local roads and pipes are charged to the properties they run past,
+and shared costs are spread across everyone.
+
+2025/26 is the last year water was billed in council rates (Tiaki Wai bills it from 1 July
+2026), and the first year of the 2024 valuations. All figures exclude GST.
+
+**Revenue: each rating unit's bill from the 2025/26 rates resolution.** It includes the
+general rate, water, sewerage, stormwater, the sector rates and the downtown levy. The
+modelled total is $611.8m, 97.5% of the actual $627.7m.
+
+**Costs: two views.** Activity figures come from the LTP 2024-34 Amendment
+([`fiscal_cost_pools_$m.csv`](outputs/tables/fiscal_cost_pools_$m.csv)).
+- **A. Rates-funded:** what rates pay for today. Water $92m, wastewater $82m, stormwater
+  $45m, transport $104m, and $261m for everything else (parks, libraries, recreation,
+  governance, and so on).
+- **B. Full cost:** operating cost + interest + depreciation, net of fees and subsidies.
+  This is **$694m, about $82m a year (13%) more than rates raise.** The gap is mostly
+  depreciation on the three waters that current rates don't cover: water rates cover
+  about 78% of the full cost, wastewater 68% and stormwater 80%.
+
+**How costs are allocated.** [`network_frontage.py`](scripts/network_frontage.py)
+does the frontage matching. It uses the council's GIS: 709 km of council roads and
+2,700 km of council pipes.
+- **Local roads and pipes (up to 300 mm)** go to the properties on each side, in
+  proportion to frontage. Pipe cost is weighted by diameter.
+- **Trunk mains, treatment, arterial roads and other transport costs** are shared per
+  rating unit. Trunk stormwater is shared by land area instead.
+- **Everything else** is shared per rating unit.
+- **The sector rates and downtown levy** are treated as funding that sector's own
+  spending.
+- **Frontage past parks and schools** is spread across all ratepayers.
+
+| Property type | Rating units | Median rates | Local roads + pipes cost | Rates ÷ cost (A) | Rates ÷ cost (B) | A, shared costs by CV |
+|---|---|---|---|---|---|---|
+| House | 51,549 | $4,850 | $2,000 | 0.72 | 0.62 | 0.70 |
+| Apartment / unit / flat | 25,814 | $3,070 | $460 | 0.53 | 0.48 | 0.91 |
+| Commercial | 1,436 | $43,600 | $5,140 | **5.74** | 5.30 | 2.36 |
+| Commercial land, little or no building | 706 | $20,400 | $4,510 | 2.83 | 2.46 | 1.94 |
+| Residential vacant land | 2,322 | $2,460 | $2,400 | **0.32** | 0.28 | 0.42 |
+| Rural / lifestyle | 486 | $5,970 | $5,290 | 0.68 | 0.61 | 0.53 |
+
+"Local roads + pipes cost" is the average annual cost of the local network per unit.
+
+1. **Commercial ratepayers carry the city.**
+   - Commercial property pays $216m of rates against about $38m of allocated cost.
+   - This is the 3.7× differential at work.
+   - Even if shared costs are allocated by capital value, commercial still pays 2.4× its
+     cost.
+   - Residential property as a whole pays about two-thirds of what it costs to serve.
+2. **Local infrastructure per home falls steeply with density.** Annual cost of local
+   roads and pipes per dwelling:
+
+   | Dwellings per hectare | Local network cost per dwelling (A) |
+   |---|---|
+   | under 5 | $6,000 |
+   | 5–15 | $2,140 |
+   | 15–30 | $1,910 |
+   | 30–60 | $1,200 |
+   | 60–150 | $595 |
+   | 150+ | $117 |
+
+   This is the classic Urban3 result: spread-out development needs far more road and
+   pipe per household. Sparse suburban lots cost many times more to reach than
+   apartments.
+3. **Vacant residential land pays about a third of its cost.** It sits on serviced
+   streets but pays rates on low capital value. Taxing land value instead of capital
+   value (the rest of this analysis) would close most of that gap.
+4. **Whether apartments "pay their way" depends on how shared services are split.**
+   - Per rating unit (every household uses libraries and parks equally): apartments
+     pay 0.53 of their cost, and inner-city SA2s such as Te Aro look subsidised.
+   - By capital value: apartments pay 0.91, and 150+ dwellings/ha pays its way (1.08).
+   - Either way, their *local infrastructure* cost is tiny.
+
+![Rates vs cost by property type and density](outputs/figures/fiscal_revenue_to_cost.png)
+
+![Rates and net per hectare](outputs/figures/fiscal_map_rates_and_net_per_ha.png)
+
+The map shows rates per hectare (left, Urban3's "value per acre" in rates terms) and
+rates minus cost of service per hectare (right). The CBD, Kilbirnie and Johnsonville
+commercial centres and the airport pay well above their cost. Most residential land pays
+less, because under the 3.7× differential commercial ratepayers fund much of the
+residential share.
+
+**Caveats**
+- The cost split is a model, not the council's cost accounting.
+  - Local vs trunk shares use length weights (trunk 2.5×, arterials 2×). Pipe cost
+    rises with diameter by assumption, not from asset valuations.
+  - Water use isn't measured per property: the commercial metered-water revenue is
+    spread by capital value.
+- The rating category (residential vs commercial) is the same proxy as the rest of this
+  analysis.
+- Non-rateable land (parks, schools, Crown land) gets network frontage, but its costs are
+  spread over ratepayers.
+- Per-unit sharing treats a studio apartment and a large office building as one
+  "household" each for shared services. That is why the capital-value alternative is
+  shown.
+
 ## Data
 
 | Source | What | Notes |
@@ -223,6 +324,9 @@ python scripts/model.py           # outputs/tables/*.csv, data/processed/results
 python scripts/uniformity.py      # outputs/tables/uniformity_*.csv
 python scripts/figures.py         # outputs/figures/*.png
 python scripts/blocks.py          # outputs/blocks/*.geojson, outputs/tables/blocks_*.csv
+python scripts/fetch_networks.py  # roads, three-waters pipes, downtown levy area
+python scripts/network_frontage.py
+python scripts/fiscal.py          # outputs/tables/fiscal_*.csv, outputs/figures/fiscal_*.png
 ```
 
 ## Possible next steps

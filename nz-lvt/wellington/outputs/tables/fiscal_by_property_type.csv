@@ -1,0 +1,7 @@
+ptype,units,rates_$m,cost_A_$m,cost_B_$m,median_rates,median_cost_A,median_cost_B,local_network_cost_A_per_unit,local_network_cost_B_per_unit,revenue_to_cost_A,revenue_to_cost_B,revenue_to_cost_A_shared_by_cv,share_paying_more_than_cost_A_%,net_A_$m
+Apartment / unit / flat,25814,78.6,147,163,3.07e+03,5.43e+03,5.98e+03,464,594,0.535,0.481,0.913,2.7,-68.3
+Commercial,1436,216,37.6,40.8,4.36e+04,1.17e+04,1.3e+04,5.14e+03,6.58e+03,5.74,5.3,2.36,91.2,179
+"Commercial land, little or no building",706,27.3,9.65,11.1,2.04e+04,9.68e+03,1.1e+04,4.51e+03,5.8e+03,2.83,2.46,1.94,76.6,17.7
+House,51549,279,390,447,4.85e+03,7.1e+03,8.08e+03,2e+03,2.56e+03,0.715,0.624,0.704,10.5,-111
+Residential vacant land,2322,7.11,22.2,25.9,2.46e+03,6.53e+03,7.4e+03,2.4e+03,3.04e+03,0.321,0.275,0.424,3.4,-15
+Rural / lifestyle,486,3.54,5.22,5.84,5.97e+03,8.11e+03,8.97e+03,5.29e+03,6.06e+03,0.678,0.606,0.532,19.8,-1.68

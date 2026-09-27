@@ -3,6 +3,7 @@
 Layers (gis.wcc.govt.nz):
   - Transportation/Roads/MapServer/4: road centrelines with RAMM category (arterial,
     collector, local, private, ...), length.
+  - PropertyAndBoundaries/Downtown_Levy_Area/MapServer/6: area where the downtown levy applies.
   - WaterServices/WCC_3_Waters_Underground_Services_Backup/MapServer/13, 19, 25: water,
     wastewater and stormwater pipes with owner, diameter, material, install date.
 Only in-use pipes are kept. Writes GeoParquet (NZTM 2000) to data/raw/networks/.
@@ -19,6 +20,7 @@ from shapely.geometry import shape
 BASE = "https://gis.wcc.govt.nz/arcgis/rest/services"
 PIPES = f"{BASE}/WaterServices/WCC_3_Waters_Underground_Services_Backup/MapServer"
 LAYERS = {
+    "downtown_levy_area": (f"{BASE}/PropertyAndBoundaries/Downtown_Levy_Area/MapServer/6", "1=1", "*"),
     "roads": (f"{BASE}/Transportation/Roads/MapServer/4", "1=1",
               "feature_id,location,category,ONRC,suburb,adt,prim_meas"),
     "water_pipes": (f"{PIPES}/13", "Operational_Status = 'In Use'",
