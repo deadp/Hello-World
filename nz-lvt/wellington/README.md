@@ -75,22 +75,40 @@ Tables behind every number are in [`outputs/tables/`](outputs/tables/).
 ## Land value and rates by block
 
 `scripts/blocks.py` groups land into blocks: regular grids (100 m, 250 m,
-500 m, 1 km), Stats NZ SA2s, and SA2 × district plan zone "value districts". It then
-answers two questions.
+500 m, 1 km), Stats NZ SA1s and SA2s, and SA2 × district plan zone "value districts".
+It then answers two questions.
 
 **1. How much land value, and how much land value rate, sits in each block?**
-[`outputs/blocks/`](outputs/blocks/) has GeoJSON for the 250 m grid, the 500 m grid and
-the SA2s, ready for QGIS or a web map. [`blocks_sa2.csv`](outputs/tables/blocks_sa2.csv)
-is the table version. Each block has:
+[`outputs/blocks/`](outputs/blocks/) has GeoJSON for the 250 m grid, the 500 m grid,
+SA1s and SA2s, ready for QGIS or a web map. [`blocks_sa1.csv`](outputs/tables/blocks_sa1.csv)
+and [`blocks_sa2.csv`](outputs/tables/blocks_sa2.csv) are the table versions. Each block has:
 - land value per m² of private land, and per hectare of block (including roads);
 - today's general-rate take;
-- the take under land value rating (3.7× kept), both in total and per m² of land.
+- the take under land value rating (3.7× kept), both in total and per m² of land;
+- the residential-only rates now and under land value rating;
+- for SA1s only, 2023 Census residents, land value per resident, and residential rates
+  per resident.
 
 For example, Wellington Central land averages $6,022/m², which would carry about
 $114/m² a year in general rates on land value. Mt Victoria North is $3,346/m² (about
 $21/m² a year) and Grenada North $142/m² (about $1.40/m² a year).
 
 ![Land value per hectare, 250 m blocks](outputs/figures/map_blocks_250m_land_value_per_ha.png)
+
+**SA1s** are Stats NZ's smallest standard output areas. Wellington City has 1,401 SA1s,
+each with a median of 42 parcels and 141 residents (2023 Census). At that resolution:
+- **Most areas pay more.** Residential rates rise in 73% of SA1s, home to 71% of
+  residents, when the 3.7× commercial differential is kept. That is mostly the ~$25m
+  shift from commercial to residential ratepayers described above; holding the sector
+  split would lower the bar everywhere.
+- **Per resident**, the median SA1's residential general rate goes from $1,048 to $1,174.
+- **The pattern repeats street by street.** Apartment blocks in Te Aro and Pipitea, and the
+  newer subdivisions of Churton Park, Grenada and Tawa, pay less.
+  Almost all of the older southern and eastern suburbs pay more.
+
+| | |
+|---|---|
+| ![Land value per m² by SA1](outputs/figures/map_sa1_land_value_per_m2.png) | ![Residential rates change by SA1](outputs/figures/map_sa1_residential_rates_change.png) |
 
 **2. Could a council value land with one rate per block instead of parcel by parcel?**
 This is the Qingdao and Somers approach Doucet describes: every parcel in a block gets
@@ -107,6 +125,7 @@ The test works like this:
 | Blocks | Flat $/m²: COD | + lot-size adjustment: COD | Within ±20% | PRD |
 |---|---|---|---|---|
 | 100 m grid | 23.5 | **14.6** | 75% | 1.08 |
+| SA1 | 25.7 | 15.9 | 72% | 1.12 |
 | 250 m grid | 26.3 | 16.7 | 70% | 1.13 |
 | 500 m grid | 27.9 | 18.5 | 66% | 1.18 |
 | SA2 × zone | 29.2 | 19.3 | 64% | 1.17 |
@@ -121,7 +140,10 @@ IAAO targets are COD ≤ 15 for residential land (≤ 20 for vacant land) and PR
   half its size, not 2×. Adding this one citywide adjustment cuts COD by about a third
   at every block size.
 - **Small blocks with a size adjustment are nearly as good as parcel-by-parcel
-  valuation:** 100 m blocks meet the IAAO residential COD standard.
+  valuation:** 100 m blocks meet the IAAO residential COD standard. SA1s (COD 15.9) come
+  close and beat a 250 m grid with a similar number of blocks, because their boundaries
+  follow real neighbourhood edges (ridgelines, main roads, zone changes) rather than an
+  arbitrary grid.
 - **Coarse blocks are regressive.** PRD rises from 1.08 to 1.22 as blocks grow: modest
   land is over-valued and premium land (views, sun, frontage) under-valued within the
   block. A block-rate system would need small blocks, or a premium/discount layer, to
@@ -142,6 +164,7 @@ Full results, including how rates bills would differ, are in
 | WCC `PropertyAndBoundaries/Property` (public ArcGIS layer) | 88,070 rating-unit records with capital, land and improvements value | Valuation date 1 Sept 2024, used for rates from 1 July 2025 |
 | WCC 2024 District Plan zones | Operative zones | Used for the commercial and non-rateable proxies |
 | Stats NZ SA2 2025 (via WCC GIS) | 86 Wellington City statistical areas | Used for block aggregation |
+| Stats NZ SA1 2025 + 2023 Census usually resident population (Stats NZ ArcGIS) | 1,401 SA1s in Wellington City | SA1 blocks and per-resident figures |
 | WCC 2025/26 Rating Policy | General rate on CV, no UAGC, 3.7× commercial and 5× downtown vacant/derelict differentials | Base rate 0.301493 c/$ incl. GST |
 
 ## Method
