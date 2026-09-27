@@ -74,7 +74,7 @@ Tables behind every number are in [`outputs/tables/`](outputs/tables/).
 
 ## Land value and rates by block
 
-`scripts/blocks.py` groups land into blocks two ways: regular grids (100 m, 250 m,
+`scripts/blocks.py` groups land into blocks: regular grids (100 m, 250 m,
 500 m, 1 km), Stats NZ SA2s, and SA2 × district plan zone "value districts". It then
 answers two questions.
 
