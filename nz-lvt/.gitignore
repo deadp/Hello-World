@@ -1,0 +1,4 @@
+# Raw and processed data are re-created by the scripts (see wellington/README.md).
+*/data/raw/
+*/data/processed/
+__pycache__/

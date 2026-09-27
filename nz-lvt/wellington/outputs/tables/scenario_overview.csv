@@ -1,0 +1,7 @@
+scenario,base,commercial_differential,base_rate_cents_per_$,commercial_share_%,median_house_$,median_apartment_$,vacant_and_carpark_total_$m
+cv_3.7,CapitalValue,3.7,0.3015,42.66,3000,1779,23.58
+lv_3.7,LandValue,3.7,0.5972,36.42,3315,1612,46.5
+lv_share,LandValue,category shares held,,42.66,2989,1454,52.27
+cv_2.0,CapitalValue,2.0,0.375,28.68,3731,2212,18.23
+lv_2.0,LandValue,2.0,0.7172,23.64,3981,1936,34.7
+lv_1.0,LandValue,1.0,0.8134,13.4,4514,2196,25.24

@@ -1,0 +1,7 @@
+ptype,units,capital_value_bn,land_value_bn,land_share_of_cv,median_rates_now,median_rates_lv_2.0,median_change_$,median_change_%,share_paying_less_%,total_now_$m,total_lv_2.0_$m,total_change_$m
+House,51549,57.94,33.03,0.57,3000,3981,970.4,32.85,11.12,174.7,236.9,62.2
+Apartment / unit / flat,25814,15.06,7.271,0.4828,1779,1936,79.08,7.217,41.08,45.4,52.15,6.746
+Rural / lifestyle,486,0.8471,0.4449,0.5251,4236,5738,1427,39.39,11.93,2.554,3.191,0.6365
+Residential vacant land,2322,1.377,1.368,0.9932,1357,3227,1871,137.9,0,4.153,9.812,5.66
+Commercial,1436,13.39,4.784,0.3574,3.123e+04,2.288e+04,-9257,-35.71,82.17,149.3,68.63,-80.7
+"Commercial land, little or no building",706,1.742,1.735,0.996,1.461e+04,1.879e+04,4178,28.59,0,19.43,24.88,5.455
