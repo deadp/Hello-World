@@ -1,0 +1,7 @@
+scenario,cross_subsidy_$m,within_25pct_%,suburb_cross_subsidy_$m,tawa_net_$m,wellington_central_net_$m,ratio_House,ratio_Apartment / unit / flat,ratio_Residential vacant land,ratio_Commercial,"ratio_Commercial land, little or no building"
+Today (capital value),214.753,24.265,140.674,-18.264,74.588,0.715,0.535,0.321,5.742,2.832
+"Land value, same res/comm split",219.972,23.577,128.995,-21.168,43.744,0.726,0.473,0.534,4.775,6.602
+"Land value, today's commercial loading",195.542,29.105,109.341,-19.880,35.304,0.794,0.512,0.583,4.117,5.671
+"Land value, commercial 2×",158.661,37.286,76.801,-17.629,20.556,0.913,0.582,0.670,2.966,4.044
+"Land value, no commercial loading",131.645,42.606,61.571,-15.473,6.430,1.026,0.648,0.753,1.864,2.486
+Land value + max fixed charge,141.966,45.981,85.434,-15.542,26.078,0.835,0.709,0.628,3.219,4.435

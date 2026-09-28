@@ -261,6 +261,46 @@ map by SA1. It switches between net per hectare (rates-funded or full cost), rat
 cost per hectare, local infrastructure per home, land value per m², and the change under
 land value rating. Clicking a suburb in the chart zooms the map to it.
 
+### Would land value rating bring rates closer to cost?
+
+[`scripts/lv_alignment.py`](scripts/lv_alignment.py) re-levies the same $612m under
+land-value designs and measures how far each property's bill sits from its cost to serve
+([`lv_alignment_per_unit.csv`](outputs/tables/lv_alignment_per_unit.csv),
+[`lv_alignment_by_value.csv`](outputs/tables/lv_alignment_by_value.csv)).
+
+**What "cross-subsidy" means here:** the total of rates paid above cost, which funds
+others. Lower means rates track cost more closely. Each cell gives two figures: shared
+costs split per property / split by value.
+
+| Design (all raise the same total) | Cross-subsidy | Bills within ±25% of cost | House rates ÷ cost | Commercial rates ÷ cost |
+|---|---|---|---|---|
+| Today (capital value, commercial 3.4×) | $215m / $142m | 24% / 54% | 0.72 | 5.7 / 2.4 |
+| Land value, same residential/commercial split | $220m / $155m | 24% / 44% | 0.73 | 4.8 / 2.0 |
+| Land value, today's commercial loading | $196m / $132m | 29% / 52% | 0.79 | 4.1 / 1.7 |
+| Land value, commercial 2× | $159m / $102m | 37% / 60% | 0.91 | 3.0 / 1.2 |
+| Land value, no commercial loading | $132m / $91m | 43% / 59% | 1.03 | 1.9 / 0.8 |
+| Land value + maximum fixed charge ($1,752, the 30% legal cap) | $142m / $111m | 46% / 59% | 0.84 | 3.2 / 1.3 |
+
+- **Switching the base from capital value to land value barely moves the overall
+  picture.** On its own it changes the cross-subsidy by −9% to +10%. The biggest
+  mismatch is between commercial and residential, set by the commercial differential,
+  not by which value is taxed.
+- **The commercial differential is the main lever.** Land value with no commercial
+  loading cuts the cross-subsidy by about 40% under either cost view.
+- **A uniform fixed charge gets the most individual bills near their cost** (46% within
+  ±25%), because much of the council's cost is per property.
+- **Land value clearly helps where Doucet predicts: vacant and underused land.**
+  - Vacant residential land goes from paying 0.32 of its cost to 0.53–0.75.
+  - Commercial sites with little or no building start paying well above their
+    frontage cost.
+- **It doesn't help Tawa or apartments.**
+  - Tawa's land is among the city's cheapest per m², so with the split unchanged its net
+    goes from −$18m to −$21m.
+  - Apartments sit on little land, so their bills fall further below cost.
+  - Only a smaller commercial loading narrows Tawa's gap.
+
+![Land value rating and cost alignment](outputs/figures/lv_alignment.png)
+
 **Caveats**
 - The cost split is a model, not the council's cost accounting.
   - Local vs trunk shares use length weights (trunk 2.5×, arterials 2×). Pipe cost
@@ -346,6 +386,7 @@ python scripts/network_frontage.py
 python scripts/fiscal.py          # outputs/tables/fiscal_*.csv, outputs/figures/fiscal_*.png
 python scripts/fiscal_blocks.py   # SA1 GeoJSON, net by suburb table + chart
 python scripts/build_web_map.py   # outputs/web/who_pays_wellington.html
+python scripts/lv_alignment.py    # land value rating vs cost-of-service alignment
 ```
 
 ## Possible next steps
