@@ -1,0 +1,302 @@
+<title>Who Pays Wellington</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Public+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+/*__LEAFLET_CSS__*/
+:root{
+  --bg:#f6f7f4; --surface:#fcfcfb; --panel:#eef0ec; --ink:#15202a; --ink2:#4f5963; --muted:#7c858c;
+  --line:#dde1db; --focus:#2a78d6; --mapbg:#e9ece8; --mid:#f0efec; --stroke:rgba(21,32,42,.18);
+  --blue:#2a78d6; --red:#e34948; --good:#006300;
+  --sans:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0f1316; --surface:#161b1f; --panel:#1c2227; --ink:#eef1ee; --ink2:#b9c0c5; --muted:#8a939a;
+    --line:#2a3137; --focus:#6da7ec; --mapbg:#12171b; --mid:#383835; --stroke:rgba(238,241,238,.16);
+    --blue:#3987e5; --red:#e66767; --good:#0ca30c;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0f1316; --surface:#161b1f; --panel:#1c2227; --ink:#eef1ee; --ink2:#b9c0c5; --muted:#8a939a;
+  --line:#2a3137; --focus:#6da7ec; --mapbg:#12171b; --mid:#383835; --stroke:rgba(238,241,238,.16);
+  --blue:#3987e5; --red:#e66767; --good:#0ca30c;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:grid;gap:28px}
+header{display:grid;gap:14px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.08;margin:0;letter-spacing:-.01em;text-wrap:balance}
+.lede{max-width:70ch;color:var(--ink2);margin:0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.fact{border-top:2px solid var(--ink);padding-top:10px;display:grid;gap:4px}
+.fact b{font:600 26px/1.1 var(--mono);font-variant-numeric:tabular-nums}
+.fact span{color:var(--ink2);font-size:13.5px}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:18px;align-items:start}
+@media (max-width:900px){.main{grid-template-columns:1fr}}
+.mapcard{display:grid;gap:10px}
+.controls{display:flex;flex-wrap:wrap;gap:6px}
+.controls button{font:500 13px var(--sans);color:var(--ink2);background:var(--surface);border:1px solid var(--line);
+  border-radius:999px;padding:6px 12px;cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.controls button:focus-visible,.bars button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+#map{height:min(72vh,720px);min-height:420px;width:100%;border:1px solid var(--line);border-radius:6px;background:var(--mapbg)}
+.leaflet-container{background:var(--mapbg);font:13px var(--sans)}
+.leaflet-control-zoom a{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;font-size:12.5px;color:var(--ink2)}
+.legend .ttl{font-weight:600;color:var(--ink)}
+.swatches{display:flex;flex-wrap:wrap;gap:4px 10px}
+.sw{display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11.5px}
+.sw i{width:14px;height:14px;border-radius:2px;display:inline-block;border:1px solid var(--stroke)}
+.metricnote{color:var(--muted);font-size:12.5px;margin:0}
+aside{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:12px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
+aside h2{margin:0;font-size:18px;line-height:1.2}
+aside .sub{color:var(--muted);font:12px var(--mono);margin-top:-8px}
+.kv{display:grid;grid-template-columns:1fr auto;gap:5px 12px;margin:0}
+.kv dt{color:var(--ink2);font-size:13.5px}
+.kv dd{margin:0;font:500 13.5px var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.kv .sep{grid-column:1/-1;border-top:1px solid var(--line);margin:4px 0}
+.pill{display:inline-block;font:600 12px var(--mono);padding:3px 8px;border-radius:999px}
+.pill.pos{background:color-mix(in srgb,var(--blue) 16%,transparent);color:var(--blue)}
+.pill.neg{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+.hint{color:var(--muted);font-size:12.5px;margin:0}
+section h2{font-size:22px;margin:0 0 4px}
+section>p{margin:0 0 14px;color:var(--ink2);max-width:75ch}
+.chartbox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 8px}
+.bars{display:grid;grid-template-columns:150px minmax(260px,1fr);gap:1px 10px;align-items:center;min-width:420px}
+.bars .name{font-size:13px;text-align:right;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bars button{all:unset;cursor:pointer;display:block;position:relative;height:17px;border-radius:2px}
+.bars button:hover .bar,.bars button.sel .bar{filter:brightness(.88)}
+.bar{position:absolute;top:2px;height:13px;border-radius:0 3px 3px 0}
+.bar.neg{border-radius:3px 0 0 3px}
+.bars .zero{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--muted)}
+.val{position:absolute;top:0;font:11px/17px var(--mono);color:var(--ink2);white-space:nowrap}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font:12.5px/1.45 var(--sans);padding:8px 10px;border-radius:5px;max-width:260px;z-index:1000;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.tip b{font-weight:600}
+.method{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;color:var(--ink2);font-size:13.5px}
+.method h3{font-size:14px;color:var(--ink);margin:0 0 4px}
+.method p{margin:0}
+footer{color:var(--muted);font-size:12.5px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Wellington City · rates vs cost of service · 2025/26</div>
+    <h1>Who pays Wellington's bills, and who costs more than they pay?</h1>
+    <p class="lede">Each area's estimated rates bill set against what the council spends to serve it: the local roads and pipes along its streets, a share of trunk networks and treatment, and a share of everything else rates fund. Built from the council's own valuation roll, rates resolution, activity budgets and network GIS, following Urban3's method. Figures exclude GST.</p>
+    <div class="facts">
+      <div class="fact"><b id="f1"></b><span>what commercial property pays in rates for every dollar it costs to serve</span></div>
+      <div class="fact"><b id="f2"></b><span>a year of full cost (incl. depreciation) that current rates don't cover</span></div>
+      <div class="fact"><b id="f3"></b><span>yearly local roads and pipes per home: under 5 homes/ha vs 150+ homes/ha</span></div>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="mapcard">
+      <div class="controls" role="group" aria-label="Map metric" id="controls"></div>
+      <div id="map" role="region" aria-label="Map of Wellington City SA1 areas"></div>
+      <div class="legend" id="legend"></div>
+      <p class="metricnote" id="metricnote"></p>
+    </div>
+    <aside aria-live="polite">
+      <h2 id="dTitle">Wellington City</h2>
+      <div class="sub" id="dSub"></div>
+      <div id="dPill"></div>
+      <dl class="kv" id="dList"></dl>
+      <p class="hint">Hover or tap an area to see its numbers. Click a suburb in the chart below to zoom to it.</p>
+    </aside>
+  </div>
+
+  <section>
+    <h2>Net by suburb</h2>
+    <p>Rates paid minus rates-funded cost of service, $ million a year. Suburbs with at least 50 rating units. Commercial areas pay far more than they cost because commercial property carries a 3.7× general-rate differential; large residential suburbs cost more than they pay.</p>
+    <div class="chartbox"><div class="bars" id="bars"></div></div>
+  </section>
+
+  <section>
+    <h2>How it's calculated</h2>
+    <div class="method">
+      <div><h3>Rates</h3><p>Each rating unit's 2025/26 bill from the rates resolution: general rate on capital value (commercial 3.7× residential), water, sewerage, stormwater, sector rates and the downtown levy. Modelled total $611.8m against the actual $627.7m.</p></div>
+      <div><h3>Local network</h3><p>709 km of council roads and about 2,700 km of council pipes from the council's GIS. Local streets and pipes up to 300 mm are charged to the properties along each side, by frontage. Bigger pipes cost more per metre.</p></div>
+      <div><h3>Shared costs</h3><p>Trunk mains, treatment, arterial roads and every other rates-funded service (parks, libraries, governance) are shared equally per rating unit; trunk stormwater by land area. Sharing by capital value instead narrows but doesn't close the commercial–residential gap.</p></div>
+      <div><h3>Two cost views</h3><p><b>Rates-funded</b> spreads what rates pay for today, so the city nets to zero. <b>Full cost</b> adds unfunded depreciation (mostly three waters), $694m in total, about $82m more than rates raise.</p></div>
+    </div>
+  </section>
+  <footer>Sources: Wellington City Council valuation roll (2024 revaluation), 2025/26 rates resolution, LTP 2024-34 Amendment activity statements, council GIS (roads, three-waters pipes), Stats NZ SA1 2025 and 2023 Census. Residential vs commercial status is estimated from zoning and property descriptions. A model, not the council's cost accounts.</footer>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const GEO = __DATA__;
+const SUBURBS = __SUBURBS__;
+const TOTALS = __TOTALS__;
+
+const fmt$ = v => (v < 0 ? "−" : "") + "$" + Math.abs(Math.round(v)).toLocaleString("en-NZ");
+const fmtK = v => { const a = Math.abs(v); const s = v < 0 ? "−" : "+";
+  return a >= 1e6 ? s + "$" + (a/1e6).toFixed(1) + "m" : a >= 1e3 ? s + "$" + (a/1e3).toFixed(0) + "k" : s + "$" + a.toFixed(0); };
+const fmtN = v => v == null || isNaN(v) ? "–" : Math.round(v).toLocaleString("en-NZ");
+
+document.getElementById("f1").textContent = TOTALS.commercial_ratio.toFixed(1) + "×";
+document.getElementById("f2").textContent = "$" + TOTALS.gap_m.toFixed(0) + "m";
+document.getElementById("f3").textContent = "$" + fmtN(TOTALS.local_low) + " vs $" + fmtN(TOTALS.local_high);
+
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const BLUES = ["#cde2fb","#9ec5f4","#6da7ec","#3987e5","#256abf","#184f95","#0d366b"];
+const ORANGES = ["#fde3d6","#f9c2a6","#f39b72","#eb6834","#c9501f","#9a3b14","#6b280c"];
+const DIV = () => ["#a32322","#e34948","#f4a3a2", css("--mid"), "#9ec5f4","#3987e5","#184f95"];
+
+const METRICS = {
+  net_ha: {label:"Net per hectare", type:"div", breaks:[-50000,-15000,-3000,3000,15000,50000],
+    labels:["< −$50k","−$50k to −15k","−$15k to −3k","±$3k","+$3k to 15k","+$15k to 50k","> +$50k"],
+    note:"Rates minus rates-funded cost of service, per hectare of private land, per year. Blue pays more than it costs; red costs more than it pays."},
+  net_full_ha: {label:"Net per ha (full cost)", type:"div", breaks:[-50000,-15000,-3000,3000,15000,50000],
+    labels:["< −$50k","−$50k to −15k","−$15k to −3k","±$3k","+$3k to 15k","+$15k to 50k","> +$50k"],
+    note:"As above, but cost includes depreciation that rates don't currently fund (mostly three waters), so more of the city is red."},
+  rates_ha: {label:"Rates per hectare", type:"blue", breaks:[5000,20000,40000,80000,160000,400000],
+    labels:["< $5k","$5k–20k","$20k–40k","$40k–80k","$80k–160k","$160k–400k","> $400k"],
+    note:"Rates paid per hectare of private land per year: Urban3's value-per-acre measure, in rates."},
+  cost_ha: {label:"Cost per hectare", type:"orange", breaks:[5000,20000,40000,80000,160000,400000],
+    labels:["< $5k","$5k–20k","$20k–40k","$40k–80k","$80k–160k","$160k–400k","> $400k"],
+    note:"Rates-funded cost of service per hectare of private land per year."},
+  local_home: {label:"Local infrastructure per home", type:"orange", breaks:[250,750,1250,2000,3000,5000],
+    labels:["< $250","$250–750","$750–1,250","$1,250–2,000","$2,000–3,000","$3,000–5,000","> $5,000"],
+    note:"Average yearly cost of the local roads and pipes along each home's frontage. Falls steeply with density."},
+  lv_m2: {label:"Land value per m²", type:"blue", breaks:[100,400,800,1200,2000,4000],
+    labels:["< $100","$100–400","$400–800","$800–1.2k","$1.2k–2k","$2k–4k","> $4k"],
+    note:"Rateable land value per square metre of private land (2024 revaluation)."},
+  lvr_change_pct: {label:"Land value rating", type:"div", invert:true, breaks:[-25,-12,-4,4,12,25],
+    labels:["< −25%","−25% to −12%","−12% to −4%","±4%","+4% to 12%","+12% to 25%","> +25%"],
+    note:"Change in the general rate if it were set on land value instead of capital value (revenue-neutral, 3.7× commercial differential kept). Blue pays less, red more."},
+};
+let metric = "net_ha";
+
+function colour(v, m) {
+  if (v == null || isNaN(v)) return css("--panel");
+  const M = METRICS[m]; let i = M.breaks.findIndex(b => v < b); if (i < 0) i = M.breaks.length;
+  const pal = M.type === "blue" ? BLUES : M.type === "orange" ? ORANGES : DIV();
+  if (M.type === "div" && M.invert) return pal[pal.length - 1 - i];
+  return pal[i];
+}
+
+const map = L.map("map", {zoomControl:true, attributionControl:false, minZoom:10, maxZoom:17, preferCanvas:false});
+const layer = L.geoJSON(GEO, {style: f => styleFor(f), onEachFeature: (f, l) => {
+  l.on("mouseover", e => { hover(f, l); });
+  l.on("mouseout", () => { l.setStyle(styleFor(f)); });
+  l.on("click", () => { hover(f, l); });
+}}).addTo(map);
+// Open on the urban area (Tawa to the south coast); rural Mākara and Ohariu sit off to the west.
+map.fitBounds([[-41.345, 174.74], [-41.155, 174.84]]);
+
+function styleFor(f) {
+  return {fillColor: colour(f.properties[metric], metric), fillOpacity: .92, color: css("--stroke"), weight: .5};
+}
+function bbox(feats) {
+  const b = L.latLngBounds([]);
+  feats.forEach(f => b.extend(L.geoJSON(f).getBounds()));
+  return b;
+}
+
+const dTitle = document.getElementById("dTitle"), dSub = document.getElementById("dSub"),
+      dList = document.getElementById("dList"), dPill = document.getElementById("dPill");
+function row(k, v) { return `<dt>${k}</dt><dd>${v}</dd>`; }
+function pill(net, ratio) {
+  if (ratio == null || isNaN(ratio)) return "";
+  const pos = net >= 0;
+  return `<span class="pill ${pos ? "pos" : "neg"}">${pos ? "Pays more than it costs" : "Costs more than it pays"} · ${ratio.toFixed(2)}×</span>`;
+}
+function hover(f, l) {
+  layer.resetStyle();
+  l.setStyle({weight: 2.5, color: css("--ink")}); l.bringToFront();
+  const p = f.properties;
+  dTitle.textContent = p.suburb || "Wellington City";
+  dSub.textContent = "SA1 " + p.sa1;
+  dPill.innerHTML = pill(p.net, p.ratio);
+  dList.innerHTML = [
+    row("Rating units", fmtN(p.units)), row("Residents (2023)", fmtN(p.residents)),
+    row("Homes per hectare", p.homes_per_ha == null ? "–" : p.homes_per_ha.toFixed(1)),
+    '<div class="sep"></div>',
+    row("Rates paid", fmt$(p.rates)), row("Cost to serve", fmt$(p.cost)), row("Net", fmtK(p.net)),
+    row("Full cost (incl. depreciation)", fmt$(p.cost_full)), row("Net at full cost", fmtK(p.net_full)),
+    '<div class="sep"></div>',
+    row("Rates per ha", fmt$(p.rates_ha)), row("Net per ha", fmtK(p.net_ha)),
+    row("Local roads + pipes per home", p.local_home == null ? "–" : fmt$(p.local_home)),
+    row("Land value per m²", fmt$(p.lv_m2)),
+    row("Land value rating change", p.lvr_change_pct == null ? "–" : (p.lvr_change_pct > 0 ? "+" : "") + p.lvr_change_pct.toFixed(1) + "%"),
+  ].join("");
+}
+function showTotals() {
+  dTitle.textContent = "Wellington City";
+  dSub.textContent = TOTALS.units.toLocaleString("en-NZ") + " rateable units · 2025/26";
+  dPill.innerHTML = "";
+  dList.innerHTML = [
+    row("Rates (modelled)", "$" + TOTALS.rates_m.toFixed(1) + "m"),
+    row("Rates-funded cost", "$" + TOTALS.cost_m.toFixed(1) + "m"),
+    row("Full cost", "$" + TOTALS.cost_full_m.toFixed(1) + "m"),
+    '<div class="sep"></div>',
+    row("Commercial: rates ÷ cost", TOTALS.commercial_ratio.toFixed(2) + "×"),
+    row("Houses: rates ÷ cost", TOTALS.house_ratio.toFixed(2) + "×"),
+    row("Apartments: rates ÷ cost", TOTALS.apt_ratio.toFixed(2) + "×"),
+    row("Vacant residential land", TOTALS.vacant_ratio.toFixed(2) + "×"),
+  ].join("");
+}
+showTotals();
+
+const controls = document.getElementById("controls");
+Object.entries(METRICS).forEach(([k, M]) => {
+  const b = document.createElement("button"); b.type = "button"; b.id = "m_" + k; b.textContent = M.label;
+  b.setAttribute("aria-pressed", k === metric); b.onclick = () => setMetric(k); controls.appendChild(b);
+});
+function setMetric(k) {
+  metric = k;
+  controls.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.id === "m_" + k));
+  layer.eachLayer(l => l.setStyle(styleFor(l.feature)));
+  legend();
+}
+function legend() {
+  const M = METRICS[metric];
+  const pal = M.type === "blue" ? BLUES : M.type === "orange" ? ORANGES : DIV();
+  const cols = M.type === "div" && M.invert ? [...pal].reverse() : pal;
+  document.getElementById("legend").innerHTML = `<span class="ttl">${M.label}</span><span class="swatches">` +
+    M.labels.map((t, i) => `<span class="sw"><i style="background:${cols[i]}"></i>${t}</span>`).join("") + "</span>";
+  document.getElementById("metricnote").textContent = M.note;
+}
+legend();
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => setMetric(metric));
+new MutationObserver(() => setMetric(metric)).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
+
+// Suburb chart
+const bars = document.getElementById("bars"), tip = document.getElementById("tip");
+const maxAbs = Math.max(...SUBURBS.map(s => Math.abs(s.net)));
+const lo = Math.min(0, ...SUBURBS.map(s => s.net)), hi = Math.max(...SUBURBS.map(s => s.net));
+const pad = 16, span = hi - lo;
+[...SUBURBS].sort((a, b) => b.net - a.net).forEach(s => {
+  const name = document.createElement("div"); name.className = "name"; name.textContent = s.name;
+  const btn = document.createElement("button"); btn.type = "button";
+  btn.setAttribute("aria-label", `${s.name}: net ${s.net.toFixed(1)} million dollars a year`);
+  const zeroPct = (-lo) / span * (100 - pad) + pad / 2;
+  const w = Math.abs(s.net) / span * (100 - pad);
+  const bar = document.createElement("div"); bar.className = "bar" + (s.net < 0 ? " neg" : "");
+  bar.style.background = s.net >= 0 ? "var(--blue)" : "var(--red)";
+  bar.style.left = (s.net >= 0 ? zeroPct : zeroPct - w) + "%"; bar.style.width = Math.max(w, .3) + "%";
+  const zero = document.createElement("div"); zero.className = "zero"; zero.style.left = zeroPct + "%";
+  const val = document.createElement("div"); val.className = "val";
+  val.textContent = (s.net >= 0 ? "+" : "−") + Math.abs(s.net).toFixed(1);
+  if (s.net >= 0) val.style.left = `calc(${zeroPct + w}% + 4px)`; else val.style.right = `calc(${100 - zeroPct + w}% + 4px)`;
+  btn.append(zero, bar, val);
+  btn.onmousemove = e => { tip.hidden = false; tip.style.left = Math.min(e.clientX + 14, innerWidth - 270) + "px"; tip.style.top = (e.clientY + 14) + "px";
+    tip.innerHTML = `<b>${s.name}</b><br>Rates $${s.rates.toFixed(1)}m · cost $${s.cost.toFixed(1)}m<br>Net ${s.net >= 0 ? "+" : "−"}$${Math.abs(s.net).toFixed(1)}m · ${s.ratio.toFixed(2)}× · ${s.units.toLocaleString("en-NZ")} units<br>Commercial rates $${s.commercial.toFixed(1)}m`; };
+  btn.onmouseleave = () => { tip.hidden = true; };
+  btn.onclick = () => {
+    bars.querySelectorAll("button.sel").forEach(b => b.classList.remove("sel")); btn.classList.add("sel");
+    const feats = GEO.features.filter(f => f.properties.suburb === s.name);
+    if (feats.length) { map.fitBounds(bbox(feats).pad(.1)); document.getElementById("map").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"center"}); }
+  };
+  bars.append(name, btn);
+});
+</script>

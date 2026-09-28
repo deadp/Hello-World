@@ -244,6 +244,23 @@ commercial centres and the airport pay well above their cost. Most residential l
 less, because under the 3.7× differential commercial ratepayers fund much of the
 residential share.
 
+### Net by suburb and interactive map
+
+![Net by suburb](outputs/figures/fiscal_net_by_suburb.png)
+
+The central city and commercial areas pay far more than they cost: Wellington Central
++$75m, Pipitea +$21m, Te Aro +$18m, Thorndon +$10m and Rongotai +$9m a year. The big
+residential suburbs cost more than they pay: Tawa −$18m, Karori −$12m and Johnsonville
+−$11m ([`fiscal_net_by_suburb.csv`](outputs/tables/fiscal_net_by_suburb.csv)).
+
+[`scripts/fiscal_blocks.py`](scripts/fiscal_blocks.py) rolls the results up to SA1s
+([`outputs/blocks/sa1_fiscal.geojson`](outputs/blocks/sa1_fiscal.geojson)).
+[`scripts/build_web_map.py`](scripts/build_web_map.py) builds an interactive page
+([`outputs/web/who_pays_wellington.html`](outputs/web/who_pays_wellington.html)) with a
+map by SA1. It switches between net per hectare (rates-funded or full cost), rates and
+cost per hectare, local infrastructure per home, land value per m², and the change under
+land value rating. Clicking a suburb in the chart zooms the map to it.
+
 **Caveats**
 - The cost split is a model, not the council's cost accounting.
   - Local vs trunk shares use length weights (trunk 2.5×, arterials 2×). Pipe cost
@@ -327,6 +344,8 @@ python scripts/blocks.py          # outputs/blocks/*.geojson, outputs/tables/blo
 python scripts/fetch_networks.py  # roads, three-waters pipes, downtown levy area
 python scripts/network_frontage.py
 python scripts/fiscal.py          # outputs/tables/fiscal_*.csv, outputs/figures/fiscal_*.png
+python scripts/fiscal_blocks.py   # SA1 GeoJSON, net by suburb table + chart
+python scripts/build_web_map.py   # outputs/web/who_pays_wellington.html
 ```
 
 ## Possible next steps
