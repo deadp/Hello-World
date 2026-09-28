@@ -23,19 +23,26 @@ def main():
         f["properties"] = {k: (None if isinstance(v, float) and v != v else v) for k, v in f["properties"].items()}
     sub = pd.read_csv(ROOT / "outputs" / "tables" / "fiscal_net_by_suburb.csv", index_col=0)
     suburbs = [dict(name=n, units=int(r["units"]), rates=r["rates_$m"], cost=r["cost_$m"], net=r["net_$m"],
-                    ratio=r["ratio"], commercial=r["commercial_rates_$m"]) for n, r in sub.iterrows()]
-    t = pd.read_csv(ROOT / "outputs" / "tables" / "fiscal_by_property_type.csv", index_col=0)
-    d = pd.read_csv(ROOT / "outputs" / "tables" / "fiscal_residential_by_density.csv", index_col=0)
-    u = pd.read_parquet(ROOT / "data" / "processed" / "fiscal_units.parquet", columns=["rates", "cost_A", "cost_B"])
+                    ratio=r["ratio"], commercial=r["commercial_rates_$m"], net_v1=r["net_v1_$m"],
+                    lo=r["net_lo_$m"], hi=r["net_hi_$m"]) for n, r in sub.iterrows()]
+    tables = ROOT / "outputs" / "tables"
+    t = pd.read_csv(tables / "fiscal_v2_by_property_type.csv", index_col=0)
+    loc = pd.read_csv(tables / "fiscal_v2_local_cost_by_rule.csv", index_col=[0, 1]).loc["homes_by_density"]
+    u = pd.read_parquet(ROOT / "data" / "processed" / "fiscal_units_v2.parquet",
+                        columns=["rates", "cost_A_v2", "cost_B_v2"])
+
+    def ratios(ptype):
+        r = t.loc[ptype]
+        return dict(v2=float(r["ratio_A_v2"]), v1=float(r["ratio_A_v1"]), lo=float(r["v2_range_low"]),
+                    hi=float(r["v2_range_high"]))
+
     totals = dict(
-        units=len(u), rates_m=u["rates"].sum() / 1e6, cost_m=u["cost_A"].sum() / 1e6,
-        cost_full_m=u["cost_B"].sum() / 1e6, gap_m=(u["cost_B"].sum() - u["rates"].sum()) / 1e6,
-        commercial_ratio=float(t.loc["Commercial", "revenue_to_cost_A"]),
-        house_ratio=float(t.loc["House", "revenue_to_cost_A"]),
-        apt_ratio=float(t.loc["Apartment / unit / flat", "revenue_to_cost_A"]),
-        vacant_ratio=float(t.loc["Residential vacant land", "revenue_to_cost_A"]),
-        local_low=float(d["local_network_cost_A_per_unit"].iloc[0]),
-        local_high=float(d["local_network_cost_A_per_unit"].iloc[-1]),
+        units=len(u), rates_m=u["rates"].sum() / 1e6, cost_m=u["cost_A_v2"].sum() / 1e6,
+        cost_full_m=u["cost_B_v2"].sum() / 1e6, gap_m=(u["cost_B_v2"].sum() - u["rates"].sum()) / 1e6,
+        commercial=ratios("Commercial"), house=ratios("House"), apt=ratios("Apartment / unit / flat"),
+        vacant=ratios("Residential vacant land"),
+        local_low=float(loc["SA1 pool by lot width (v2)"].iloc[0]),
+        local_high=float(loc["SA1 pool by lot width (v2)"].iloc[-1]),
     )
     css = requests.get(LEAFLET_CSS, timeout=60).text
     html = TEMPLATE.read_text()

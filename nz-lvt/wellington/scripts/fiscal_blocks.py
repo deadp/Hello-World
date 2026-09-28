@@ -1,6 +1,10 @@
 """Roll the fiscal (rates vs cost of service) results up to SA1s and suburbs.
 
-Inputs: data/processed/fiscal_units.parquet (fiscal.py), units.parquet and
+Uses the v2 cost model (fiscal_v2.py: calibrated asset weights, SA1-pooled local network,
+demand-based sharing), with v1 (fiscal.py) kept for comparison and the range of rates/cost
+ratios across the v2 variants.
+
+Inputs: data/processed/fiscal_units.parquet (fiscal.py), fiscal_units_v2.parquet, units.parquet and
 results.parquet (land value rating scenario), data/raw/sa1.geojson + sa1_census2023.geojson.
 
 Outputs
@@ -21,6 +25,7 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 from figures import AXIS, INK, INK2, title  # noqa: E402
+from fiscal_v2 import VARIANTS  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 PROC = ROOT / "data" / "processed"
@@ -33,6 +38,12 @@ BLUE, RED = "#2a78d6", "#e34948"
 
 def load():
     f = pd.read_parquet(PROC / "fiscal_units.parquet")
+    v2 = pd.read_parquet(PROC / "fiscal_units_v2.parquet")
+    var = [f"cost_A_{n}" for n in VARIANTS]
+    f = f.rename(columns={"cost_A": "cost_A_v1", "cost_B": "cost_B_v1", "local_network_A": "local_v1"})
+    f = f.merge(v2[var + ["cost_B_v2", "local_A_v2", "residents", "workers"]], left_on="ValuationID",
+                right_index=True, how="left")
+    f["cost_A"], f["cost_B"], f["local_network_A"] = f["cost_A_v2"], f["cost_B_v2"], f["local_A_v2"]
     geo = gpd.read_parquet(PROC / "units.parquet")[["ValuationID", "geometry"]]
     lv = pd.read_parquet(PROC / "results.parquet", columns=["ValuationID", "rates_cv_3.7", "rates_lv_3.7"])
     f = f.merge(lv, on="ValuationID", how="left")
@@ -62,6 +73,9 @@ def sa1_summary(f):
         "cost_a": g["cost_A"].sum(),
         "cost_b": g["cost_B"].sum(),
         "local_net": g["local_network_A"].sum(),
+        "cost_v1": g["cost_A_v1"].sum(),
+        "workers": g["workers"].sum(),
+        **{f"var_{n}": g[f"cost_A_{n}"].sum() for n in VARIANTS},
         "gr_cv": g["rates_cv_3.7"].sum(),
         "gr_lv": g["rates_lv_3.7"].sum(),
     })
@@ -87,6 +101,12 @@ def sa1_summary(f):
     out["ratio"] = (s["rates"] / s["cost_a"]).round(2)
     out["lv_m2"] = (s["land_value"] / s["land_m2"]).round(0)
     out["local_home"] = s["local_net_per_home"].round(0)
+    out["workers"] = s["workers"].round(0)
+    out["people_ha"] = ((s["residents"].fillna(0) + s["workers"]) / ha).round(0)
+    out["net_v1"] = (s["rates"] - s["cost_v1"]).round(0)
+    out["net_v1_ha"] = ((s["rates"] - s["cost_v1"]) / ha).round(0)
+    ratios = pd.concat([s["rates"] / s[f"var_{n}"] for n in VARIANTS], axis=1)
+    out["ratio_lo"], out["ratio_hi"] = ratios.min(axis=1).round(2), ratios.max(axis=1).round(2)
     out["lvr_change_pct"] = ((s["gr_lv"] / s["gr_cv"] - 1) * 100).round(1)
     shapes = sa1.set_index("SA12025_V1_00")[["geometry"]].join(out, how="inner")
     shapes.index.name = "sa1"
@@ -104,12 +124,18 @@ def suburb_summary(f):
         "rates_$m": g["rates"].sum() / 1e6,
         "cost_$m": g["cost_A"].sum() / 1e6,
         "cost_full_$m": g["cost_B"].sum() / 1e6,
+        "cost_v1_$m": g["cost_A_v1"].sum() / 1e6,
+        **{f"var_{n}": g[f"cost_A_{n}"].sum() / 1e6 for n in VARIANTS},
         "commercial_rates_$m": f[f["category"] == "Commercial"].groupby("Suburb")["rates"].sum().reindex(
             g.size().index).fillna(0) / 1e6,
     })
     s["net_$m"] = s["rates_$m"] - s["cost_$m"]
     s["net_full_$m"] = s["rates_$m"] - s["cost_full_$m"]
     s["ratio"] = s["rates_$m"] / s["cost_$m"]
+    s["net_v1_$m"] = s["rates_$m"] - s["cost_v1_$m"]
+    nets = pd.concat([s["rates_$m"] - s[f"var_{n}"] for n in VARIANTS], axis=1)
+    s["net_lo_$m"], s["net_hi_$m"] = nets.min(axis=1), nets.max(axis=1)
+    s = s.drop(columns=[f"var_{n}" for n in VARIANTS])
     s = s[s["units"] >= 50].sort_values("net_$m")
     s.to_csv(TABLES / "fiscal_net_by_suburb.csv", float_format="%.3f")
     return s
@@ -120,9 +146,12 @@ def fig_net(s):
     y = np.arange(len(s))
     v = s["net_$m"].values
     ax.barh(y, v, color=np.where(v >= 0, BLUE, RED), height=0.72)
+    ax.errorbar(v, y, xerr=[v - s["net_lo_$m"].values, s["net_hi_$m"].values - v], fmt="none", ecolor=INK,
+                elinewidth=0.8, capsize=2)
     ax.axvline(0, color=AXIS, lw=1)
     for yy, val in zip(y, v):
-        ax.text(val + (1.5 if val >= 0 else -1.5), yy, f"{val:+.1f}", va="center",
+        edge = s["net_hi_$m"].iat[int(yy)] if val >= 0 else s["net_lo_$m"].iat[int(yy)]
+        ax.text(edge + (1.2 if val >= 0 else -1.2), yy, f"{val:+.1f}", va="center",
                 ha="left" if val >= 0 else "right", fontsize=7.5, color=INK2)
     ax.set_yticks(y, s.index, fontsize=8)
     ax.set_ylim(-0.7, len(s) - 0.3)
@@ -132,7 +161,8 @@ def fig_net(s):
     lo, hi = v.min(), v.max()
     ax.set_xlim(lo - 12, hi + 14)
     title(ax, "Wellington City: which suburbs pay more than they cost?",
-          "Blue pays more than its rates-funded cost, red less. Suburbs with 50+ rating units.")
+          "Blue pays more than its rates-funded cost, red less (cost model v2; whiskers: range\n"
+          "across model variants). Suburbs with 50+ rating units.")
     fig.tight_layout()
     fig.savefig(FIGS / "fiscal_net_by_suburb.png", dpi=160)
     plt.close(fig)

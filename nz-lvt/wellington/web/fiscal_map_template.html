@@ -27,7 +27,8 @@
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);margin:0}
-.wrap{max-width:1280px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:grid;gap:28px}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:20px;padding-block:24px 48px;display:grid;grid-template-columns:minmax(0,1fr);gap:28px}
+.wrap>*{min-width:0}
 header{display:grid;gap:14px}
 .eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 h1{font-weight:800;font-size:clamp(28px,4vw,42px);line-height:1.08;margin:0;letter-spacing:-.01em;text-wrap:balance}
@@ -75,6 +76,17 @@ section>p{margin:0 0 14px;color:var(--ink2);max-width:75ch}
 .bar.neg{border-radius:3px 0 0 3px}
 .bars .zero{position:absolute;top:-2px;bottom:-2px;width:1px;background:var(--muted)}
 .val{position:absolute;top:0;font:11px/17px var(--mono);color:var(--ink2);white-space:nowrap}
+.rng{position:absolute;top:8px;height:1px;background:var(--ink);opacity:.55}
+.rng::before,.rng::after{content:"";position:absolute;top:-3px;width:1px;height:7px;background:var(--ink)}
+.rng::before{left:0}.rng::after{right:0}
+.v1{position:absolute;top:4px;width:7px;height:7px;margin-left:-3.5px;border:1.5px solid var(--ink);background:var(--surface);transform:rotate(45deg)}
+.keyrow{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12.5px;color:var(--ink2);margin:0 0 10px}
+.keyrow span{display:inline-flex;align-items:center;gap:6px}
+.keyrow .kr{position:relative;display:inline-block;width:22px;height:9px}
+.keyrow .kr .rng{top:4px;left:0;right:0}
+.keyrow .kd{position:relative;display:inline-block;width:10px;height:10px}
+.keyrow .kd .v1{top:1px;left:5px}
+.version{font:500 12px var(--mono);color:var(--muted)}
 .tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font:12.5px/1.45 var(--sans);padding:8px 10px;border-radius:5px;max-width:260px;z-index:1000;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 .tip b{font-weight:600}
 .method{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;color:var(--ink2);font-size:13.5px}
@@ -86,13 +98,14 @@ footer{color:var(--muted);font-size:12.5px}
 
 <div class="wrap">
   <header>
-    <div class="eyebrow">Wellington City · rates vs cost of service · 2025/26</div>
+    <div class="eyebrow">Wellington City · rates vs cost of service · 2025/26 · cost model v2</div>
     <h1>Who pays Wellington's bills, and who costs more than they pay?</h1>
-    <p class="lede">Each area's estimated rates bill set against what the council spends to serve it: the local roads and pipes along its streets, a share of trunk networks and treatment, and a share of everything else rates fund. Built from the council's own valuation roll, rates resolution, activity budgets and network GIS, following Urban3's method. Figures exclude GST.</p>
+    <p class="lede">Each area's estimated rates bill set against what the council spends to serve it: the local roads and pipes its neighbourhood needs, a share of trunk networks and treatment based on the people who live and work there, and a share of everything else rates fund. Built from the council's valuation roll, rates resolution, activity budgets, asset valuation and network GIS, plus census residents and Stats NZ job counts, following Urban3's method. Figures exclude GST.</p>
     <div class="facts">
-      <div class="fact"><b id="f1"></b><span>what commercial property pays in rates for every dollar it costs to serve</span></div>
+      <div class="fact"><b id="f1"></b><span id="f1s">what commercial property pays in rates for every dollar it costs to serve</span></div>
       <div class="fact"><b id="f2"></b><span>a year of full cost (incl. depreciation) that current rates don't cover</span></div>
       <div class="fact"><b id="f3"></b><span>yearly local roads and pipes per home: under 5 homes/ha vs 150+ homes/ha</span></div>
+      <div class="fact"><b id="f4"></b><span id="f4s">what a typical house pays for every dollar it costs; every model variant lands in the same place</span></div>
     </div>
   </header>
 
@@ -114,7 +127,8 @@ footer{color:var(--muted);font-size:12.5px}
 
   <section>
     <h2>Net by suburb</h2>
-    <p>Rates paid minus rates-funded cost of service, $ million a year. Suburbs with at least 50 rating units. Commercial areas pay far more than they cost because commercial property carries a 3.7× general-rate differential; large residential suburbs cost more than they pay.</p>
+    <p>Rates paid minus rates-funded cost of service, $ million a year. Suburbs with at least 50 rating units. Commercial areas pay more than they cost because commercial property carries a 3.7× general-rate differential; large low-density suburbs cost more than they pay, with Tawa furthest behind.</p>
+    <div class="keyrow"><span><span class="kr"><span class="rng"></span></span>range across model variants</span><span><span class="kd"><span class="v1"></span></span>first model (v1: frontage, equal shares per property)</span></div>
     <div class="chartbox"><div class="bars" id="bars"></div></div>
   </section>
 
@@ -122,12 +136,13 @@ footer{color:var(--muted);font-size:12.5px}
     <h2>How it's calculated</h2>
     <div class="method">
       <div><h3>Rates</h3><p>Each rating unit's 2025/26 bill from the rates resolution: general rate on capital value (commercial 3.7× residential), water, sewerage, stormwater, sector rates and the downtown levy. Modelled total $611.8m against the actual $627.7m.</p></div>
-      <div><h3>Local network</h3><p>709 km of council roads and about 2,700 km of council pipes from the council's GIS. Local streets and pipes up to 300 mm are charged to the properties along each side, by frontage. Bigger pipes cost more per metre.</p></div>
-      <div><h3>Shared costs</h3><p>Trunk mains, treatment, arterial roads and every other rates-funded service (parks, libraries, governance) are shared equally per rating unit; trunk stormwater by land area. Sharing by capital value instead narrows but doesn't close the commercial–residential gap.</p></div>
-      <div><h3>Two cost views</h3><p><b>Rates-funded</b> spreads what rates pay for today, so the city nets to zero. <b>Full cost</b> adds unfunded depreciation (mostly three waters), $694m in total, about $82m more than rates raise.</p></div>
+      <div><h3>Local network</h3><p>709 km of council roads and about 2,700 km of council pipes. Each pipe is costed from its diameter, material and condition, calibrated to the council's $7.9bn three-waters valuation after setting aside reservoirs, pump stations and tunnels. Water connections are traced to the homes they serve. Each neighbourhood's (SA1) local roads and pipes are pooled and split by lot width.</p></div>
+      <div><h3>Shared costs</h3><p>Trunk mains and treatment are shared by residents plus 0.35× workers, arterial roads and other transport by residents plus 0.8× workers, trunk stormwater by roof and paved area, and parks, libraries and other services mostly by people (82%) with the rest per property. Residents come from the 2023 census; workers from Stats NZ 2024 job counts spread over floor area.</p></div>
+      <div><h3>Two cost views</h3><p><b>Rates-funded</b> spreads what rates pay for today, so the city nets to zero. <b>Full cost</b> adds unfunded depreciation (mostly three waters), about $82m a year more than rates raise.</p></div>
+      <div><h3>How sure is this?</h3><p>Nine variants change the sharing rule (own frontage, lot area, per property), the value of non-pipe assets, the cost of big pipes, how much a worker counts, and how much of other services follow people. Ranges are shown in the area panel and the suburb chart. Commercial and downtown results are the most sensitive; houses and outer suburbs barely move.</p></div>
     </div>
   </section>
-  <footer>Sources: Wellington City Council valuation roll (2024 revaluation), 2025/26 rates resolution, LTP 2024-34 Amendment activity statements, council GIS (roads, three-waters pipes), Stats NZ SA1 2025 and 2023 Census. Residential vs commercial status is estimated from zoning and property descriptions. A model, not the council's cost accounts.</footer>
+  <footer>Sources: Wellington City Council valuation roll (2024 revaluation), 2025/26 rates resolution, LTP 2024-34 Amendment activity statements, Annual Report 2024/25 and Infrastructure Strategy (asset values), council GIS (roads, three-waters pipes, building footprints), Stats NZ SA1 2025, 2023 Census and 2024 business employee counts. Residential vs commercial status is estimated from zoning and property descriptions. A model, not the council's cost accounts.</footer>
 </div>
 <div class="tip" id="tip" hidden></div>
 
@@ -142,7 +157,11 @@ const fmtK = v => { const a = Math.abs(v); const s = v < 0 ? "−" : "+";
   return a >= 1e6 ? s + "$" + (a/1e6).toFixed(1) + "m" : a >= 1e3 ? s + "$" + (a/1e3).toFixed(0) + "k" : s + "$" + a.toFixed(0); };
 const fmtN = v => v == null || isNaN(v) ? "–" : Math.round(v).toLocaleString("en-NZ");
 
-document.getElementById("f1").textContent = TOTALS.commercial_ratio.toFixed(1) + "×";
+const R = TOTALS.commercial, H = TOTALS.house;
+document.getElementById("f1").textContent = R.v2.toFixed(1) + "×";
+document.getElementById("f1s").textContent = `what commercial property pays in rates for every dollar it costs to serve (range ${R.lo.toFixed(1)}–${R.hi.toFixed(1)}×; the first model said ${R.v1.toFixed(1)}×)`;
+document.getElementById("f4").textContent = H.v2.toFixed(2) + "×";
+document.getElementById("f4s").textContent = `what a house pays for every dollar it costs (range ${H.lo.toFixed(2)}–${H.hi.toFixed(2)}×): the gap is the local network per home, not how costs are shared`;
 document.getElementById("f2").textContent = "$" + TOTALS.gap_m.toFixed(0) + "m";
 document.getElementById("f3").textContent = "$" + fmtN(TOTALS.local_low) + " vs $" + fmtN(TOTALS.local_high);
 
@@ -158,6 +177,9 @@ const METRICS = {
   net_full_ha: {label:"Net per ha (full cost)", type:"div", breaks:[-50000,-15000,-3000,3000,15000,50000],
     labels:["< −$50k","−$50k to −15k","−$15k to −3k","±$3k","+$3k to 15k","+$15k to 50k","> +$50k"],
     note:"As above, but cost includes depreciation that rates don't currently fund (mostly three waters), so more of the city is red."},
+  net_v1_ha: {label:"Net per ha (first model)", type:"div", breaks:[-50000,-15000,-3000,3000,15000,50000],
+    labels:["< −$50k","−$50k to −15k","−$15k to −3k","±$3k","+$3k to 15k","+$15k to 50k","> +$50k"],
+    note:"The first model (v1) for comparison: local network by each lot's own frontage, everything else shared equally per property. It made commercial areas look far more profitable and dense apartments far more costly."},
   rates_ha: {label:"Rates per hectare", type:"blue", breaks:[5000,20000,40000,80000,160000,400000],
     labels:["< $5k","$5k–20k","$20k–40k","$40k–80k","$80k–160k","$160k–400k","> $400k"],
     note:"Rates paid per hectare of private land per year: Urban3's value-per-acre measure, in rates."},
@@ -166,7 +188,10 @@ const METRICS = {
     note:"Rates-funded cost of service per hectare of private land per year."},
   local_home: {label:"Local infrastructure per home", type:"orange", breaks:[250,750,1250,2000,3000,5000],
     labels:["< $250","$250–750","$750–1,250","$1,250–2,000","$2,000–3,000","$3,000–5,000","> $5,000"],
-    note:"Average yearly cost of the local roads and pipes along each home's frontage. Falls steeply with density."},
+    note:"Average yearly cost per home of the neighbourhood's local roads and pipes (pooled by SA1, split by lot width). Falls steeply with density."},
+  people_ha: {label:"People per hectare", type:"blue", breaks:[20,40,60,100,200,500],
+    labels:["< 20","20–40","40–60","60–100","100–200","200–500","> 500"],
+    note:"Residents (2023 census) plus workers (2024 job counts) per hectare of private land. These people drive the shared costs in this model."},
   lv_m2: {label:"Land value per m²", type:"blue", breaks:[100,400,800,1200,2000,4000],
     labels:["< $100","$100–400","$400–800","$800–1.2k","$1.2k–2k","$2k–4k","> $4k"],
     note:"Rateable land value per square metre of private land (2024 revaluation)."},
@@ -216,13 +241,14 @@ function hover(f, l) {
   const p = f.properties;
   dTitle.textContent = p.suburb || "Wellington City";
   dSub.textContent = "SA1 " + p.sa1;
-  dPill.innerHTML = pill(p.net, p.ratio);
+  dPill.innerHTML = pill(p.net, p.ratio) + (p.ratio_lo != null ? `<div class="version" style="margin-top:6px">range across variants ${p.ratio_lo.toFixed(2)}–${p.ratio_hi.toFixed(2)}×</div>` : "");
   dList.innerHTML = [
-    row("Rating units", fmtN(p.units)), row("Residents (2023)", fmtN(p.residents)),
+    row("Rating units", fmtN(p.units)), row("Residents (2023)", fmtN(p.residents)), row("Workers (est.)", fmtN(p.workers)),
     row("Homes per hectare", p.homes_per_ha == null ? "–" : p.homes_per_ha.toFixed(1)),
     '<div class="sep"></div>',
     row("Rates paid", fmt$(p.rates)), row("Cost to serve", fmt$(p.cost)), row("Net", fmtK(p.net)),
     row("Full cost (incl. depreciation)", fmt$(p.cost_full)), row("Net at full cost", fmtK(p.net_full)),
+    row("Net, first model (v1)", fmtK(p.net_v1)),
     '<div class="sep"></div>',
     row("Rates per ha", fmt$(p.rates_ha)), row("Net per ha", fmtK(p.net_ha)),
     row("Local roads + pipes per home", p.local_home == null ? "–" : fmt$(p.local_home)),
@@ -239,10 +265,11 @@ function showTotals() {
     row("Rates-funded cost", "$" + TOTALS.cost_m.toFixed(1) + "m"),
     row("Full cost", "$" + TOTALS.cost_full_m.toFixed(1) + "m"),
     '<div class="sep"></div>',
-    row("Commercial: rates ÷ cost", TOTALS.commercial_ratio.toFixed(2) + "×"),
-    row("Houses: rates ÷ cost", TOTALS.house_ratio.toFixed(2) + "×"),
-    row("Apartments: rates ÷ cost", TOTALS.apt_ratio.toFixed(2) + "×"),
-    row("Vacant residential land", TOTALS.vacant_ratio.toFixed(2) + "×"),
+    ...[["Commercial", TOTALS.commercial], ["Houses", TOTALS.house], ["Apartments", TOTALS.apt],
+        ["Vacant residential land", TOTALS.vacant]].map(([k, r]) =>
+      row(k + ": rates ÷ cost", `${r.v2.toFixed(2)}× <span style="color:var(--muted)">(${r.lo.toFixed(2)}–${r.hi.toFixed(2)})</span>`)),
+    '<div class="sep"></div>',
+    row("First model: commercial / houses", `${TOTALS.commercial.v1.toFixed(2)}× / ${TOTALS.house.v1.toFixed(2)}×`),
   ].join("");
 }
 showTotals();
@@ -273,7 +300,8 @@ new MutationObserver(() => setMetric(metric)).observe(document.documentElement, 
 // Suburb chart
 const bars = document.getElementById("bars"), tip = document.getElementById("tip");
 const maxAbs = Math.max(...SUBURBS.map(s => Math.abs(s.net)));
-const lo = Math.min(0, ...SUBURBS.map(s => s.net)), hi = Math.max(...SUBURBS.map(s => s.net));
+const lo = Math.min(0, ...SUBURBS.map(s => Math.min(s.net, s.lo, s.net_v1))),
+      hi = Math.max(...SUBURBS.map(s => Math.max(s.net, s.hi, s.net_v1)));
 const pad = 16, span = hi - lo;
 [...SUBURBS].sort((a, b) => b.net - a.net).forEach(s => {
   const name = document.createElement("div"); name.className = "name"; name.textContent = s.name;
@@ -285,12 +313,17 @@ const pad = 16, span = hi - lo;
   bar.style.background = s.net >= 0 ? "var(--blue)" : "var(--red)";
   bar.style.left = (s.net >= 0 ? zeroPct : zeroPct - w) + "%"; bar.style.width = Math.max(w, .3) + "%";
   const zero = document.createElement("div"); zero.className = "zero"; zero.style.left = zeroPct + "%";
+  const pos = x => (x - lo) / span * (100 - pad) + pad / 2;
+  const rng = document.createElement("div"); rng.className = "rng";
+  rng.style.left = pos(s.lo) + "%"; rng.style.width = Math.max(pos(s.hi) - pos(s.lo), .2) + "%";
+  const v1 = document.createElement("div"); v1.className = "v1"; v1.style.left = pos(s.net_v1) + "%";
   const val = document.createElement("div"); val.className = "val";
   val.textContent = (s.net >= 0 ? "+" : "−") + Math.abs(s.net).toFixed(1);
-  if (s.net >= 0) val.style.left = `calc(${zeroPct + w}% + 4px)`; else val.style.right = `calc(${100 - zeroPct + w}% + 4px)`;
-  btn.append(zero, bar, val);
+  const outer = s.net >= 0 ? Math.max(pos(s.hi), pos(s.net_v1), zeroPct + w) : Math.min(pos(s.lo), pos(s.net_v1), zeroPct - w);
+  if (s.net >= 0) val.style.left = `calc(${outer}% + 6px)`; else val.style.right = `calc(${100 - outer}% + 6px)`;
+  btn.append(zero, bar, rng, v1, val);
   btn.onmousemove = e => { tip.hidden = false; tip.style.left = Math.min(e.clientX + 14, innerWidth - 270) + "px"; tip.style.top = (e.clientY + 14) + "px";
-    tip.innerHTML = `<b>${s.name}</b><br>Rates $${s.rates.toFixed(1)}m · cost $${s.cost.toFixed(1)}m<br>Net ${s.net >= 0 ? "+" : "−"}$${Math.abs(s.net).toFixed(1)}m · ${s.ratio.toFixed(2)}× · ${s.units.toLocaleString("en-NZ")} units<br>Commercial rates $${s.commercial.toFixed(1)}m`; };
+    tip.innerHTML = `<b>${s.name}</b><br>Rates $${s.rates.toFixed(1)}m · cost $${s.cost.toFixed(1)}m<br>Net ${s.net >= 0 ? "+" : "−"}$${Math.abs(s.net).toFixed(1)}m · ${s.ratio.toFixed(2)}× · ${s.units.toLocaleString("en-NZ")} units<br>Range across variants ${s.lo >= 0 ? "+" : "−"}$${Math.abs(s.lo).toFixed(1)}m to ${s.hi >= 0 ? "+" : "−"}$${Math.abs(s.hi).toFixed(1)}m<br>First model: ${s.net_v1 >= 0 ? "+" : "−"}$${Math.abs(s.net_v1).toFixed(1)}m<br>Commercial rates $${s.commercial.toFixed(1)}m`; };
   btn.onmouseleave = () => { tip.hidden = true; };
   btn.onclick = () => {
     bars.querySelectorAll("button.sel").forEach(b => b.classList.remove("sel")); btn.classList.add("sel");
