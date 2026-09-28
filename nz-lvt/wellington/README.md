@@ -472,7 +472,9 @@ the interactive map `outputs/web/wellington_cycle_gaps.html` and the static map
    - workplaces by estimated workers (SA2 job counts over floor area, from `fiscal_v2.py`);
    - education trips at OSM schools and universities.
 2. **Network.** OSM streets and paths bikes may use (motorways excluded; unsigned
-   paths and footways excluded unless paved or signed for bikes). Each edge gets:
+   paths and footways excluded unless paved or signed for bikes; ways closed to general
+   traffic but open to bikes, like Te Ara Tupua and the Lambton Quay bus lanes, are
+   kept). Each edge gets:
    - its climb in each direction, from the WCC 1 m LiDAR DEM resampled to 5 m;
    - its existing facility, from OSM plus the council's Strategic Bike Network 2022;
    - its traffic, from council ADT counts and speed limits;
@@ -495,42 +497,43 @@ the interactive map `outputs/web/wellington_cycle_gaps.html` and the static map
   against 2.7% who cycled in 2023 (3.4% of work trips). With e-bikes it is 29%. The hills
   cost Wellington roughly a third of the Dutch-flat potential. E-bikes more than make it
   up.
-- **Where the potential cycling would ride.** 46% on protected routes (including
-  parallel paths such as the Hutt Road and Tawa paths), 22% on quiet streets and 32% on
-  busy unprotected streets.
+- **Where the potential cycling would ride.** 50% on protected routes (including Te Ara
+  Tupua and parallel paths such as the Hutt Road and Tawa paths), 21% on quiet streets and
+  29% on busy unprotected streets.
+- **Te Ara Tupua.** The Ngauranga–Petone path carries up to ~1,300 Go Dutch trips a day,
+  so SH2 beside it is not a gap.
 - **Top 20 gap corridors vs the council's plan.** 17 are already in the 2022 Strategic
-  Bike Network, but 9 of those were staged under Let's Get Wellington Moving, which was
-  wound up in 2024. The CBD links (Willis, Taranaki, The Terrace, Courtenay Place,
-  Victoria Street, Lambton Quay) are mostly ex-LGWM. Three are not in the plan at all:
-  - SH2 Hutt Road between Ngauranga and Petone, which NZTA's Te Ara Tupua path addresses.
-    OSM (May 2026) maps only part of that path.
-  - Boulcott Street (Kelburn/Terrace to the CBD).
+  Bike Network, but 9 of those were staged under Let's Get Wellington Moving, which
+  was wound up in 2024. The CBD links (Willis, Taranaki, The Terrace, Courtenay Place,
+  Lambton Quay, Victoria Street) are mostly ex-LGWM. Three are not in the plan at all:
+  - Boulcott Street (Kelburn/Terrace to the CBD);
+  - Tinakori Road (Thorndon);
   - Takapu Road (Tawa/Grenada North).
 
   Tauhinu Road (Miramar) is 23rd.
 
 | # | Street | Suburbs | Length | Today | Go Dutch | E-bike | Plan |
 |---|---|---|---|---|---|---|---|
-| 1 | Hutt Road (SH) | Ngauranga, Horokiwi, Newlands | 7.5 km | 55 | 667 | 1,465 | Not in plan |
-| 2 | Middleton Road | Glenside, Churton Park, Johnsonville | 4.2 km | 14 | 687 | 1,984 | Planned (WCC) |
-| 3 | Willis Street | Te Aro, Wellington Central, Aro Valley | 1.2 km | 367 | 1,485 | 2,624 | Planned (ex-LGWM) |
-| 4 | Taranaki Street | Te Aro, Mt Cook, Wellington Central | 1.4 km | 235 | 1,120 | 1,867 | Planned (ex-LGWM) |
-| 5 | The Terrace | Wellington Central, Te Aro | 1.6 km | 461 | 967 | 2,120 | Planned (ex-LGWM) |
-| 6 | Courtenay Place | Te Aro | 0.9 km | 338 | 1,043 | 1,725 | Planned (ex-LGWM) |
-| 7 | Broadway | Miramar, Strathmore Park | 1.5 km | 107 | 592 | 1,003 | Planned (WCC) |
-| 8 | Tory Street | Te Aro | 0.8 km | 336 | 1,124 | 1,786 | Planned (WCC) |
-| 9 | Burma Road | Broadmeadows, Khandallah, Johnsonville | 1.5 km | 44 | 581 | 1,369 | Planned (WCC) |
-| 10 | Boulcott Street | Wellington Central, Mt Victoria, Kelburn | 0.6 km | 510 | 1,230 | 2,370 | Not in plan |
-| 11 | Upland Road | Kelburn, Northland | 1.0 km | 149 | 754 | 1,627 | Planned (WCC) |
-| 12 | Victoria Street | Wellington Central, Te Aro | 0.7 km | 266 | 1,032 | 1,724 | Planned (ex-LGWM) |
+| 1 | Middleton Road | Glenside, Churton Park, Johnsonville | 4.2 km | 14 | 695 | 2,015 | Planned (WCC) |
+| 2 | Willis Street | Te Aro, Wellington Central, Aro Valley | 1.2 km | 366 | 1,485 | 2,620 | Planned (ex-LGWM) |
+| 3 | Taranaki Street | Te Aro, Mt Cook, Wellington Central | 1.4 km | 234 | 1,112 | 1,858 | Planned (ex-LGWM) |
+| 4 | The Terrace | Wellington Central, Te Aro | 1.6 km | 462 | 966 | 2,127 | Planned (ex-LGWM) |
+| 5 | Courtenay Place | Te Aro | 0.9 km | 337 | 1,037 | 1,711 | Planned (ex-LGWM) |
+| 6 | Broadway | Miramar, Strathmore Park | 1.5 km | 107 | 592 | 1,003 | Planned (WCC) |
+| 7 | Tory Street | Te Aro | 0.8 km | 336 | 1,126 | 1,789 | Planned (WCC) |
+| 8 | Burma Road | Broadmeadows, Khandallah, Johnsonville | 1.5 km | 44 | 579 | 1,368 | Planned (WCC) |
+| 9 | Boulcott Street | Wellington Central, Mt Victoria, Kelburn | 0.6 km | 509 | 1,228 | 2,368 | Not in plan |
+| 10 | Upland Road | Kelburn, Northland | 1.0 km | 148 | 753 | 1,625 | Planned (WCC) |
+| 11 | Lambton Quay | Wellington Central, Pipitea | 1.1 km | 145 | 659 | 1,121 | Planned (ex-LGWM) |
+| 12 | Victoria Street | Wellington Central, Te Aro | 0.7 km | 266 | 1,031 | 1,722 | Planned (ex-LGWM) |
 | 13 | Riddiford Street | Newtown | 0.6 km | 392 | 1,170 | 2,014 | Planned (WCC) |
-| 14 | Moxham Avenue | Hataitai | 0.6 km | 370 | 1,191 | 2,211 | Planned (ex-LGWM) |
-| 15 | Lambton Quay | Wellington Central, Pipitea | 0.9 km | 154 | 724 | 1,196 | Planned (ex-LGWM) |
-| 16 | Takapu Road | Tawa, Grenada North, Takapu Valley | 1.2 km | 0 | 473 | 1,083 | Not in plan |
-| 17 | Wellington Road (SH) | Hataitai, Kilbirnie | 0.7 km | 215 | 881 | 1,592 | Planned (ex-LGWM) |
+| 14 | Moxham Avenue | Hataitai | 0.6 km | 370 | 1,193 | 2,214 | Planned (ex-LGWM) |
+| 15 | Tinakori Road | Thorndon | 0.8 km | 178 | 780 | 1,819 | Not in plan |
+| 16 | Takapu Road | Tawa, Grenada North, Takapu Valley | 1.2 km | 0 | 474 | 1,085 | Not in plan |
+| 17 | Wellington Road (SH) | Hataitai, Kilbirnie | 0.7 km | 215 | 882 | 1,592 | Planned (ex-LGWM) |
 | 18 | Ruahine Street (SH) | Hataitai | 0.4 km | 428 | 1,376 | 2,530 | Planned (ex-LGWM) |
-| 19 | Raroa Road | Kelburn, Aro Valley | 1.5 km | 37 | 356 | 909 | Planned (WCC) |
-| 20 | Newlands Road | Newlands | 1.4 km | 42 | 357 | 846 | Planned (WCC) |
+| 19 | Raroa Road | Kelburn, Aro Valley | 1.5 km | 40 | 361 | 923 | Planned (WCC) |
+| 20 | Newlands Road | Newlands | 1.4 km | 42 | 356 | 847 | Planned (WCC) |
 
 Trips are per weekday, both directions, averaged along the corridor.
 

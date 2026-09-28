@@ -55,7 +55,10 @@ DEM_EXTENT, DEM_RES = (1742080, 5418960, 1756480, 5443440), 5
 
 def usable(t):
     h = t.get("highway")
-    if t.get("bicycle") in ("no", "dismount", "private") or t.get("access") in ("no", "private"):
+    if t.get("bicycle") in ("no", "dismount", "private"):
+        return False
+    # access=no with bicycle=yes/designated is a bike-and-pedestrian (or bus-and-bike) way.
+    if t.get("access") in ("no", "private") and t.get("bicycle") not in BIKE_OK:
         return False
     if h in ROADS:
         return not (h == "service" and t.get("service") in SERVICE_SKIP)

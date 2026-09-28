@@ -173,7 +173,7 @@ document.getElementById("f2s").textContent = "of that potential cycling would be
 document.getElementById("f3").textContent = S.top20.planned + " of 20";
 document.getElementById("f3s").textContent = `top gap corridors are already in the council's 2022 bike plan (${S.top20.lgwm} of them staged under LGWM, now wound up)`;
 document.getElementById("f4").textContent = S.top20.notplan;
-document.getElementById("f4s").textContent = "top-20 gaps aren't in the plan at all: " + CORR.filter(c => c.plan === "Not in plan").slice(0, 4).map(c => c.street).join(", ");
+document.getElementById("f4s").textContent = "top-20 gaps aren't in the plan at all: " + CORR.filter(c => c.plan === "Not in plan" && c.rank <= 20).map(c => c.street).join(", ");
 
 // Map
 const map = L.map("map", {attributionControl: false, minZoom: 11, maxZoom: 18, preferCanvas: true});
