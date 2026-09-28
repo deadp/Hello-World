@@ -110,10 +110,14 @@ def main():
                            ("trunk", "Trunk + treatment (by demand)"), ("transport", "Arterials + other transport"),
                            ("sector", "Sector levies"), ("other", "Other services (people + per unit)")]:
                 print(f"    {lab:<42}{q['A_' + k]:>10,.0f}")
-            lo = min(q[c] for c in v2.columns if c.startswith("cost_A_") and c != "cost_A_v1")
-            hi = max(q[c] for c in v2.columns if c.startswith("cost_A_") and c != "cost_A_v1")
+            var = [c for c in v2.columns if c.startswith("cost_A_") and c not in ("cost_A_v1", "cost_A_v2a")]
+            lo, hi = min(q[c] for c in var), max(q[c] for c in var)
             print(f"    {'Total':<42}{q['cost_A_v2']:>10,.0f}   (variants {lo:,.0f}-{hi:,.0f})")
             print(f"  v2 net: {r['rates'] - q['cost_A_v2']:+,.0f}   ratio {r['rates'] / q['cost_A_v2']:.2f}")
+            rules = {"v2": "SA1 pool by lot width", "rule_frontage": "own frontage", "rule_area": "SA1 pool by lot area",
+                     "rule_per_home": "SA1 pool per unit", "v2a": "first v2 (frontage, uncalibrated)"}
+            print("  Local roads + pipes under each rule: " + "; ".join(
+                f"{lab} ${q['local_A_' + k]:,.0f}" for k, lab in rules.items()))
 
 
 if __name__ == "__main__":

@@ -138,6 +138,8 @@ def main():
         p["w"], p["rc"] = cost_weights(p)
         local = p["Pipe_Type"].isin(LOCAL_TYPES) & (p["dia"] <= LOCAL_MAX_D)
         totals[f"{net}_rc_inventory_m"] = float(p["rc"].sum() / 1e6)
+        totals[f"{net}_dep_inventory_m"] = float((p["rc"] / life(p["Material"])).sum() / 1e6)
+        totals[f"{net}_w_inventory"] = float(p["w"].sum())
         totals[f"{net}_trunk_w"] = float(p.loc[~local, "w"].sum())
         loc = p[local].copy()
         loc["road"] = in_road(loc, road)

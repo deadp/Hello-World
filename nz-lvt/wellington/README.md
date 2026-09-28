@@ -315,22 +315,23 @@ costs split per property / split by value.
   "household" each for shared services. That is why the capital-value alternative is
   shown.
 
-### Cost model v2: asset-based networks and demand-based sharing
+### Cost model v2: asset-based, calibrated, demand-based sharing
 
 This version uses only public data (`network_v2.py`, `fiscal_v2.py`). The revenue side and
 the activity cost totals are the same as v1. Only the way costs are assigned to
-properties changes.
+properties changes. It was built in two steps: v2a (the first four rows below), then
+v2 (calibration and neighbourhood pooling).
 
 | | v1 | v2 |
 |---|---|---|
 | Pipe cost | Length × a diameter factor (1.0 / 1.3 / 1.7) | Replacement cost (diameter unit rate) ÷ life (by material) × condition grade (0.8–1.5) |
-| Local vs trunk | Trunk weighted 2.5× per km | Each pipe's own weight |
 | Water mains | Frontage | 31,800 service connections traced to their main and property; each main is split among the properties connected to it |
-| Pipes crossing private land | Charged to the lot they cross | Neighbourhood pool, split over the rating units in the SA1 |
 | Arterial roads | Arterials (2×) all shared; fronting lots pay nothing | Fronting lots pay the local-street equivalent. Width and traffic (category weight × ADT) above that is citywide |
 | Trunk, treatment, other transport | Equal per rating unit | Person-equivalents: residents + 0.35 × workers (water, wastewater); trips: residents + 0.8 × workers (transport) |
 | Stormwater trunk | Land area | Impervious area: roof + 20% (residential) or 60% (commercial) of the rest of the lot |
 | Parks, libraries, community, governance… | Equal per rating unit | 81.6% by people (residents + 0.1 × workers), 18.4% per rating unit |
+| Local vs trunk | Trunk weighted 2.5× per km | Each pipe's own weight, **calibrated to the council's asset valuation** (below) |
+| Sharing local cost | Each lot's own frontage | **Pooled by SA1, split by lot width** (√area) |
 
 Demand comes from the 2023 census:
 - **Residents:** SA1 usually resident population, split over the homes in each SA1.
@@ -340,71 +341,120 @@ Demand comes from the 2023 census:
   storeys = height ÷ 3.3 m. This gives 135k jobs on rateable property; jobs on
   non-rateable land are left out.
 
-**Results (rates-funded view A; ratio = rates ÷ cost; range across the variants in brackets):**
+**Calibration to council costs.** Each network's total is already the council's
+activity cost, so scaling all pipes up by the same factor would change nothing. What
+matters is the split between local pipes and everything else.
+- **Replacement cost.** The GIS pipe inventory, priced at generic unit rates, comes to
+  less than half the council's replacement cost (Annual Report 2024/25, Table 36).
+- **Assets that aren't pipes.** Part of the gap is reservoirs, pump stations and
+  tunnels. I priced these from the counts in the Infrastructure Strategy:
+  - 68 reservoirs at $3m / $6m / $10m each (low / central / high);
+  - water pump stations at $1m / $1.5m / $2.5m;
+  - 69 wastewater pump stations at $1.5m / $2.5m / $4m;
+  - 13.7 km of tunnels not in the GIS at $10k / $15k / $25k per metre.
 
-| | v1 | v2 |
-|---|---|---|
-| Commercial | 5.74 | **2.62** (2.00–3.35) |
-| Commercial land, little building | 2.83 | 2.17 (1.78–2.56) |
-| House | 0.72 | 0.72 (0.69–0.76) |
-| Apartment / unit / flat | 0.53 | 0.69 (0.66–0.73) |
-| Residential vacant land | 0.32 | 0.76 (0.65–0.76) |
-| Homes at 150+ dwellings/ha | 0.46 | 0.79 (0.72–0.84) |
-| Tawa (all property; net) | 0.56 (−$18.3m) | 0.60 (−$15.7m) |
+  These count as trunk assets.
+- **Pipes.** The remainder scales the pipe unit rates by k = 2.0 (water), 2.2
+  (wastewater) and 1.5 (stormwater). That is consistent with hillside construction and
+  with the valuation including fittings and laterals.
+- **Depreciation check.** Implied depreciation matches the council's 2025/26 figures
+  reasonably well:
+  - water $29m, against $35m for the whole activity;
+  - wastewater $37m, against $50m including the treatment plants (~$350m of plant);
+  - stormwater $29m, against $23m (the council assumes longer stormwater lives).
+
+  So the published useful lives (40–130 years) are consistent with the weights.
+- **Effect.** Local pipes' share of network cost falls to 70% (water), 66%
+  (wastewater) and 42% (stormwater). About $6m a year of water cost moves from fronting
+  lots into the demand-based trunk pool (`outputs/tables/fiscal_v2_calibration.csv`).
+
+**Frontage vs lot size.** Frontage says how much network a neighbourhood needs (street
+length per home). But which particular lot fronts which pipe is mostly noise: corner
+lots pay double, rear lots on a right-of-way pay nothing, and one lot can pick up a main
+that serves the whole street. v2 therefore:
+1. adds up each SA1's local roads and pipes (frontage + traced connections + pipes
+   crossing private land);
+2. splits that total among its parcels by lot width (√area), since the street length a
+   lot needs grows with its width, not its area;
+3. splits each parcel's share among its units by CV.
+
+Lot area alone would overcharge big, steep hillside lots and parks. The share falling on
+parks and schools is shared citywide. Own frontage, lot area and equal per unit are run
+as variants.
+
+Mean local roads + pipes cost per home, rates-funded
+(`outputs/tables/fiscal_v2_local_cost_by_rule.csv`):
+
+| Homes at… | Own frontage | SA1 pool, lot width (v2) | SA1 pool, lot area | SA1 pool, per unit |
+|---|---|---|---|---|
+| <5 /ha | $3,831 | $4,426 | $6,462 | $2,586 |
+| 15–30 /ha | $1,555 | $1,507 | $1,226 | $1,598 |
+| 60–150 /ha | $541 | $429 | $326 | $1,092 |
+| 150+ /ha | $129 | $93 | $78 | $467 |
+
+**Results (rates-funded view A; ratio = rates ÷ cost; range across all v2 variants in brackets):**
+
+| | v1 | v2a | v2 |
+|---|---|---|---|
+| Commercial | 5.74 | 2.62 | **2.61** (1.98–3.36) |
+| Commercial land, little building | 2.83 | 2.17 | 2.17 (1.77–2.58) |
+| House | 0.72 | 0.72 | 0.72 (0.69–0.76) |
+| Apartment / unit / flat | 0.54 | 0.69 | 0.69 (0.62–0.74) |
+| Residential vacant land | 0.32 | 0.76 | 0.74 (0.63–0.79) |
+| Homes at <5 dwellings/ha | 0.64 | 0.79 | 0.76 (0.65–0.89) |
+| Homes at 150+ dwellings/ha | 0.46 | 0.79 | 0.79 (0.71–0.85) |
+| Tawa (all property; net) | 0.56 (−$18.3m) | 0.60 | 0.60 (−$15.6m) |
 
 The variants are:
+- sharing by own frontage, lot area, or equally per unit;
+- low or high non-pipe asset values;
+- trunk pipes costing 1.5× more;
 - worker weights halved or doubled;
-- a 60% (not 81.6%) people share of other services;
-- off-road pipes pooled citywide rather than by SA1.
+- a 60% (not 81.6%) people share of other services.
 
-**What changes:**
+The sharing rule matters most for the sparsest homes (0.65 by lot area to 0.89 per
+unit). Worker weights matter most for commercial property.
+
+**What changes from v1:**
 - **Commercial still pays more than it costs, but by 2.6× not 5.7×.** v1 charged an
   office tower as one household for shared services. v2 charges it for the people who
   work there.
-- **Apartments move towards paying their way (0.53 → 0.69).** They average 2.0 residents
+- **Apartments move towards paying their way (0.54 → 0.69).** They average 2.0 residents
   against 2.9 per house, so they use less of the people-based services.
 - **The downtown gap mostly disappears.** Te Aro homes go from −$20m to −$3m, and
   Wellington Central and Pipitea come close to break-even.
-- **Vacant residential land improves (0.32 → 0.76)** because it has no residents. It
+- **Vacant residential land improves (0.32 → 0.74)** because it has no residents. It
   still has pipes and roads out front.
-- **Houses and Tawa hardly move.** Their gap was never about the sharing rule. It is the
-  cost of the local network per household at 15–30 dwellings/ha, plus a general rate
-  on CV that is low relative to that cost. The worst-off suburbs are still the northern
-  ones (Grenada North, Paparangi, Newlands, Kingston, Tawa: 0.51–0.57).
-- **Density gradient.** Among homes, the ratio is now flat at ~0.7 from 5 to 150
-  dwellings/ha, with 0.79 at both ends. Sparse lots carry a lot of network, but they pay
-  more in rates and have fewer people.
+- **Houses and Tawa hardly move under any version or variant.** Their gap was never
+  about the sharing rule or the calibration. It is the cost of the local network per
+  household at 15–30 dwellings/ha, plus a general rate on CV that is low relative to
+  that cost. The worst-off suburbs are still the northern ones (Paparangi, Grenada
+  North, Kingston, Newlands, Tawa: 0.55–0.57).
+- **Calibration and pooling barely move the aggregates, but they move individual
+  properties a lot.** That is expected: they change who within a neighbourhood pays,
+  not how much the neighbourhood costs.
 
-Onslow examples (`python scripts/explain_property.py "Onslow Road" --type House --v2`):
+Onslow examples (`python scripts/explain_property.py "Onslow Road" --v2`):
 
-| Property | v1 cost | v2 cost (range) | Rates |
-|---|---|---|---|
-| 3 Onslow Rd | $6,975 | $5,892 ($5.6–6.1k) | $4,344 |
-| 9C Onslow Rd (2,279 m²) | $8,125 | $7,252 ($6.9–7.5k) | $4,213 |
-| 17C Onslow Rd (long right-of-way) | $14,010 | $11,525 ($11.2–11.8k) | $4,256 |
+| Property | Rates | v1 cost | v2 cost (variant range) | Local roads + pipes: own frontage → v2 (SA1 pool by width) |
+|---|---|---|---|---|
+| 3 Onslow Rd (461 m²) | $4,344 | $6,975 | $6,718 ($5.6–7.0k) | $1,076 → $1,923 |
+| 9C Onslow Rd (2,279 m²) | $4,213 | $8,125 | $9,473 ($7.1–9.7k) | $1,875 → $4,276 |
+| 17C Onslow Rd (3,691 m², right-of-way) | $4,256 | $14,010 | $11,021 ($7.5–11.9k) | $5,187 → $5,441 |
 
-The per-property shared charge falls from $5,033 to about $2,800 plus $1,200–2,000 in
-demand-based trunk and treatment.
-
-**Pipe inventory check.** Unit rates × lengths give replacement costs of:
-- water pipes $0.95bn, against the council's $2.4bn for all water assets;
-- wastewater $1.3bn, against $3.2bn for the sewer network (plants are another $0.35bn);
-- stormwater $1.6bn, against $2.4bn.
-
-The council figures include reservoirs, pump stations, treatment plants and service
-lines on private land, and use higher Wellington hillside rates. The gap is in the
-expected direction but large. Only the *relative* weights are used (each network is
-scaled to its activity cost), so the level doesn't matter. The shape (big pipes vs
-small) would, and it is assumed, not calibrated.
+Pooling spreads the Onslow SA1's expensive right-of-way pipes over the neighbourhood.
+Bigger lots then carry more because they are wider, not because they happen to sit on a
+main. The per-property shared charge falls from $5,033 (v1) to about $2,800, plus
+$1,200–2,000 in demand-based trunk and treatment.
 
 **Still not fixable from public data:**
 - actual water consumption (commercial meters);
-- the council's per-asset valuation and renewal plans;
+- the council's per-asset valuation (the calibration uses class totals);
+- road structure costs (retaining walls, bridges) by location;
 - true rating categories;
-- depreciation by asset;
-- where rateable people actually live within unit-title buildings.
+- where people actually live within unit-title buildings.
 
-![Cost model v1 vs v2](outputs/figures/fiscal_v2_vs_v1.png)
+![Cost model versions](outputs/figures/fiscal_v2_vs_v1.png)
 
 ## Data
 
@@ -480,8 +530,8 @@ python scripts/build_web_map.py   # outputs/web/who_pays_wellington.html
 python scripts/lv_alignment.py    # land value rating vs cost-of-service alignment
 python scripts/explain_property.py "Onslow Road" --type House   # line-by-line rates and cost for matching addresses
 python scripts/network_v2.py      # v2: asset-weighted pipes, traced water connections, road reserve test
-python scripts/fiscal_v2.py       # v2: demand-based sharing + variants; outputs/tables/fiscal_v2_*.csv
-python scripts/explain_property.py "Onslow Road" --type House --v2
+python scripts/fiscal_v2.py       # v2: calibration, SA1 pooling, demand-based sharing + variants
+python scripts/explain_property.py "Onslow Road" --type House --v2   # incl. local cost under each sharing rule
 ```
 
 ## Possible next steps
