@@ -456,6 +456,96 @@ $1,200–2,000 in demand-based trunk and treatment.
 
 ![Cost model versions](outputs/figures/fiscal_v2_vs_v1.png)
 
+## Where should new cycle connections go?
+
+`fetch_cycling.py`, `cycle_network.py`, `cycle_model.py`, `cycle_gaps.py` and
+`build_cycle_map.py` implement a Propensity to Cycle Tool (PCT) style analysis. The output is
+the interactive map `outputs/web/wellington_cycle_gaps.html` and the static map
+`outputs/figures/cycle_gaps.png`.
+
+**Method**
+1. **Trips.** 2023 Census main means of travel to work and to education, from SA2 of
+   residence to SA2 of workplace or institution (Stats NZ). This gives 97k work and 47k
+   education commuters with both ends in the study area; people who work or study at home
+   are left out. Where trips start and end within an SA2:
+   - homes are placed by SA1 population;
+   - workplaces by estimated workers (SA2 job counts over floor area, from `fiscal_v2.py`);
+   - education trips at OSM schools and universities.
+2. **Network.** OSM streets and paths bikes may use (motorways excluded; unsigned
+   paths and footways excluded unless paved or signed for bikes). Each edge gets:
+   - its climb in each direction, from the WCC 1 m LiDAR DEM resampled to 5 m;
+   - its existing facility, from OSM plus the council's Strategic Bike Network 2022;
+   - its traffic, from council ADT counts and speed limits;
+   - a simplified level of traffic stress.
+
+   A road counts as protected if a cycleway or shared path runs alongside it.
+3. **Routing.** Directed shortest paths with cost = metres × stress factor + 10 × metres
+   climbed. The stress factor is 1.1 on stress level 3 and 1.25 on level 4, a mild
+   preference that uses parallel paths without long detours. Outbound and return trips are
+   routed separately.
+4. **Uptake.** The PCT Go Dutch commute model (pct R package) gives the chance a trip is
+   cycled from its route length and average gradient. The e-bike scenario adds the PCT's
+   e-bike terms. "Census" routes the people who actually cycled in 2023.
+5. **Gaps.** Street edges with 250+ Go Dutch trips a weekday and stress level 3–4 (over
+   ~2,000 vehicles/day or over 50 km/h) with no protection. Touching gap edges on the same
+   street (within 150 m) form a corridor. Corridors are ranked by potential cycle-km a day.
+
+**Results**
+- **Uptake.** 17% of work and study trips could be cycled in the Go Dutch scenario,
+  against 2.7% who cycled in 2023 (3.4% of work trips). With e-bikes it is 29%. The hills
+  cost Wellington roughly a third of the Dutch-flat potential. E-bikes more than make it
+  up.
+- **Where the potential cycling would ride.** 46% on protected routes (including
+  parallel paths such as the Hutt Road and Tawa paths), 22% on quiet streets and 32% on
+  busy unprotected streets.
+- **Top 20 gap corridors vs the council's plan.** 17 are already in the 2022 Strategic
+  Bike Network, but 9 of those were staged under Let's Get Wellington Moving, which was
+  wound up in 2024. The CBD links (Willis, Taranaki, The Terrace, Courtenay Place,
+  Victoria Street, Lambton Quay) are mostly ex-LGWM. Three are not in the plan at all:
+  - SH2 Hutt Road between Ngauranga and Petone, which NZTA's Te Ara Tupua path addresses.
+    OSM (May 2026) maps only part of that path.
+  - Boulcott Street (Kelburn/Terrace to the CBD).
+  - Takapu Road (Tawa/Grenada North).
+
+  Tauhinu Road (Miramar) is 23rd.
+
+| # | Street | Suburbs | Length | Today | Go Dutch | E-bike | Plan |
+|---|---|---|---|---|---|---|---|
+| 1 | Hutt Road (SH) | Ngauranga, Horokiwi, Newlands | 7.5 km | 55 | 667 | 1,465 | Not in plan |
+| 2 | Middleton Road | Glenside, Churton Park, Johnsonville | 4.2 km | 14 | 687 | 1,984 | Planned (WCC) |
+| 3 | Willis Street | Te Aro, Wellington Central, Aro Valley | 1.2 km | 367 | 1,485 | 2,624 | Planned (ex-LGWM) |
+| 4 | Taranaki Street | Te Aro, Mt Cook, Wellington Central | 1.4 km | 235 | 1,120 | 1,867 | Planned (ex-LGWM) |
+| 5 | The Terrace | Wellington Central, Te Aro | 1.6 km | 461 | 967 | 2,120 | Planned (ex-LGWM) |
+| 6 | Courtenay Place | Te Aro | 0.9 km | 338 | 1,043 | 1,725 | Planned (ex-LGWM) |
+| 7 | Broadway | Miramar, Strathmore Park | 1.5 km | 107 | 592 | 1,003 | Planned (WCC) |
+| 8 | Tory Street | Te Aro | 0.8 km | 336 | 1,124 | 1,786 | Planned (WCC) |
+| 9 | Burma Road | Broadmeadows, Khandallah, Johnsonville | 1.5 km | 44 | 581 | 1,369 | Planned (WCC) |
+| 10 | Boulcott Street | Wellington Central, Mt Victoria, Kelburn | 0.6 km | 510 | 1,230 | 2,370 | Not in plan |
+| 11 | Upland Road | Kelburn, Northland | 1.0 km | 149 | 754 | 1,627 | Planned (WCC) |
+| 12 | Victoria Street | Wellington Central, Te Aro | 0.7 km | 266 | 1,032 | 1,724 | Planned (ex-LGWM) |
+| 13 | Riddiford Street | Newtown | 0.6 km | 392 | 1,170 | 2,014 | Planned (WCC) |
+| 14 | Moxham Avenue | Hataitai | 0.6 km | 370 | 1,191 | 2,211 | Planned (ex-LGWM) |
+| 15 | Lambton Quay | Wellington Central, Pipitea | 0.9 km | 154 | 724 | 1,196 | Planned (ex-LGWM) |
+| 16 | Takapu Road | Tawa, Grenada North, Takapu Valley | 1.2 km | 0 | 473 | 1,083 | Not in plan |
+| 17 | Wellington Road (SH) | Hataitai, Kilbirnie | 0.7 km | 215 | 881 | 1,592 | Planned (ex-LGWM) |
+| 18 | Ruahine Street (SH) | Hataitai | 0.4 km | 428 | 1,376 | 2,530 | Planned (ex-LGWM) |
+| 19 | Raroa Road | Kelburn, Aro Valley | 1.5 km | 37 | 356 | 909 | Planned (WCC) |
+| 20 | Newlands Road | Newlands | 1.4 km | 42 | 357 | 846 | Planned (WCC) |
+
+Trips are per weekday, both directions, averaged along the corridor.
+
+**Limitations**
+- **Only commuting and study trips are included** (about a third of all trips). Shopping,
+  leisure, and parents' school runs are missing, and so is the 2018–2023 shift to working
+  from home.
+- **The uptake model was fitted to English commuting with Dutch benchmarks**, not to
+  Wellington.
+- **Some inputs are coarse or dated.** OSM tagging and the council's 2022 plan layer may
+  lag recent builds or changes (e.g. transitional bike lanes). Traffic stress uses
+  council ADT where matched and defaults for residential streets.
+- **Routing ignores some real-world detail:** turn difficulty, intersections, and wind.
+  The ranking is a long list for engineering assessment, not a design.
+
 ## Data
 
 | Source | What | Notes |
@@ -531,7 +621,12 @@ python scripts/lv_alignment.py    # land value rating vs cost-of-service alignme
 python scripts/explain_property.py "Onslow Road" --type House   # line-by-line rates and cost for matching addresses
 python scripts/network_v2.py      # v2: asset-weighted pipes, traced water connections, road reserve test
 python scripts/fiscal_v2.py       # v2: calibration, SA1 pooling, demand-based sharing + variants
-python scripts/explain_property.py "Onslow Road" --type House --v2   # incl. local cost under each sharing rule
+python scripts/explain_property.py "Onslow Road" --type House --v2
+python scripts/fetch_cycling.py   # OSM streets/paths, WCC LiDAR DEM, bike plan, census travel OD
+python scripts/cycle_network.py   # routable network with hills and traffic stress
+python scripts/cycle_model.py     # PCT Go Dutch / e-bike potential, routed flows
+python scripts/cycle_gaps.py      # gap corridors vs council plan; map data and figure
+python scripts/build_cycle_map.py # outputs/web/wellington_cycle_gaps.html   # incl. local cost under each sharing rule
 ```
 
 ## Possible next steps

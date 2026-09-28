@@ -1,0 +1,52 @@
+"""Build the interactive cycle gap map (outputs/web/wellington_cycle_gaps.html).
+
+Embeds outputs/blocks/cycle_edges.geojson (cycle_gaps.py), the top corridors and headline
+figures into web/cycle_map_template.html, with Leaflet's CSS inlined.
+"""
+
+import json
+from pathlib import Path
+
+import pandas as pd
+import requests
+
+ROOT = Path(__file__).resolve().parents[1]
+TABLES = ROOT / "outputs" / "tables"
+TEMPLATE = ROOT / "web" / "cycle_map_template.html"
+OUT = ROOT / "outputs" / "web" / "wellington_cycle_gaps.html"
+LEAFLET_CSS = "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"
+N_LIST = 30
+
+
+def main():
+    geo = json.loads((ROOT / "outputs" / "blocks" / "cycle_edges.geojson").read_text())
+    for f in geo["features"]:
+        p = f["properties"]
+        f["properties"] = {k: (None if isinstance(v, float) and v != v else v) for k, v in p.items()
+                           if k not in ("gap",)}
+    c = pd.read_csv(TABLES / "cycle_corridors.csv").head(N_LIST)
+    corr = json.loads(c[["rank", "street", "road", "suburbs", "length_m", "census_trips", "godutch_trips",
+                         "ebike_trips", "max_adt", "speed", "painted_share", "plan"]].to_json(orient="records"))
+    sc = pd.read_csv(TABLES / "cycle_scenarios.csv", index_col=0).sum()
+    sm = pd.read_csv(TABLES / "cycle_summary.csv", index_col=0)
+    top = c.head(20)["plan"]
+    summary = dict(
+        scen={k: dict(share=sc[v] / sc["trips"] * 100) for k, v in
+              [("census", "bike"), ("godutch", "godutch"), ("ebike", "ebike")]},
+        km=sm["cycle_km_per_day"].to_dict(), prot=sm["on_protected_%"].to_dict(),
+        quiet=sm["on_quiet_streets_%"].to_dict(), stress=sm["on_high_stress_%"].to_dict(),
+        top20=dict(planned=int(top.str.startswith("Planned").sum() + (top == "Desired only").sum()),
+                   lgwm=int((top == "Planned (ex-LGWM)").sum()), notplan=int((top == "Not in plan").sum())),
+    )
+    html = TEMPLATE.read_text()
+    html = html.replace("/*__LEAFLET_CSS__*/", requests.get(LEAFLET_CSS, timeout=60).text)
+    html = html.replace("__DATA__", json.dumps(geo, separators=(",", ":")))
+    html = html.replace("__CORRIDORS__", json.dumps(corr, separators=(",", ":")))
+    html = html.replace("__SUMMARY__", json.dumps(summary, separators=(",", ":")))
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(html)
+    print(f"wrote {OUT} ({OUT.stat().st_size / 1e6:.1f} MB); top 20 plan: {top.value_counts().to_dict()}")
+
+
+if __name__ == "__main__":
+    main()
