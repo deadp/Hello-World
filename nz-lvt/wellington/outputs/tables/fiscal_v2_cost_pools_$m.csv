@@ -1,0 +1,7 @@
+,A,A,A,A,A,A,B,B,B,B,B,B
+,total,local,offroad,by_demand,by_trips,by_people,total,local,offroad,by_demand,by_trips,by_people
+water,89.9,41.4,1.0,47.5,,,113.0,52.0,1.2,59.7,,
+wastewater,79.6,15.1,10.4,54.2,,,114.8,21.8,14.9,78.1,,
+stormwater,44.0,6.4,5.9,31.7,,,54.4,8.0,7.3,39.2,,
+transport,101.2,36.3,,,64.8,,114.9,41.2,,,73.7,
+other_services,255.2,,,,,208.3,255.2,,,,,208.3

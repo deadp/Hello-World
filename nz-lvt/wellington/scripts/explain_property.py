@@ -1,6 +1,6 @@
 """Break down one or more properties' rates bill and modelled cost of service (fiscal.py).
 
-Usage: python scripts/explain_property.py "Onslow Road" [--type House] [--limit 8]
+Usage: python scripts/explain_property.py "Onslow Road" [--type House] [--limit 8] [--v2]
 Matches FullAddress (case-insensitive substring). Uses the rates-funded cost view (A).
 
 Revenue lines: 2025/26 rates by component (excl. GST).
@@ -47,7 +47,9 @@ def main():
     ap.add_argument("pattern")
     ap.add_argument("--type", default=None)
     ap.add_argument("--limit", type=int, default=8)
+    ap.add_argument("--v2", action="store_true", help="also show the v2 cost model (fiscal_v2.py)")
     a = ap.parse_args()
+    v2 = pd.read_parquet(PROC / "fiscal_units_v2.parquet") if a.v2 else None
 
     fis = pd.read_parquet(PROC / "fiscal_units.parquet").set_index("ValuationID")
     u = gpd.read_parquet(PROC / "units.parquet")
@@ -100,6 +102,18 @@ def main():
             print(f"    {k:<34}{v:>10,.0f}")
         print(f"    {'Total':<34}{r['cost_A']:>10,.0f}")
         print(f"  Net (rates - cost): {r['net_A']:+,.0f}   ratio {r['rates'] / r['cost_A']:.2f}")
+        if v2 is not None and vid in v2.index:
+            q = v2.loc[vid]
+            print(f"  v2 cost to serve ({q['residents']:.1f} residents, {q['workers']:.1f} workers, "
+                  f"{q['impervious']:,.0f} m2 impervious):")
+            for k, lab in [("local", "Local roads + pipes (traced/frontage/SA1)"),
+                           ("trunk", "Trunk + treatment (by demand)"), ("transport", "Arterials + other transport"),
+                           ("sector", "Sector levies"), ("other", "Other services (people + per unit)")]:
+                print(f"    {lab:<42}{q['A_' + k]:>10,.0f}")
+            lo = min(q[c] for c in v2.columns if c.startswith("cost_A_") and c != "cost_A_v1")
+            hi = max(q[c] for c in v2.columns if c.startswith("cost_A_") and c != "cost_A_v1")
+            print(f"    {'Total':<42}{q['cost_A_v2']:>10,.0f}   (variants {lo:,.0f}-{hi:,.0f})")
+            print(f"  v2 net: {r['rates'] - q['cost_A_v2']:+,.0f}   ratio {r['rates'] / q['cost_A_v2']:.2f}")
 
 
 if __name__ == "__main__":
