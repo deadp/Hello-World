@@ -387,6 +387,7 @@ python scripts/fiscal.py          # outputs/tables/fiscal_*.csv, outputs/figures
 python scripts/fiscal_blocks.py   # SA1 GeoJSON, net by suburb table + chart
 python scripts/build_web_map.py   # outputs/web/who_pays_wellington.html
 python scripts/lv_alignment.py    # land value rating vs cost-of-service alignment
+python scripts/explain_property.py "Onslow Road" --type House   # line-by-line rates and cost for matching addresses
 ```
 
 ## Possible next steps
