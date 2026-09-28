@@ -118,6 +118,19 @@ split across several parcels, or unit titles sharing one) and maps land value pe
 Averages per m² are pulled down heavily by large rural parcels. Median urban
 residential land is roughly $400–1,600/m².
 
+## Interactive explorer
+
+[`scripts/build_web.py`](scripts/build_web.py) builds
+[`outputs/web/tax_reset_explorer.html`](outputs/web/tax_reset_explorer.html). It has:
+- a map of every SA2, switchable between net change, Citizen's Income minus extra tax,
+  land tax on homes, land tax on farmland, and land value per home;
+- a detail panel for each neighbourhood;
+- search by suburb or council;
+- a household calculator using the same rules;
+- the area-income decile chart, a sortable council table and the fiscal ledger;
+- a toggle that spreads the unfunded costs evenly: about $11,570 per household, being
+  the $11.9bn shortfall plus the $8.7bn of land tax on rentals and business land.
+
 ## Policy parameters
 
 Parameters are in [`scripts/policy.py`](scripts/policy.py). TOP's own
@@ -196,6 +209,7 @@ python scripts/harvest_land.py    # ~2M rating units from 26 council layers (~10
 python scripts/build_land.py
 python scripts/build_income.py
 python scripts/model_national.py
+python scripts/build_web.py       # outputs/web/tax_reset_explorer.html
 ```
 
 ## What this can and can't tell you

@@ -1,0 +1,441 @@
+<title>Tax Reset Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Libre+Franklin:wght@400;500;600;700;800&display=swap">
+<style>
+/*__LEAFLET_CSS__*/
+:root{
+  --bg:#f3f5f6; --surface:#fdfdfc; --panel:#e9edef; --ink:#0f1d26; --ink2:#4a5761; --muted:#7a8791;
+  --line:#d8dee2; --mapbg:#e4e9ec; --mid:#f0efec; --stroke:rgba(15,29,38,.16); --focus:#2a78d6;
+  --gain:#2a78d6; --tax:#eb6834; --loss:#e34948;
+  --sans:"Libre Franklin",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0d1216; --surface:#151c21; --panel:#1c252b; --ink:#edf2f4; --ink2:#b5c0c7; --muted:#85919a;
+    --line:#27323a; --mapbg:#10171c; --mid:#383835; --stroke:rgba(237,242,244,.14); --focus:#6da7ec;
+    --gain:#3987e5; --tax:#d95926; --loss:#e66767;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0d1216; --surface:#151c21; --panel:#1c252b; --ink:#edf2f4; --ink2:#b5c0c7; --muted:#85919a;
+  --line:#27323a; --mapbg:#10171c; --mid:#383835; --stroke:rgba(237,242,244,.14); --focus:#6da7ec;
+  --gain:#3987e5; --tax:#d95926; --loss:#e66767;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans);margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:20px;padding-block:24px 56px;display:grid;gap:32px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-weight:800;font-size:clamp(28px,4.2vw,44px);line-height:1.06;margin:8px 0 12px;letter-spacing:-.015em;text-wrap:balance;max-width:24ch}
+h2{font-size:22px;margin:0 0 4px;letter-spacing:-.005em}
+h3{font-size:15px;margin:0}
+.lede{max-width:72ch;color:var(--ink2);margin:0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:18px}
+.fact{border-top:2px solid var(--ink);padding-top:10px;display:grid;gap:3px}
+.fact b{font:600 25px/1.1 var(--mono);font-variant-numeric:tabular-nums}
+.fact span{color:var(--ink2);font-size:13.5px}
+.fact.warn b{color:var(--loss)}
+.main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start}
+@media (max-width:940px){.main{grid-template-columns:1fr}}
+.maptools{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:500 13px var(--sans);color:var(--ink2);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.search{display:flex;gap:6px;align-items:center}
+.search input{font:14px var(--sans);padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);width:min(260px,70vw)}
+.mapcol{display:grid;gap:10px}
+#map{height:min(74vh,760px);min-height:440px;border:1px solid var(--line);border-radius:6px;background:var(--mapbg)}
+.leaflet-container{background:var(--mapbg);font:13px var(--sans)}
+.leaflet-control-zoom a{background:var(--surface);color:var(--ink);border-color:var(--line)}
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;font-size:12.5px;color:var(--ink2)}
+.legend .ttl{font-weight:600;color:var(--ink)}
+.sw{display:inline-flex;align-items:center;gap:5px;font:11.5px var(--mono)}
+.sw i{width:14px;height:14px;border-radius:2px;border:1px solid var(--stroke);display:inline-block}
+.note{color:var(--muted);font-size:12.5px;margin:0}
+.toggle{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--ink2);background:var(--panel);border-radius:6px;padding:10px 12px}
+.toggle input{margin-top:3px;accent-color:var(--loss)}
+aside{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:12px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
+aside h2{font-size:19px;margin:0;line-height:1.2}
+.sub{color:var(--muted);font:12px var(--mono);margin-top:-8px}
+.kv{display:grid;grid-template-columns:1fr auto;gap:5px 12px;margin:0}
+.kv dt{color:var(--ink2);font-size:13.5px}
+.kv dd{margin:0;font:500 13.5px var(--mono);text-align:right;font-variant-numeric:tabular-nums}
+.kv .sep{grid-column:1/-1;border-top:1px solid var(--line);margin:3px 0}
+.kv dd.g{color:var(--gain)} .kv dd.t{color:var(--tax)} .kv dd.b{font-weight:600}
+.big{font:600 30px/1 var(--mono);font-variant-numeric:tabular-nums}
+.big.pos{color:var(--gain)} .big.neg{color:var(--loss)}
+.flag{font-size:12px;color:var(--ink2);background:var(--panel);border-radius:4px;padding:6px 8px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:940px){.two{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;display:grid;gap:14px}
+.card>p{margin:0;color:var(--ink2);font-size:14px}
+form.calc{display:grid;gap:12px}
+fieldset{border:1px solid var(--line);border-radius:6px;padding:10px 12px 12px;margin:0;display:grid;gap:8px}
+legend{font-size:13px;font-weight:600;padding:0 4px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media (max-width:480px){.row{grid-template-columns:1fr}}
+label{display:grid;gap:3px;font-size:12.5px;color:var(--ink2)}
+label.inline{display:flex;gap:8px;align-items:center;font-size:13px}
+select{font:13.5px var(--sans)!important}
+input[type=number],select{font:14px var(--mono);padding:6px 8px;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--ink);width:100%}
+.result{display:grid;gap:8px;background:var(--panel);border-radius:6px;padding:14px}
+.result .kv dt{font-size:13px}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{fill:var(--ink2);font:11px var(--mono)}
+.chart .lab{font:12px var(--sans);fill:var(--ink2)}
+.keys{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink2)}
+.keys i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.tablewrap{overflow:auto;max-height:460px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;min-width:560px}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{position:sticky;top:0;background:var(--panel);font-weight:600;font-size:12.5px;color:var(--ink2);cursor:pointer}
+td{font-family:var(--mono);font-variant-numeric:tabular-nums}
+td:first-child{font-family:var(--sans)}
+tr:hover td{background:var(--panel)}
+.chip{font:500 10.5px var(--sans);color:var(--ink2);border:1px solid var(--line);border-radius:999px;padding:1px 6px;margin-left:6px}
+.ledger td,.ledger th{min-width:0}
+.ledger tr.total td{font-weight:600;border-top:2px solid var(--ink)}
+.ledger tr.part td{color:var(--muted);font-size:12.5px}
+.ledger tr.part td:first-child{padding-left:26px}
+.caveats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;font-size:13.5px;color:var(--ink2)}
+.caveats p{margin:4px 0 0}
+footer{color:var(--muted);font-size:12.5px;max-width:110ch}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">New Zealand · The Opportunity Party's 2026 Tax Reset</div>
+    <h1>Land value tax and a Citizen's Income, suburb by suburb</h1>
+    <p class="lede">The average yearly change per household in every neighbourhood (SA2) if TOP's Tax Reset replaced today's settings: a $19,400 tax-free Citizen's Income for adults, income tax at 28/34/39%, and a land value tax of 1.75% on urban land and 0.5% on rural land. Built from 2 million council rating valuations and the 2023 Census.</p>
+    <div class="facts">
+      <div class="fact"><b id="fLvt"></b><span>land value tax a year, against TOP's claimed <span id="fClaim"></span></span></div>
+      <div class="fact"><b id="fInc"></b><span>net cost of the Citizen's Income after the higher income tax</span></div>
+      <div class="fact warn"><b id="fGap"></b><span>yearly shortfall in this model; TOP says the package leaves about $4bn spare</span></div>
+      <div class="fact"><b id="fMed"></b><span>median neighbourhood's average change per household, before anyone funds the shortfall</span></div>
+    </div>
+  </header>
+
+  <div class="main">
+    <div class="mapcol">
+      <div class="maptools">
+        <div class="seg" role="group" aria-label="Map layer" id="seg"></div>
+        <div class="search">
+          <input id="q" list="places" placeholder="Find a suburb or council" aria-label="Find a suburb or council">
+          <datalist id="places"></datalist>
+        </div>
+      </div>
+      <div id="map" role="region" aria-label="Map of New Zealand SA2 neighbourhoods"></div>
+      <div class="legend" id="legend"></div>
+      <p class="note" id="mnote"></p>
+      <label class="toggle" for="spread"><input type="checkbox" id="spread">
+        <span><b>Spread the unfunded costs evenly.</b> Subtracts <span id="fSpread"></span> per household: this model's shortfall plus the land tax on rentals and business land, which has no home neighbourhood. Someone pays both, through other taxes, spending cuts, rents or lower returns.</span></label>
+    </div>
+    <aside aria-live="polite">
+      <h2 id="dName">New Zealand</h2>
+      <div class="sub" id="dSub"></div>
+      <div><div class="big" id="dNet"></div><div class="note" id="dNetLab">average change per household per year</div></div>
+      <dl class="kv" id="dList"></dl>
+      <div class="flag" id="dFlag" hidden></div>
+      <p class="note">Hover or tap a neighbourhood. Search to jump to a place.</p>
+    </aside>
+  </div>
+
+  <div class="two">
+    <section class="card" aria-labelledby="calcH">
+      <h2 id="calcH">Your household</h2>
+      <p>A simple version of TOP's own calculator using the same rules as the map. People on NZ Super or a main benefit are held harmless, as TOP promises; child and sole-parent top-ups aren't included.</p>
+      <form class="calc" id="calc">
+        <fieldset><legend>Adult 1</legend>
+          <div class="row">
+            <label for="i1">Income before tax ($/yr)<input type="number" id="i1" min="0" step="1000" value="72000"></label>
+            <label for="s1">Situation<select id="s1"><option value="w">Working age, not on a benefit</option><option value="s">65+ on NZ Super</option><option value="b">On a main benefit or student allowance</option></select></label>
+          </div>
+        </fieldset>
+        <fieldset><legend>Adult 2</legend>
+          <label class="inline" for="has2"><input type="checkbox" id="has2" checked> Include a second adult</label>
+          <div class="row" id="a2">
+            <label for="i2">Income before tax ($/yr)<input type="number" id="i2" min="0" step="1000" value="48000"></label>
+            <label for="s2">Situation<select id="s2"><option value="w">Working age, not on a benefit</option><option value="s">65+ on NZ Super</option><option value="b">On a main benefit or student allowance</option></select></label>
+          </div>
+        </fieldset>
+        <fieldset><legend>Home</legend>
+          <div class="row">
+            <label for="ten">You<select id="ten"><option value="own">Own your home</option><option value="rent">Rent</option></select></label>
+            <label for="lv">Land value ($, on your rates bill)<input type="number" id="lv" min="0" step="10000" value="520000"></label>
+          </div>
+          <label class="inline" for="rural"><input type="checkbox" id="rural"> Rural or farm land (0.5% instead of 1.75%)</label>
+          <p class="note">No rates bill handy? TOP's rule of thumb: land is about 70% of a standalone house's value, 50% of a townhouse's and 20% of an apartment's.</p>
+        </fieldset>
+      </form>
+      <div class="result" aria-live="polite">
+        <div><div class="big" id="cNet"></div><div class="note" id="cWeek"></div></div>
+        <dl class="kv" id="cList"></dl>
+        <p class="note" id="cNote"></p>
+      </div>
+    </section>
+
+    <section class="card chart" aria-labelledby="decH">
+      <h2 id="decH">By neighbourhood income</h2>
+      <p>Neighbourhoods ranked by median household income, in ten groups of about 178,000 households each. Average change per household per year.</p>
+      <div class="keys"><span><i style="background:var(--gain)"></i>Citizen's Income minus extra tax</span><span><i style="background:var(--tax)"></i>Land value tax (homes + local farmland)</span><span><i style="background:var(--ink)"></i>Net</span></div>
+      <div id="decChart"></div>
+      <p class="note" id="decNote"></p>
+    </section>
+  </div>
+
+  <section aria-labelledby="taH">
+    <h2 id="taH">By council</h2>
+    <p class="note" style="margin-bottom:10px">Average per household per year. Click a column to sort. Councils marked "estimated" have no public valuation data, so their land values are modelled.</p>
+    <div class="tablewrap"><table id="taTable"><thead><tr>
+      <th data-k="ta_name">Council</th><th data-k="households">Households</th><th data-k="income_side_gain_per_hh">Citizen's Income − extra tax</th>
+      <th data-k="lvt_owner_per_hh">LVT, homes</th><th data-k="lvt_farm_per_hh">LVT, farmland</th><th data-k="net_change_per_hh">Net</th>
+    </tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <div class="two">
+    <section class="card" aria-labelledby="ledH">
+      <h2 id="ledH">Does it add up?</h2>
+      <p>This model's national totals, $ billion a year. Land value comes from council rating valuations (57 of 67 councils, the rest estimated), which sum to within 3% of Stats NZ's national figure.</p>
+      <div class="tablewrap" style="max-height:none"><table class="ledger" style="min-width:0"><tbody id="ledger"></tbody></table></div>
+    </section>
+    <section class="card" aria-labelledby="cavH">
+      <h2 id="cavH">What this can and can't tell you</h2>
+      <div class="caveats">
+        <div><h3>Averages, not households</h3><p>Results are neighbourhood averages from banded census incomes. Household-level results need Stats NZ's restricted IDI data or Treasury's tax-benefit model.</p></div>
+        <div><h3>Who pays the land tax</h3><p>Owner-occupiers pay on their homes and farmers on their farms. Renters pay none: research on land taxes finds they aren't passed on to tenants without rent control. Tax on rentals and business land falls on owners and shareholders.</p></div>
+        <div><h3>Not modelled</h3><p>Child, sole-parent, disability and housing top-ups; KiwiSaver 2.0; land prices falling 10–15% as TOP expects; any change in how much people work. Superannuitants can defer the land tax until sale.</p></div>
+        <div><h3>Policy details</h3><p>Rates and the Citizen's Income are from TOP's policy page. The $50k and $200k bracket thresholds come from Deloitte and law-firm summaries, as TOP's full policy document wasn't available.</p></div>
+      </div>
+    </section>
+  </div>
+  <footer>Sources: council and regional-council rating valuation layers (2023–2026 revaluations), LINZ property boundaries, Stats NZ 2023 Census (SA2), Stats NZ boundaries and urban–rural areas, DOC conservation land, Stats NZ annual balance sheets 2024, IRD tax rates from 31 July 2024, opportunity.org.nz/tax-reset. Current tax includes the Independent Earner Tax Credit. All figures are yearly and approximate.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+const GEO = __DATA__, DECILES = __DECILES__, TAS = __TAS__, T = __TOTALS__;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const money = v => (v < 0 ? "−" : "") + "$" + Math.abs(Math.round(v)).toLocaleString("en-NZ");
+const signed = v => (v > 0 ? "+" : v < 0 ? "−" : "") + "$" + Math.abs(Math.round(v)).toLocaleString("en-NZ");
+const bn = v => "$" + v.toFixed(1) + "bn";
+
+document.getElementById("fLvt").textContent = bn(T.lvt_bn);
+document.getElementById("fClaim").textContent = bn(T.lvt_claim_bn);
+document.getElementById("fInc").textContent = bn(T.income_cost_bn);
+document.getElementById("fGap").textContent = "−" + bn(T.gap_bn);
+document.getElementById("fMed").textContent = signed(T.median_net);
+document.getElementById("fSpread").textContent = money(T.unfunded_per_hh);
+
+// ---------- policy rules (mirror scripts/policy.py) ----------
+const CUR = [[15600,.105],[53500,.175],[78100,.30],[180000,.33],[Infinity,.39]];
+const TOP = [[50000,.28],[200000,.34],[Infinity,.39]];
+const CI = 19400, LVT_URBAN = .0175, LVT_RURAL = .005;
+function bracket(y, br) { let t = 0, lo = 0; for (const [hi, r] of br) { t += r * Math.max(0, Math.min(y, hi) - lo); lo = hi; } return t; }
+function ietc(y) { if (y < 24000) return 0; if (y <= 66000) return 520; return Math.max(0, 520 - .13 * (y - 66000)); }
+const curTax = y => bracket(y, CUR) - ietc(y), topTax = y => bracket(y, TOP);
+
+// ---------- map ----------
+const BLUES = ["#cde2fb","#9ec5f4","#6da7ec","#3987e5","#256abf","#184f95","#0d366b"];
+const ORANGES = ["#fde3d6","#f9c2a6","#f39b72","#eb6834","#c9501f","#9a3b14","#6b280c"];
+const DIV = () => ["#a32322","#e34948","#f4a3a2", css("--mid"), "#9ec5f4","#3987e5","#184f95"];
+const LAYERS = {
+  net: {label:"Net change", type:"div", breaks:[-15000,-7500,-2500,2500,7500,15000],
+    labels:["< −$15k","−$15k to −7.5k","−$7.5k to −2.5k","±$2.5k","+$2.5k to 7.5k","+$7.5k to 15k","> +$15k"],
+    note:"Average yearly change per household: Citizen's Income minus extra income tax, minus land value tax on owner-occupied homes and local farmland. Blue gains, red loses."},
+  inc: {label:"Citizen's Income − tax", type:"blue", breaks:[8000,12000,15000,18000,21000,25000],
+    labels:["< $8k","$8k–12k","$12k–15k","$15k–18k","$18k–21k","$21k–25k","> $25k"],
+    note:"Average per household of the Citizen's Income paid to working-age adults, minus the extra income tax at 28/34/39%. Superannuitants and beneficiaries count as zero (held harmless)."},
+  lvt_home: {label:"Land tax on homes", type:"orange", breaks:[2000,4000,6000,8000,11000,15000],
+    labels:["< $2k","$2k–4k","$4k–6k","$6k–8k","$8k–11k","$11k–15k","> $15k"],
+    note:"Average per household (owners and renters together) of the land value tax on owner-occupied homes."},
+  lvt_farm: {label:"Land tax on farmland", type:"orange", breaks:[100,500,1500,3000,6000,12000],
+    labels:["< $100","$100–500","$500–1.5k","$1.5k–3k","$3k–6k","$6k–12k","> $12k"],
+    note:"Land value tax on farmland at 0.5%, averaged over the neighbourhood's households on the assumption that most farms are owner-operated."},
+  lv_unit: {label:"Land value per home", type:"blue", breaks:[150000,300000,450000,600000,850000,1200000],
+    labels:["< $150k","$150k–300k","$300k–450k","$450k–600k","$600k–850k","$850k–1.2m","> $1.2m"],
+    note:"Average rating land value per residential property. Where a council publishes no valuation data, it's estimated from census variables."},
+};
+let layerKey = "net", spread = false;
+const valueOf = (p, k) => k === "net" ? (p.net == null ? null : p.net - (spread ? T.unfunded_per_hh : 0)) : p[k];
+function colour(v, k) {
+  if (v == null || isNaN(v)) return css("--panel");
+  const L = LAYERS[k]; let i = L.breaks.findIndex(b => v < b); if (i < 0) i = L.breaks.length;
+  return (L.type === "blue" ? BLUES : L.type === "orange" ? ORANGES : DIV())[i];
+}
+const map = L.map("map", {attributionControl:false, preferCanvas:true, minZoom:4, maxZoom:14, zoomSnap:.25});
+const style = f => ({fillColor: colour(valueOf(f.properties, layerKey), layerKey), fillOpacity:.92, color: css("--stroke"), weight:.4});
+const geoLayer = L.geoJSON(GEO, {style, onEachFeature:(f, l) => {
+  l.on("mouseover click", () => select(f, l));
+}}).addTo(map);
+map.fitBounds([[-46.7, 166.8], [-34.4, 178.6]], {padding:[4, 4]});
+let selected = null;
+function select(f, l) {
+  if (selected) geoLayer.resetStyle(selected);
+  selected = l; l.setStyle({weight:2, color: css("--ink")}); l.bringToFront();
+  showArea(f.properties);
+}
+const dName = document.getElementById("dName"), dSub = document.getElementById("dSub"), dNet = document.getElementById("dNet"),
+      dList = document.getElementById("dList"), dFlag = document.getElementById("dFlag");
+const row = (k, v, cls = "") => `<dt>${k}</dt><dd class="${cls}">${v}</dd>`;
+function setNet(v) { dNet.textContent = signed(v); dNet.className = "big " + (v >= 0 ? "pos" : "neg"); }
+function showArea(p) {
+  dName.textContent = p.name; dSub.textContent = p.ta + (p.region ? " · " + p.region : "");
+  const net = p.net - (spread ? T.unfunded_per_hh : 0); setNet(net);
+  const rows = [
+    row("Households", Math.round(p.hh).toLocaleString("en-NZ")),
+    row("Own their home", p.own == null ? "–" : Math.round(p.own * 100) + "%"),
+    row("Median household income", p.med_inc == null ? "–" : money(p.med_inc)),
+    row("Land value per home", p.lv_unit == null ? "–" : money(p.lv_unit)),
+    '<div class="sep"></div>',
+    row("Citizen's Income − extra tax", signed(p.inc), "g"),
+    row("Land tax on homes", signed(-p.lvt_home), "t"),
+    row("Land tax on farmland", signed(-p.lvt_farm), "t"),
+  ];
+  if (spread) rows.push(row("Share of unfunded costs", signed(-T.unfunded_per_hh), "t"));
+  rows.push(row("Net per household", signed(net), "b"));
+  dList.innerHTML = rows.join("");
+  dFlag.hidden = !p.imputed;
+  dFlag.textContent = "Land values here are estimated: this council publishes no valuation data, or too few homes were matched.";
+}
+function showNational() {
+  dName.textContent = "New Zealand"; dSub.textContent = Math.round(T.households).toLocaleString("en-NZ") + " households · 2,284 neighbourhoods";
+  const inc = T.income_cost_bn * 1e9 / T.households, home = T.lvt_owner_bn * 1e9 / T.households, farm = T.lvt_farm_bn * 1e9 / T.households;
+  const net = inc - home - farm - (spread ? T.unfunded_per_hh : 0); setNet(net);
+  const rows = [row("Citizen's Income − extra tax", signed(inc), "g"), row("Land tax on homes", signed(-home), "t"), row("Land tax on farmland", signed(-farm), "t")];
+  if (spread) rows.push(row("Share of unfunded costs", signed(-T.unfunded_per_hh), "t"));
+  rows.push(row("Net per household", signed(net), "b"));
+  dList.innerHTML = rows.join(""); dFlag.hidden = true;
+}
+showNational();
+
+const seg = document.getElementById("seg");
+Object.entries(LAYERS).forEach(([k, L]) => {
+  const b = document.createElement("button"); b.type = "button"; b.id = "l_" + k; b.textContent = L.label;
+  b.setAttribute("aria-pressed", k === layerKey); b.onclick = () => { layerKey = k; redraw(); }; seg.appendChild(b);
+});
+function redraw() {
+  seg.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.id === "l_" + layerKey));
+  geoLayer.setStyle(style); if (selected) selected.setStyle({weight:2, color: css("--ink")});
+  const L = LAYERS[layerKey], pal = L.type === "blue" ? BLUES : L.type === "orange" ? ORANGES : DIV();
+  document.getElementById("legend").innerHTML = `<span class="ttl">${L.label}${layerKey === "net" && spread ? " (after unfunded costs)" : ""}</span>` +
+    L.labels.map((t, i) => `<span class="sw"><i style="background:${pal[i]}"></i>${t}</span>`).join("");
+  document.getElementById("mnote").textContent = L.note;
+}
+redraw();
+document.getElementById("spread").addEventListener("change", e => {
+  spread = e.target.checked; redraw();
+  if (selected) showArea(selected.feature.properties); else showNational();
+  drawDeciles(); drawTable();
+});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", redraw);
+new MutationObserver(redraw).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]});
+
+// search
+const places = new Map();
+GEO.features.forEach(f => places.set(f.properties.name + " (" + f.properties.ta + ")", [f]));
+const byTa = {}; GEO.features.forEach(f => (byTa[f.properties.ta] ||= []).push(f));
+Object.entries(byTa).forEach(([k, v]) => places.set(k, v));
+document.getElementById("places").innerHTML = [...places.keys()].sort().map(k => `<option value="${k.replace(/"/g, "&quot;")}">`).join("");
+document.getElementById("q").addEventListener("change", e => {
+  const feats = places.get(e.target.value); if (!feats) return;
+  const b = L.latLngBounds([]); feats.forEach(f => b.extend(L.geoJSON(f).getBounds())); map.fitBounds(b.pad(.15));
+  if (feats.length === 1) geoLayer.eachLayer(l => { if (l.feature === feats[0]) select(feats[0], l); });
+});
+
+// ---------- calculator ----------
+const $ = id => document.getElementById(id);
+function person(y, s) {
+  if (s !== "w") return {ci:0, cur:curTax(y), top:curTax(y), change:0, held:true};
+  const cur = curTax(y), top = topTax(y);
+  return {ci:CI, cur, top, change: CI - (top - cur), held:false};
+}
+function calc() {
+  const a = [person(+$("i1").value || 0, $("s1").value)];
+  $("a2").hidden = !$("has2").checked;
+  if ($("has2").checked) a.push(person(+$("i2").value || 0, $("s2").value));
+  const own = $("ten").value === "own", lvt = own ? (+$("lv").value || 0) * ($("rural").checked ? LVT_RURAL : LVT_URBAN) : 0;
+  const inc = a.reduce((s, p) => s + p.change, 0), net = inc - lvt;
+  $("cNet").textContent = signed(net); $("cNet").className = "big " + (net >= 0 ? "pos" : "neg");
+  $("cWeek").textContent = signed(net / 52) + " a week for your household";
+  const rows = [];
+  a.forEach((p, i) => {
+    if (p.held) { rows.push(row(`Adult ${i + 1}`, "no change (held harmless)")); return; }
+    rows.push(row(`Adult ${i + 1}: Citizen's Income`, signed(p.ci), "g"));
+    rows.push(row(`Adult ${i + 1}: income tax`, money(p.cur) + " → " + money(p.top)));
+  });
+  rows.push(row("Land value tax", own ? signed(-lvt) : "none (renting)", "t"));
+  rows.push('<div class="sep"></div>', row("Net per year", signed(net), "b"));
+  $("cList").innerHTML = rows.join("");
+  const olds = a.some(p => p.held);
+  $("cNote").textContent = (own && a.some((p, i) => [$("s1").value, $("s2").value][i] === "s") ? "Superannuitants can defer the land tax until the home is sold. " : "") +
+    (olds ? "TOP says no one on NZ Super or a current benefit will get less; beneficiaries with children would gain through top-ups not modelled here. " : "") +
+    "Excludes KiwiSaver 2.0 contributions and any change in land prices.";
+}
+["i1","s1","i2","s2","has2","ten","lv","rural"].forEach(id => $(id).addEventListener("input", calc));
+$("calc").addEventListener("submit", e => e.preventDefault());
+calc();
+
+// ---------- decile chart ----------
+function drawDeciles() {
+  const W = 560, H = 320, m = {l:48, r:12, t:16, b:52}, iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const adj = spread ? T.unfunded_per_hh : 0;
+  const rows = DECILES.map(d => ({g: d.income_side_gain_per_hh, t: -(d.lvt_owner_per_hh + d.lvt_farm_per_hh), n: d.net_change_per_hh - adj, inc: d.median_household_income}));
+  const lo = Math.min(-15000, ...rows.map(r => Math.min(r.t, r.n))), hi = Math.max(...rows.map(r => r.g)) * 1.08;
+  const y = v => m.t + (hi - v) / (hi - lo) * ih, bw = iw / 10;
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Average change per household by neighbourhood income decile">`;
+  const step = 5000;
+  for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) {
+    s += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="${v === 0 ? css("--muted") : css("--line")}" stroke-width="${v === 0 ? 1 : .6}"/>`;
+    s += `<text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${v === 0 ? "0" : (v > 0 ? "+" : "−") + Math.abs(v / 1000) + "k"}</text>`;
+  }
+  rows.forEach((r, i) => {
+    const x = m.l + i * bw;
+    s += `<rect x="${x + bw * .14}" y="${y(r.g)}" width="${bw * .34}" height="${y(0) - y(r.g)}" rx="2" fill="${css("--gain")}"><title>D${i + 1}: +$${Math.round(r.g).toLocaleString()}</title></rect>`;
+    s += `<rect x="${x + bw * .52}" y="${y(0)}" width="${bw * .34}" height="${y(r.t) - y(0)}" rx="2" fill="${css("--tax")}"><title>D${i + 1}: −$${Math.round(-r.t).toLocaleString()}</title></rect>`;
+    s += `<text x="${x + bw / 2}" y="${H - 34}" text-anchor="middle">D${i + 1}</text>`;
+    s += `<text x="${x + bw / 2}" y="${H - 21}" text-anchor="middle" style="font-size:9.5px">$${Math.round(r.inc / 1000)}k</text>`;
+    s += `<text x="${x + bw / 2}" y="${H - 4}" text-anchor="middle" style="fill:${css("--ink")};font-weight:600;font-size:10.5px">${(r.n >= 0 ? "+" : "−") + (Math.abs(r.n) / 1000).toFixed(1) + "k"}</text>`;
+  });
+  s += `<polyline fill="none" stroke="${css("--ink")}" stroke-width="2" points="${rows.map((r, i) => `${m.l + i * bw + bw / 2},${y(r.n)}`).join(" ")}"/>`;
+  rows.forEach((r, i) => { const cx = m.l + i * bw + bw / 2;
+    s += `<circle cx="${cx}" cy="${y(r.n)}" r="4.5" fill="${css("--ink")}" stroke="${css("--surface")}" stroke-width="2"><title>D${i + 1} net: ${signed(r.n)}</title></circle>`;
+  });
+  s += "</svg>";
+  $("decChart").innerHTML = s;
+  $("decNote").textContent = "Under each group: its median household income, then the average net change in $ thousand. " + (spread ? "Net includes an equal share of the unfunded costs." : "Net excludes the unfunded costs; tick the box above the map to include them.");
+}
+drawDeciles();
+
+// ---------- council table ----------
+let sortKey = "net_change_per_hh", sortDir = -1;
+function drawTable() {
+  const adj = spread ? T.unfunded_per_hh : 0;
+  const rows = [...TAS].sort((a, b) => sortDir * ((a[sortKey] > b[sortKey]) - (a[sortKey] < b[sortKey])));
+  document.querySelector("#taTable tbody").innerHTML = rows.map(r => `<tr>
+    <td>${r.ta_name}${r["share_sa2_imputed_%"] > 50 ? '<span class="chip">estimated</span>' : ""}</td>
+    <td>${Math.round(r.households).toLocaleString("en-NZ")}</td><td>${signed(r.income_side_gain_per_hh)}</td>
+    <td>${signed(-r.lvt_owner_per_hh)}</td><td>${signed(-r.lvt_farm_per_hh)}</td><td><b>${signed(r.net_change_per_hh - adj)}</b></td></tr>`).join("");
+}
+document.querySelectorAll("#taTable th").forEach(th => th.addEventListener("click", () => {
+  const k = th.dataset.k; sortDir = k === sortKey ? -sortDir : (k === "ta_name" ? 1 : -1); sortKey = k; drawTable();
+}));
+drawTable();
+
+// ---------- ledger ----------
+const L_ = [
+  ["Land value tax (after exemptions)", T.lvt_bn], ["  on owner-occupied homes", T.lvt_owner_bn], ["  on farmland", T.lvt_farm_bn],
+  ["  on rentals, business and other land", T.lvt_other_bn], ["TOP's claimed admin savings", T.admin_bn],
+  ["Citizen's Income to working-age adults", -T.ci_bn], ["Extra income tax (28/34/39%)", T.tax_bn],
+];
+document.getElementById("ledger").innerHTML = L_.map(([k, v]) => k.startsWith("  ")
+    ? `<tr class="part"><td>${k.trim()}</td><td>(${Math.abs(v).toFixed(1)})</td></tr>`
+    : `<tr><td>${k}</td><td>${(v >= 0 ? "+" : "−") + Math.abs(v).toFixed(1)}</td></tr>`).join("") +
+  `<tr class="total"><td>Balance</td><td>${"−" + T.gap_bn.toFixed(1)}</td></tr>` +
+  `<tr><td>Land value (Stats NZ check: $${Math.round(T.statsnz_land_bn).toLocaleString()}bn)</td><td>$${Math.round(T.land_bn).toLocaleString()}bn</td></tr>`;
+</script>
