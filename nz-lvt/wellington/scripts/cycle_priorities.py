@@ -8,7 +8,11 @@ order, connect the most potential trips per dollar.
    The low-stress network is every arc with traffic stress <= 2 that ends at a crossing of stress
    <= 2. A trip is connected when its shortest low-stress route is at most `cap` x its shortest
    route on the whole network (cap 1.25 central; 1.15 and 1.5 as sensitivities). Trips under
-   200 m are left out. Tolerance variant: level 3 arcs (and level 3 crossings) shorter than
+   200 m are left out. The first and last arc of a trip (up to 150 m) may be any stress: homes
+   and workplaces on arterials are reached along the kerb or footpath (without this allowance,
+   only 4.5% of Go Dutch trips are connected, mostly because endpoints snap to arterial nodes).
+   Crossing stress is per junction, not per turn, so a left turn onto a busy road counts as a
+   crossing (conservative; ignoring crossings adds ~2-4 points). Tolerance variant: level 3 arcs (and level 3 crossings) shorter than
    150 m or 400 m count as low stress, an arc-level stand-in for Lowry's "up to ~150 m of LTS 3
    per route".
 3. Candidates.
@@ -63,6 +67,7 @@ CAPS = [1.15, 1.25, 1.5]
 TOLS = [0.0, 150.0, 400.0]
 CAP0, TOL0, SCEN0 = 1.25, 0.0, "godutch"
 MIN_M = 200
+ACCESS_M = 150
 N_CORR, N_XING, MIN_DIR = 150, 80, 30
 GREEDY_STEPS, GREEDY_POOL = 10, 40
 N_DRAWS = 1000
@@ -98,10 +103,12 @@ def arc_table(e):
     return a
 
 
-def low_stress(a, tol, lts=None, cross=None):
+def low_stress(a, tol, lts=None, cross=None, access=None):
     lts = a["lts"].values if lts is None else lts
     cross = a["cross"].values if cross is None else cross
     ok = (lts <= 2) & (cross <= 2)
+    if access is not None:
+        ok |= access
     if tol > 0:
         ok |= (lts <= 3) & (cross <= 3) & (a["len"].values <= tol)
     return ok
@@ -118,10 +125,14 @@ class Connectivity:
     def __init__(self, a, n, S, P, w, d_full, tol):
         self.a, self.n, self.S, self.P, self.w, self.d_full, self.tol = a, n, S, P, w, d_full, tol
         self.lts, self.cross = a["lts"].values.copy(), a["cross"].values.copy()
+        # Access legs: the first arc out of an origin and the last into a destination may be any
+        # stress up to ACCESS_M (homes and workplaces on arterials are reached along the kerb).
+        self.access = ((np.isin(a["u"].values, S) | np.isin(a["v"].values, P["t"]))
+                       & (a["len"].values <= ACCESS_M))
         self.refresh()
 
     def refresh(self):
-        self.mask = low_stress(self.a, self.tol, self.lts, self.cross)
+        self.mask = low_stress(self.a, self.tol, self.lts, self.cross, self.access)
         self.G = csr(self.a, self.mask, self.n)
         self.dS = dijkstra(self.G, indices=self.S).astype(np.float32)  # S x N
         self.d = self.dS[self.P["si"], self.P["t"]]
@@ -139,7 +150,7 @@ class Connectivity:
         lts, cross = self.lts.copy(), self.cross.copy()
         lts[idx_l], cross[idx_c] = np.minimum(lts[idx_l], 2), np.minimum(cross[idx_c], 2)
         idx = np.union1d(idx_l, idx_c).astype(int)
-        mask = low_stress(self.a, self.tol, lts, cross)
+        mask = low_stress(self.a, self.tol, lts, cross, self.access)
         added = idx[mask[idx] & ~self.mask[idx]]
         if len(added) == 0:
             return self.d, lts, cross

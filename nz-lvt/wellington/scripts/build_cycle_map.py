@@ -1,7 +1,7 @@
 """Build the interactive cycle gap map (outputs/web/wellington_cycle_gaps.html).
 
-Embeds outputs/blocks/cycle_edges.geojson (cycle_gaps.py), the top corridors and headline
-figures into web/cycle_map_template.html, with Leaflet's CSS inlined.
+Embeds outputs/blocks/cycle_edges.geojson (cycle_gaps.py), the top corridors, the prioritised
+candidates and build order (cycle_priorities.py) and headline figures into web/cycle_map_template.html, with Leaflet's CSS inlined.
 """
 
 import json
@@ -55,12 +55,25 @@ def main():
     pts = json.loads((ROOT / "outputs" / "blocks" / "cycle_points.geojson").read_text())
     for f in pts["features"]:
         f["properties"] = {k: (None if isinstance(v, float) and v != v else v) for k, v in f["properties"].items()}
+    pri, build = None, None
+    if (ROOT / "outputs" / "blocks" / "cycle_priorities.geojson").exists():
+        pri = json.loads((ROOT / "outputs" / "blocks" / "cycle_priorities.geojson").read_text())
+        for f in pri["features"]:
+            f["properties"] = {k: (None if isinstance(v, float) and v != v else v) for k, v in f["properties"].items()}
+        b = pd.read_csv(TABLES / "cycle_build_order.csv")
+        build = json.loads(b.to_json(orient="records"))
+        conn = pd.read_csv(TABLES / "cycle_connectivity.csv")
+        conn = conn[(conn["tolerance_m"] == 0) & (conn["cap"] == 1.25)].set_index("scenario")["connected_pct"]
+        summary["conn"] = dict(now=float(conn["godutch"]), census=float(conn["census"]), local=float(conn["local"]),
+                               ebike=float(conn["ebike"]))
     html = TEMPLATE.read_text()
     html = html.replace("/*__LEAFLET_CSS__*/", requests.get(LEAFLET_CSS, timeout=60).text)
     html = html.replace("__DATA__", json.dumps(geo, separators=(",", ":")))
     html = html.replace("__CORRIDORS__", json.dumps(corr, separators=(",", ":")))
     html = html.replace("__SUMMARY__", json.dumps(summary, separators=(",", ":")))
     html = html.replace("__POINTS__", json.dumps(pts, separators=(",", ":")))
+    html = html.replace("__PRIORITIES__", json.dumps(pri, separators=(",", ":")))
+    html = html.replace("__BUILD__", json.dumps(build, separators=(",", ":")))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(html)
     print(f"wrote {OUT} ({OUT.stat().st_size / 1e6:.1f} MB); top 20 plan: {top.value_counts().to_dict()}")
