@@ -469,8 +469,8 @@ The research behind version 3, and the remaining steps, are in `CYCLING_IMPROVEM
 1. **Trips.** 2023 Census main means of travel to work and to education, from SA2 of
    residence to SA2 of workplace or institution. This gives 97k work and 47k education
    commuters, excluding people who work or study at home. Where trips start and end:
-   - homes, placed by SA1 population;
-   - workplaces, placed by estimated workers;
+   - homes, placed at properties by residents (scaled to each SA1's census count);
+   - workplaces, placed at properties by estimated workers;
    - education trips, at OSM schools and universities.
 2. **Network, rated per direction.** OSM streets and paths bikes may use are split at
    junctions. Each direction of each edge gets:
@@ -559,79 +559,91 @@ The research behind version 3, and the remaining steps, are in `CYCLING_IMPROVEM
 
 | Trips | Trips/weekday | Mean km | Today | Go Dutch | E-bike | Wellington habits |
 |---|---|---|---|---|---|---|
-| work | 97,035 | 7.3 | 3.4% | 19.5% | 28.3% | 7.7% |
-| primary | 13,941 | 3.0 | 2.3% | 15.0% | 15.0% | 2.3% |
-| secondary | 14,868 | 5.0 | 0.9% | 46.9% | 46.9% | 0.9% |
-| tertiary | 18,432 | 4.8 | 0.6% | 17.1% | 27.5% | 6.6% |
-| shopping | 104,553 | 3.4 | 1.7% | 12.9% | 17.8% | 3.5% |
-| visiting | 48,736 | 5.6 | 3.5% | 18.0% | 28.4% | 7.6% |
-| leisure | 26,242 | 5.2 | 3.5% | 20.5% | 30.7% | 7.5% |
-| all | 323,807 | 5.2 | 2.5% | 18.1% | 25.4% | 5.7% |
+| work | 97,035 | 7.2 | 3.4% | 20.0% | 28.8% | 7.6% |
+| primary | 13,941 | 3.0 | 2.3% | 15.1% | 15.1% | 2.3% |
+| secondary | 14,868 | 5.0 | 0.9% | 47.1% | 47.1% | 0.9% |
+| tertiary | 18,432 | 4.8 | 0.6% | 17.2% | 27.7% | 6.5% |
+| shopping | 104,553 | 3.2 | 1.7% | 13.1% | 18.0% | 3.5% |
+| visiting | 48,736 | 5.5 | 3.5% | 18.4% | 28.8% | 7.4% |
+| leisure | 26,242 | 5.0 | 3.5% | 20.9% | 31.1% | 7.4% |
+| all | 323,807 | 5.1 | 2.6% | 18.5% | 25.7% | 5.6% |
 
 - **Where potential cycling would ride (Go Dutch, all trips):** 51% on protected routes, 27%
   on quiet streets, 22% on busy unprotected streets.
 - **The ranking is robust to the uptake model:**
-  - Go Dutch vs Wellington habits: rank correlation 0.91, and 13 of the top 20 are shared.
-  - Go Dutch vs today's cycling: 10 of the top 20 are shared. Potential also points to the
+  - Go Dutch vs Wellington habits: rank correlation 0.92, and 13 of the top 20 are shared.
+  - Go Dutch vs today's cycling: 11 of the top 20 are shared. Potential also points to the
     northern suburbs.
-- **The safest bets** are high on all three measures: The Terrace, Willis Street, Victoria
-  Street, Rintoul Street, Featherston Street, and Newtown's Mein, Daniell and Riddiford
-  Streets.
+- **The safest bets** are in the top 25 on all three measures: Middleton Road, Willis Street, Victoria Street, Park Road, Newlands Road, Broadway, The Terrace, Rintoul Street, Riddiford Street, Daniell Street, Boulcott Street, Rongotai Road, Mein Street.
 - **Top 20 vs the council's 2022 plan:**
   - 9 planned by the council;
-  - 5 staged under LGWM, now unfunded (Willis, The Terrace, Victoria, Rintoul, Featherston);
-  - 6 not in the plan: Takapu Road (speculative: rural, 60–100 km/h, nobody cycles it today),
-    Mein Street, Daniell Street, Tauhinu Road, Ghuznee Street.
+  - 7 staged under LGWM, now unfunded (Willis, Victoria, The Terrace, Rintoul, Courtenay Place,
+    Taranaki, Dixon);
+  - 4 not in the plan: two stretches of Takapu Road (speculative: rural, 60–110 km/h, nobody
+    cycles it today), Daniell Street and Boulcott Street.
 
 | # | Street | Suburbs | Today | Go Dutch | Rank (Wellington habits) | Rank (today) | km/h | Vehicles/day | Facility now | Plan |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 1 | Middleton Road | Glenside, Churton Park, Johnsonville | 63 | 1,589 | 1 | 6 | 50 | 6,985 | none | Planned (WCC) |
-| 2 | Takapu Road | Tawa, Grenada North, Takapu Valley | 4 | 1,076 | 2 | 149 | 60 | 17,549 | none | Not in plan |
-| 3 | Willis Street | Te Aro, Wellington Central, Aro Valley | 300 | 1,898 | 4 | 2 | 30 | 11,034 | none | Unfunded (ex-LGWM) |
-| 4 | The Terrace | Wellington Central | 828 | 2,302 | 3 | 1 | 30 | 14,579 | none | Unfunded (ex-LGWM) |
-| 5 | Victoria Street | Te Aro, Wellington Central, Mt Cook | 303 | 1,587 | 8 | 5 | 30 | 12,326 | sharrows | Unfunded (ex-LGWM) |
-| 6 | Park Road | Miramar | 106 | 931 | 24 | 22 | 50 | 11,691 | none | Planned (WCC) |
-| 7 | Burma Road | Broadmeadows, Khandallah, Johnsonville | 75 | 765 | 15 | 28 | 50 | 14,678 | none | Planned (WCC) |
-| 8 | Newlands Road | Newlands | 100 | 770 | 6 | 21 | 50 | 15,669 | none | Planned (WCC) |
-| 9 | Takapu Road | – | 1 | 1,482 | 44 | 213 | 110 | 500 | none | Not in plan |
-| 10 | Broadway | Strathmore Park, Miramar | 250 | 1,276 | 23 | 11 | 50 | 12,659 | none | Planned (WCC) |
-| 11 | Rintoul Street | Newtown | 2,175 | 6,222 | 13 | 3 | 50 | 3,892 | sharrows (one way) | Unfunded (ex-LGWM) |
-| 12 | Mein Street | Newtown | 324 | 1,636 | 19 | 12 | 40 | 6,744 | none | Not in plan |
-| 13 | Riddiford Street | Newtown | 302 | 1,579 | 22 | 13 | 40 | 14,904 | none | Planned (WCC) |
-| 14 | Daniell Street | Newtown | 317 | 1,424 | 18 | 10 | 40 | 5,000 | none | Not in plan |
-| 15 | Helston Road | Johnsonville, Paparangi | 49 | 792 | 9 | 65 | 50 | 14,060 | none | Planned (WCC) |
-| 16 | Willowbank Road | Tawa | 62 | 1,860 | 5 | 121 | 50 | 4,184 | none | Planned (WCC) |
-| 17 | Tauhinu Road | Miramar | 264 | 1,698 | 28 | 25 | 50 | 7,970 | none | Not in plan |
-| 18 | Featherston Street | Wellington Central, Pipitea | 378 | 1,430 | 16 | 9 | 30 | 7,923 | sharrows | Unfunded (ex-LGWM) |
-| 19 | Rongotai Road | Kilbirnie | 540 | 3,094 | 21 | 23 | 30 | 8,079 | sharrows | Planned (WCC) |
-| 20 | Ghuznee Street | Te Aro | 108 | 1,388 | 38 | 59 | 30 | 12,835 | none | Not in plan |
+| 1 | Middleton Road | Glenside, Churton Park, Johnsonville | 59 | 1,575 | 1 | 8 | 50 | 6,985 | none | Planned (WCC) |
+| 2 | Takapu Road | Tawa, Grenada North, Takapu Valley | 3 | 1,110 | 2 | 146 | 60 | 17,549 | none | Not in plan |
+| 3 | Willis Street | Te Aro, Wellington Central, Aro Valley | 373 | 2,231 | 3 | 1 | 30 | 11,034 | none | Unfunded (ex-LGWM) |
+| 4 | Victoria Street | Te Aro, Wellington Central, Mt Cook | 284 | 1,559 | 9 | 6 | 30 | 12,326 | sharrows | Unfunded (ex-LGWM) |
+| 5 | Park Road | Miramar | 107 | 1,005 | 22 | 22 | 50 | 11,691 | none | Planned (WCC) |
+| 6 | Burma Road | Broadmeadows, Khandallah, Johnsonville | 71 | 780 | 15 | 32 | 50 | 14,678 | none | Planned (WCC) |
+| 7 | Newlands Road | Newlands | 100 | 785 | 5 | 19 | 50 | 15,669 | none | Planned (WCC) |
+| 8 | Broadway | Strathmore Park, Miramar | 332 | 1,648 | 19 | 9 | 50 | 9,964 | none | Planned (WCC) |
+| 9 | The Terrace | Wellington Central | 435 | 1,469 | 8 | 3 | 30 | 14,579 | none | Unfunded (ex-LGWM) |
+| 10 | Rintoul Street | Newtown | 2,238 | 6,583 | 12 | 2 | 50 | 3,892 | sharrows (one way) | Unfunded (ex-LGWM) |
+| 11 | Takapu Road | – | 1 | 1,514 | 45 | 219 | 110 | 500 | none | Not in plan |
+| 12 | Riddiford Street | Newtown | 342 | 1,801 | 21 | 11 | 40 | 14,904 | none | Planned (WCC) |
+| 13 | Daniell Street | Newtown | 309 | 1,467 | 18 | 10 | 40 | 5,000 | none | Not in plan |
+| 14 | Helston Road | Johnsonville, Paparangi | 51 | 822 | 7 | 62 | 50 | 14,060 | none | Planned (WCC) |
+| 15 | Courtenay Place | Te Aro | 217 | 1,188 | 28 | 14 | 30 | 8,700 | bus lane | Unfunded (ex-LGWM) |
+| 16 | Willowbank Road | Tawa | 60 | 1,863 | 4 | 118 | 50 | 4,184 | none | Planned (WCC) |
+| 17 | Boulcott Street | Wellington Central, Mt Victoria, Kelburn | 355 | 1,586 | 17 | 12 | 30 | 7,268 | none | Not in plan |
+| 18 | Taranaki Street | Te Aro, Wellington Central | 70 | 1,003 | 43 | 66 | 50 | 15,000 | none | Unfunded (ex-LGWM) |
+| 19 | Dixon Street | Te Aro | 241 | 1,434 | 31 | 26 | 30 | 5,000 | none | Unfunded (ex-LGWM) |
+| 20 | Rongotai Road | Kilbirnie | 532 | 3,078 | 23 | 24 | 30 | 8,079 | sharrows | Planned (WCC) |
 
 **Phase 4–5: what to build first (`cycle_priorities.py`)**
 
 The gap ranking above says where potential riders meet traffic. It doesn't say which fix joins
 up the most trips per dollar. The prioritisation does, in these steps:
 
+- **Homes and jobs at property level.** Trips start and end at rating units (residents and
+  workers from the v2 cost model, scaled to each SA1's census count), not one centroid per SA1.
+  The first version snapped whole SA1s to single street corners. That made short links next to
+  those corners look vital: Wha Street (Lyall Bay) and Ellice Street (Mt Victoria) were first
+  and second on the list, and with homes spread along their streets they connect no trips.
 - **Connectivity.** A trip is *connected* when its low-stress route (stress 1–2, ending at
   crossings of stress 1–2) is at most 25% longer than its shortest route (Furth, Mekuria &
-  Nixon). The first and last 150 m may be on any street, since homes and workplaces on arterials
-  are reached along the kerb. Without that allowance only 4.5% of trips are connected, mostly
-  because endpoints snap to arterial nodes.
-- **Today:** 18% of potential (Go Dutch) trips are connected. So are 15% of the trips people
-  cycle today, and 23% with a 50% detour allowed. About 77% of network length is low stress,
-  but it is split into islands by the arterials. The largest island holds only 17% of trip
-  origins.
-- **Candidates:** 230 in total.
+  Nixon). The first and last 150 m may be on any street.
+- **Today:** 37% of potential (Go Dutch) trips are connected, as are 38% of trips cycled
+  today. That rises to 45% with a 50% detour allowed, and 52% if 150 m of busy street is
+  tolerated.
+- **Candidates:** 318 in total.
   - The 150 biggest corridor gaps (any level 3–4 direction with 30+ Go Dutch trips). Each
     covers the street's whole busy stretch: busy pieces within 150 m with few potential trips
-    are filled in (15 km in total), so a project on Tinakori Road leaves no busy gaps. Each gets
-    a treatment: a *quiet street* (30 km/h and a modal filter) where the road is local or
-    collector, ≤50 km/h and ≤3,000 vehicles/day; a *protected lane* otherwise.
-  - The 80 busiest unsignalised crossings of busy roads. Each gets signals where the road
-    carries over 8,000 vehicles/day or is faster than 50 km/h, otherwise a raised zebra or
-    refuge.
+    are filled in, so a Tinakori Road project leaves no busy gaps.
+  - 88 unbuilt council-plan links (Strategic Bike Network: planned, ex-LGWM, desired) with a
+    busy direction, whatever their modelled trips. A one-way street on the plan becomes two-way
+    for bikes. For example, Bunny Street would carry the Thorndon Quay cycleway to the
+    waterfront at Lady Elizabeth Lane both ways; today bikes may only ride it eastbound.
+  - The 80 busiest unsignalised crossings of busy roads.
+- **Treatments.**
+  - Quiet street (30 km/h and a modal filter): local or collector roads of 50 km/h or less
+    with 3,000 vehicles/day or fewer.
+  - Protected lane: other roads.
+  - Crossings: signals over 8,000 vehicles/day or 50 km/h, otherwise a raised zebra or refuge.
 - **Benefit, exact.** Each candidate is added to the low-stress network and the trips newly
   connected are counted with an exact shortcut: new distance = min(old, via the tail of any
-  new arc). It runs in about 3 minutes for all 230 × 3 settings.
+  new arc).
+- **Network bonus, a judgment.** The score is trips per $M × 1.5 when both ends of a
+  corridor join the existing cycle network, or × 1.25 for one end. The existing network is
+  protected lanes, tracks, paths, living streets and the waterfront. The bonus stands for what
+  the trip model misses: a legible, continuous network, and riders who would go further on
+  it. The Monte Carlo draws vary it from 0 to ×1.5. A second ranking by trips connected, cost
+  aside, is also reported.
 - **Costs are indicative, not engineers' estimates.**
   - Quiet street: $0.1–0.3M/km, at least $30–100k a project.
   - Protected lane: $0.75M/km (Wellington transitional, 2023) to $3.4M/km (permanent), central
@@ -640,54 +652,57 @@ up the most trips per dollar. The prioritisation does, in these steps:
 - **Health value:** NZTA MBCM $4.90 per new cyclist-km, on the extra cycling of newly
   connected trips. Low = Wellington habits, high = Go Dutch. Not an NZTA benefit–cost ratio.
 
-**Build order** (greedy: add the best trips per $M, then re-score the rest):
+**Build order** (greedy on the score, re-scoring after each step):
 
-| Step | Project | Treatment | Cost | Go Dutch trips newly connected | % connected after |
-|---|---|---|---|---|---|
-| – | Today | | | | 18.3% |
-| 1 | Wha Street, Lyall Bay | Quiet street | $50k | 189 | 18.6% |
-| 2 | Ellice Street, Mt Victoria | Quiet street | $50k | 106 | 18.8% |
-| 3 | Kaiwharawhara Road (short link) | Protected lane | $250k | 291 | 19.3% |
-| 4 | Garden Road, Northland | Quiet street | $85k | 55 | 19.4% |
-| 5 | Takapu Road | Protected lane | $1.0M | 579 | 20.4% |
-| 6 | Whitmore Street | Protected lane | $250k | 121 | 20.6% |
-| 7 | Tory Street at College Street | Raised zebra | $250k | 110 | 20.8% |
-| 8 | Friend Street, Karori | Quiet street | $80k | 34 | 20.8% |
-| 9 | Karori Road (short link) | Protected lane | $360k | 164 | 21.1% |
-| 10 | Garden Road at Glenmore Street | Raised zebra | $250k | 99 | 21.3% |
+| Step | Project | Treatment | Cost | Go Dutch trips newly connected | Joins network | % connected after |
+|---|---|---|---|---|---|---|
+| – | Today | | | | | 37.2% |
+| 1 | Bolton Street, Kelburn–CBD | Quiet street | $75k | 159 | one end | 37.5% |
+| 2 | Panama Street, CBD (council plan) | Quiet street | $50k | 126 | – | 37.7% |
+| 3 | Moorefield Road, Johnsonville | Protected lane | $250k | 371 | both | 38.3% |
+| 4 | Oxford Street, Tawa | Quiet street | $60k | 119 | – | 38.5% |
+| 5 | Duncan Street | Quiet street | $70k | 117 | one end | 38.7% |
+| 6 | Chaytor Street, Karori–Kelburn | Protected lane | $580k | 746 | both | 39.9% |
+| 7 | Garden Road, Northland | Quiet street | $85k | 82 | one end | 40.1% |
+| 8 | Stone Street, Miramar | Quiet street | $60k | 70 | – | 40.2% |
+| 9 | Cockayne Road at Lucknow Terrace, Khandallah | Raised zebra | $250k | 278 | – | 40.7% |
+| 10 | Maupuia Road | Quiet street | $125k | 109 | one end | 40.9% |
 
 What this shows:
-- **Cheap fixes come first.** About $2.6M (indicative) lifts connected trips from 18% to 21%.
-  The first steps are short missing pieces: a quiet-street treatment or a short protected link
-  that joins two low-stress islands.
-- **The biggest single gains are the CBD arterials:**
-  - Taranaki Street: 929 trips, $2.3M;
-  - The Terrace: 913 trips, $2.9M;
-  - Willis Street: 531 trips, $2.0M;
-  - Jervois Quay: 373 trips, $1.9M;
-  - Tinakori Road: 363 trips, $2.8M;
-  - Tasman and Tory Streets: about 300 each.
-  The Terrace and Willis Street are the two corridors top of both the gap ranking and
-  today's cycling, and both lost their funding with LGWM.
-- **How robust the order is:**
-  - Over 1,000 draws of detour limit (1.15/1.25/1.5), scenario and cost, four candidates are
-    in the top 10 in 80%+ of draws: Wha Street, Ellice Street, Kaiwharawhara Road and Garden
-    Road.
-  - If 150 m of busy street is tolerated (Lowry et al.), 39% of trips are already connected.
-    The short-link fixes then drop out, and only one of the top 10 stays. These stay in the
-    top 20 at both 150 m and 400 m: Takapu Road, Taranaki Street, Willis Street, John Street,
-    Kelburn Parade, Broadway and Carlton Gore Road.
-- **Crash flag.** Crashes are counted within 30 m of each project (CAS, bicycle involved,
-  since 2016). Taranaki Street has 26, The Terrace 21, Willis Street 11. They are shown on the
-  map as a flag, not a weight.
-- **Takapu Road is speculative.** It is a 110 km/h rural stretch (per the speed register) that
-  nobody cycles today. It ranks high because it would join Tawa to Grenada North and Johnsonville.
-  Whether that route is realistic needs checking on the ground.
+- **Cheap fixes come first.** About $1.6M (indicative) lifts connected trips from 37% to 41%.
+  Most are quiet-street treatments on short local links between low-stress areas.
+- **Robust picks:** Bolton Street, Panama Street, Moorefield Road and Chaytor Street are in the
+  top 10 in 80%+ of 1,000 draws of detour limit, scenario, cost and network bonus. Chaytor
+  Street (Karori to Kelburn, 740 trips for about $0.6M) stays in the top 15 even when short
+  busy stretches are tolerated.
+- **Most trips connected, cost aside:**
 
-Outputs: `outputs/tables/cycle_priorities.csv` (all 230 candidates: treatment, cost range,
-trips newly connected by scenario, cycle-km, trips per $M, health value, crashes, plan status,
-rank band, tolerance ranks, build step), `cycle_build_order.csv`, `cycle_connectivity.csv` and
-the map's "Priorities" view.
+  | Project | Trips per weekday | Indicative cost | Plan status |
+  |---|---|---|---|
+  | The Terrace | 1,089 | $2.9M | unfunded (ex-LGWM) |
+  | Willis Street | 944 | $2.0M | unfunded (ex-LGWM) |
+  | Chaytor Street | 739 | $0.6M | unfunded (ex-LGWM) |
+  | Takapu Road | 592 | $1.0M | not in plan |
+  | Para Street, Miramar | 527 | $0.9M | not in plan |
+  | Broderick Road | 487 | $1.5M | planned |
+  | Lambton Quay | 470 | $2.4M | unfunded (ex-LGWM) |
+- **Bunny Street** (two-way, joining Thorndon Quay to the waterfront) ranks 25th on value (118
+  trips, about $0.44M) and 36th on trips. The model credits only trips that have no
+  low-stress route within 25% today. The built protected lane on Waterloo Quay already gives
+  many waterfront–Thorndon trips such a route. Its network value (a continuous Thorndon–waterfront spine) is what the bonus
+  tries to capture, and a trip model understates it.
+- **Tolerance matters for the cheap fixes.** If 150 m of busy street is tolerated, 5 of the top
+  10 stay in the top 10; at 400 m, 1 of 10 stays.
+- **Crash flag:** CAS bicycle crashes since 2016 within 30 m of each project, shown on the map
+  (not a weight).
+- **Takapu Road is speculative.** It is a 110 km/h rural stretch (per the speed register) that
+  nobody cycles today.
+
+Outputs: `outputs/tables/cycle_priorities.csv` (every candidate: source, treatment, cost range,
+trips newly connected by scenario, cycle-km, trips per $M, network ends joined, score, health
+value, crashes, plan status, rank band, rank by trips, tolerance ranks, build step),
+`cycle_build_order.csv`, `cycle_connectivity.csv` and the map's "Priorities" view (rank by best
+value or most trips).
 
 **Limitations**
 - **Connectivity counts outbound trips.** Return trips roughly double them, but
@@ -696,6 +711,8 @@ the map's "Priorities" view.
   crossing, which is conservative. Ignoring crossings adds 2–5 points of connectivity.
 - **The build order tests candidates one at a time.** It re-scores after each step, but it
   doesn't test pairs of adjacent links that only pay off together.
+- **Calibration predates property-level homes.** The route-choice factors were fitted with SA1
+  centroids and not refitted.
 - **Non-commute trips are modelled from UK travel-survey ratios**, not measured in
   Wellington; the counters can't confirm them.
 - **Counts are below the modelled flows at matched sites.** Some countlines see only one

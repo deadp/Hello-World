@@ -1,12 +1,12 @@
 step,name,connected,connected_pct,cum_cost,treatment,cost,dT,dT_per_M,score,grid_ends
 0,Today,22061.337,37.186,0.0,,,,,,
 1,Bolton Street,22220.608,37.454,0.075,Quiet street (30 km/h + filter),0.075,159.271,2119.469,2649.337,1.0
-2,Moorefield Road,22588.309,38.074,0.325,Protected lane,0.25,367.701,1470.803,2206.205,2.0
-3,Oxford Street,22707.196,38.274,0.385,Quiet street (30 km/h + filter),0.06,118.887,1982.919,1982.919,0.0
-4,Duncan Street,22824.67,38.472,0.453,Quiet street (30 km/h + filter),0.068,117.474,1739.507,2174.383,1.0
-5,Chaytor Street,23564.369,39.719,1.031,Protected lane,0.578,739.7,1279.877,1919.815,2.0
-6,Garden Road,23646.435,39.857,1.115,Quiet street (30 km/h + filter),0.085,82.066,970.444,1213.055,1.0
-7,Stone Street,23716.702,39.976,1.177,Quiet street (30 km/h + filter),0.062,70.267,1141.584,1141.584,0.0
-8,Cockayne Road at Lucknow Terrace,23992.439,40.441,1.427,Raised zebra / refuge,0.25,275.738,1102.951,1102.951,0.0
-9,Maupuia Road,24100.776,40.623,1.55,Quiet street (30 km/h + filter),0.124,108.336,875.104,1093.879,1.0
-10,Taurima Street,24271.804,40.912,1.8,Protected lane,0.25,171.028,684.113,1026.169,2.0
+2,Panama Street,22346.63,37.667,0.125,Quiet street (30 km/h + filter),0.05,126.022,2520.433,2520.433,0.0
+3,Moorefield Road,22717.461,38.292,0.375,Protected lane,0.25,370.832,1483.327,2224.99,2.0
+4,Oxford Street,22836.349,38.492,0.435,Quiet street (30 km/h + filter),0.06,118.887,1982.919,1982.919,0.0
+5,Duncan Street,22953.822,38.69,0.503,Quiet street (30 km/h + filter),0.068,117.474,1739.507,2174.383,1.0
+6,Chaytor Street,23699.732,39.947,1.081,Protected lane,0.578,745.91,1290.622,1935.933,2.0
+7,Garden Road,23782.125,40.086,1.165,Quiet street (30 km/h + filter),0.085,82.393,974.317,1217.896,1.0
+8,Stone Street,23852.392,40.205,1.227,Quiet street (30 km/h + filter),0.062,70.267,1141.584,1141.584,0.0
+9,Cockayne Road at Lucknow Terrace,24130.787,40.674,1.477,Raised zebra / refuge,0.25,278.395,1113.581,1113.581,0.0
+10,Maupuia Road,24239.651,40.857,1.6,Quiet street (30 km/h + filter),0.124,108.864,879.361,1099.202,1.0
