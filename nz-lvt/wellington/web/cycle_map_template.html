@@ -173,6 +173,7 @@ const BUILD = __BUILD__;
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fmt = v => v == null || isNaN(v) ? "–" : Math.round(v).toLocaleString("en-NZ");
 const GAP_MIN = 250;
+const money = v => v == null ? "–" : v < 1 ? "$" + Math.round(v * 1000 / 10) * 10 + "k" : "$" + v.toFixed(1) + "M";
 const SCEN = {census: "Today", godutch: "Go Dutch", ebike: "E-bike", local: "Wellington habits"};
 const MODES = PRI ? {priorities: "Priorities", gaps: "Gaps", facility: "Facilities", plan: "Council plan"} : {gaps: "Gaps", facility: "Facilities", plan: "Council plan"};
 const PLAN_COL = {"Built or underway": "--built", "Planned (WCC)": "--planned", "Unfunded (ex-LGWM)": "--lgwm",
@@ -274,7 +275,7 @@ if (PRI) {
       l = L.geoJSON(f, {style: () => priStyle(p)});
     }
     l.on("mouseover", e => { tip.hidden = false; moveTip(e.originalEvent);
-      tip.innerHTML = `<b>#${p.rank} ${p.name}</b><br>${p.treatment} · ~$${p.cost.toFixed(1)}M<br>${fmt(p.dT_godutch)} Go Dutch trips a day newly connected${p.build_step ? "<br>Build order step " + p.build_step : ""}`; });
+      tip.innerHTML = `<b>#${p.rank} ${p.name}</b><br>${p.treatment} · ~${money(p.cost)}<br>${fmt(p.dT_godutch)} Go Dutch trips a day newly connected${p.build_step ? "<br>Build order step " + p.build_step : ""}`; });
     l.on("mousemove", e => moveTip(e.originalEvent));
     l.on("mouseout", () => { tip.hidden = true; });
     l.on("click", () => selectPriority(p.rank));
@@ -398,7 +399,7 @@ function selectPriority(rank) {
     <span class="chip" style="color:var(${PLAN_COL[p.plan] || "--none"})">${p.plan}</span>
     <dl class="kv"><dt>Treatment</dt><dd style="font-family:var(--sans)">${p.treatment}</dd>
     ${p.length_m ? `<dt>Length</dt><dd>${(p.length_m / 1000).toFixed(1)} km</dd>` : ""}
-    <dt>Indicative cost</dt><dd>$${p.cost_low.toFixed(1)}–${p.cost_high.toFixed(1)}M</dd>
+    <dt>Indicative cost</dt><dd>${money(p.cost_low)}–${money(p.cost_high)}</dd>
     <dt>Trips newly connected (Go Dutch)</dt><dd>${fmt(p.dT_godutch)}</dd>
     <dt>… with Wellington habits</dt><dd>${fmt(p.dT_local)}</dd>
     <dt>… cycled today</dt><dd>${fmt(p.dT_census)}</dd>
@@ -418,7 +419,7 @@ function renderList() {
     document.querySelector(".listhead span").textContent = "trips per $M";
     PRI.features.map(f => f.properties).filter(p => p.rank <= 40).forEach(p => {
       const b = document.createElement("button"); b.type = "button"; b.dataset.pri = p.rank;
-      b.innerHTML = `<span class="rk">${p.rank}</span><span class="nm">${p.name}</span><span class="tr">${fmt(p.dT_per_M)}</span><span class="sb">${p.treatment} · $${p.cost.toFixed(1)}M${p.build_step ? " · step " + p.build_step : ""}</span>${planChip(p.plan)}`;
+      b.innerHTML = `<span class="rk">${p.rank}</span><span class="nm">${p.name}</span><span class="tr">${fmt(p.dT_per_M)}</span><span class="sb">${p.treatment} · ${money(p.cost)}${p.build_step ? " · step " + p.build_step : ""}</span>${planChip(p.plan)}`;
       b.onclick = () => selectPriority(p.rank);
       list.appendChild(b);
     });
@@ -447,8 +448,8 @@ if (PRI && S.conn) {
   const robust = PRI.features.filter(f => f.properties.robust_top10).length;
   document.getElementById("priText").textContent = `Candidates ranked by potential trips a weekday newly given a low-stress route per $M (Go Dutch scenario, outbound trips). "Step" is the order a greedy programme would build them, re-scoring after each one. "Range" is the 10–90% rank band across 1,000 draws of detour limit, scenario and cost; ${robust} candidates are in the top 10 in at least 80% of draws. Costs and benefits are indicative, not an NZTA business case.`;
   const P = PRI.features.map(f => f.properties).filter(p => p.rank <= 20);
-  document.getElementById("priTbl").innerHTML = `<thead><tr><th>#</th><th style="text-align:left">Where</th><th style="text-align:left">Treatment</th><th>Cost $M</th><th>Trips connected</th><th>WH</th><th>Per $M</th><th>Range</th><th>Step</th><th>Crashes</th><th style="text-align:left">Plan</th></tr></thead><tbody>` +
-    P.map(p => `<tr><td class="num">${p.rank}</td><td style="text-align:left">${p.name}<br><span style="color:var(--muted);font-size:12.5px">${p.where || ""}</span></td><td style="text-align:left;color:var(--ink2)">${p.treatment}${p.length_m ? ", " + (p.length_m / 1000).toFixed(1) + " km" : ""}</td><td class="num">${p.cost_low.toFixed(1)}–${p.cost_high.toFixed(1)}</td><td class="num">${fmt(p.dT_godutch)}</td><td class="num">${fmt(p.dT_local)}</td><td class="num">${fmt(p.dT_per_M)}</td><td class="num">${fmt(p.rank_p10)}–${fmt(p.rank_p90)}</td><td class="num">${p.build_step || "–"}</td><td class="num">${p.crashes}</td><td style="text-align:left;color:var(${PLAN_COL[p.plan] || "--none"});font-weight:600">${p.plan}</td></tr>`).join("") + "</tbody>";
+  document.getElementById("priTbl").innerHTML = `<thead><tr><th>#</th><th style="text-align:left">Where</th><th style="text-align:left">Treatment</th><th>Cost</th><th>Trips connected</th><th>WH</th><th>Per $M</th><th>Range</th><th>Step</th><th>Crashes</th><th style="text-align:left">Plan</th></tr></thead><tbody>` +
+    P.map(p => `<tr><td class="num">${p.rank}</td><td style="text-align:left">${p.name}<br><span style="color:var(--muted);font-size:12.5px">${p.where || ""}</span></td><td style="text-align:left;color:var(--ink2)">${p.treatment}${p.length_m ? ", " + (p.length_m / 1000).toFixed(1) + " km" : ""}</td><td class="num">${money(p.cost_low)}–${money(p.cost_high)}</td><td class="num">${fmt(p.dT_godutch)}</td><td class="num">${fmt(p.dT_local)}</td><td class="num">${fmt(p.dT_per_M)}</td><td class="num">${fmt(p.rank_p10)}–${fmt(p.rank_p90)}</td><td class="num">${p.build_step || "–"}</td><td class="num">${p.crashes}</td><td style="text-align:left;color:var(${PLAN_COL[p.plan] || "--none"});font-weight:600">${p.plan}</td></tr>`).join("") + "</tbody>";
 }
 
 // Table

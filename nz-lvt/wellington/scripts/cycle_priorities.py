@@ -31,18 +31,20 @@ order, connect the most potential trips per dollar.
 5. Build order: greedy, adding the candidate with the largest dT per $M (Go Dutch, cap 1.25) and
    re-evaluating (links complement each other: a crossing can unlock a quiet street).
 6. Money, indicative only (not an NZTA benefit-cost ratio). Costs per km: quiet street
-   $0.1-0.3M (central 0.2); protected lane $0.75M (Wellington transitional, 2023) to $3.4M
+   $0.1-0.3M (central 0.2), at least $0.03-0.1M a project; protected lane $0.75M (Wellington transitional, 2023) to $3.4M
    (permanent, ~4.5x), central $1.6M (quoted national average); x (1 - 0.4 x one-way share) when
-   only one direction needs it. Crossings: signals $0.5-1.5M (0.8), raised zebra/refuge
+   only one direction needs it, at least $0.1-0.5M (0.25) a project. Crossings: signals $0.5-1.5M (0.8), raised zebra/refuge
    $0.15-0.4M (0.25). Health benefit: NZTA Monetised Benefits and Costs Manual (2023) $4.90 per
    new cyclist-km, on the extra cycling (scenario minus census) of the newly connected trips,
    x 2 for returns x 250 weekdays; low = Wellington habits, high = Go Dutch.
 7. Safety flag: CAS crashes involving a bicycle since 2016 within 30 m of the corridor or
    crossing (not a weight: low cycling suppresses crash counts where riding feels unsafe).
-8. Uncertainty: 1,000 Monte Carlo draws of cap (1.15/1.25/1.5), level-3 tolerance (0/150/400 m),
-   scenario (Go Dutch/e-bike/Wellington habits/census) and cost (uniform in each range). Each draw
-   ranks candidates by dT per $M (single-step); report median rank, 10-90% band and the share of
-   draws in the top 10.
+8. Uncertainty: 1,000 Monte Carlo draws of cap (1.15/1.25/1.5), scenario (Go Dutch/e-bike/
+   Wellington habits/census) and cost (uniform in each range). Each draw ranks candidates by dT
+   per $M (single-step); report median rank, 10-90% band and the share of draws in the top 10
+   ("robust" if >= 80%). The level-3 tolerance is reported separately (rank_tol150, rank_tol400):
+   it redefines the problem (forgiving short busy stretches connects most short gaps outright),
+   so mixing it into the draws only reshuffles the short links.
 
 Writes outputs/tables/cycle_priorities.csv, cycle_build_order.csv, cycle_connectivity.csv and
 outputs/blocks/cycle_priorities.geojson (WGS84, for the web map).
@@ -75,6 +77,8 @@ HEALTH_PER_KM, DAYS = 4.90, 250
 QUIET_ROADS = {"residential", "unclassified", "tertiary", "tertiary_link", "living_street", "service", "road"}
 COST = {"quiet": (0.1, 0.2, 0.3), "protected": (0.75, 1.6, 3.4), "protected_sh": (1.0, 2.0, 3.4),
         "signals": (0.5, 0.8, 1.5), "zebra": (0.15, 0.25, 0.4)}
+# Minimum per project (design, junction works, a filter), so a 90 m link isn't nearly free.
+MIN_COST = {"quiet": (0.03, 0.05, 0.1), "protected": (0.1, 0.25, 0.5), "protected_sh": (0.2, 0.4, 0.8)}
 TREATMENT = {"quiet": "Quiet street (30 km/h + filter)", "protected": "Protected lane",
              "protected_sh": "Protected lane (state highway, NZTA)", "signals": "Signalised crossing",
              "zebra": "Raised zebra / refuge"}
@@ -203,7 +207,7 @@ def candidates(a):
         else:
             kind = "protected"
         f = 1 - 0.4 * r["one_way_share"] if kind != "quiet" else 1.0
-        cost = [x * r["length_m"] / 1000 * f for x in COST[kind]]
+        cost = [max(x * r["length_m"] / 1000 * f, m) for x, m in zip(COST[kind], MIN_COST[kind])]
         rows.append(dict(type="corridor", name=r["street"], where=r["suburbs"], treatment=TREATMENT[kind],
                          kind=kind, length_m=r["length_m"], facility_now=r["facility_now"], max_adt=r["max_adt"],
                          speed=r["speed"], one_way_share=r["one_way_share"], plan=r["plan"],
@@ -296,15 +300,24 @@ def main():
     rng = np.random.default_rng(1)
     ranks = np.zeros((N_DRAWS, len(cand)))
     for b in range(N_DRAWS):
-        ti_, ci, sj = rng.integers(len(TOLS)), rng.integers(len(CAPS)), rng.integers(len(SCEN))
+        ci, sj = rng.integers(len(CAPS)), rng.integers(len(SCEN))
         cost = rng.uniform(cand["cost_low"], cand["cost_high"])
-        score = gains[:, ti_, ci, sj] / cost
+        score = gains[:, i0, ci, sj] / cost
         ranks[b] = pd.Series(score).rank(ascending=False, method="min").values
     cand["rank_median"] = np.median(ranks, axis=0)
     cand["rank_p10"] = np.percentile(ranks, 10, axis=0)
     cand["rank_p90"] = np.percentile(ranks, 90, axis=0)
     cand["top10_share"] = (ranks <= 10).mean(axis=0)
     cand["robust_top10"] = cand["top10_share"] >= 0.8
+    # Tolerance sensitivity: with short busy stretches forgiven, which of today's top 10 stay top 10?
+    top = set(cand["dT_per_M"].rank(ascending=False, method="first").loc[lambda x: x <= 10].index)
+    for ti_, tol in enumerate(TOLS):
+        if tol == TOL0:
+            continue
+        r = pd.Series(gains[:, ti_, c0, s0] / cand["cost"]).rank(ascending=False, method="first")
+        cand[f"rank_tol{int(tol)}"] = r.values
+        print(f"tolerance {tol:.0f} m: {len(top & set(r[r <= 10].index))}/10 of the top 10 stay top 10; "
+              f"connected {base.set_index(['tolerance_m', 'cap', 'scenario']).loc[(tol, CAP0, SCEN0), 'connected_pct']:.1f}%")
 
     # Greedy build order (central case), re-evaluating the best pool each step.
     C = conn[TOL0]
@@ -339,7 +352,7 @@ def main():
             "dT_godutch", "dT_ebike", "dT_local", "dT_census", "dK_godutch", "dT_pct_pts", "dT_per_M",
             "health_M_low", "health_M_high", "crashes", "crashes_serious", "plan", "facility_now", "max_adt",
             "speed", "one_way_share", "gap_rank", "rank_median", "rank_p10", "rank_p90", "top10_share",
-            "robust_top10", "build_step"]
+            "robust_top10", "rank_tol150", "rank_tol400", "build_step"]
     cand[cols].round(3).to_csv(TABLES / "cycle_priorities.csv", index=False)
     pd.DataFrame(steps).round(3).to_csv(TABLES / "cycle_build_order.csv", index=False)
     base.round(3).to_csv(TABLES / "cycle_connectivity.csv", index=False)

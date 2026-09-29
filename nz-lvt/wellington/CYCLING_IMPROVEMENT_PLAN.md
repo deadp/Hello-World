@@ -1,12 +1,15 @@
 # Wellington cycle gap analysis: improvement plan
 
-**Status (29 Sep 2026): phases 0–3 are done.** The results are in the README section
+**Status (29 Sep 2026): phases 0–5 are done.** The results are in the README section
 "Where should new cycle connections go?".
 
 Changes from what's planned below:
 - Calibration compares counts per sensor, because one camera covers a road and its path.
-- The best fit is stress factors 2/3 and a climb weight of 20.
-- Agreement with the counts rose from 0.44 to 0.55.
+- The best fit is stress factors 2/3 and a climb weight of 30.
+- Shared paths beside roads of 70 km/h+ or 20,000+ vehicles/day (Aotea Quay) rate level 2, and
+  routing costs them 1.25× their length. This came from local feedback ("a footpath next to a
+  motorway"), and the counters back it: agreement rises from 0.56 to 0.60 (0.48 with the first
+  version's guesses).
 
 Phase 3 is done:
 - Schools use the MoE directory and PCT school models.
@@ -14,7 +17,13 @@ Phase 3 is done:
 - The Wellington uptake model is fitted. It shows no hill penalty in census data (selection) and
   a weak protection effect, and serves as a lower-bound scenario.
 
-Phases 4–5 (prioritisation, map layers) are next.
+Phases 4–5 are done (`cycle_priorities.py`, the map's Priorities view). Changes from the plan:
+- Trip ends get a 150 m access allowance on any street.
+- The LTS 3 tolerance is an arc-level approximation, reported as a sensitivity and not mixed
+  into the Monte Carlo draws.
+- The crash flag is a raw count within 30 m, not empirical-Bayes smoothed.
+- "Parallel route" and adjacent-pair candidates are not built; the greedy re-scoring partly
+  covers complementarity.
 
 This plan comes from four research reviews carried out on 2026-09-29, each checked against the current code:
 

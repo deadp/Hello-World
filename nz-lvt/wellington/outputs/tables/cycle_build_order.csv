@@ -1,0 +1,12 @@
+step,name,connected,connected_pct,cum_cost,treatment,cost,dT,dT_per_M
+0,Today,10626.282,18.262,0.0,,,,
+1,Wha Street,10815.271,18.587,0.05,Quiet street (30 km/h + filter),0.05,188.989,3779.783
+2,Ellice Street,10921.354,18.769,0.1,Quiet street (30 km/h + filter),0.05,106.083,2121.655
+3,Kaiwharawhara Road,11212.776,19.27,0.35,Protected lane,0.25,291.422,1165.689
+4,Garden Road,11268.155,19.365,0.435,Quiet street (30 km/h + filter),0.085,55.379,654.868
+5,Takapu Road,11846.748,20.359,1.448,Protected lane,1.013,578.593,570.897
+6,Whitmore Street,11967.498,20.567,1.698,Protected lane,0.25,120.75,482.998
+7,Taranaki Street,12901.736,22.172,3.727,Protected lane,2.029,934.238,460.426
+8,Friend Street,12935.455,22.23,3.806,Quiet street (30 km/h + filter),0.079,33.719,427.022
+9,Karori Road,13099.669,22.512,4.17,Protected lane,0.364,164.213,451.185
+10,Garden Road at Glenmore Street,13200.219,22.685,4.42,Raised zebra / refuge,0.25,100.55,402.199

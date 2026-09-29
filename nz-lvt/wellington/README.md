@@ -459,11 +459,11 @@ $1,200–2,000 in demand-based trunk and treatment.
 ## Where should new cycle connections go?
 
 This is a Propensity to Cycle Tool (PCT) style analysis. The scripts are, in order:
-`fetch_cycling.py`, `cycle_network.py`, `cycle_model.py`, `cycle_validate.py`, `cycle_gaps.py`
-and `build_cycle_map.py`. The outputs are the interactive map
+`fetch_cycling.py`, `cycle_network.py`, `cycle_model.py`, `cycle_validate.py`, `cycle_gaps.py`,
+`cycle_priorities.py` and `build_cycle_map.py`. The outputs are the interactive map
 `outputs/web/wellington_cycle_gaps.html` and the static map `outputs/figures/cycle_gaps.png`.
 The research behind version 3, and the remaining steps, are in `CYCLING_IMPROVEMENT_PLAN.md`
-(phases 0–2 are done).
+(phases 0–5 are done).
 
 **Method (version 3)**
 1. **Trips.** 2023 Census main means of travel to work and to education, from SA2 of
@@ -485,20 +485,28 @@ The research behind version 3, and the remaining steps, are in `CYCLING_IMPROVEM
      1/20, CROW, Auckland Transport's design code). 30 km/h streets under ~3,000
      vehicles/day are fine to share. One-way streets count 1.5× traffic. Descents over 4%
      on streets of 50 km/h or less rate one speed band lower.
+   - **Paths beside motorway-like roads:** a shared path, footway or parallel path beside a
+     road of 70 km/h+ or 20,000+ vehicles/day is separated but noisy and exposed, "a footpath
+     next to a motorway". These rate level 2, not 1: 28 km, including 1.9 km of Aotea Quay's
+     path and the Hutt Road paths beside SH1/SH2. Kerbed cycle tracks and protected lanes
+     stay level 1.
    - **Crossing stress** at unsignalised junctions. Signals, or a zebra/marked crossing on
      roads of 50 km/h or less and 8,000 vehicles/day or less, count as level 2.
 3. **Routing, calibrated against counters.** Cost = metres × stress factor + climb weight ×
-   metres climbed + crossing penalty. The factors were fitted to WCC's VivaCity sensors:
+   metres climbed + crossing penalty, × a roadside factor on paths beside motorway-like roads.
+   The factors were fitted to WCC's VivaCity sensors:
    - Data: average weekday cyclists over the last 12 months, on days each sensor was up
      95%+ of the time, compared per camera.
-   - Grid: 50 runs.
+   - Grid: 36 runs (stress × climb × roadside factor).
    - Best fit: level 3 streets cost 2.0× their length and level 4 streets
-     3.0×, each metre climbed costs 20 m, and busy unsignalised
-     crossings add 30–80 m.
+     3.0×, each metre climbed costs 30 m, busy unsignalised
+     crossings add 30–80 m, and a path beside a motorway-like road costs 1.25× its length.
    - Fit improvement: agreement with the counts (log correlation, 105 sensors) rises
-     from **0.44** with the first version's guessed factors to
-     **0.55** (rank correlation 0.61). On the 21 bike countlines
-     alone it is 0.73.
+     from **0.48** with the first version's guessed factors to
+     **0.60** (rank correlation 0.65).
+   - The roadside factor is supported by the counts: at the best stress and climb settings,
+     agreement is 0.56 without it (1.0), 0.60 at 1.25 and 0.58 at 1.5. Riders use Aotea Quay's
+     path, but less than its directness would suggest.
    - Meaning: Wellington riders avoid busy roads and hills about twice as strongly as first
      assumed.
 4. **Uptake.** The PCT's production Go Dutch model (2020 coefficients, gradient centred at
@@ -535,14 +543,14 @@ The research behind version 3, and the remaining steps, are in `CYCLING_IMPROVEM
   streets and share protected. Findings:
   - **Distance:** cycling peaks at 4–8 km (9.5% of those commuters). Shorter trips are walked.
   - **Hills:** no hill penalty in Wellington's census data (gradient
-    +0.21, p 0.000). This reflects who cycles (committed riders, e-bikes), not
+    +0.23, p 0.000). This reflects who cycles (committed riders, e-bikes), not
     the physics, so the hill effect can't be estimated from census shares.
-  - **Protection:** share of route protected +0.44 (p 0.06); share on
-    busy streets -0.19 (p 0.50). There's no detectable extra
+  - **Protection:** share of route protected +0.45 (p 0.06); share on
+    busy streets -0.27 (p 0.36). There's no detectable extra
     2018→2023 gain on now-protected routes; several opened after the March 2023 census.
   - **Scenario:** with Wellingtonians' current habits and every route made low-stress,
     commuter cycling on these pairs goes from 6.2% to
-    7.0%, against
+    7.1%, against
     20% under Go Dutch.
   - **Role:** the "Wellington habits" scenario is a cautious lower bound and Go Dutch the
     aspiration.
@@ -551,55 +559,139 @@ The research behind version 3, and the remaining steps, are in `CYCLING_IMPROVEM
 
 | Trips | Trips/weekday | Mean km | Today | Go Dutch | E-bike | Wellington habits |
 |---|---|---|---|---|---|---|
-| work | 97,035 | 7.3 | 3.4% | 19.3% | 28.1% | 7.6% |
-| primary | 13,941 | 3.0 | 2.3% | 14.8% | 14.8% | 2.3% |
-| secondary | 14,868 | 5.0 | 0.9% | 46.5% | 46.5% | 0.9% |
-| tertiary | 18,432 | 4.8 | 0.6% | 16.9% | 27.4% | 6.4% |
-| shopping | 104,553 | 3.4 | 1.7% | 12.7% | 17.7% | 3.5% |
-| visiting | 48,736 | 5.6 | 3.5% | 17.7% | 28.1% | 7.4% |
-| leisure | 26,242 | 5.2 | 3.5% | 20.2% | 30.4% | 7.4% |
-| all | 323,807 | 5.2 | 2.5% | 17.9% | 25.2% | 5.6% |
+| work | 97,035 | 7.3 | 3.4% | 19.5% | 28.3% | 7.7% |
+| primary | 13,941 | 3.0 | 2.3% | 15.0% | 15.0% | 2.3% |
+| secondary | 14,868 | 5.0 | 0.9% | 46.9% | 46.9% | 0.9% |
+| tertiary | 18,432 | 4.8 | 0.6% | 17.1% | 27.5% | 6.6% |
+| shopping | 104,553 | 3.4 | 1.7% | 12.9% | 17.8% | 3.5% |
+| visiting | 48,736 | 5.6 | 3.5% | 18.0% | 28.4% | 7.6% |
+| leisure | 26,242 | 5.2 | 3.5% | 20.5% | 30.7% | 7.5% |
+| all | 323,807 | 5.2 | 2.5% | 18.1% | 25.4% | 5.7% |
 
-- **Where potential cycling would ride (Go Dutch, all trips):** 52% on protected routes, 27%
-  on quiet streets, 21% on busy unprotected streets.
+- **Where potential cycling would ride (Go Dutch, all trips):** 51% on protected routes, 27%
+  on quiet streets, 22% on busy unprotected streets.
 - **The ranking is robust to the uptake model:**
-  - Go Dutch vs Wellington habits: rank correlation 0.92, and 14 of the top 20 are shared.
+  - Go Dutch vs Wellington habits: rank correlation 0.91, and 13 of the top 20 are shared.
   - Go Dutch vs today's cycling: 10 of the top 20 are shared. Potential also points to the
     northern suburbs.
 - **The safest bets** are high on all three measures: The Terrace, Willis Street, Victoria
-  Street, Rintoul Street, Rongotai Road, Riddiford Street, and Newtown's Mein and Daniell
+  Street, Rintoul Street, Featherston Street, and Newtown's Mein, Daniell and Riddiford
   Streets.
 - **Top 20 vs the council's 2022 plan:**
   - 9 planned by the council;
-  - 5 staged under LGWM, now unfunded (Willis, The Terrace, Victoria, Rintoul, Courtenay
-    Place);
+  - 5 staged under LGWM, now unfunded (Willis, The Terrace, Victoria, Rintoul, Featherston);
   - 6 not in the plan: Takapu Road (speculative: rural, 60–100 km/h, nobody cycles it today),
     Mein Street, Daniell Street, Tauhinu Road, Ghuznee Street.
 
 | # | Street | Suburbs | Today | Go Dutch | Rank (Wellington habits) | Rank (today) | km/h | Vehicles/day | Facility now | Plan |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 1 | Middleton Road | Glenside, Churton Park, Johnsonville | 61 | 1,551 | 1 | 6 | 50 | 6,985 | none | Planned (WCC) |
-| 2 | Takapu Road | Tawa, Grenada North, Takapu Valley | 3 | 1,071 | 2 | 144 | 60 | 17,549 | none | Not in plan |
-| 3 | Willis Street | Te Aro, Wellington Central, Aro Valley | 292 | 1,862 | 4 | 2 | 30 | 11,034 | none | Unfunded (ex-LGWM) |
-| 4 | The Terrace | Wellington Central | 1,027 | 2,748 | 3 | 1 | 30 | 14,579 | none | Unfunded (ex-LGWM) |
-| 5 | Victoria Street | Te Aro, Wellington Central, Mt Cook | 246 | 1,425 | 9 | 8 | 30 | 12,326 | sharrows | Unfunded (ex-LGWM) |
-| 6 | Park Road | Miramar | 112 | 948 | 23 | 21 | 50 | 11,691 | none | Planned (WCC) |
-| 7 | Burma Road | Broadmeadows, Khandallah, Johnsonville | 69 | 731 | 15 | 29 | 50 | 14,678 | none | Planned (WCC) |
-| 8 | Riddiford Street | Newtown | 355 | 1,692 | 18 | 10 | 40 | 14,904 | none | Planned (WCC) |
-| 9 | Takapu Road | – | 1 | 1,485 | 45 | 204 | 110 | 500 | none | Not in plan |
-| 10 | Mein Street | Newtown | 337 | 1,684 | 17 | 11 | 40 | 6,744 | none | Not in plan |
-| 11 | Daniell Street | Newtown | 334 | 1,477 | 16 | 9 | 40 | 5,000 | none | Not in plan |
-| 12 | Rintoul Street | Newtown | 2,171 | 6,187 | 13 | 3 | 50 | 3,892 | sharrows (one way) | Unfunded (ex-LGWM) |
-| 13 | Rongotai Road | Kilbirnie | 730 | 3,601 | 14 | 12 | 30 | 8,079 | sharrows | Planned (WCC) |
-| 14 | Broadway | Strathmore Park, Miramar | 283 | 1,396 | 24 | 14 | 50 | 9,964 | none | Planned (WCC) |
-| 15 | Willowbank Road | Tawa | 61 | 1,834 | 5 | 113 | 50 | 4,184 | none | Planned (WCC) |
-| 16 | Helston Road | Johnsonville, Paparangi | 46 | 750 | 8 | 68 | 50 | 14,060 | none | Planned (WCC) |
-| 17 | Tauhinu Road | Miramar | 272 | 1,700 | 27 | 24 | 50 | 7,970 | none | Not in plan |
-| 18 | Newlands Road | Newlands | 140 | 1,037 | 7 | 33 | 50 | 15,669 | none | Planned (WCC) |
-| 19 | Courtenay Place | Te Aro | 179 | 1,072 | 41 | 25 | 30 | 8,700 | bus lane | Unfunded (ex-LGWM) |
-| 20 | Ghuznee Street | Te Aro | 111 | 1,299 | 44 | 56 | 30 | 12,835 | none | Not in plan |
+| 1 | Middleton Road | Glenside, Churton Park, Johnsonville | 63 | 1,589 | 1 | 6 | 50 | 6,985 | none | Planned (WCC) |
+| 2 | Takapu Road | Tawa, Grenada North, Takapu Valley | 4 | 1,076 | 2 | 149 | 60 | 17,549 | none | Not in plan |
+| 3 | Willis Street | Te Aro, Wellington Central, Aro Valley | 300 | 1,898 | 4 | 2 | 30 | 11,034 | none | Unfunded (ex-LGWM) |
+| 4 | The Terrace | Wellington Central | 828 | 2,302 | 3 | 1 | 30 | 14,579 | none | Unfunded (ex-LGWM) |
+| 5 | Victoria Street | Te Aro, Wellington Central, Mt Cook | 303 | 1,587 | 8 | 5 | 30 | 12,326 | sharrows | Unfunded (ex-LGWM) |
+| 6 | Park Road | Miramar | 106 | 931 | 24 | 22 | 50 | 11,691 | none | Planned (WCC) |
+| 7 | Burma Road | Broadmeadows, Khandallah, Johnsonville | 75 | 765 | 15 | 28 | 50 | 14,678 | none | Planned (WCC) |
+| 8 | Newlands Road | Newlands | 100 | 770 | 6 | 21 | 50 | 15,669 | none | Planned (WCC) |
+| 9 | Takapu Road | – | 1 | 1,482 | 44 | 213 | 110 | 500 | none | Not in plan |
+| 10 | Broadway | Strathmore Park, Miramar | 250 | 1,276 | 23 | 11 | 50 | 12,659 | none | Planned (WCC) |
+| 11 | Rintoul Street | Newtown | 2,175 | 6,222 | 13 | 3 | 50 | 3,892 | sharrows (one way) | Unfunded (ex-LGWM) |
+| 12 | Mein Street | Newtown | 324 | 1,636 | 19 | 12 | 40 | 6,744 | none | Not in plan |
+| 13 | Riddiford Street | Newtown | 302 | 1,579 | 22 | 13 | 40 | 14,904 | none | Planned (WCC) |
+| 14 | Daniell Street | Newtown | 317 | 1,424 | 18 | 10 | 40 | 5,000 | none | Not in plan |
+| 15 | Helston Road | Johnsonville, Paparangi | 49 | 792 | 9 | 65 | 50 | 14,060 | none | Planned (WCC) |
+| 16 | Willowbank Road | Tawa | 62 | 1,860 | 5 | 121 | 50 | 4,184 | none | Planned (WCC) |
+| 17 | Tauhinu Road | Miramar | 264 | 1,698 | 28 | 25 | 50 | 7,970 | none | Not in plan |
+| 18 | Featherston Street | Wellington Central, Pipitea | 378 | 1,430 | 16 | 9 | 30 | 7,923 | sharrows | Unfunded (ex-LGWM) |
+| 19 | Rongotai Road | Kilbirnie | 540 | 3,094 | 21 | 23 | 30 | 8,079 | sharrows | Planned (WCC) |
+| 20 | Ghuznee Street | Te Aro | 108 | 1,388 | 38 | 59 | 30 | 12,835 | none | Not in plan |
+
+**Phase 4–5: what to build first (`cycle_priorities.py`)**
+
+The gap ranking above says where potential riders meet traffic. It doesn't say which fix joins
+up the most trips per dollar. The prioritisation does, in these steps:
+
+- **Connectivity.** A trip is *connected* when its low-stress route (stress 1–2, ending at
+  crossings of stress 1–2) is at most 25% longer than its shortest route (Furth, Mekuria &
+  Nixon). The first and last 150 m may be on any street, since homes and workplaces on arterials
+  are reached along the kerb. Without that allowance only 4.5% of trips are connected, mostly
+  because endpoints snap to arterial nodes.
+- **Today:** 18% of potential (Go Dutch) trips are connected. So are 15% of the trips people
+  cycle today, and 23% with a 50% detour allowed. About 77% of network length is low stress,
+  but it is split into islands by the arterials. The largest island holds only 17% of trip
+  origins.
+- **Candidates:** 230 in total.
+  - The 150 biggest corridor gaps (any level 3–4 direction with 30+ Go Dutch trips). Each gets
+    a treatment: a *quiet street* (30 km/h and a modal filter) where the road is local or
+    collector, ≤50 km/h and ≤3,000 vehicles/day; a *protected lane* otherwise.
+  - The 80 busiest unsignalised crossings of busy roads. Each gets signals where the road
+    carries over 8,000 vehicles/day or is faster than 50 km/h, otherwise a raised zebra or
+    refuge.
+- **Benefit, exact.** Each candidate is added to the low-stress network and the trips newly
+  connected are counted with an exact shortcut: new distance = min(old, via the tail of any
+  new arc). It runs in about 3 minutes for all 230 × 3 settings.
+- **Costs are indicative, not engineers' estimates.**
+  - Quiet street: $0.1–0.3M/km, at least $30–100k a project.
+  - Protected lane: $0.75M/km (Wellington transitional, 2023) to $3.4M/km (permanent), central
+    $1.6M; ×0.6 when only one direction needs it; at least $0.1–0.5M a project.
+  - Crossings: signals $0.5–1.5M; raised zebra $0.15–0.4M.
+- **Health value:** NZTA MBCM $4.90 per new cyclist-km, on the extra cycling of newly
+  connected trips. Low = Wellington habits, high = Go Dutch. Not an NZTA benefit–cost ratio.
+
+**Build order** (greedy: add the best trips per $M, then re-score the rest):
+
+| Step | Project | Treatment | Cost | Go Dutch trips newly connected | % connected after |
+|---|---|---|---|---|---|
+| – | Today | | | | 18.3% |
+| 1 | Wha Street, Lyall Bay | Quiet street | $50k | 189 | 18.6% |
+| 2 | Ellice Street, Mt Victoria | Quiet street | $50k | 106 | 18.8% |
+| 3 | Kaiwharawhara Road (short link) | Protected lane | $250k | 291 | 19.3% |
+| 4 | Garden Road, Northland | Quiet street | $85k | 55 | 19.4% |
+| 5 | Takapu Road | Protected lane | $1.0M | 579 | 20.4% |
+| 6 | Whitmore Street | Protected lane | $250k | 121 | 20.6% |
+| 7 | Taranaki Street | Protected lane | $2.0M | 934 | 22.2% |
+| 8 | Friend Street, Karori | Quiet street | $80k | 34 | 22.2% |
+| 9 | Karori Road (short link) | Protected lane | $360k | 164 | 22.5% |
+| 10 | Garden Road at Glenmore Street | Raised zebra | $250k | 101 | 22.7% |
+
+What this shows:
+- **Cheap fixes come first.** About $4.4M (indicative) lifts connected trips from 18% to 23%.
+  The first steps are short missing pieces: a quiet-street treatment or a short protected link
+  that joins two low-stress islands.
+- **The biggest single gains are the CBD arterials:**
+  - Taranaki Street: 920 trips, $2.0M;
+  - The Terrace: 913 trips, $2.9M;
+  - Willis Street: 531 trips, $2.0M;
+  - Tasman, Tinakori and Tory Streets: about 300 each.
+  The Terrace and Willis Street are the two corridors top of both the gap ranking and
+  today's cycling, and both lost their funding with LGWM.
+- **How robust the order is:**
+  - Over 1,000 draws of detour limit (1.15/1.25/1.5), scenario and cost, four candidates are
+    in the top 10 in 80%+ of draws: Wha Street, Ellice Street, Kaiwharawhara Road and Garden
+    Road.
+  - If 150 m of busy street is tolerated (Lowry et al.), 34% of trips are already connected.
+    The short-link fixes then drop out, and only one of the top 10 stays. Three larger projects
+    stay in or near the top 20 at both 150 m and 400 m: Taranaki Street, Jervois Quay and Takapu
+    Road.
+- **Crash flag.** Crashes are counted within 30 m of each project (CAS, bicycle involved,
+  since 2016). Taranaki Street has 26, The Terrace 21, Willis Street 11. They are shown on the
+  map as a flag, not a weight.
+- **Takapu Road is speculative.** It is a 110 km/h rural stretch (per the speed register) that
+  nobody cycles today. It ranks high because it would join Tawa to Grenada North and Johnsonville.
+  Whether that route is realistic needs checking on the ground.
+
+Outputs: `outputs/tables/cycle_priorities.csv` (all 230 candidates: treatment, cost range,
+trips newly connected by scenario, cycle-km, trips per $M, health value, crashes, plan status,
+rank band, tolerance ranks, build step), `cycle_build_order.csv`, `cycle_connectivity.csv` and
+the map's "Priorities" view.
 
 **Limitations**
+- **Connectivity counts outbound trips.** Return trips roughly double them, but
+  one-way streets can differ.
+- **Crossing stress is per junction, not per turn.** A left turn onto a busy road counts as a
+  crossing, which is conservative. Ignoring crossings adds 2–5 points of connectivity.
+- **The build order tests candidates one at a time.** It re-scores after each step, but it
+  doesn't test pairs of adjacent links that only pay off together.
 - **Non-commute trips are modelled from UK travel-survey ratios**, not measured in
   Wellington; the counters can't confirm them.
 - **Counts are below the modelled flows at matched sites.** Some countlines see only one
@@ -689,10 +781,11 @@ python scripts/explain_property.py "Onslow Road" --type House --v2
 python scripts/fetch_cycling.py   # OSM streets/paths, WCC LiDAR DEM, bike plan, census travel OD
 python scripts/cycle_network.py   # direction-aware network: facilities, speeds, traffic stress, crossings
 python scripts/fetch_cycling.py --extras  # NZTA speed limits + SH traffic, OSM signals, WCC sensor counts
-python scripts/cycle_validate.py  # calibrate route choice against sensor counts (~15 min)
+python scripts/cycle_validate.py  # calibrate route choice against sensor counts (~30 min)
 python scripts/cycle_uptake_fit.py  # Wellington uptake model (2018 + 2023 census), writes cycle_uptake_local.json
 python scripts/cycle_model.py     # all trip streams, Go Dutch / e-bike / Wellington-habits potential (uses calibration)
 python scripts/cycle_gaps.py      # gap corridors vs council plan; map data and figure
+python scripts/cycle_priorities.py  # connectivity, candidate treatments and costs, build order (~8 min)
 python scripts/build_cycle_map.py # outputs/web/wellington_cycle_gaps.html   # incl. local cost under each sharing rule
 ```
 
