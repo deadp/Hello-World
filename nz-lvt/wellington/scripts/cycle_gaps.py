@@ -45,7 +45,7 @@ GAP_MIN_DIR = 60  # in the stressful direction
 PROTECTED = {"track", "protected_lane", "sidepath", "seg_path", "shared_path", "shared_footway"}
 LANE = {"painted_lane", "buffered_lane", "bus_lane"}
 MAP_MIN_FLOW = 40
-SCEN = ["census", "godutch", "ebike"]
+SCEN = ["census", "godutch", "ebike", "local"]
 
 
 def plan_status(stage, klass):
@@ -117,6 +117,7 @@ def corridors(e):
             "godutch_cyc_km": (x["hs_flow_godutch"] * L).sum() / 1000,
             "ebike_cyc_km": (x["hs_flow_ebike"] * L).sum() / 1000,
             "census_cyc_km": (x["hs_flow_census"] * L).sum() / 1000,
+            "local_cyc_km": (x["hs_flow_local"] * L).sum() / 1000,
             "godutch_trips": (x["flow_godutch"] * L).sum() / L.sum(),
             "ebike_trips": (x["flow_ebike"] * L).sum() / L.sum(),
             "census_trips": (x["flow_census"] * L).sum() / L.sum(),
@@ -134,6 +135,9 @@ def corridors(e):
     c = g.groupby("corridor").apply(agg)
     c = c[c["length_m"] >= 60].sort_values("godutch_cyc_km", ascending=False)
     c["rank"] = np.arange(1, len(c) + 1)
+    # Robustness: rank the same corridors under the census flows and the Wellington-fitted model.
+    for s in ("local", "census"):
+        c[f"rank_{s}"] = c[f"{s}_cyc_km"].rank(ascending=False, method="min").astype(int)
     g["rank"] = g["corridor"].map(c["rank"])
     return c, g
 
@@ -191,7 +195,8 @@ def crossings(e_all, e):
 def export(e, g, xing):
     m = e[(e["flow_godutch"] >= MAP_MIN_FLOW) | e["protected"] | e["plan"].ne("Not in plan")].copy()
     m["rank"] = g["rank"].reindex(m.index)
-    m = m[["geometry", "name", "flow_census", "flow_godutch", "flow_ebike", "flow_godutch_fw", "flow_godutch_bw",
+    m = m[["geometry", "name", "flow_census", "flow_godutch", "flow_ebike", "flow_local", "flow_godutch_fw",
+           "flow_godutch_bw",
            "lts", "lts_fw", "lts_bw", "can_fw", "can_bw", "facility", "fac_fw", "fac_bw", "plan", "adt", "speed",
            "gap", "gap_dir", "rank"]]
     for c in m.columns:
@@ -251,7 +256,8 @@ def figure(e, c):
     ax.set_axis_off()
     title(ax, "Where Wellington needs protected cycle connections",
           "Potential cycling if the city cycled like the Netherlands (PCT Go Dutch, hill-adjusted),\n"
-          "2023 census work and education trips. Line width = trips per weekday. Numbers = top corridors.")
+          "2023 census work and education trips plus shopping, visiting and leisure trips.\n"
+          "Line width = trips per weekday. Numbers = top corridors.")
     fig.subplots_adjust(top=0.93, bottom=0.01, left=0.01, right=0.99)
     fig.savefig(FIGS / "cycle_gaps.png", dpi=150)
     plt.close(fig)
@@ -269,6 +275,12 @@ def main():
                       "godutch_cyc_km", "max_adt", "speed", "facility_now", "one_way_share", "plan"]].round(2).to_string())
     print(c.groupby("plan")["godutch_cyc_km"].sum().round(0).to_string())
     print("top 20 by plan:", c.head(20)["plan"].value_counts().to_dict())
+    from scipy.stats import spearmanr
+    for s in ("local", "census"):
+        top = set(c[c["rank"] <= 20].index)
+        alt = set(c[c[f"rank_{s}"] <= 20].index)
+        print(f"ranking vs {s}: spearman {spearmanr(c['godutch_cyc_km'], c[f'{s}_cyc_km']).statistic:.2f}, "
+              f"top-20 overlap {len(top & alt)}/20")
     xing = crossings(e_all, e)
     xing.drop(columns="geometry").head(40).round(0).to_csv(TABLES / "cycle_crossings.csv")
     print(xing.head(15)[["trips", "census", "approach", "crossing", "lts", "adt", "speed", "suburb"]].round(0).to_string())

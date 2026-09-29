@@ -1,6 +1,6 @@
 # Wellington cycle gap analysis: improvement plan
 
-**Status (29 Sep 2026): phases 0–2 are done (version 3).** The results are in the README section
+**Status (29 Sep 2026): phases 0–3 are done.** The results are in the README section
 "Where should new cycle connections go?".
 
 Changes from what's planned below:
@@ -8,7 +8,13 @@ Changes from what's planned below:
 - The best fit is stress factors 2/3 and a climb weight of 20.
 - Agreement with the counts rose from 0.44 to 0.55.
 
-Phases 3–5 are next.
+Phase 3 is done:
+- Schools use the MoE directory and PCT school models.
+- Non-commute trips are added NPT-style.
+- The Wellington uptake model is fitted. It shows no hill penalty in census data (selection) and
+  a weak protection effect, and serves as a lower-bound scenario.
+
+Phases 4–5 (prioritisation, map layers) are next.
 
 This plan comes from four research reviews carried out on 2026-09-29, each checked against the current code:
 

@@ -511,70 +511,101 @@ The research behind version 3, and the remaining steps, are in `CYCLING_IMPROVEM
 6. **Crossing hotspots.** Junctions where potential trips arrive on low-stress streets and
    must cross a level 3–4 road without signals.
 
+**Phase 3: demand (added 29 Sep 2026)**
+- **School trips.** Education trips are split by destination using the Ministry of Education
+  schools directory (type and roll; Eagle Technology's ArcGIS copy, because data.govt.nz blocks
+  scripts).
+  - School trips = 0.86 × roll. The 0.86 is education trips per enrolled pupil, measured in
+    areas with no tertiary campus.
+  - The rest are tertiary: 13.9k primary, 14.9k secondary, 18.4k tertiary.
+  - Primary and secondary trips use the PCT schools models (Goodman et al. 2019), with Go
+    Dutch applied within 5 km and 10 km respectively.
+- **Shopping, visiting and leisure.** Added with Scotland's Network Planning Tool method:
+  - Trip rates relative to commuting: shopping 1.08×, visiting 0.5×, leisure 0.27×.
+  - A gravity model to OSM shops, cafés, parks, beaches, sport and attractions, and to other
+    homes, between 0.5 and 15 km. Distance decay is fitted to UK trip-length ratios, giving
+    mean trips of 3.3 km (shopping), 5.6 km (visiting) and 5.2 km (leisure).
+  - Cycling today is assumed to equal the area's commute share (half that for shopping).
+  - Return trips reuse the outbound route in reverse.
+  - Adding these barely changes agreement with the counters (0.553 → 0.559), so they are
+    assumptions the counts can't confirm.
+- **A Wellington uptake model** (`cycle_uptake_fit.py`): a grouped binomial model on 2018 and
+  2023 SA2-to-SA2 work trips (2,018 pair-years with 20+ commuters,
+  9,111 cyclists), using calibrated route length, gradient, share on busy
+  streets and share protected. Findings:
+  - **Distance:** cycling peaks at 4–8 km (9.5% of those commuters). Shorter trips are walked.
+  - **Hills:** no hill penalty in Wellington's census data (gradient
+    +0.21, p 0.000). This reflects who cycles (committed riders, e-bikes), not
+    the physics, so the hill effect can't be estimated from census shares.
+  - **Protection:** share of route protected +0.44 (p 0.06); share on
+    busy streets -0.19 (p 0.50). There's no detectable extra
+    2018→2023 gain on now-protected routes; several opened after the March 2023 census.
+  - **Scenario:** with Wellingtonians' current habits and every route made low-stress,
+    commuter cycling on these pairs goes from 6.2% to
+    7.0%, against
+    20% under Go Dutch.
+  - **Role:** the "Wellington habits" scenario is a cautious lower bound and Go Dutch the
+    aspiration.
+
 **Results**
-- **Uptake:** 19% of work and study trips could be cycled (Go Dutch), against 2.7% who
-  cycled in 2023. With e-bikes it is 29%.
-- **Where potential cycling would ride:** 59% on protected routes, 23% on quiet streets,
-  19% on busy unprotected streets. It was 32% on busy streets before calibration: riders
-  already route round the worst arterials where a parallel route exists.
-- **Top 20 corridors vs the council's 2022 plan:**
-  - 7 planned by the council;
-  - 5 staged under LGWM, now unfunded (The Terrace, Willis, Victoria, Taranaki, Rintoul);
-  - 1 desired only (Customhouse Quay);
-  - 7 not in the plan:
-    - Takapu Road (the flat valley link from Tawa to Grenada North; 60–100 km/h and nobody
-      cycled it in 2023, so speculative);
-    - Daniell Street and Mein Street (Newtown);
-    - Ghuznee Street;
-    - Boulcott Street;
-    - Tauhinu Road (Miramar).
-- **Changes from version 2:**
-  - Busy 30 km/h central streets with parallel options dropped out, and quieter feeder
-    streets came in.
-  - Middleton Road is still first.
-  - The CBD gaps (The Terrace, Willis, Victoria) carry the most trips per metre.
 
-| # | Street | Suburbs | Length | Today | Go Dutch | km/h | Vehicles/day | Facility now | Plan |
-|---|---|---|---|---|---|---|---|---|---|
-| 1 | Middleton Road | Glenside, Churton Park, Johnsonville | 4.2 km | 13 | 671 | 50 | 6,985 | none | Planned (WCC) |
-| 2 | Takapu Road | Tawa, Grenada North, Takapu Valley | 5.8 km | 0 | 486 | 60 | 17,549 | none | Not in plan |
-| 3 | The Terrace | Wellington Central | 0.7 km | 976 | 2,456 | 30 | 14,579 | none | Unfunded (ex-LGWM) |
-| 4 | Willis Street | Te Aro, Wellington Central | 1.1 km | 193 | 1,137 | 30 | 10,537 | none | Unfunded (ex-LGWM) |
-| 5 | Victoria Street | Te Aro, Wellington Central, Mt Cook | 1.1 km | 171 | 988 | 30 | 12,326 | sharrows | Unfunded (ex-LGWM) |
-| 6 | Park Road | Miramar | 0.9 km | 70 | 570 | 50 | 6,295 | none | Planned (WCC) |
-| 7 | Riddiford Street | Newtown | 0.5 km | 209 | 1,057 | 40 | 14,904 | none | Planned (WCC) |
-| 8 | Taranaki Street | Te Aro, Wellington Central, Mt Cook | 0.7 km | 41 | 599 | 50 | 15,000 | none | Unfunded (ex-LGWM) |
-| 9 | Rintoul Street | Newtown | 0.2 km | 1,080 | 2,784 | 50 | 3,892 | sharrows (one way) | Unfunded (ex-LGWM) |
-| 10 | Takapu Road | – | 0.6 km | 0 | 635 | 110 | 500 | none | Not in plan |
-| 11 | Daniell Street | Newtown | 0.5 km | 146 | 749 | 40 | 5,000 | none | Not in plan |
-| 12 | Ghuznee Street | Te Aro | 0.5 km | 88 | 781 | 30 | 12,404 | none | Not in plan |
-| 13 | Johnsonville Road | Johnsonville | 0.4 km | 70 | 962 | 50 | 19,980 | painted lane | Planned (WCC) |
-| 14 | Rongotai Road | Kilbirnie | 0.2 km | 234 | 1,530 | 30 | 8,079 | sharrows | Planned (WCC) |
-| 15 | Mein Street | Newtown | 0.3 km | 201 | 1,277 | 40 | 6,744 | none | Not in plan |
-| 16 | Boulcott Street | Wellington Central, Mt Victoria, Kelburn | 0.5 km | 137 | 694 | 30 | 7,268 | none | Not in plan |
-| 17 | Tauhinu Road | Miramar | 0.5 km | 124 | 728 | 50 | 7,970 | none | Not in plan |
-| 18 | Willowbank Road | Tawa | 0.5 km | 12 | 719 | 50 | 4,184 | none | Planned (WCC) |
-| 19 | Customhouse Quay | Wellington Central | 0.2 km | 394 | 1,750 | 30 | 4,870 | none | Desired only |
-| 20 | Broadway | Strathmore Park, Miramar | 0.6 km | 100 | 502 | 50 | 9,964 | none | Planned (WCC) |
+| Trips | Trips/weekday | Mean km | Today | Go Dutch | E-bike | Wellington habits |
+|---|---|---|---|---|---|---|
+| work | 97,035 | 7.3 | 3.4% | 19.3% | 28.1% | 7.6% |
+| primary | 13,941 | 3.0 | 2.3% | 14.8% | 14.8% | 2.3% |
+| secondary | 14,868 | 5.0 | 0.9% | 46.5% | 46.5% | 0.9% |
+| tertiary | 18,432 | 4.8 | 0.6% | 16.9% | 27.4% | 6.4% |
+| shopping | 104,553 | 3.4 | 1.7% | 12.7% | 17.7% | 3.5% |
+| visiting | 48,736 | 5.6 | 3.5% | 17.7% | 28.1% | 7.4% |
+| leisure | 26,242 | 5.2 | 3.5% | 20.2% | 30.4% | 7.4% |
+| all | 323,807 | 5.2 | 2.5% | 17.9% | 25.2% | 5.6% |
 
-Top crossing hotspots (Go Dutch trips a weekday arriving on a low-stress street and crossing a busy road without signals):
+- **Where potential cycling would ride (Go Dutch, all trips):** 52% on protected routes, 27%
+  on quiet streets, 21% on busy unprotected streets.
+- **The ranking is robust to the uptake model:**
+  - Go Dutch vs Wellington habits: rank correlation 0.92, and 14 of the top 20 are shared.
+  - Go Dutch vs today's cycling: 10 of the top 20 are shared. Potential also points to the
+    northern suburbs.
+- **The safest bets** are high on all three measures: The Terrace, Willis Street, Victoria
+  Street, Rintoul Street, Rongotai Road, Riddiford Street, and Newtown's Mein and Daniell
+  Streets.
+- **Top 20 vs the council's 2022 plan:**
+  - 9 planned by the council;
+  - 5 staged under LGWM, now unfunded (Willis, The Terrace, Victoria, Rintoul, Courtenay
+    Place);
+  - 6 not in the plan: Takapu Road (speculative: rural, 60–100 km/h, nobody cycles it today),
+    Mein Street, Daniell Street, Tauhinu Road, Ghuznee Street.
 
-| Crossing | Suburb | Trips | Vehicles/day | km/h |
-|---|---|---|---|---|
-| Wilson Street × Daniell Street | Newtown | 1,755 | 1,880 | 40 |
-| Wilson Street × Coromandel Street | Newtown | 1,499 | 3,880 | 40 |
-| nan × Wakefield Street | Te Aro | 1,149 | 4,711 | 30 |
-| Wilson Street × Daniell Street | Newtown | 1,141 | 1,830 | 40 |
-| Tennyson Street × Tory Street | Te Aro | 904 | 8,650 | 30 |
-| Devon Street × Aro Street | Aro Valley | 870 | 10,155 | 30 |
-| Glenmore Street × Garden Road | Northland | 822 | 2,960 | 50 |
-| Brougham Street × Ellice Street | Mt Victoria | 805 | 2,670 | 50 |
+| # | Street | Suburbs | Today | Go Dutch | Rank (Wellington habits) | Rank (today) | km/h | Vehicles/day | Facility now | Plan |
+|---|---|---|---|---|---|---|---|---|---|---|
+| 1 | Middleton Road | Glenside, Churton Park, Johnsonville | 61 | 1,551 | 1 | 6 | 50 | 6,985 | none | Planned (WCC) |
+| 2 | Takapu Road | Tawa, Grenada North, Takapu Valley | 3 | 1,071 | 2 | 144 | 60 | 17,549 | none | Not in plan |
+| 3 | Willis Street | Te Aro, Wellington Central, Aro Valley | 292 | 1,862 | 4 | 2 | 30 | 11,034 | none | Unfunded (ex-LGWM) |
+| 4 | The Terrace | Wellington Central | 1,027 | 2,748 | 3 | 1 | 30 | 14,579 | none | Unfunded (ex-LGWM) |
+| 5 | Victoria Street | Te Aro, Wellington Central, Mt Cook | 246 | 1,425 | 9 | 8 | 30 | 12,326 | sharrows | Unfunded (ex-LGWM) |
+| 6 | Park Road | Miramar | 112 | 948 | 23 | 21 | 50 | 11,691 | none | Planned (WCC) |
+| 7 | Burma Road | Broadmeadows, Khandallah, Johnsonville | 69 | 731 | 15 | 29 | 50 | 14,678 | none | Planned (WCC) |
+| 8 | Riddiford Street | Newtown | 355 | 1,692 | 18 | 10 | 40 | 14,904 | none | Planned (WCC) |
+| 9 | Takapu Road | – | 1 | 1,485 | 45 | 204 | 110 | 500 | none | Not in plan |
+| 10 | Mein Street | Newtown | 337 | 1,684 | 17 | 11 | 40 | 6,744 | none | Not in plan |
+| 11 | Daniell Street | Newtown | 334 | 1,477 | 16 | 9 | 40 | 5,000 | none | Not in plan |
+| 12 | Rintoul Street | Newtown | 2,171 | 6,187 | 13 | 3 | 50 | 3,892 | sharrows (one way) | Unfunded (ex-LGWM) |
+| 13 | Rongotai Road | Kilbirnie | 730 | 3,601 | 14 | 12 | 30 | 8,079 | sharrows | Planned (WCC) |
+| 14 | Broadway | Strathmore Park, Miramar | 283 | 1,396 | 24 | 14 | 50 | 9,964 | none | Planned (WCC) |
+| 15 | Willowbank Road | Tawa | 61 | 1,834 | 5 | 113 | 50 | 4,184 | none | Planned (WCC) |
+| 16 | Helston Road | Johnsonville, Paparangi | 46 | 750 | 8 | 68 | 50 | 14,060 | none | Planned (WCC) |
+| 17 | Tauhinu Road | Miramar | 272 | 1,700 | 27 | 24 | 50 | 7,970 | none | Not in plan |
+| 18 | Newlands Road | Newlands | 140 | 1,037 | 7 | 33 | 50 | 15,669 | none | Planned (WCC) |
+| 19 | Courtenay Place | Te Aro | 179 | 1,072 | 41 | 25 | 30 | 8,700 | bus lane | Unfunded (ex-LGWM) |
+| 20 | Ghuznee Street | Te Aro | 111 | 1,299 | 44 | 56 | 30 | 12,835 | none | Not in plan |
 
 **Limitations**
-- **Only commuting and study trips are included.** Counts are about 0.75× the modelled
-  census flows at matched sites, which means some countlines see only one side of a
-  corridor. Leisure trips (the waterfront) are missing.
-- **The uptake model is English/Dutch, not fitted to Wellington** (phase 3 of the plan).
+- **Non-commute trips are modelled from UK travel-survey ratios**, not measured in
+  Wellington; the counters can't confirm them.
+- **Counts are below the modelled flows at matched sites.** Some countlines see only one
+  side of a corridor.
+- **The Go Dutch models are English/Dutch.** The Wellington-fitted model can't separate hill
+  effects from who chooses to cycle.
 - **OSM tagging drives facility levels.** Untagged cycleways are treated as shared paths.
 - **Crossing stress uses nearby signal and crossing nodes, not turn geometry.**
 - **The ranking is a long list for engineering assessment, not a design.**
@@ -659,7 +690,8 @@ python scripts/fetch_cycling.py   # OSM streets/paths, WCC LiDAR DEM, bike plan,
 python scripts/cycle_network.py   # direction-aware network: facilities, speeds, traffic stress, crossings
 python scripts/fetch_cycling.py --extras  # NZTA speed limits + SH traffic, OSM signals, WCC sensor counts
 python scripts/cycle_validate.py  # calibrate route choice against sensor counts (~15 min)
-python scripts/cycle_model.py     # PCT Go Dutch / e-bike potential, routed flows (uses calibration)
+python scripts/cycle_uptake_fit.py  # Wellington uptake model (2018 + 2023 census), writes cycle_uptake_local.json
+python scripts/cycle_model.py     # all trip streams, Go Dutch / e-bike / Wellington-habits potential (uses calibration)
 python scripts/cycle_gaps.py      # gap corridors vs council plan; map data and figure
 python scripts/build_cycle_map.py # outputs/web/wellington_cycle_gaps.html   # incl. local cost under each sharing rule
 ```

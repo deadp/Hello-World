@@ -28,18 +28,26 @@ def main():
     c["suburbs"] = c["suburbs"].fillna("–")
     corr = json.loads(c[["rank", "street", "road", "suburbs", "length_m", "census_trips", "godutch_trips",
                          "ebike_trips", "max_adt", "speed", "painted_share", "facility_now", "one_way_share",
-                         "plan"]].to_json(orient="records"))
-    sc = pd.read_csv(TABLES / "cycle_scenarios.csv", index_col=0).sum()
+                         "plan", "rank_local", "rank_census"]].to_json(orient="records"))
+    sc_all = pd.read_csv(TABLES / "cycle_scenarios.csv", index_col=0)
+    sc = sc_all.loc["all"]
+    commute = sc_all.loc[[i for i in ("work", "primary", "secondary", "tertiary") if i in sc_all.index]].sum()
     sm = pd.read_csv(TABLES / "cycle_summary.csv", index_col=0)
     top = c.head(20)["plan"]
     summary = dict(
-        scen={k: dict(share=sc[v] / sc["trips"] * 100) for k, v in
-              [("census", "census"), ("godutch", "godutch"), ("ebike", "ebike")]},
+        scen={k: dict(share=sc[k] / sc["trips"] * 100, commute=commute[k] / commute["trips"] * 100)
+              for k in ("census", "godutch", "ebike", "local")},
+        trips=dict(all=float(sc["trips"]), commute=float(commute["trips"])),
         km=sm["cycle_km_per_day"].to_dict(), prot=sm["on_protected_%"].to_dict(),
         quiet=sm["on_quiet_streets_%"].to_dict(), stress=sm["on_high_stress_%"].to_dict(),
         top20=dict(planned=int(top.isin(["Planned (WCC)", "Unfunded (ex-LGWM)", "Desired only"]).sum()),
                    lgwm=int((top == "Unfunded (ex-LGWM)").sum()), notplan=int((top == "Not in plan").sum())),
     )
+    loc = TABLES / "cycle_uptake_local.json"
+    if loc.exists():
+        summary["local"] = json.loads(loc.read_text())["shares_2023_pct"]
+    rob = c[["rank", "rank_local", "rank_census"]].head(20)
+    summary["robust"] = dict(local=int((rob["rank_local"] <= 20).sum()), census=int((rob["rank_census"] <= 20).sum()))
     cal = TABLES / "cycle_calibration.json"
     if cal.exists():
         cj = json.loads(cal.read_text())
