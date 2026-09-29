@@ -19,6 +19,8 @@
                                         via Eagle Technology's ArcGIS copy (data.govt.nz blocks
                                         scripted downloads)
   data/raw/cycling/osm_destinations.json  OSM shops, leisure and community destinations
+  data/raw/cycling/crashes.geojson      NZTA Crash Analysis System: crashes involving a bicycle in
+                                        Wellington City since 2016 (points, NZTM; CC BY 4.0)
 
 Run with --extras to fetch only the NZTA, sensor, school and destination layers.
 """
@@ -115,6 +117,10 @@ def extras():
              ';nwr["tourism"~"^(attraction|museum|gallery|viewpoint|zoo)$"]' + BBOX + ';nwr["amenity"~"^(library|cinema|'
              'theatre|cafe|restaurant|pub|bar|community_centre|marketplace|place_of_worship)$"]' + BBOX + ';);out tags center;',
              OUT / "osm_destinations.json")
+    arcgis_geojson(f"{NZTA}/CAS_Data_Public/FeatureServer/0",
+                   "tlaName='Wellington City' AND bicycle>0 AND crashYear>=2016",
+                   "crashYear,crashSeverity,crashLocation1,crashLocation2,speedLimit,intersection,trafficControl,"
+                   "fatalCount,seriousInjuryCount,minorInjuryCount", OUT / "crashes.geojson")
     sens = OUT / "sensors"
     sens.mkdir(exist_ok=True)
     for name, key in [("meta.csv", "countline_meta_info/csv/countline_meta_info.csv"),

@@ -15,8 +15,8 @@
        colleges (other OSM education points where an SA2 has none);
    each snapped to the nearest node of the cycling network.
 3. Routes: shortest path on the direction-aware network (cycle_network.py). Arc cost =
-   metres x stress factor(level of traffic stress in that direction) + climb weight x metres
-   climbed + a penalty for crossing a busy road at an unsignalised junction. The factors live in
+   metres x stress factor(level of traffic stress in that direction; x a "roadside" factor on
+   shared paths beside fast or busy roads) + climb weight x metres climbed + a penalty for crossing a busy road at an unsignalised junction. The factors live in
    PARAMS; cycle_validate.py calibrates them against WCC's cyclist counters and writes
    outputs/tables/cycle_calibration.json, which this script uses when present.
    Outbound and return trips are routed separately (different hills, one-way streets and
@@ -70,7 +70,7 @@ RAW = ROOT / "data" / "raw"
 CYC = RAW / "cycling"
 PROC = ROOT / "data" / "processed"
 TABLES = ROOT / "outputs" / "tables"
-PARAMS = dict(climb=10.0, stress={2: 1.0, 3: 1.1, 4: 1.25}, cross={3: 30.0, 4: 80.0})
+PARAMS = dict(climb=10.0, stress={2: 1.0, 3: 1.1, 4: 1.25}, cross={3: 30.0, 4: 80.0}, roadside=1.0)
 MODEL = "2020"
 CALIBRATION = TABLES / "cycle_calibration.json"
 UPTAKE_2020 = dict(a=-4.018, d1=-0.6369, d2=1.988, d3=0.008775, h1=-0.2555, i1=0.02006, i2=-0.1234,
@@ -145,7 +145,7 @@ def load_params():
     if CALIBRATION.exists():
         p = json.loads(CALIBRATION.read_text())["best"]
         return dict(climb=p["climb"], stress={int(k): v for k, v in p["stress"].items()},
-                    cross={int(k): v for k, v in p["cross"].items()})
+                    cross={int(k): v for k, v in p["cross"].items()}, roadside=p.get("roadside", 1.0))
     return PARAMS
 
 
@@ -155,17 +155,18 @@ def graph(params=None, verbose=True):
     nodes = pd.read_parquet(PROC / "cycle_nodes.parquet")
     fw = pd.DataFrame({"u": e["u"], "v": e["v"], "edge": e.index, "dir": 0, "len": e["length_m"],
                        "up": e["up_fw"], "rise": e["rise_abs"], "lts": e["lts_fw"], "cross": e["cross_v"],
-                       "fac": e["fac_fw"]})[
+                       "fac": e["fac_fw"], "roadside": e["roadside_fw"]})[
         e["can_fw"].values]
     bw = pd.DataFrame({"u": e["v"], "v": e["u"], "edge": e.index, "dir": 1, "len": e["length_m"],
                        "up": e["up_bw"], "rise": e["rise_abs"], "lts": e["lts_bw"], "cross": e["cross_u"],
-                       "fac": e["fac_bw"]})[
+                       "fac": e["fac_bw"], "roadside": e["roadside_bw"]})[
         e["can_bw"].values]
     arcs = pd.concat([fw, bw], ignore_index=True)
     arcs["hs_len"] = arcs["len"] * (arcs["lts"] >= 3)
     arcs["prot_len"] = arcs["len"] * arcs["fac"].isin(PROTECTED)
     stress = arcs["lts"].map(p["stress"]).fillna(1.0).values
     cross = arcs["cross"].map(p["cross"]).fillna(0.0).values
+    stress = stress * np.where(arcs["roadside"], p.get("roadside", 1.0), 1.0)
     arcs["cost"] = arcs["len"] * stress + p["climb"] * arcs["up"] + cross
     arcs = arcs.sort_values("cost").drop_duplicates(["u", "v"]).reset_index(drop=True)
     n = len(nodes)
@@ -381,8 +382,11 @@ def streams(setup):
     return out
 
 
+LAST_MATRIX = {}
+
+
 def run(params=None, scenarios=("census", "godutch", "ebike"), floor=True, model=None, verbose=True,
-        setup=None, collect_od=False, only=None, utility=True):
+        setup=None, collect_od=False, only=None, utility=True, collect_matrix=False):
     """Route all trips; return (edge flows by scenario, arc flows, route summary rows, arcs, edges,
     setup[, per-SA2-pair route metrics])."""
     e, nodes, arcs, G, A, keep = graph(params, verbose)
@@ -394,6 +398,26 @@ def run(params=None, scenarios=("census", "godutch", "ebike"), floor=True, model
     k_s = len(scenarios)
     arc_flow = np.zeros((len(arcs), k_s))
     route_rows, od_rows = [], []
+    mat = None
+    LAST_MATRIX.clear()
+    if collect_matrix:
+        # Outbound trips per scenario, home node x destination node (for cycle_priorities.py).
+        S = home.index.get_level_values(1).unique().values
+        dn = set()
+        for _, _, dest in streams(setup):
+            dn.update(dest.index.get_level_values(1))
+        if utility:
+            pts_u, attract = setup_utility_cache(setup, nodes, G)
+            for v in attract.values():
+                dn.update(v.index)
+        D = np.array(sorted(dn))
+        s_idx = np.full(len(nodes), -1)
+        s_idx[S] = np.arange(len(S))
+        d_idx = np.full(len(nodes), -1)
+        d_idx[D] = np.arange(len(D))
+        mat = np.zeros((len(S), len(D), k_s), dtype=np.float32)
+        LAST_MATRIX.clear()
+        LAST_MATRIX.update(S=S, D=D, mat=mat, scenarios=list(scenarios), s_idx=s_idx, d_idx=d_idx)
 
     def as_arrays(table):
         return {k: (g.index.get_level_values(1).values, g.values / g.values.sum())
@@ -458,6 +482,8 @@ def run(params=None, scenarios=("census", "godutch", "ebike"), floor=True, model
                                 cols.append(np.maximum(v, bike) if floor else v)
                         if cols:
                             np.add.at(dem, tn, np.column_stack(cols))
+                            if mat is not None and direction == "out":
+                                np.add.at(mat, (s_idx[sn], d_idx[tn]), np.column_stack(cols))
                         if direction == "out":
                             route_rows.append((name, n_trips.sum(), (n_trips * d_km).sum(),
                                                (n_trips * grad).sum(), *[c.sum() for c in cols]))
@@ -547,6 +573,8 @@ def run_utility(setup, G, A, arcs, attrs, nodes, scenarios, model, floor, verbos
                 cols.append(np.maximum(v, base) if (floor and sc != "census") else v)
             dem = np.zeros((len(nodes), k_s))
             np.add.at(dem, a_nodes, np.column_stack(cols))
+            if LAST_MATRIX.get("mat") is not None and LAST_MATRIX["s_idx"][sn] >= 0:
+                LAST_MATRIX["mat"][LAST_MATRIX["s_idx"][sn], LAST_MATRIX["d_idx"][a_nodes]] += np.column_stack(cols)
             acc = accumulate(pred[k], depth, dem)
             has = arc >= 0
             np.add.at(arc_flow, arc[has], acc[has])

@@ -14,7 +14,7 @@ compared with one direction only.
 
 Calibration: re-run the model's census scenario (people who cycled to work or study in 2023)
 over a grid of route-choice parameters (stress factor for level 3 and 4 streets, climb weight,
-crossing penalties) and keep the set with the best agreement: Pearson correlation of
+crossing penalties, and a factor for shared paths beside fast or busy roads) and keep the set with the best agreement: Pearson correlation of
 log(1 + count) and log(1 + modelled), compared per sensor (viewpoint). One camera usually covers a
 road and the path or lane beside it with separate countlines; the model can't reliably say which
 of two parallel facilities a rider uses, so counts and modelled flows (the union of edges and
@@ -44,7 +44,7 @@ COMPASS = {"N": 0, "NE": 45, "E": 90, "SE": 135, "S": 180, "SW": 225, "W": 270, 
 # A first pass at countline level (40 runs: stress up to 5/10, climb 5-40, two crossing penalties)
 # found the best fit near stress 2/3, climb 30, crossing 30/80; this grid refines it per sensor.
 GRID = dict(stress=[(1.1, 1.25), (1.5, 2.0), (2.0, 3.0), (3.0, 5.0)], climb=[10.0, 20.0, 30.0],
-            cross=[(30.0, 80.0)])
+            cross=[(30.0, 80.0)], roadside=[1.0, 1.25, 1.5])
 
 
 def counts(min_avail=95, min_days=20):
@@ -156,15 +156,16 @@ def main():
         pd.MultiIndex.from_frame(m[["COUNTLINE_ID", "DIRECTION"]])).values
     print(f"countline-directions matched: {len(m):,} ({(obs >= 10).sum()} with >= 10 cyclists/weekday)")
     results, setup, best = [], None, None
-    for (s3, s4), climb, (c3, c4) in itertools.product(GRID["stress"], GRID["climb"], GRID["cross"]):
-        p = dict(climb=climb, stress={2: 1.0, 3: s3, 4: s4}, cross={3: c3, 4: c4})
+    for (s3, s4), climb, (c3, c4), rs in itertools.product(GRID["stress"], GRID["climb"], GRID["cross"],
+                                                            GRID["roadside"]):
+        p = dict(climb=climb, stress={2: 1.0, 3: s3, 4: s4}, cross={3: c3, 4: c4}, roadside=rs)
         flow, arc_flow, _, arcs, _, setup = M.run(p, scenarios=("census",), verbose=False, setup=setup)
         mod = modelled(m, arcs, arc_flow, e)
         line = score(obs, mod)
         sc, vp = viewpoint_score(m, cl, arcs, arc_flow)
-        results.append(dict(stress3=s3, stress4=s4, climb=climb, cross3=c3, cross4=c4, **sc,
+        results.append(dict(stress3=s3, stress4=s4, climb=climb, cross3=c3, cross4=c4, roadside=rs, **sc,
                             countline_log_r=line["log_r"]))
-        print(f"  stress {s3}/{s4} climb {climb} cross {c3}/{c4}: sensors log r {sc['log_r']:.3f} (n {sc['n']}), "
+        print(f"  stress {s3}/{s4} climb {climb} cross {c3}/{c4} roadside {rs}: sensors log r {sc['log_r']:.3f} (n {sc['n']}), "
               f"countlines log r {line['log_r']:.3f}, k {sc['k']:.2f}", flush=True)
         if best is None or sc["log_r"] > best[0]["log_r"]:
             best = (dict(sc, countline_log_r=line["log_r"]), p, mod, vp)
@@ -172,9 +173,10 @@ def main():
     grid.round(3).to_csv(TABLES / "cycle_calibration_grid.csv", index=False)
     sc, p, mod, vp = best
     vp.round(1).to_csv(TABLES / "cycle_counters_by_sensor.csv", index=False)
-    default = grid[(grid.stress3 == 1.1) & (grid.climb == 10.0) & (grid.cross3 == 30.0)].iloc[0].to_dict()
+    default = grid[(grid.stress3 == 1.1) & (grid.climb == 10.0) & (grid.cross3 == 30.0)
+                   & (grid.roadside == 1.0)].iloc[0].to_dict()
     (TABLES / "cycle_calibration.json").write_text(json.dumps(dict(
-        best=dict(climb=p["climb"], stress=p["stress"], cross=p["cross"], **sc),
+        best=dict(climb=p["climb"], stress=p["stress"], cross=p["cross"], roadside=p["roadside"], **sc),
         default=default, grid=GRID), indent=1, default=float))
     out = cl.drop(columns="geometry").set_index(["COUNTLINE_ID", "DIRECTION"]).loc[
         list(zip(m["COUNTLINE_ID"], m["DIRECTION"]))].reset_index()

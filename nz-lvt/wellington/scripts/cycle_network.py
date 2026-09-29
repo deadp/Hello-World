@@ -46,7 +46,9 @@ Per edge:
       design code (30 km/h streets up to ~3,000 vehicles/day are fine to share; 3,000-5,000 is
       level 2 without a centre line). One-way streets count at 1.5 x ADT. Downhill at > 4% on
       streets <= 50 km/h, mixed traffic is rated one speed band lower (riders descend near traffic
-      speed), but no better than level 2.
+      speed), but no better than level 2. Protected facilities are level 1, except shared paths,
+      sidepaths and footways beside a road of >= 70 km/h or >= 20,000 vehicles/day (e.g. Aotea
+      Quay, Hutt Road by SH1): level 2 (side_speed, side_adt, roadside_fw/bw; see roadside()).
   cross_u, cross_v
       stress of crossing at each end node: at an unsignalised junction, the highest LTS of the
       other roads meeting there (Conveyal's rule); 2 where signals are within 25 m, or where a
@@ -82,6 +84,10 @@ BIKE_OK = {"yes", "designated", "permissive"}
 SERVICE_SKIP = {"driveway", "parking_aisle", "drive-through", "emergency_access"}
 DEM_EXTENT, DEM_RES = (1742080, 5418960, 1756480, 5443440), 5
 PROTECTED = {"track", "protected_lane", "sidepath", "seg_path", "shared_path", "shared_footway"}
+# Shared paths beside roads this fast or busy rate level 2, not 1 (roadside()); kerbed tracks and
+# protected lanes keep level 1.
+ROADSIDE_FAC = {"sidepath", "seg_path", "shared_path", "shared_footway"}
+ROADSIDE_SPEED, ROADSIDE_ADT = 70, 20000
 RANK = ["track", "protected_lane", "sidepath", "seg_path", "shared_path", "shared_footway", "buffered_lane",
         "painted_lane", "bus_lane", "sharrow", "mixed"]
 DEFAULT_ADT = {"residential": 500, "unclassified": 500, "service": 500, "living_street": 200, "road": 500,
@@ -309,6 +315,32 @@ def sidepaths(g, buf=20):
     return g
 
 
+def roadside(g, buf=20):
+    """Speed and traffic of the busiest major road alongside each protected edge.
+
+    A shared path beside a 30,000-vehicle quay or an 80-100 km/h highway (Aotea Quay, Hutt Road
+    by SH1/SH2) is separated from traffic but noisy and exposed, "a footpath next to a motorway".
+    Road edges carry their own speed and volume; paths take the busiest major road whose 20 m
+    corridor covers at least half their length."""
+    g["side_speed"] = np.where(g["highway"].isin(ROADS), g["speed"], np.nan)
+    g["side_adt"] = np.where(g["highway"].isin(ROADS), g["adt"], np.nan)
+    path = ~g["highway"].isin(ROADS) & (g["fac_fw"].isin(PROTECTED) | g["fac_bw"].isin(PROTECTED))
+    rd = g[g["highway"].isin(MAJOR)][["speed", "adt", "geometry"]].copy()
+    rd["geometry"] = rd.buffer(buf, cap_style="flat")
+    rd["rid"] = np.arange(len(rd))
+    j = gpd.sjoin(g.loc[path, ["geometry"]], rd, predicate="intersects")
+    j["share"] = [g.geometry.loc[i].intersection(rd.geometry.iloc[r]).length / max(g.at[i, "length_m"], 0.1)
+                  for i, r in zip(j.index, j["rid"])]
+    j = j[j["share"] >= 0.5]
+    agg = j.groupby(level=0).agg(s=("speed", "max"), a=("adt", "max"))
+    g.loc[agg.index, "side_speed"], g.loc[agg.index, "side_adt"] = agg["s"], agg["a"]
+    busy = (g["side_speed"] >= ROADSIDE_SPEED) | (g["side_adt"] >= ROADSIDE_ADT)
+    for d in ("fw", "bw"):
+        g[f"roadside_{d}"] = busy & g[f"fac_{d}"].isin(ROADSIDE_FAC)
+    print(f"protected facilities beside busy roads: {g.loc[g['roadside_fw'] | g['roadside_bw'], 'length_m'].sum() / 1000:,.1f} km")
+    return g
+
+
 def speeds(g):
     z = gpd.read_file(RAW / "speed_zones.geojson")
     z = z[z["speedCategoryName"] == "Permanent"].set_crs(2193, allow_override=True)
@@ -479,6 +511,10 @@ def main():
         g[f"lts_{d}"] = [stress(f, s, a, ln, c, o, h, dn) for f, s, a, ln, c, o, h, dn in zip(
             g[f"fac_{d}"], g["speed"], g["adt"].fillna(0), g["lanes_dir"], g["centre_line"], oneway_motor,
             g["highway"], down)]
+    g["lts"] = np.maximum(np.where(g["can_fw"], g["lts_fw"], 0), np.where(g["can_bw"], g["lts_bw"], 0))
+    g = roadside(g)
+    for d in ("fw", "bw"):
+        g.loc[g[f"roadside_{d}"], f"lts_{d}"] = g.loc[g[f"roadside_{d}"], f"lts_{d}"].clip(lower=2)
     g["lts"] = np.maximum(np.where(g["can_fw"], g["lts_fw"], 0), np.where(g["can_bw"], g["lts_bw"], 0))
     g = junctions(g, nodes)
 
