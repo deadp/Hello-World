@@ -63,7 +63,7 @@ def main():
         b = pd.read_csv(TABLES / "cycle_build_order.csv")
         build = json.loads(b.to_json(orient="records"))
         conn = pd.read_csv(TABLES / "cycle_connectivity.csv")
-        conn = conn[(conn["tolerance_m"] == 0) & (conn["cap"] == 1.25)].set_index("scenario")["connected_pct"]
+        conn = conn[(conn["level"] == "all_ages") & (conn["cap"] == 1.25)].set_index("scenario")["connected_pct"]
         summary["conn"] = dict(now=float(conn["godutch"]), census=float(conn["census"]), local=float(conn["local"]),
                                ebike=float(conn["ebike"]))
     html = TEMPLATE.read_text()

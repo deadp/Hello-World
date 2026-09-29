@@ -5,19 +5,19 @@ order, connect the most potential trips per dollar.
    Go Dutch, e-bike, Wellington habits) from each home node to each destination node (work,
    education, shopping, leisure, visiting). Cached in data/processed/cycle_od_matrix.npz.
 2. Connectivity (Mekuria, Furth & Nixon 2012; Furth, Mekuria & Nixon 2016; Lowry et al. 2016).
-   The low-stress network is every arc with traffic stress <= 2 that ends at a crossing of stress
-   <= 2. A trip is connected when its shortest low-stress route is at most `cap` x its shortest
-   route on the whole network (cap 1.25 central; 1.15 and 1.5 as sensitivities). Trips under
-   200 m are left out. The first and last arc of a trip (up to 150 m) may be any stress: homes
-   and workplaces on arterials are reached along the kerb or footpath (without this allowance,
-   only 4.5% of Go Dutch trips are connected, mostly because endpoints snap to arterial nodes).
-   Crossing stress is per junction, not per turn, so a left turn onto a busy road counts as a
-   crossing (conservative; ignoring crossings adds ~2-4 points). Tolerance variant: level 3 arcs (and level 3 crossings) shorter than
-   150 m or 400 m count as low stress, an arc-level stand-in for Lowry's "up to ~150 m of LTS 3
-   per route".
+   Central standard "all ages": stress 1 links (protected lanes, tracks, paths, genuinely quiet
+   streets) ending at crossings of stress <= 2 (signals, zebras, quiet junctions). A trip is
+   connected when its least-effort route on that network takes at most `cap` x the effort of its
+   least-effort route on the whole network (cap 1.25 central; 1.15 and 1.5 as sensitivities).
+   Effort = metres + 30 x metres climbed (the calibrated route-choice weight), so a quiet detour
+   over a hill does not count as a connection. Trips under 200 m are left out. The first and
+   last arc of a trip (up to 150 m) may be any stress: homes and workplaces on arterials are
+   reached along the kerb or footpath. Crossing stress is per junction, not per turn
+   (conservative). Sensitivities: "confident" (stress <= 2: painted lanes and moderately busy
+   streets count) and "confident_flat" (stress <= 2, distance only: the first version).
 3. Candidates.
-   Corridors: runs of the same street where a direction is level 3-4 and carries >= 30 Go Dutch
-   trips a weekday (cycle_gaps.corridors with a lower threshold), top 150 by potential cycle-km.
+   Corridors: runs of the same street where a road direction is stress 2-4 and carries >= 30 Go Dutch
+   trips a weekday (cycle_gaps.corridors with a lower threshold), top 200 by potential cycle-km.
    Each is extended to the same street's other level 3-4 edges within 150 m, so short low-flow
    pieces between gap runs are treated too (otherwise the treated route stays broken).
    Council plan: every unbuilt Strategic Bike Network link (planned, ex-LGWM, desired) with a
@@ -26,7 +26,7 @@ order, connect the most potential trips per dollar.
    Thorndon Quay cycleway through to the waterfront in both directions.
    Treatment: residential/unclassified/tertiary streets with <= 3,000 vehicles/day get a quiet
    street (30 km/h and a modal filter); other roads a protected lane. Either way the treated
-   directions become low stress, and so do the corridor's internal junctions. Crossings: the 80 busiest junctions where
+   directions become stress 1, and the corridor's internal junctions stress 2. Crossings: the 80 busiest junctions where
    low-stress approaches meet an unsignalised level 3-4 road (cycle_gaps.crossings). Treatment:
    signals where the road carries > 8,000 vehicles/day or is faster than 50 km/h, otherwise a
    raised zebra or refuge.
@@ -53,9 +53,8 @@ order, connect the most potential trips per dollar.
 8. Uncertainty: 1,000 Monte Carlo draws of cap (1.15/1.25/1.5), scenario (Go Dutch/e-bike/
    Wellington habits/census), cost (uniform in each range) and network bonus (0-1). Each draw
    ranks candidates by score (single-step); report median rank, 10-90% band and the share of draws in the top 10
-   ("robust" if >= 80%). The level-3 tolerance is reported separately (rank_tol150, rank_tol400):
-   it redefines the problem (forgiving short busy stretches connects most short gaps outright),
-   so mixing it into the draws only reshuffles the short links.
+   ("robust" if >= 80%). The connectivity standard is reported separately (rank_confident,
+   rank_confident_flat): it redefines the problem rather than adding noise.
 
 Writes outputs/tables/cycle_priorities.csv, cycle_build_order.csv, cycle_connectivity.csv and
 outputs/blocks/cycle_priorities.geojson (WGS84, for the web map).
@@ -77,16 +76,23 @@ PROC, TABLES, RAW = M.PROC, M.TABLES, M.RAW
 BLOCKS = M.ROOT / "outputs" / "blocks"
 SCEN = ["census", "godutch", "ebike", "local"]
 CAPS = [1.15, 1.25, 1.5]
-TOLS = [0.0, 150.0, 400.0]
-CAP0, TOL0, SCEN0 = 1.25, 0.0, "godutch"
+# Connectivity standards. all_ages (central): stress 1 links (protected lanes, paths, genuinely
+# quiet streets) and crossings of stress <= 2 (signals, zebras); confident: stress <= 2 (painted
+# lanes, moderately busy 50 km/h streets). Detours are judged on effort (metres + CLIMB_W x metres
+# climbed), except confident_flat (distance only, the first version's measure).
+LEVELS = {"all_ages": dict(lts=1, weight="eff"), "confident": dict(lts=2, weight="eff"),
+          "confident_flat": dict(lts=2, weight="len")}
+TOLS = list(LEVELS)
+CAP0, TOL0, SCEN0 = 1.25, "all_ages", "godutch"
 MIN_M = 200
 ACCESS_M = 150
-N_CORR, N_XING, MIN_DIR = 150, 80, 30
+N_CORR, N_XING, MIN_DIR = 200, 80, 30
 FILL_M = 150
 GRID_M = 30
 # Network bonus (a judgment, varied 0-1 in the draws): a project whose ends both join the existing
 # cycle network scores (1 + GRID_BONUS) x its trips per $M, one end (1 + GRID_BONUS / 2).
 GRID_BONUS = 0.5
+CLIMB_W = 30.0  # metres of flat riding per metre climbed (the calibrated route-choice weight)
 NODES_XY = None
 BARRED = 9
 ROADS_ALL = {"primary", "primary_link", "secondary", "secondary_link", "tertiary", "tertiary_link", "unclassified",
@@ -118,9 +124,9 @@ def od_matrix():
 
 def arc_table(e):
     fw = pd.DataFrame({"u": e["u"], "v": e["v"], "edge": e.index, "dir": 0, "len": e["length_m"],
-                       "lts": e["lts_fw"], "cross": e["cross_v"], "ok": e["can_fw"]})
+                       "up": e["up_fw"], "lts": e["lts_fw"], "cross": e["cross_v"], "ok": e["can_fw"]})
     bw = pd.DataFrame({"u": e["v"], "v": e["u"], "edge": e.index, "dir": 1, "len": e["length_m"],
-                       "lts": e["lts_bw"], "cross": e["cross_u"], "ok": e["can_bw"]})
+                       "up": e["up_bw"], "lts": e["lts_bw"], "cross": e["cross_u"], "ok": e["can_bw"]})
     a = pd.concat([fw, bw], ignore_index=True)
     # Directions bikes may not ride today (one-way streets) stay in the table at stress 9, so a
     # council-plan treatment can open them (two-way cycleway); elsewhere they are never used.
@@ -129,30 +135,32 @@ def arc_table(e):
     a.loc[~a["ok"], "lts"] = BARRED
     a = a.drop(columns="ok")
     a["len"] = a["len"].clip(lower=0.5)
+    a["eff"] = a["len"] + CLIMB_W * a["up"].fillna(0)
     return a
 
 
-def low_stress(a, tol, lts=None, cross=None, access=None):
+def low_stress(a, level, lts=None, cross=None, access=None):
     lts = a["lts"].values if lts is None else lts
     cross = a["cross"].values if cross is None else cross
-    ok = (lts <= 2) & (cross <= 2)
+    ok = (lts <= LEVELS[level]["lts"]) & (cross <= 2)
     if access is not None:
         ok |= access
-    if tol > 0:
-        ok |= (lts <= 3) & (cross <= 3) & (a["len"].values <= tol)
     return ok
 
 
-def csr(a, mask, n):
-    s = a.loc[mask, ["u", "v", "len"]].sort_values("len").drop_duplicates(["u", "v"])
-    return csr_matrix((s["len"].values, (s["u"].values, s["v"].values)), shape=(n, n))
+def csr(a, mask, n, weight="len"):
+    s = a.loc[mask, ["u", "v", weight]].sort_values(weight).drop_duplicates(["u", "v"])
+    return csr_matrix((s[weight].values, (s["u"].values, s["v"].values)), shape=(n, n))
 
 
 class Connectivity:
-    """Low-stress distances from every origin, and the trips connected, for one tolerance."""
+    """Low-stress distances (or efforts) from every origin, and the trips connected, for one
+    connectivity standard (LEVELS)."""
 
     def __init__(self, a, n, S, P, w, d_full, tol):
-        self.a, self.n, self.S, self.P, self.w, self.d_full, self.tol = a, n, S, P, w, d_full, tol
+        self.a, self.n, self.S, self.P, self.w, self.tol = a, n, S, P, w, tol
+        self.wt = LEVELS[tol]["weight"]
+        self.d_full = d_full[self.wt]
         self.lts, self.cross = a["lts"].values.copy(), a["cross"].values.copy()
         # Access legs: the first arc out of an origin and the last into a destination may be any
         # stress up to ACCESS_M (homes and workplaces on arterials are reached along the kerb).
@@ -162,7 +170,7 @@ class Connectivity:
 
     def refresh(self):
         self.mask = low_stress(self.a, self.tol, self.lts, self.cross, self.access)
-        self.G = csr(self.a, self.mask, self.n)
+        self.G = csr(self.a, self.mask, self.n, self.wt)
         self.dS = dijkstra(self.G, indices=self.S).astype(np.float32)  # S x N
         self.d = self.dS[self.P["si"], self.P["t"]]
 
@@ -174,17 +182,17 @@ class Connectivity:
         return conn.astype(np.float64) @ self.w  # caps x scenarios
 
     def with_arcs(self, idx_l, idx_c):
-        """Low-stress distances for all pairs after treating arcs idx_l (stress -> at most level 2
-        along the link) and idx_c (crossing at their end node -> at most level 2)."""
+        """Low-stress distances for all pairs after treating arcs idx_l (protected lane or filtered
+        quiet street: stress 1) and idx_c (crossing at their end node -> signals/zebra, level 2)."""
         lts, cross = self.lts.copy(), self.cross.copy()
-        lts[idx_l], cross[idx_c] = np.minimum(lts[idx_l], 2), np.minimum(cross[idx_c], 2)
+        lts[idx_l], cross[idx_c] = np.minimum(lts[idx_l], 1), np.minimum(cross[idx_c], 2)
         idx = np.union1d(idx_l, idx_c).astype(int)
         mask = low_stress(self.a, self.tol, lts, cross, self.access)
         added = idx[mask[idx] & ~self.mask[idx]]
         if len(added) == 0:
             return self.d, lts, cross
         tails = np.unique(self.a["u"].values[added])
-        Ga = csr(self.a, mask, self.n)
+        Ga = csr(self.a, mask, self.n, self.wt)
         dA = dijkstra(Ga, indices=tails).astype(np.float32)  # A x N
         new = self.d.copy()
         si, t = self.P["si"], self.P["t"]
@@ -252,6 +260,14 @@ def candidates(a):
                  & (e_all["lts"] <= 2)]
     gp = grid.geometry.segmentize(10).get_coordinates().values
     grid_xy = cKDTree(gp)
+    # Under the all-ages standard a road direction is a gap at stress 2 too (painted lanes,
+    # moderately busy streets), not only 3-4.
+    road = e["highway"].isin(ROADS_ALL)
+    for d in ("fw", "bw"):
+        e[f"hs_{d}"] = e[f"can_{d}"] & (e[f"lts_{d}"] >= 2) & road
+    for sc in CG.SCEN:
+        e[f"hs_flow_{sc}"] = e[f"flow_{sc}_fw"] * e["hs_fw"] + e[f"flow_{sc}_bw"] * e["hs_bw"]
+    e["hs_fac"] = np.where(e["hs_fw"], e["fac_fw"], e["fac_bw"])
     for d in ("fw", "bw"):
         e[f"gapd_{d}"] = e[f"hs_{d}"] & (e[f"flow_godutch_{d}"] >= MIN_DIR)
     e["gap"] = e["gapd_fw"] | e["gapd_bw"]
@@ -340,11 +356,15 @@ def main():
     S, D, mat = od_matrix()
     print(f"trip matrix: {len(S):,} origins x {len(D):,} destinations; outbound trips/weekday "
           + ", ".join(f"{s} {mat[:, :, i].sum():,.0f}" for i, s in enumerate(SCEN)))
-    d_full = dijkstra(csr(a, a["lts"].values < BARRED, n), indices=S)[:, D].astype(np.float32)
+    allowed = a["lts"].values < BARRED
+    d_full = dijkstra(csr(a, allowed, n), indices=S)[:, D].astype(np.float32)
     si, ti = np.nonzero(mat.sum(axis=2) > 0)
     df = d_full[si, ti]
     ok = np.isfinite(df) & (df >= MIN_M)
     si, ti, df = si[ok], ti[ok], df[ok]
+    del d_full
+    e_full = dijkstra(csr(a, allowed, n, "eff"), indices=S)[:, D].astype(np.float32)[si, ti]
+    full = dict(len=df, eff=e_full)
     w = mat[si, ti].astype(np.float64)
     P = dict(si=si, t=D[ti], km=df / 1000)
     print(f"pairs: {len(si):,}; trips covered: " + ", ".join(f"{s} {w[:, i].sum():,.0f}" for i, s in enumerate(SCEN)))
@@ -355,16 +375,16 @@ def main():
           f"({time.time() - t0:.0f}s)")
 
     # Connectivity today, and single-step gains for every candidate under each tolerance.
-    conn = {tol: Connectivity(a, n, S, P, w, df, tol) for tol in TOLS}
+    conn = {tol: Connectivity(a, n, S, P, w, full, tol) for tol in TOLS}
     rows = []
     for tol, C in conn.items():
         tot = C.totals()
         for i, cap in enumerate(CAPS):
             for j, s in enumerate(SCEN):
-                rows.append(dict(tolerance_m=tol, cap=cap, scenario=s, trips=w[:, j].sum(), connected=tot[i, j],
+                rows.append(dict(level=tol, cap=cap, scenario=s, trips=w[:, j].sum(), connected=tot[i, j],
                                  connected_pct=tot[i, j] / w[:, j].sum() * 100))
     base = pd.DataFrame(rows)
-    print(base[base["tolerance_m"] == 0].round(1).to_string(index=False))
+    print(base.round(1).to_string(index=False))
     gains = np.zeros((len(cand), len(TOLS), len(CAPS), len(SCEN)))
     gains_km = np.zeros_like(gains)
     for k, r in cand.iterrows():
@@ -373,7 +393,7 @@ def main():
         if k % 25 == 0:
             print(f"  evaluated {k + 1}/{len(cand)} ({time.time() - t0:.0f}s)", flush=True)
     i0, c0, s0 = TOLS.index(TOL0), CAPS.index(CAP0), SCEN.index(SCEN0)
-    tot0 = base.set_index(["tolerance_m", "cap", "scenario"])
+    tot0 = base.set_index(["level", "cap", "scenario"])
     for s in SCEN:
         j = SCEN.index(s)
         cand[f"dT_{s}"] = gains[:, i0, c0, j]
@@ -401,15 +421,16 @@ def main():
     cand["rank_p90"] = np.percentile(ranks, 90, axis=0)
     cand["top10_share"] = (ranks <= 10).mean(axis=0)
     cand["robust_top10"] = cand["top10_share"] >= 0.8
-    # Tolerance sensitivity: with short busy stretches forgiven, which of today's top 10 stay top 10?
+    # Standard sensitivity: judged for confident riders (or on distance only), which of the top 10
+    # stay top 10?
     top = set(cand["score"].rank(ascending=False, method="first").loc[lambda x: x <= 10].index)
     for ti_, tol in enumerate(TOLS):
         if tol == TOL0:
             continue
         r = pd.Series(gains[:, ti_, c0, s0] / cand["cost"] * bonus(GRID_BONUS)).rank(ascending=False, method="first")
-        cand[f"rank_tol{int(tol)}"] = r.values
-        print(f"tolerance {tol:.0f} m: {len(top & set(r[r <= 10].index))}/10 of the top 10 stay top 10; "
-              f"connected {base.set_index(['tolerance_m', 'cap', 'scenario']).loc[(tol, CAP0, SCEN0), 'connected_pct']:.1f}%")
+        cand[f"rank_{tol}"] = r.values
+        print(f"{tol}: {len(top & set(r[r <= 10].index))}/10 of the top 10 stay top 10; "
+              f"connected {tot0.loc[(tol, CAP0, SCEN0), 'connected_pct']:.1f}%")
 
     # Greedy build order (central case), re-evaluating the best pool each step.
     C = conn[TOL0]
@@ -447,7 +468,7 @@ def main():
             "dT_godutch", "dT_ebike", "dT_local", "dT_census", "dK_godutch", "dT_pct_pts", "dT_per_M",
             "grid_ends", "score", "health_M_low", "health_M_high", "crashes", "crashes_serious", "plan", "facility_now", "max_adt",
             "speed", "one_way_share", "gap_rank", "rank_median", "rank_p10", "rank_p90", "top10_share",
-            "robust_top10", "rank_tol150", "rank_tol400", "build_step"]
+            "robust_top10", "rank_confident", "rank_confident_flat", "build_step"]
     cand[cols].round(3).to_csv(TABLES / "cycle_priorities.csv", index=False)
     pd.DataFrame(steps).round(3).to_csv(TABLES / "cycle_build_order.csv", index=False)
     base.round(3).to_csv(TABLES / "cycle_connectivity.csv", index=False)
