@@ -15,7 +15,11 @@ compared with one direction only.
 Calibration: re-run the model's census scenario (people who cycled to work or study in 2023)
 over a grid of route-choice parameters (stress factor for level 3 and 4 streets, climb weight,
 crossing penalties) and keep the set with the best agreement: Pearson correlation of
-log(1 + count) and log(1 + modelled). The ratio counted / modelled is the factor from census
+log(1 + count) and log(1 + modelled), compared per sensor (viewpoint). One camera usually covers a
+road and the path or lane beside it with separate countlines; the model can't reliably say which
+of two parallel facilities a rider uses, so counts and modelled flows (the union of edges and
+directions its countlines cross) are totalled per camera. Countline-level agreement is also
+reported. The ratio counted / modelled is the factor from census
 commuting to all-day weekday cycling at these sites.
 
 Writes outputs/tables/cycle_counters.csv (per countline and direction), cycle_calibration.json
@@ -37,8 +41,10 @@ ROOT = Path(__file__).resolve().parents[1]
 SENS = ROOT / "data" / "raw" / "cycling" / "sensors"
 TABLES = ROOT / "outputs" / "tables"
 COMPASS = {"N": 0, "NE": 45, "E": 90, "SE": 135, "S": 180, "SW": 225, "W": 270, "NW": 315}
-GRID = dict(stress=[(1.1, 1.25), (1.5, 2.0), (2.0, 3.0), (3.0, 5.0), (5.0, 10.0)], climb=[5.0, 10.0, 20.0],
-            cross=[(30.0, 80.0), (150.0, 400.0)])
+# A first pass at countline level (40 runs: stress up to 5/10, climb 5-40, two crossing penalties)
+# found the best fit near stress 2/3, climb 30, crossing 30/80; this grid refines it per sensor.
+GRID = dict(stress=[(1.1, 1.25), (1.5, 2.0), (2.0, 3.0), (3.0, 5.0)], climb=[10.0, 20.0, 30.0],
+            cross=[(30.0, 80.0)])
 
 
 def counts(min_avail=95, min_days=20):
@@ -116,6 +122,22 @@ def modelled(m, arcs, arc_flow, e):
     return np.array([sum(key.get((ei, d), 0.0) for ei, d in p) for p in m["pairs"]])
 
 
+def viewpoint_score(m, cl, arcs, arc_flow, min_count=20):
+    key = pd.Series(arc_flow[:, 0], index=pd.MultiIndex.from_arrays([arcs["edge"].values, arcs["dir"].values]))
+    key = key.groupby(level=[0, 1]).sum()
+    vp = cl.drop_duplicates("COUNTLINE_ID").set_index("COUNTLINE_ID")["VIEWPOINT_ID"]
+    cnt = cl.set_index(["COUNTLINE_ID", "DIRECTION"])["weekday_avg"]
+    rows = {}
+    for (cid, d, pairs) in zip(m["COUNTLINE_ID"], m["DIRECTION"], m["pairs"]):
+        v = vp[cid]
+        r = rows.setdefault(v, [0.0, set()])
+        r[0] += cnt.get((cid, d), 0.0)
+        r[1].update(pairs)
+    obs = np.array([r[0] for r in rows.values()])
+    mod = np.array([sum(key.get(p, 0.0) for p in r[1]) for r in rows.values()])
+    return score(obs, mod, min_count), pd.DataFrame({"VIEWPOINT_ID": list(rows), "counted": obs, "modelled": mod})
+
+
 def score(obs, mod, min_count=10):
     ok = obs >= min_count
     x, y = np.log1p(mod[ok]), np.log1p(obs[ok])
@@ -138,15 +160,18 @@ def main():
         p = dict(climb=climb, stress={2: 1.0, 3: s3, 4: s4}, cross={3: c3, 4: c4})
         flow, arc_flow, _, arcs, _, setup = M.run(p, scenarios=("census",), verbose=False, setup=setup)
         mod = modelled(m, arcs, arc_flow, e)
-        sc = score(obs, mod)
-        results.append(dict(stress3=s3, stress4=s4, climb=climb, cross3=c3, cross4=c4, **sc))
-        print(f"  stress {s3}/{s4} climb {climb} cross {c3}/{c4}: log r {sc['log_r']:.3f}, "
-              f"spearman {sc['spearman']:.3f}, k {sc['k']:.2f}", flush=True)
+        line = score(obs, mod)
+        sc, vp = viewpoint_score(m, cl, arcs, arc_flow)
+        results.append(dict(stress3=s3, stress4=s4, climb=climb, cross3=c3, cross4=c4, **sc,
+                            countline_log_r=line["log_r"]))
+        print(f"  stress {s3}/{s4} climb {climb} cross {c3}/{c4}: sensors log r {sc['log_r']:.3f} (n {sc['n']}), "
+              f"countlines log r {line['log_r']:.3f}, k {sc['k']:.2f}", flush=True)
         if best is None or sc["log_r"] > best[0]["log_r"]:
-            best = (sc, p, mod)
+            best = (dict(sc, countline_log_r=line["log_r"]), p, mod, vp)
     grid = pd.DataFrame(results).sort_values("log_r", ascending=False)
     grid.round(3).to_csv(TABLES / "cycle_calibration_grid.csv", index=False)
-    sc, p, mod = best
+    sc, p, mod, vp = best
+    vp.round(1).to_csv(TABLES / "cycle_counters_by_sensor.csv", index=False)
     default = grid[(grid.stress3 == 1.1) & (grid.climb == 10.0) & (grid.cross3 == 30.0)].iloc[0].to_dict()
     (TABLES / "cycle_calibration.json").write_text(json.dumps(dict(
         best=dict(climb=p["climb"], stress=p["stress"], cross=p["cross"], **sc),

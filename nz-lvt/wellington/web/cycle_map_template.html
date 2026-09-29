@@ -346,7 +346,7 @@ document.getElementById("tbl").innerHTML = `<thead><tr><th>#</th><th style="text
 
 if (S.calibration) {
   const c = S.calibration.best, d = S.calibration.default;
-  document.getElementById("calText").textContent = `calibrated against ${c.n} council sensor count directions (VivaCity, last 12 months): the best fit treats a metre of busy (level 4) street as ${c.stress["4"]} m and each metre climbed as ${c.climb} m on the flat, raising agreement with counts from ${d.log_r.toFixed(2)} to ${c.log_r.toFixed(2)} (log correlation)`;
+  document.getElementById("calText").textContent = `calibrated against ${c.n} council sensors (VivaCity counts, last 12 months, road and path at each camera added together). Best fit: a metre of busy (level 4) street costs like ${c.stress["4"]} m of calm street, level 3 like ${c.stress["3"]} m, and each metre climbed like ${c.climb} m on the flat. That lifts agreement with the counts (log correlation) from ${d.log_r.toFixed(2)} with the first version's guesses to ${c.log_r.toFixed(2)}`;
 }
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", restyle);
 new MutationObserver(restyle).observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
