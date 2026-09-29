@@ -35,8 +35,8 @@ order, connect the most potential trips per dollar.
    since any new route first joins a new arc at its tail. dT = trips newly connected per weekday
    (outbound; returns roughly double it), dK = their cycle-km.
 5. Ranking and build order. Score = dT per $M (Go Dutch, cap 1.25) x a network bonus: 1.5 when
-   both ends of a corridor join the existing low-stress cycle network (protected facilities
-   within 30 m), 1.25 for one end (crossings: next to it). The bonus is a judgment, standing for
+   both ends of a corridor join the existing low-stress cycle network (protected facilities,
+   cycleways, living streets and pedestrian areas within 30 m), 1.25 for one end (crossings: next to it). The bonus is a judgment, standing for
    what the trip model misses (wayfinding, a legible network, riders who would go further on
    it); the draws vary it from 0 to 1. Build order: greedy on the score, re-evaluating after
    each step (links complement each other: a crossing can unlock a quiet street). Also
@@ -244,8 +244,12 @@ def candidates(a):
     nodes = pd.read_parquet(PROC / "cycle_nodes.parquet")
     NODES_XY = nodes[["x", "y"]].values
     e_all, e = CG.load()
-    # The existing low-stress cycle network: protected facilities rated level 1-2 (points every 10 m).
-    grid = e_all[e_all["facility"].isin(CG.PROTECTED) & (e_all["lts"] <= 2)]
+    # The existing low-stress cycle network: protected facilities, cycleways, living streets and
+    # pedestrian areas bikes may use (e.g. the waterfront's Lady Elizabeth Lane), rated level 1-2
+    # (points every 10 m).
+    grid = e_all[(e_all["facility"].isin(CG.PROTECTED) | e_all["highway"].isin(["cycleway", "living_street",
+                                                                                 "pedestrian"]))
+                 & (e_all["lts"] <= 2)]
     gp = grid.geometry.segmentize(10).get_coordinates().values
     grid_xy = cKDTree(gp)
     for d in ("fw", "bw"):
