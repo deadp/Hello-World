@@ -115,12 +115,27 @@ Expected effect: busy 30/40 km/h central city streets such as Cuba Street, Lambt
    - Fit counts = k × modelled.
    - Report R², GEH and mean absolute percentage error, with residuals by corridor.
    - Expect k of about 1.5–3, because counts include trips other than commuting. k becomes the local factor for scaling commute flows to all-day flows.
-3. **Directional use and before/after.**
+3. **First comparison with the model (29 Sep 2026).**
+   - **Data:** `countline_mobility_cyclist.csv` has 6.1M hourly rows from 406 countlines, 2023-11-03 to 2026-09-27. Cyclists are counted at every countline, not only the 25 cycle-primary ones.
+   - **Method:** average weekday since Sep 2025, using days with at least 22 reporting hours and countlines with at least 40 such days.
+   - **Busiest sites (cyclists per average weekday):**
+     - waterfront (Commonwealth Walkway / Ara Moana): about 1,500–1,650;
+     - Cambridge Terrace cyclepath: 896;
+     - Hutt Road cyclepath: 800;
+     - Riddiford Street: 566;
+     - Tasman Street: 560;
+     - Chaytor Street: 519.
+   - **Match with the model:** snapping 37 countlines (20+ cyclists a weekday) to model edges gives a weak log correlation of **0.30**. Counted cyclists are 1.28× the modelled census cyclists overall.
+   - **Where the gaps are:**
+     - **Route choice.** Cambridge Terrace has 896 counted against 17 modelled, and Tasman Street 560 against 16. Real riders use the protected and quiet parallel routes; the model's mild stress penalty (×1.1 / ×1.25) sends them along the arterials next to them.
+     - **Leisure trips.** The waterfront (Queens Wharf 1,170 counted against 32 modelled) carries leisure and other non-commute riding the model doesn't include.
+   - **Next step:** fit the route-choice stress penalties (and the climb weight) to maximise agreement with the counters. This is a direct calibration of how much Wellington riders avoid traffic, and it replaces the guessed factors. Compare directional counts per countline, since many countlines count one side or one direction only.
+4. **Directional use and before/after.**
    - Directional use: most cycle countlines record direction. Compare uphill and downhill counts on split streets (protected one way, sharrow the other) to see whether riders stay in the protected lane both ways, which may be illegal or unsafe, or ride the descent in traffic.
    - Before/after: several countlines started when routes opened (The Parade 2025, Thorndon Quay 2025/26, Molesworth Street Feb 2026). Their counts after opening, set against modelled potential, give a local estimate of how much new infrastructure lifts cycling. Use this in Phase 3.2.
    - E-scooters: counts show how much of the demand for bike lanes comes from micromobility.
-4. **Check traffic counts.** Use the car, bus and van classes on the same sensors to check council ADT on about 130 streets.
-5. **2018 vs 2023.** The census travel CSV already has `2018_*` columns on 2023 SA2 boundaries. Map where cycling grew. Early before/after evidence should come from routes such as Newtown, Kilbirnie and Thorndon.
+5. **Check traffic counts.** Use the car, bus and van classes on the same sensors to check council ADT on about 130 streets.
+6. **2018 vs 2023.** The census travel CSV already has `2018_*` columns on 2023 SA2 boundaries. Map where cycling grew. Early before/after evidence should come from routes such as Newtown, Kilbirnie and Thorndon.
 
 ## Phase 3: demand model (3–7 days)
 
