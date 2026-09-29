@@ -26,7 +26,8 @@ def main():
                            if k not in ("gap",)}
     c = pd.read_csv(TABLES / "cycle_corridors.csv").head(N_LIST)
     corr = json.loads(c[["rank", "street", "road", "suburbs", "length_m", "census_trips", "godutch_trips",
-                         "ebike_trips", "max_adt", "speed", "painted_share", "plan"]].to_json(orient="records"))
+                         "ebike_trips", "max_adt", "speed", "painted_share", "facility_now", "one_way_share",
+                         "plan"]].to_json(orient="records"))
     sc = pd.read_csv(TABLES / "cycle_scenarios.csv", index_col=0).sum()
     sm = pd.read_csv(TABLES / "cycle_summary.csv", index_col=0)
     top = c.head(20)["plan"]
@@ -35,14 +36,22 @@ def main():
               [("census", "bike"), ("godutch", "godutch"), ("ebike", "ebike")]},
         km=sm["cycle_km_per_day"].to_dict(), prot=sm["on_protected_%"].to_dict(),
         quiet=sm["on_quiet_streets_%"].to_dict(), stress=sm["on_high_stress_%"].to_dict(),
-        top20=dict(planned=int(top.str.startswith("Planned").sum() + (top == "Desired only").sum()),
-                   lgwm=int((top == "Planned (ex-LGWM)").sum()), notplan=int((top == "Not in plan").sum())),
+        top20=dict(planned=int(top.isin(["Planned (WCC)", "Unfunded (ex-LGWM)", "Desired only"]).sum()),
+                   lgwm=int((top == "Unfunded (ex-LGWM)").sum()), notplan=int((top == "Not in plan").sum())),
     )
+    cal = TABLES / "cycle_calibration.json"
+    if cal.exists():
+        cj = json.loads(cal.read_text())
+        summary["calibration"] = dict(best=cj["best"], default=cj["default"])
+    pts = json.loads((ROOT / "outputs" / "blocks" / "cycle_points.geojson").read_text())
+    for f in pts["features"]:
+        f["properties"] = {k: (None if isinstance(v, float) and v != v else v) for k, v in f["properties"].items()}
     html = TEMPLATE.read_text()
     html = html.replace("/*__LEAFLET_CSS__*/", requests.get(LEAFLET_CSS, timeout=60).text)
     html = html.replace("__DATA__", json.dumps(geo, separators=(",", ":")))
     html = html.replace("__CORRIDORS__", json.dumps(corr, separators=(",", ":")))
     html = html.replace("__SUMMARY__", json.dumps(summary, separators=(",", ":")))
+    html = html.replace("__POINTS__", json.dumps(pts, separators=(",", ":")))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(html)
     print(f"wrote {OUT} ({OUT.stat().st_size / 1e6:.1f} MB); top 20 plan: {top.value_counts().to_dict()}")

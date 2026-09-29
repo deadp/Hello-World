@@ -8,8 +8,17 @@
                                         network class, stage)
   data/raw/cycling/census_work_od.csv   2023 Census main means of travel to work, SA2 -> SA2
   data/raw/cycling/census_edu_od.csv    2023 Census main means of travel to education, SA2 -> SA2
+  data/raw/cycling/osm_nodes.json       OSM traffic signals, crossings and cycle barriers
+  data/raw/cycling/speed_zones.geojson  NZTA National Speed Limit Register zones in force today
+                                        (Wellington City and state highways; polygons, NZTM; CC BY 4.0)
+  data/raw/cycling/sh_sites.geojson     NZTA state highway traffic monitoring sites with AADT
+  data/raw/cycling/sensors/             WCC transport sensors (VivaCity): countline metadata and
+                                        hourly cyclist counts from Nov 2023 (public S3 bucket)
+
+Run with --extras to fetch only the last four.
 """
 
+import sys
 import time
 from pathlib import Path
 
@@ -27,6 +36,9 @@ WCC = "https://gis.wcc.govt.nz/arcgis/rest/services"
 DEM = f"{WCC}/Elevation/DigitalElevation1Metre_2020/ImageServer/exportImage"
 DEM_EXTENT = (1742080, 5418960, 1756480, 5443440)
 DEM_RES = 5
+NZTA = "https://services.arcgis.com/CXBb7LAjgIIdcsPt/arcgis/rest/services"
+NZTM_BOX = "1735000,5415000,1765000,5445000"
+SENSORS = "https://gis-snowflake-opendata-public-wcc-arcgis-prod.s3.ap-southeast-2.amazonaws.com/transport_sensors"
 # Stats NZ ArcGIS Hub items (CSV).
 CENSUS = {"census_work_od.csv": "fedc12523d4f4da08f094cf13bb21807",
           "census_edu_od.csv": "1cc7c8d8e99e4e428c3359172f49effc"}
@@ -60,8 +72,51 @@ def dem():
         print(f"dem_5m_{i}.tif: {w}x{h}, {len(r.content) / 1e6:.1f} MB")
 
 
+def arcgis_geojson(url, where, fields, path, page=1000):
+    feats, offset = [], 0
+    while True:
+        r = requests.get(f"{url}/query", params=dict(
+            where=where, outFields=fields, geometry=NZTM_BOX, geometryType="esriGeometryEnvelope", inSR=2193,
+            spatialRel="esriSpatialRelIntersects", outSR=2193, resultOffset=offset, resultRecordCount=page,
+            f="geojson"), timeout=300)
+        r.raise_for_status()
+        got = r.json().get("features", [])
+        feats += got
+        if len(got) < page:
+            break
+        offset += page
+    import json
+    path.write_text(json.dumps({"type": "FeatureCollection", "features": feats}))
+    print(f"{path.name}: {len(feats):,} features")
+
+
+def extras():
+    OUT.mkdir(parents=True, exist_ok=True)
+    overpass('[out:json][timeout:120];(node["highway"~"^(traffic_signals|crossing)$"]' + BBOX +
+             ';node["crossing"]' + BBOX + ';node["barrier"="cycle_barrier"]' + BBOX + ';);out body;',
+             OUT / "osm_nodes.json")
+    arcgis_geojson(f"{NZTA}/SpeedLimitZoneFull__View/FeatureServer/0",
+                   "rcaZoneReferenceName IN ('Wellington City','State Highways') AND whenEffective<=CURRENT_TIMESTAMP"
+                   " AND (whenIneffective IS NULL OR whenIneffective>CURRENT_TIMESTAMP)",
+                   "speedLimitZoneValue,speedCategoryName,speedLimitZoneName,speedLimitZoneReasonName,whenEffective",
+                   OUT / "speed_zones.geojson")
+    arcgis_geojson(f"{NZTA}/Assets_SHTrafficMonitoringSites/FeatureServer/0", "1=1", "*", OUT / "sh_sites.geojson")
+    sens = OUT / "sensors"
+    sens.mkdir(exist_ok=True)
+    for name, key in [("meta.csv", "countline_meta_info/csv/countline_meta_info.csv"),
+                      ("cyclist.csv", "countline_mobility/csv/countline_mobility_cyclist.csv"),
+                      ("availability.csv", "viewpoint_availability_daily/csv/viewpoint_availability_daily.csv")]:
+        r = requests.get(f"{SENSORS}/{key}", timeout=900)
+        r.raise_for_status()
+        (sens / name).write_bytes(r.content)
+        print(f"sensors/{name}: {len(r.content) / 1e6:.1f} MB")
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    if "--extras" in sys.argv:
+        extras()
+        return
     overpass(f'[out:json][timeout:170];way["highway"]{BBOX};out tags geom;', OUT / "osm_ways.json")
     overpass(f'[out:json][timeout:120];nwr["amenity"~"^(school|college|university)$"]{BBOX};out tags center;',
              OUT / "osm_education.json")
@@ -74,6 +129,7 @@ def main():
         r.raise_for_status()
         (OUT / name).write_bytes(r.content)
         print(f"{name}: {len(r.content) / 1e6:.1f} MB")
+    extras()
 
 
 if __name__ == "__main__":

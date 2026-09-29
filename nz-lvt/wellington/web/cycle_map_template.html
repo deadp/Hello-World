@@ -10,6 +10,7 @@
   --line:#d6ddd6; --focus:#1f6fd1; --mapbg:#e4e9e3; --stroke:rgba(20,32,27,.16);
   --protected:#1d8a4e; --quiet:#a3aea8; --busy:#e9a07f; --gap:#cf3326; --painted:#e0a526;
   --planned:#2f6fd0; --lgwm:#8a63c9; --desired:#58a7c9; --none:#cf3326; --built:#1d8a4e;
+  --track:#0f6b3a; --shared:#6fb98a; --sharrow:#d9772f; --bus:#8a63c9; --xing:#14201b; --counter:#1f6fd1;
   --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --sans:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -21,6 +22,7 @@
     --line:#29332e; --focus:#6fa6ee; --mapbg:#111714; --stroke:rgba(234,240,236,.14);
     --protected:#34b06a; --quiet:#4d5953; --busy:#b0714f; --gap:#f0564a; --painted:#e9b440;
     --planned:#5b93e6; --lgwm:#a585dc; --desired:#6fbcdc; --none:#f0564a; --built:#34b06a;
+    --track:#3fcf7e; --shared:#2f7f52; --sharrow:#e8904f; --bus:#a585dc; --xing:#eaf0ec; --counter:#6fa6ee;
   }
 }
 :root[data-theme="dark"]{
@@ -29,6 +31,7 @@
   --line:#29332e; --focus:#6fa6ee; --mapbg:#111714; --stroke:rgba(234,240,236,.14);
   --protected:#34b06a; --quiet:#4d5953; --busy:#b0714f; --gap:#f0564a; --painted:#e9b440;
   --planned:#5b93e6; --lgwm:#a585dc; --desired:#6fbcdc; --none:#f0564a; --built:#34b06a;
+    --track:#3fcf7e; --shared:#2f7f52; --sharrow:#e8904f; --bus:#a585dc; --xing:#eaf0ec; --counter:#6fa6ee;
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);margin:0}
@@ -139,13 +142,14 @@ footer{color:var(--muted);font-size:13px;max-width:100ch}
     <h2>How it's worked out</h2>
     <div class="method">
       <div><h3>Trips</h3><p>2023 Census main means of travel to work and to education, from each SA2 of residence to each SA2 of workplace or school (Stats NZ). People who work or study at home are left out. Homes are placed by SA1 population, jobs by estimated floor-space employment, and education trips at schools and universities.</p></div>
-      <div><h3>Routes</h3><p>Every trip is routed over OpenStreetMap streets and paths bikes may use, with hills from the council's LiDAR elevation model: each metre climbed counts as ten on the flat. There's a mild preference for calmer streets, but routes mostly follow the most direct way, not today's safest one. Outbound and return trips are routed separately.</p></div>
-      <div><h3>Who would cycle</h3><p>The Propensity to Cycle Tool's Go Dutch model gives the chance a trip is cycled from its length and steepness, as if cycling were as normal as in the Netherlands. The e-bike version adds the PCT's e-bike terms, which remove most of the hill penalty. "Census 2023" shows the people who actually cycled.</p></div>
-      <div><h3>Gaps</h3><p>A street is a gap when it carries 250+ potential trips a day and is stressful to ride: over about 2,000 vehicles a day (council counts) or over 50 km/h, with no separated lane or path along it. Painted lanes don't count as protection on busy streets.</p></div>
-      <div><h3>Limits</h3><p>Only commuting and study trips are included, which is about a third of all trips. Shopping, leisure and school runs by parents aren't. OSM tagging and the 2022 plan layer may lag recent builds. The PCT model was fitted to English and Dutch travel, not Wellington's. Treat the rankings as a long list for engineers to test, not a design.</p></div>
+      <div><h3>Streets, by direction</h3><p>Every OpenStreetMap street and path bikes may use, rated separately in each direction: a protected uphill lane with sharrows downhill counts as protected one way only. Speed limits come from NZTA's National Speed Limit Register, traffic from council counts and NZTA state highway sites. Traffic stress (1–4) follows a speed × volume table (Furth, UK LTN 1/20, CROW, Auckland Transport): a 30 km/h street with under ~3,000 vehicles a day is fine to share. Busy junctions without signals or a marked crossing add crossing stress.</p></div>
+      <div><h3>Routes, checked against counters</h3><p>Trips are routed on the real streets with hills from the council's LiDAR. How much riders avoid busy streets, hills and unsignalised crossings is <span id="calText">calibrated against the council's VivaCity sensor counts</span>. Outbound and return trips are routed separately.</p></div>
+      <div><h3>Who would cycle</h3><p>The Propensity to Cycle Tool's current Go Dutch model (2020) gives the chance a trip is cycled from its length and steepness, as if cycling were as normal as in the Netherlands, and never less than the people who already cycle that route. The e-bike version removes most of the hill penalty. "Census 2023" shows the people who actually cycled.</p></div>
+      <div><h3>Gaps and crossings</h3><p>A street is a gap where it carries 250+ potential trips a day and at least one direction is stressful with no protection. Dashed gaps are protected or calm one way only. Diamonds mark junctions where lots of potential trips arrive on quiet streets but must cross a busy road without signals.</p></div>
+      <div><h3>Limits</h3><p>Only commuting and study trips are included, which is about a third of all trips. Shopping, leisure and school runs by parents aren't. OSM tagging and the 2022 plan layer may lag recent builds, and counters mostly sit on routes that are already popular. The PCT model was fitted to English and Dutch travel, not Wellington's. Treat the rankings as a long list for engineers to test, not a design.</p></div>
     </div>
   </section>
-  <footer>Sources: Stats NZ 2023 Census travel to work and education (SA2 origin–destination), SA1 population and 2024 business employee counts; OpenStreetMap contributors (streets, paths, schools; data May 2026); Wellington City Council 1 m LiDAR DEM (2020), road traffic counts and Strategic Bike Network 2022; uptake model from the Propensity to Cycle Tool (Lovelace et al. 2017).</footer>
+  <footer>Sources: Stats NZ 2023 Census travel to work and education (SA2 origin–destination), SA1 population and 2024 business employee counts; OpenStreetMap contributors (streets, paths, schools; data May 2026); Wellington City Council 1 m LiDAR DEM (2020), road traffic counts and Strategic Bike Network 2022; NZTA National Speed Limit Register, state highway traffic sites; WCC transport sensors (VivaCity); uptake model from the Propensity to Cycle Tool (Lovelace et al. 2017; 2020 model).</footer>
 </div>
 <div class="tip" id="tip" hidden></div>
 
@@ -154,14 +158,19 @@ footer{color:var(--muted);font-size:13px;max-width:100ch}
 const GEO = __DATA__;
 const CORR = __CORRIDORS__;
 const S = __SUMMARY__;
+const PTS = __POINTS__;
 
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fmt = v => v == null || isNaN(v) ? "–" : Math.round(v).toLocaleString("en-NZ");
 const GAP_MIN = 250;
 const SCEN = {census: "Census 2023", godutch: "Go Dutch", ebike: "E-bike"};
-const MODES = {gaps: "Gaps", plan: "Council plan"};
-const PLAN_COL = {"Built or underway": "--built", "Planned (WCC)": "--planned", "Planned (ex-LGWM)": "--lgwm",
+const MODES = {gaps: "Gaps", facility: "Facilities", plan: "Council plan"};
+const PLAN_COL = {"Built or underway": "--built", "Planned (WCC)": "--planned", "Unfunded (ex-LGWM)": "--lgwm",
   "Desired only": "--desired", "Not in plan": "--none"};
+const PROT = new Set(["track", "protected_lane", "sidepath", "seg_path", "shared_path", "shared_footway"]);
+const FAC_COL = {track: "--track", protected_lane: "--track", sidepath: "--protected", seg_path: "--protected",
+  shared_path: "--shared", shared_footway: "--shared", buffered_lane: "--painted", painted_lane: "--painted",
+  bus_lane: "--bus", sharrow: "--sharrow", mixed: "--quiet"};
 let scen = "godutch", mode = "gaps", selected = null;
 
 // Headline facts
@@ -171,7 +180,7 @@ document.getElementById("f1s").textContent = `of work and study trips could be c
 document.getElementById("f2").textContent = S.stress.godutch.toFixed(0) + "%";
 document.getElementById("f2s").textContent = "of that potential cycling would be on busy streets with no protection, even counting paths and parallel cycleways";
 document.getElementById("f3").textContent = S.top20.planned + " of 20";
-document.getElementById("f3s").textContent = `top gap corridors are already in the council's 2022 bike plan (${S.top20.lgwm} of them staged under LGWM, now wound up)`;
+document.getElementById("f3s").textContent = `top gap corridors are already in the council's 2022 bike plan, but ${S.top20.lgwm} of those were staged under LGWM and are now unfunded`;
 document.getElementById("f4").textContent = S.top20.notplan;
 document.getElementById("f4s").textContent = "top-20 gaps aren't in the plan at all: " + CORR.filter(c => c.plan === "Not in plan" && c.rank <= 20).map(c => c.street).join(", ");
 
@@ -182,18 +191,27 @@ const width = f => { const v = f.properties["flow_" + scen] || 0; return Math.ma
 function colourFor(p) {
   if (mode === "plan") {
     if (p.plan && p.plan !== "Not in plan") return css(PLAN_COL[p.plan]);
-    return (p.facility === "separated" || p.facility === "path" || p.facility === "sidepath") ? css("--protected") : css("--quiet");
+    return PROT.has(p.facility) ? css("--protected") : css("--quiet");
   }
-  const prot = p.facility === "separated" || p.facility === "path" || p.facility === "sidepath";
-  if (prot) return css("--protected");
+  if (mode === "facility") return css(FAC_COL[p.facility] || "--quiet");
+  if (PROT.has(p.facility) && p.lts <= 2) return css("--protected");
   if (p.lts <= 2) return css("--quiet");
-  if ((p["flow_" + scen] || 0) >= GAP_MIN) return p.facility === "painted" ? css("--painted") : css("--gap");
+  if (p.gap && scen === "godutch" || (p["flow_" + scen] || 0) >= GAP_MIN) {
+    const f = [p.fac_fw, p.fac_bw];
+    return f.some(x => x === "painted_lane" || x === "buffered_lane" || x === "bus_lane") ? css("--painted") : css("--gap");
+  }
   return css("--busy");
+}
+function dashFor(p) {
+  if (mode === "gaps" && p.gap_dir === "one way") return "6 5";
+  if (mode === "facility" && p.fac_fw !== p.fac_bw && p.can_fw && p.can_bw) return "6 5";
+  return null;
 }
 function styleFor(f) {
   const p = f.properties;
   const on = selected == null || p.rank === selected;
-  return {color: colourFor(p), weight: width(f), opacity: on ? (p["flow_" + scen] > 0 || mode === "plan" ? .95 : .35) : .18, lineCap: "round"};
+  return {color: colourFor(p), weight: width(f), dashArray: dashFor(p), lineCap: dashFor(p) ? "butt" : "round",
+    opacity: on ? (p["flow_" + scen] > 0 || mode !== "gaps" ? .95 : .35) : .18};
 }
 GEO.features.sort((a, b) => (a.properties.flow_godutch || 0) - (b.properties.flow_godutch || 0));
 const layer = L.geoJSON(GEO, {style: styleFor, onEachFeature: (f, l) => {
@@ -203,13 +221,39 @@ const layer = L.geoJSON(GEO, {style: styleFor, onEachFeature: (f, l) => {
   l.on("click", () => { if (f.properties.rank) selectCorridor(f.properties.rank); else detailEdge(f.properties); });
 }}).addTo(map);
 function restyle() { layer.setStyle(styleFor); legend(); }
+const points = L.layerGroup().addTo(map);
+PTS.features.forEach(f => {
+  const p = f.properties, [lon, lat] = f.geometry.coordinates;
+  let m;
+  if (p.kind === "counter") {
+    m = L.circleMarker([lat, lon], {radius: Math.max(3, Math.min(10, Math.sqrt(p.counted) / 2.5)), color: css("--surface"), weight: 1,
+      fillColor: css("--counter"), fillOpacity: .9});
+    m.on("mouseover", e => { tip.hidden = false; moveTip(e.originalEvent);
+      tip.innerHTML = `<b>${p.approach}</b><br>Counted: ${fmt(p.counted)} cyclists a weekday (last 12 months)<br>Modelled 2023 census commuters: ${fmt(p.modelled)}`; });
+  } else {
+    const s = 7 + Math.min(6, Math.sqrt(p.trips) / 8);
+    m = L.marker([lat, lon], {icon: L.divIcon({className: "", iconSize: [s, s],
+      html: `<div style="width:${s}px;height:${s}px;transform:rotate(45deg);background:var(--xing);border:1.5px solid var(--surface)"></div>`})});
+    m.on("mouseover", e => { tip.hidden = false; moveTip(e.originalEvent);
+      tip.innerHTML = `<b>Crossing #${p.rank}: ${p.crossing || "busy road"}</b><br>${fmt(p.trips)} Go Dutch trips a day arrive on ${p.approach || "a quiet street"} and must cross without signals<br>${p.adt ? fmt(p.adt) + " vehicles/day · " : ""}${p.speed} km/h`; });
+  }
+  m.on("mousemove", e => moveTip(e.originalEvent));
+  m.on("mouseout", () => { tip.hidden = true; });
+  points.addLayer(m);
+});
 
 const tip = document.getElementById("tip");
 function moveTip(e) { tip.style.left = Math.min(e.clientX + 14, innerWidth - 280) + "px"; tip.style.top = (e.clientY + 14) + "px"; }
-const FAC = {separated: "Separated lane or path", path: "Shared path", sidepath: "Path alongside", painted: "Painted lane", bus: "Bus lane", none: "No cycle facility"};
+const FAC = {track: "Cycle track", protected_lane: "Protected lane", sidepath: "Path alongside", seg_path: "Segregated path",
+  shared_path: "Shared path", shared_footway: "Shared footpath", buffered_lane: "Buffered lane", painted_lane: "Painted lane",
+  bus_lane: "Bus lane", sharrow: "Sharrows only", mixed: "No cycle facility"};
+function facText(p) {
+  if (!(p.can_fw && p.can_bw) || p.fac_fw === p.fac_bw) return FAC[p.facility] || "";
+  return `${FAC[p.fac_fw]} one way, ${(FAC[p.fac_bw] || "").toLowerCase()} the other`;
+}
 function showEdge(p, e) {
   tip.hidden = false; moveTip(e);
-  tip.innerHTML = `<b>${p.name || "Unnamed link"}</b><br>${fmt(p["flow_" + scen])} ${SCEN[scen]} trips/day<br>${FAC[p.facility] || ""}${p.adt ? " · " + fmt(p.adt) + " vehicles/day" : ""}${p.rank ? "<br>Gap corridor #" + p.rank : ""}`;
+  tip.innerHTML = `<b>${p.name || "Unnamed link"}</b><br>${fmt(p["flow_" + scen])} ${SCEN[scen]} trips/day<br>${facText(p)}${p.adt ? " · " + fmt(p.adt) + " vehicles/day" : ""}${p.speed ? " · " + p.speed + " km/h" : ""}${p.rank ? "<br>Gap corridor #" + p.rank + (p.gap_dir === "one way" ? " (one direction)" : "") : ""}`;
 }
 
 // Controls
@@ -226,22 +270,29 @@ seg(document.getElementById("mode"), MODES, mode, k => { mode = k; restyle(); })
 
 function legend() {
   const items = mode === "gaps"
-    ? [["--gap", "Gap: busy, unprotected, 250+ trips/day"], ["--painted", "Gap with a painted lane only"], ["--busy", "Busy street, fewer trips"], ["--protected", "Protected lane or path"], ["--quiet", "Quiet street"]]
-    : [["--built", "Built or underway"], ["--planned", "Planned (council)"], ["--lgwm", "Planned (ex-LGWM)"], ["--desired", "Desired only"], ["--protected", "Other path or lane"], ["--quiet", "Not in the plan"]];
-  document.getElementById("legend").innerHTML = items.map(([c, t]) => `<span><i style="background:var(${c})"></i>${t}</span>`).join("") +
+    ? [["--gap", "Gap: busy, unprotected, 250+ trips/day"], ["--painted", "Gap with a painted or bus lane only"], ["--busy", "Busy street, fewer trips"], ["--protected", "Protected lane or path"], ["--quiet", "Quiet street"]]
+    : mode === "facility"
+    ? [["--track", "Cycle track or protected lane"], ["--protected", "Path alongside or segregated path"], ["--shared", "Shared path"], ["--painted", "Painted or buffered lane"], ["--bus", "Bus lane"], ["--sharrow", "Sharrows only"], ["--quiet", "No facility"]]
+    : [["--built", "Built or underway"], ["--planned", "Planned (council)"], ["--lgwm", "Unfunded (ex-LGWM)"], ["--desired", "Desired only"], ["--protected", "Other path or lane"], ["--quiet", "Not in the plan"]];
+  const dash = mode === "gaps" ? `<span><i style="background:repeating-linear-gradient(90deg,var(--gap) 0 6px,transparent 6px 10px)"></i>Gap in one direction only</span>`
+    : mode === "facility" ? `<span><i style="background:repeating-linear-gradient(90deg,var(--ink2) 0 6px,transparent 6px 10px)"></i>Different each direction</span>` : "";
+  document.getElementById("legend").innerHTML = items.map(([c, t]) => `<span><i style="background:var(${c})"></i>${t}</span>`).join("") + dash +
+    `<span><i style="width:10px;height:10px;border-radius:50%;background:var(--counter)"></i>Counter</span><span><i style="width:10px;height:10px;transform:rotate(45deg);border-radius:1px;background:var(--xing)"></i>Busy crossing</span>` +
     `<span class="w"><i style="height:2px;width:22px"></i>100</span><span class="w"><i style="height:5px;width:22px"></i>1,000</span><span class="w"><i style="height:10px;width:22px"></i>3,500 trips/day</span>`;
   document.getElementById("note").textContent = mode === "gaps"
-    ? `Line width shows ${SCEN[scen]} trips a weekday, both directions. Click a red street or a corridor in the list to see it.`
+    ? `Line width shows ${SCEN[scen]} trips a weekday, both directions. Dashed: protected or calm one way only (often uphill-only protection). Click a red street or a corridor in the list to see it.`
+    : mode === "facility" ? "What's on the street today, from OpenStreetMap and the council's bike network layer. Dashed where each direction differs, e.g. a protected uphill lane with sharrows downhill."
     : "Streets on the council's 2022 Strategic Bike Network, coloured by stage. Line width still shows trips.";
 }
 legend();
 
 // Corridor list and detail
 const list = document.getElementById("list");
-function planChip(plan) { return `<span class="st" style="color:var(${PLAN_COL[plan]})">${plan.replace("Planned ", "").replace("(", "").replace(")", "")}</span>`; }
+function planChip(plan) { const short = {"Planned (WCC)": "Planned", "Unfunded (ex-LGWM)": "Unfunded", "Not in plan": "Not in plan", "Desired only": "Desired", "Built or underway": "Built"};
+  return `<span class="st" style="color:var(${PLAN_COL[plan]})">${short[plan] || plan}</span>`; }
 CORR.forEach(c => {
   const b = document.createElement("button"); b.type = "button"; b.dataset.rank = c.rank;
-  b.innerHTML = `<span class="rk">${c.rank}</span><span class="nm">${c.street}</span><span class="tr">${fmt(c.godutch_trips)}</span><span class="sb">${c.suburbs}${c.road === "State highway" ? " · state highway" : ""}</span>${planChip(c.plan)}`;
+  b.innerHTML = `<span class="rk">${c.rank}</span><span class="nm">${c.street}</span><span class="tr">${fmt(c.godutch_trips)}</span><span class="sb">${c.suburbs}${c.road === "State highway" ? " · state highway" : ""}${c.one_way_share > .5 ? " · one direction" : ""}</span>${planChip(c.plan)}`;
   b.onclick = () => selectCorridor(c.rank);
   list.appendChild(b);
 });
@@ -263,13 +314,17 @@ function renderDetail() {
     <dt>Length</dt><dd>${(c.length_m / 1000).toFixed(1)} km</dd>
     <dt>Traffic (busiest part)</dt><dd>${c.max_adt ? fmt(c.max_adt) + " /day" : "state highway"}</dd>
     <dt>Speed limit</dt><dd>${fmt(c.speed)} km/h</dd>
-    <dt>Painted lane today</dt><dd>${(c.painted_share * 100).toFixed(0)}%</dd></dl>`;
+    <dt>Facility today (busy direction)</dt><dd style="font-family:var(--sans)">${FAC[c.facility_now] || "–"}</dd>
+    <dt>Gap in one direction only</dt><dd>${(c.one_way_share * 100).toFixed(0)}% of length</dd></dl>`;
 }
 function detailEdge(p) {
   selected = null; restyle(); list.querySelectorAll(".sel").forEach(x => x.classList.remove("sel"));
+  const dirs = p.can_fw && p.can_bw && (p.fac_fw !== p.fac_bw || p.lts_fw !== p.lts_bw)
+    ? `<dt>One direction</dt><dd style="font-family:var(--sans)">${FAC[p.fac_fw]} · stress ${p.lts_fw}</dd><dt>Other direction</dt><dd style="font-family:var(--sans)">${FAC[p.fac_bw]} · stress ${p.lts_bw}</dd>`
+    : `<dt>Cycle facility</dt><dd style="font-family:var(--sans)">${FAC[p.facility]}</dd><dt>Traffic stress (1–4)</dt><dd>${p.lts}</dd>`;
   detail.innerHTML = `<div class="sub">Street segment</div><h2>${p.name || "Unnamed link"}</h2>
     <dl class="kv">${["census", "godutch", "ebike"].map(k => `<dt>${SCEN[k]} trips/day</dt><dd>${fmt(p["flow_" + k])}</dd>`).join("")}
-    <dt>Cycle facility</dt><dd style="font-family:var(--sans)">${FAC[p.facility]}</dd>
+    ${dirs}
     <dt>Traffic</dt><dd>${p.adt ? fmt(p.adt) + " /day" : "–"}</dd><dt>Speed limit</dt><dd>${fmt(p.speed)} km/h</dd>
     <dt>Council plan</dt><dd style="font-family:var(--sans)">${p.plan}</dd></dl>`;
 }
@@ -286,9 +341,13 @@ function selectCorridor(rank) {
 renderDetail();
 
 // Table
-document.getElementById("tbl").innerHTML = `<thead><tr><th>#</th><th style="text-align:left">Street</th><th style="text-align:left">Suburbs</th><th>Length</th><th>Today</th><th>Go Dutch</th><th>E-bike</th><th>Vehicles/day</th><th style="text-align:left">Plan</th></tr></thead><tbody>` +
-  CORR.slice(0, 20).map(c => `<tr><td class="num">${c.rank}</td><td style="text-align:left">${c.street}${c.road === "State highway" ? " <span style='color:var(--muted)'>(SH)</span>" : ""}</td><td style="text-align:left;color:var(--ink2)">${c.suburbs}</td><td class="num">${(c.length_m / 1000).toFixed(1)} km</td><td class="num">${fmt(c.census_trips)}</td><td class="num">${fmt(c.godutch_trips)}</td><td class="num">${fmt(c.ebike_trips)}</td><td class="num">${c.max_adt ? fmt(c.max_adt) : "–"}</td><td style="text-align:left;color:var(${PLAN_COL[c.plan]});font-weight:600">${c.plan}</td></tr>`).join("") + "</tbody>";
+document.getElementById("tbl").innerHTML = `<thead><tr><th>#</th><th style="text-align:left">Street</th><th style="text-align:left">Suburbs</th><th>Length</th><th>Today</th><th>Go Dutch</th><th>E-bike</th><th>Vehicles/day</th><th style="text-align:left">Now</th><th style="text-align:left">Plan</th></tr></thead><tbody>` +
+  CORR.slice(0, 20).map(c => `<tr><td class="num">${c.rank}</td><td style="text-align:left">${c.street}${c.road === "State highway" ? " <span style='color:var(--muted)'>(SH)</span>" : ""}</td><td style="text-align:left;color:var(--ink2)">${c.suburbs}</td><td class="num">${(c.length_m / 1000).toFixed(1)} km</td><td class="num">${fmt(c.census_trips)}</td><td class="num">${fmt(c.godutch_trips)}</td><td class="num">${fmt(c.ebike_trips)}</td><td class="num">${c.max_adt ? fmt(c.max_adt) : "–"}</td><td style="text-align:left;color:var(--ink2)">${FAC[c.facility_now] || "–"}${c.one_way_share > .5 ? " (one way)" : ""}</td><td style="text-align:left;color:var(${PLAN_COL[c.plan]});font-weight:600">${c.plan}</td></tr>`).join("") + "</tbody>";
 
+if (S.calibration) {
+  const c = S.calibration.best, d = S.calibration.default;
+  document.getElementById("calText").textContent = `calibrated against ${c.n} council sensor count directions (VivaCity, last 12 months): the best fit treats a metre of busy (level 4) street as ${c.stress["4"]} m and each metre climbed as ${c.climb} m on the flat, raising agreement with counts from ${d.log_r.toFixed(2)} to ${c.log_r.toFixed(2)} (log correlation)`;
+}
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change", restyle);
 new MutationObserver(restyle).observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
 </script>

@@ -2,15 +2,21 @@
 
 Inputs: cycle_edges.parquet (cycle_network.py) and cycle_flows.parquet (cycle_model.py).
 
-A street edge is a gap when its potential cycling (Go Dutch scenario) is high but it is
-stressful to ride (level of traffic stress 3-4) and has no protected facility. Gap edges on
-the same street that touch each other form a corridor. Corridors are ranked by potential
-cycle-km per weekday (trips x length) and labelled with the council's plan for them (WCC
-Strategic Bike Network 2022): built or being built, planned (WCC or Let's Get Wellington
-Moving stage), in the plan as "Primary desired" only, or not in the plan.
+Direction matters: WCC's transitional cycleways often protect the uphill side only. Each edge is
+judged per direction of travel. A direction is a gap when it is stressful to ride (level of
+traffic stress 3-4 in that direction, so no protection) and carries >= 60 potential trips a
+weekday, on an edge with >= 250 potential trips in total (Go Dutch scenario). Gap edges on the
+same street that touch each other (or are < 150 m apart) form a corridor. Corridors are ranked by
+potential cycle-km per weekday on their stressful directions and labelled with the council's plan
+(WCC Strategic Bike Network 2022): built or being built, planned (council stage), unfunded
+(staged under Let's Get Wellington Moving, disestablished in December 2023), "Primary desired"
+only, or not in the plan. A corridor where only one direction is a gap is flagged "one way".
 
-Writes outputs/tables/cycle_corridors.csv, outputs/tables/cycle_summary.csv,
-outputs/blocks/cycle_edges.geojson (WGS84, for the web map) and
+Crossings: junction nodes where potential trips arrive on a low-stress street and must cross a
+level 3-4 road without signals or a marked crossing, ranked by those trips.
+
+Writes outputs/tables/cycle_corridors.csv, cycle_crossings.csv, cycle_summary.csv,
+outputs/blocks/cycle_edges.geojson and cycle_points.geojson (WGS84, for the web map) and
 outputs/figures/cycle_gaps.png.
 """
 
@@ -34,32 +40,42 @@ PROC = ROOT / "data" / "processed"
 TABLES = ROOT / "outputs" / "tables"
 BLOCKS = ROOT / "outputs" / "blocks"
 FIGS = ROOT / "outputs" / "figures"
-GAP_MIN_FLOW = 250  # Go Dutch trips per weekday
+GAP_MIN_FLOW = 250  # Go Dutch trips per weekday, both directions
+GAP_MIN_DIR = 60  # in the stressful direction
+PROTECTED = {"track", "protected_lane", "sidepath", "seg_path", "shared_path", "shared_footway"}
+LANE = {"painted_lane", "buffered_lane", "bus_lane"}
 MAP_MIN_FLOW = 40
 SCEN = ["census", "godutch", "ebike"]
 
 
 def plan_status(stage, klass):
     """WCC Strategic Bike Network 2022 status. LGWM-staged links lost their programme when Let's
-    Get Wellington Moving was disestablished in 2024, so they are shown separately."""
+    Get Wellington Moving was disestablished (December 2023), so they are shown as unfunded."""
     if stage in ("Built", "Being built"):
         return "Built or underway"
     if not isinstance(stage, str) or not stage:
         return "Not in plan"
     if klass == "Primary desired":
         return "Desired only"
-    return "Planned (ex-LGWM)" if "LGWM" in stage else "Planned (WCC)"
+    return "Unfunded (ex-LGWM)" if "LGWM" in stage else "Planned (WCC)"
 
 
 def load():
-    e = gpd.read_parquet(PROC / "cycle_edges.parquet").join(pd.read_parquet(PROC / "cycle_flows.parquet"))
+    e_all = gpd.read_parquet(PROC / "cycle_edges.parquet").join(pd.read_parquet(PROC / "cycle_flows.parquet"))
     city = gpd.read_file(RAW / "sa2.geojson").to_crs(2193).union_all()
-    e = e[e.geometry.interpolate(0.5, normalized=True).within(city)].copy()
+    e = e_all[e_all.geometry.interpolate(0.5, normalized=True).within(city)].copy()
     e["plan"] = [plan_status(s, c) for s, c in zip(e["wcc_stage"], e["wcc_class"])]
-    e["protected"] = e["facility"].isin(["separated", "path", "sidepath"])
-    e["stress"] = np.where(e["lts"] >= 3, "high", "low")
-    e["gap"] = (e["lts"] >= 3) & ~e["protected"] & (e["flow_godutch"] >= GAP_MIN_FLOW)
-    return e
+    e["protected"] = e["facility"].isin(PROTECTED)
+    for d in ("fw", "bw"):
+        e[f"hs_{d}"] = e[f"can_{d}"] & (e[f"lts_{d}"] >= 3)
+        e[f"gapd_{d}"] = e[f"hs_{d}"] & (e[f"flow_godutch_{d}"] >= GAP_MIN_DIR)
+    e["gap"] = (e["flow_godutch"] >= GAP_MIN_FLOW) & (e["gapd_fw"] | e["gapd_bw"])
+    two_way = e["can_fw"] & e["can_bw"]
+    e["gap_dir"] = np.where(~e["gap"], "", np.where(e["gapd_fw"] & e["gapd_bw"] | ~two_way, "both", "one way"))
+    for s in SCEN:
+        e[f"hs_flow_{s}"] = e[f"flow_{s}_fw"] * e["hs_fw"] + e[f"flow_{s}_bw"] * e["hs_bw"]
+    e["hs_fac"] = np.where(e["hs_fw"], e["fac_fw"], e["fac_bw"])
+    return e_all, e
 
 
 def corridors(e):
@@ -93,19 +109,22 @@ def corridors(e):
     def agg(x):
         L = x["length_m"]
         plan_len = L.groupby(x["plan"]).sum()
+        fac_len = L.groupby(x["hs_fac"]).sum()
         return pd.Series({
             "street": x["street"].iat[0],
             "suburbs": ", ".join(pd.Series(x["suburb"]).dropna().value_counts().index[:3]),
             "length_m": L.sum(),
-            "godutch_cyc_km": (x["flow_godutch"] * L).sum() / 1000,
-            "ebike_cyc_km": (x["flow_ebike"] * L).sum() / 1000,
-            "census_cyc_km": (x["flow_census"] * L).sum() / 1000,
+            "godutch_cyc_km": (x["hs_flow_godutch"] * L).sum() / 1000,
+            "ebike_cyc_km": (x["hs_flow_ebike"] * L).sum() / 1000,
+            "census_cyc_km": (x["hs_flow_census"] * L).sum() / 1000,
             "godutch_trips": (x["flow_godutch"] * L).sum() / L.sum(),
             "ebike_trips": (x["flow_ebike"] * L).sum() / L.sum(),
             "census_trips": (x["flow_census"] * L).sum() / L.sum(),
             "max_adt": x["adt"].max(),
             "speed": x["speed"].median(),
-            "painted_share": (L * (x["facility"] == "painted")).sum() / L.sum(),
+            "facility_now": fac_len.idxmax(),
+            "painted_share": (L * x["hs_fac"].isin(LANE)).sum() / L.sum(),
+            "one_way_share": (L * (x["gap_dir"] == "one way")).sum() / L.sum(),
             "road": "State highway" if (x["highway"].isin(["trunk", "trunk_link"])).mean() > 0.5 else
                     x["highway"].mode().iat[0],
             "plan": plan_len.idxmax(),
@@ -127,28 +146,83 @@ def suburb_points():
 def summary(e):
     rows = {}
     for s in SCEN:
-        km = e[f"flow_{s}"] * e["length_m"] / 1000
-        rows[s] = {
-            "cycle_km_per_day": km.sum(),
-            "on_protected_%": km[e["protected"]].sum() / km.sum() * 100,
-            "on_quiet_streets_%": km[~e["protected"] & (e["lts"] <= 2)].sum() / km.sum() * 100,
-            "on_high_stress_%": km[e["lts"] >= 3].sum() / km.sum() * 100,
-            "on_high_stress_painted_%": km[(e["lts"] >= 3) & (e["facility"] == "painted")].sum() / km.sum() * 100,
-        }
+        tot = prot = quiet = hs = lane = 0.0
+        for d in ("fw", "bw"):
+            km = e[f"flow_{s}_{d}"] * e["length_m"] / 1000
+            p = e[f"fac_{d}"].isin(PROTECTED)
+            tot += km.sum()
+            prot += km[p].sum()
+            quiet += km[~p & (e[f"lts_{d}"] <= 2)].sum()
+            hs += km[e[f"lts_{d}"] >= 3].sum()
+            lane += km[(e[f"lts_{d}"] >= 3) & e[f"fac_{d}"].isin(LANE)].sum()
+        rows[s] = {"cycle_km_per_day": tot, "on_protected_%": prot / tot * 100, "on_quiet_streets_%": quiet / tot * 100,
+                   "on_high_stress_%": hs / tot * 100, "on_high_stress_painted_%": lane / tot * 100}
     return pd.DataFrame(rows).T
 
 
-def export(e, g):
+def crossings(e_all, e):
+    """Junctions where low-stress approaches meet an unsignalised level 3-4 road."""
+    arr = pd.concat([
+        pd.DataFrame({"node": e_all["v"], "flow": e_all["flow_godutch_fw"], "census": e_all["flow_census_fw"],
+                      "ok": e_all["can_fw"] & (e_all["lts_fw"] <= 2) & (e_all["cross_v"] >= 3),
+                      "approach": e_all["name"]}),
+        pd.DataFrame({"node": e_all["u"], "flow": e_all["flow_godutch_bw"], "census": e_all["flow_census_bw"],
+                      "ok": e_all["can_bw"] & (e_all["lts_bw"] <= 2) & (e_all["cross_u"] >= 3),
+                      "approach": e_all["name"]})])
+    arr = arr[arr["ok"] & (arr["flow"] > 0)]
+    n = arr.groupby("node").agg(trips=("flow", "sum"), census=("census", "sum"),
+                                approach=("approach", lambda x: ", ".join(pd.Series(x).dropna().unique()[:2])))
+    busy = e_all[e_all["lts"] >= 3]
+    inc = pd.concat([busy[["u", "name", "lts", "adt", "speed"]].rename(columns={"u": "node"}),
+                     busy[["v", "name", "lts", "adt", "speed"]].rename(columns={"v": "node"})])
+    road = inc.sort_values("adt", ascending=False).drop_duplicates("node").set_index("node")
+    n = n.join(road.rename(columns={"name": "crossing"}), how="inner")
+    nodes = pd.read_parquet(PROC / "cycle_nodes.parquet")
+    pts = gpd.GeoDataFrame(n, geometry=gpd.points_from_xy(nodes.loc[n.index, "x"], nodes.loc[n.index, "y"]), crs=2193)
+    city = gpd.read_file(RAW / "sa2.geojson").to_crs(2193).union_all()
+    pts = pts[pts.within(city)].sort_values("trips", ascending=False)
+    j = gpd.sjoin_nearest(pts[["geometry"]], suburb_points(), how="left", max_distance=300)
+    pts["suburb"] = j[~j.index.duplicated()]["Suburb"].reindex(pts.index)
+    pts["rank"] = np.arange(1, len(pts) + 1)
+    return pts
+
+
+def export(e, g, xing):
     m = e[(e["flow_godutch"] >= MAP_MIN_FLOW) | e["protected"] | e["plan"].ne("Not in plan")].copy()
     m["rank"] = g["rank"].reindex(m.index)
-    m = m[["geometry", "name", "flow_census", "flow_godutch", "flow_ebike", "lts", "facility", "plan", "adt",
-           "speed", "gap", "rank"]]
-    for s in SCEN:
-        m[f"flow_{s}"] = m[f"flow_{s}"].round(0)
+    m = m[["geometry", "name", "flow_census", "flow_godutch", "flow_ebike", "flow_godutch_fw", "flow_godutch_bw",
+           "lts", "lts_fw", "lts_bw", "can_fw", "can_bw", "facility", "fac_fw", "fac_bw", "plan", "adt", "speed",
+           "gap", "gap_dir", "rank"]]
+    for c in m.columns:
+        if c.startswith("flow_"):
+            m[c] = m[c].round(0)
     m["geometry"] = m.geometry.simplify(2)
     m = m.to_crs(4326)
     m.to_file(BLOCKS / "cycle_edges.geojson", driver="GeoJSON", COORDINATE_PRECISION=5)
     print(f"map edges: {len(m):,}, {(BLOCKS / 'cycle_edges.geojson').stat().st_size / 1e6:.1f} MB")
+    pts = xing.head(40).copy()
+    pts["kind"] = "crossing"
+    pts = pts[["kind", "rank", "trips", "census", "approach", "crossing", "lts", "adt", "speed", "suburb", "geometry"]]
+    cnt = counters()
+    frames = [pts.to_crs(4326)] + ([cnt.to_crs(4326)] if cnt is not None else [])
+    out = gpd.GeoDataFrame(pd.concat(frames, ignore_index=True), crs=4326)
+    out.to_file(BLOCKS / "cycle_points.geojson", driver="GeoJSON", COORDINATE_PRECISION=5)
+
+
+def counters():
+    """Counter sites with counted and modelled weekday cyclists (from cycle_validate.py)."""
+    f = TABLES / "cycle_counters.csv"
+    if not f.exists():
+        return None
+    c = pd.read_csv(f)
+    meta = pd.read_csv(RAW / "cycling" / "sensors" / "meta.csv").set_index("COUNTLINE_ID")
+    s = c.groupby(["COUNTLINE_ID", "NAME"]).agg(counted=("weekday_avg", "sum"),
+                                                modelled=("modelled_census", "sum")).reset_index()
+    s = s.join(meta[["LATITUDE_START_LINE", "LONGITUDE_START_LINE"]], on="COUNTLINE_ID")
+    s["kind"] = "counter"
+    s = s.rename(columns={"NAME": "approach"})
+    return gpd.GeoDataFrame(s[["kind", "approach", "counted", "modelled"]], crs=4326,
+                            geometry=gpd.points_from_xy(s["LONGITUDE_START_LINE"], s["LATITUDE_START_LINE"])).to_crs(2193)
 
 
 def figure(e, c):
@@ -183,20 +257,21 @@ def figure(e, c):
 
 
 def main():
-    e = load()
+    e_all, e = load()
     s = summary(e)
     s.round(1).to_csv(TABLES / "cycle_summary.csv")
     print(s.round(1).to_string())
     c, g = corridors(e)
     c.round(2).to_csv(TABLES / "cycle_corridors.csv", index=False)
     pd.set_option("display.width", 250)
-    print(c.head(25)[["rank", "street", "road", "suburbs", "length_m", "godutch_trips", "ebike_trips", "census_trips",
-                      "godutch_cyc_km", "max_adt", "painted_share", "plan", "plan_share"]].round(1).to_string())
+    print(c.head(25)[["rank", "street", "road", "suburbs", "length_m", "godutch_trips", "census_trips",
+                      "godutch_cyc_km", "max_adt", "speed", "facility_now", "one_way_share", "plan"]].round(2).to_string())
     print(c.groupby("plan")["godutch_cyc_km"].sum().round(0).to_string())
     print("top 20 by plan:", c.head(20)["plan"].value_counts().to_dict())
-    print(c[c["plan"] == "Not in plan"].head(12)[["rank", "street", "road", "suburbs", "length_m", "godutch_trips",
-                                                  "max_adt"]].round(0).to_string())
-    export(e, g)
+    xing = crossings(e_all, e)
+    xing.drop(columns="geometry").head(40).round(0).to_csv(TABLES / "cycle_crossings.csv")
+    print(xing.head(15)[["trips", "census", "approach", "crossing", "lts", "adt", "speed", "suburb"]].round(0).to_string())
+    export(e, g, xing)
     figure(e, c)
 
 
