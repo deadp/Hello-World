@@ -706,6 +706,11 @@ What this shows:
   bus route, so the real treatment needs design, not just a filter.
 
 **Checking the network (`cycle_review.py`, `cycle_compare_routes.py`)**
+- **Open GPS traces were tried and aren't usable yet (`cycle_traces.py`).** OpenStreetMap's
+  public traces for the city download at about one page (5,000 points) a minute. The first
+  305,000 points came from about 15 days of a few mappers' walks: 0.2% of points were at cycling
+  speed. The Strava heatmap may only be used for tracing into OpenStreetMap, so it can't feed
+  the model. Real routes (GPX) through `cycle_compare_routes.py` are the practical option.
 - **The map's "Check" view** colours streets by facility and marks two kinds of place.
   - *Possible missing links* (68): cycleways and paths that stop within 20 m of a street or path
     they don't join, where the way round by the network is over 200 m. These are usually
