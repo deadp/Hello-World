@@ -615,25 +615,32 @@ up the most trips per dollar. The prioritisation does, in these steps:
   The first version snapped whole SA1s to single street corners. That made short links next to
   those corners look vital: Wha Street (Lyall Bay) and Ellice Street (Mt Victoria) were first
   and second on the list, and with homes spread along their streets they connect no trips.
-- **Connectivity.** A trip is *connected* when its low-stress route (stress 1–2, ending at
-  crossings of stress 1–2) is at most 25% longer than its shortest route (Furth, Mekuria &
-  Nixon). The first and last 150 m may be on any street.
-- **Today:** 37% of potential (Go Dutch) trips are connected, as are 38% of trips cycled
-  today. That rises to 45% with a 50% detour allowed, and 52% if 150 m of busy street is
-  tolerated.
+- **Connectivity, all ages and hill-aware.** A trip is *connected* when it has a route on
+  stress-1 links (protected lanes, tracks, paths, genuinely quiet streets) with signals, zebras
+  or quiet junctions at busy roads, needing at most 25% more *effort* than the easiest route.
+  Effort counts each metre climbed as 30 m on the flat (the calibrated route-choice weight). The
+  first and last 150 m may be on any street.
+  - Why this standard: judged for confident riders (stress ≤ 2) on distance alone, painted
+    lanes and moderately busy streets counted as connected, and so did quiet detours over a
+    hill. That made gaps between protected pieces look unimportant and cheap links on calm
+    streets look best.
+  - Sensitivities: "confident" (stress ≤ 2, effort) and "confident_flat" (stress ≤ 2, distance:
+    the earlier measure).
+- **Today:** only 13% of potential (Go Dutch) trips have an all-ages route, and 10% of trips
+  cycled today. For confident riders the figures are 35% (hill-aware) and 37% (distance only).
 - **Candidates:** 318 in total.
-  - The 150 biggest corridor gaps (any level 3–4 direction with 30+ Go Dutch trips). Each
+  - The 200 biggest corridor gaps (any road direction at stress 2–4 with 30+ Go Dutch trips). Each
     covers the street's whole busy stretch: busy pieces within 150 m with few potential trips
     are filled in, so a Tinakori Road project leaves no busy gaps.
-  - 88 unbuilt council-plan links (Strategic Bike Network: planned, ex-LGWM, desired) with a
+  - 126 unbuilt council-plan links (Strategic Bike Network: planned, ex-LGWM, desired) with a
     busy direction, whatever their modelled trips. A one-way street on the plan becomes two-way
     for bikes. For example, Bunny Street would carry the Thorndon Quay cycleway to the
     waterfront at Lady Elizabeth Lane both ways; today bikes may only ride it eastbound.
   - The 80 busiest unsignalised crossings of busy roads.
 - **Treatments.**
   - Quiet street (30 km/h and a modal filter): local or collector roads of 50 km/h or less
-    with 3,000 vehicles/day or fewer.
-  - Protected lane: other roads.
+    with 3,000 vehicles/day or fewer. Treated streets become stress 1.
+  - Protected lane: other roads. Treated streets become stress 1.
   - Crossings: signals over 8,000 vehicles/day or 50 km/h, otherwise a raised zebra or refuge.
 - **Benefit, exact.** Each candidate is added to the low-stress network and the trips newly
   connected are counted with an exact shortcut: new distance = min(old, via the tail of any
@@ -656,47 +663,44 @@ up the most trips per dollar. The prioritisation does, in these steps:
 
 | Step | Project | Treatment | Cost | Go Dutch trips newly connected | Joins network | % connected after |
 |---|---|---|---|---|---|---|
-| – | Today | | | | | 37.2% |
-| 1 | Bolton Street, Kelburn–CBD | Quiet street | $75k | 159 | one end | 37.5% |
-| 2 | Panama Street, CBD (council plan) | Quiet street | $50k | 126 | – | 37.7% |
-| 3 | Moorefield Road, Johnsonville | Protected lane | $250k | 371 | both | 38.3% |
-| 4 | Oxford Street, Tawa | Quiet street | $60k | 119 | – | 38.5% |
-| 5 | Duncan Street | Quiet street | $70k | 117 | one end | 38.7% |
-| 6 | Chaytor Street, Karori–Kelburn | Protected lane | $580k | 746 | both | 39.9% |
-| 7 | Garden Road, Northland | Quiet street | $85k | 82 | one end | 40.1% |
-| 8 | Stone Street, Miramar | Quiet street | $60k | 70 | – | 40.2% |
-| 9 | Cockayne Road at Lucknow Terrace, Khandallah | Raised zebra | $250k | 278 | – | 40.7% |
-| 10 | Maupuia Road | Quiet street | $125k | 109 | one end | 40.9% |
+| – | Today | | | | | 13.3% |
+| 1 | Stout Street, CBD | Quiet street | $70k | 576 | both | 14.3% |
+| 2 | Manners Street, Te Aro | Quiet street | $50k | 429 | one end | 15.0% |
+| 3 | John Street, Mt Cook (ex-LGWM) | Protected lane | $420k | 1,736 | one end | 17.9% |
+| 4 | Devon Street, Aro Valley | Quiet street | $90k | 563 | – | 18.8% |
+| 5 | Miro Street, Miramar | Quiet street | $110k | 165 | both | 19.1% |
+| 6 | Strathavon Road, Miramar | Quiet street | $110k | 437 | – | 19.9% |
+| 7 | Adelaide Road, Mt Cook–Newtown (ex-LGWM) | Protected lane | $1.3M | 1,884 | both | 23.0% |
+| 8 | Hill Street, Thorndon | Quiet street | $100k | 158 | one end | 23.3% |
+| 9 | Panama Street, CBD | Quiet street | $50k | 91 | – | 23.5% |
+| 10 | Hobson Street, Thorndon | Quiet street | $120k | 185 | – | 23.8% |
 
 What this shows:
-- **Cheap fixes come first.** About $1.6M (indicative) lifts connected trips from 37% to 41%.
-  Most are quiet-street treatments on short local links between low-stress areas.
-- **Robust picks:** Bolton Street, Panama Street, Moorefield Road and Chaytor Street are in the
-  top 10 in 80%+ of 1,000 draws of detour limit, scenario, cost and network bonus. Chaytor
-  Street (Karori to Kelburn, 740 trips for about $0.6M) stays in the top 15 even when short
-  busy stretches are tolerated.
-- **Most trips connected, cost aside:**
-
-  | Project | Trips per weekday | Indicative cost | Plan status |
-  |---|---|---|---|
-  | The Terrace | 1,089 | $2.9M | unfunded (ex-LGWM) |
-  | Willis Street | 944 | $2.0M | unfunded (ex-LGWM) |
-  | Chaytor Street | 739 | $0.6M | unfunded (ex-LGWM) |
-  | Takapu Road | 592 | $1.0M | not in plan |
-  | Para Street, Miramar | 527 | $0.9M | not in plan |
-  | Broderick Road | 487 | $1.5M | planned |
-  | Lambton Quay | 470 | $2.4M | unfunded (ex-LGWM) |
-- **Bunny Street** (two-way, joining Thorndon Quay to the waterfront) ranks 25th on value (118
-  trips, about $0.44M) and 36th on trips. The model credits only trips that have no
-  low-stress route within 25% today. The built protected lane on Waterloo Quay already gives
-  many waterfront–Thorndon trips such a route. Its network value (a continuous Thorndon–waterfront spine) is what the bonus
-  tries to capture, and a trip model understates it.
-- **Tolerance matters for the cheap fixes.** If 150 m of busy street is tolerated, 5 of the top
-  10 stay in the top 10; at 400 m, 1 of 10 stays.
-- **Crash flag:** CAS bicycle crashes since 2016 within 30 m of each project, shown on the map
-  (not a weight).
-- **Takapu Road is speculative.** It is a 110 km/h rural stretch (per the speed register) that
-  nobody cycles today.
+- **The CBD and inner-city links carry most of the value.** The biggest single gains are:
+  - Adelaide Road (3,100 trips, $1.3M);
+  - John Street (1,400);
+  - Lambton Quay (700);
+  - Willis Street (675);
+  - Jervois Quay (660);
+  - Bunny Street (607, rank 8 on value);
+  - Wakefield Street (500);
+  - Bowen Street (460).
+  Almost all join the existing network at both ends, and most were LGWM-staged links that are
+  now unfunded.
+- **About $2.4M (indicative) lifts all-ages connectivity from 13% to 24%**, mostly by joining up
+  what exists in and around the CBD.
+- **Robust picks** are in the top 10 in 80%+ of draws: Stout, Manners and Devon Streets, John
+  Street, Adelaide Road, Bowen Street and Miro Street.
+- **The standard matters.** Only 1 of the top 10 stays top 10 under the confident-rider or
+  distance-only standards.
+- **Suburban connections score low one at a time.** Wadestown Road, Upland Road and the Mt
+  Victoria tunnel's east side (Ruahine Street, Wellington Road, Waitoa Road) connect few trips
+  on their own. A Wadestown or Hataitai trip also needs its other gaps closed (Tinakori Road,
+  Bowen Street, the CBD links). Each link only pays off once the rest of its route is done, and
+  the one-at-a-time build order can't see that. This is the main remaining limitation; route
+  packages or "value in the complete network" would address it.
+- **Manners Street is rated a quiet street** because its general traffic count is low. It is a
+  bus route, so the real treatment needs design, not just a filter.
 
 Outputs: `outputs/tables/cycle_priorities.csv` (every candidate: source, treatment, cost range,
 trips newly connected by scenario, cycle-km, trips per $M, network ends joined, score, health

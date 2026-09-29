@@ -1,12 +1,12 @@
 step,name,connected,connected_pct,cum_cost,treatment,cost,dT,dT_per_M,score,grid_ends
-0,Today,22061.337,37.186,0.0,,,,,,
-1,Bolton Street,22220.608,37.454,0.075,Quiet street (30 km/h + filter),0.075,159.271,2119.469,2649.337,1.0
-2,Panama Street,22346.63,37.667,0.125,Quiet street (30 km/h + filter),0.05,126.022,2520.433,2520.433,0.0
-3,Moorefield Road,22717.461,38.292,0.375,Protected lane,0.25,370.832,1483.327,2224.99,2.0
-4,Oxford Street,22836.349,38.492,0.435,Quiet street (30 km/h + filter),0.06,118.887,1982.919,1982.919,0.0
-5,Duncan Street,22953.822,38.69,0.503,Quiet street (30 km/h + filter),0.068,117.474,1739.507,2174.383,1.0
-6,Chaytor Street,23699.732,39.947,1.081,Protected lane,0.578,745.91,1290.622,1935.933,2.0
-7,Garden Road,23782.125,40.086,1.165,Quiet street (30 km/h + filter),0.085,82.393,974.317,1217.896,1.0
-8,Stone Street,23852.392,40.205,1.227,Quiet street (30 km/h + filter),0.062,70.267,1141.584,1141.584,0.0
-9,Cockayne Road at Lucknow Terrace,24130.787,40.674,1.477,Raised zebra / refuge,0.25,278.395,1113.581,1113.581,0.0
-10,Maupuia Road,24239.651,40.857,1.6,Quiet street (30 km/h + filter),0.124,108.864,879.361,1099.202,1.0
+0,Today,7876.107,13.276,0.0,,,,,,
+1,Stout Street,8451.728,14.246,0.072,Quiet street (30 km/h + filter),0.072,575.621,7945.824,11918.736,2.0
+2,Manners Street,8880.703,14.969,0.122,Quiet street (30 km/h + filter),0.05,428.975,8579.505,10724.381,1.0
+3,John Street,10617.069,17.896,0.545,Protected lane,0.423,1736.365,4108.679,5135.848,1.0
+4,Devon Street,11180.162,18.845,0.634,Quiet street (30 km/h + filter),0.089,563.094,6350.935,6350.935,0.0
+5,Miro Street,11345.496,19.123,0.741,Quiet street (30 km/h + filter),0.107,165.334,1541.214,2311.821,2.0
+6,Strathavon Road,11782.259,19.86,0.851,Quiet street (30 km/h + filter),0.11,436.763,3956.103,3956.103,0.0
+7,Adelaide Road,13666.286,23.035,2.171,Protected lane,1.319,1884.027,1427.919,2141.879,2.0
+8,Hill Street,13824.617,23.302,2.274,Quiet street (30 km/h + filter),0.103,158.331,1530.843,1913.554,1.0
+9,Panama Street,13915.772,23.456,2.324,Quiet street (30 km/h + filter),0.05,91.155,1823.098,1823.098,0.0
+10,Hobson Street,14100.903,23.768,2.439,Quiet street (30 km/h + filter),0.115,185.132,1611.08,1611.08,0.0
