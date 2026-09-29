@@ -1,0 +1,125 @@
+kind,name,other,highway,gap_m,detour_m,trips
+protected_ends,Whitmore Street,Whitmore Street,,,,8835.5
+protected_ends,Crawford Road,Crawford Road,,,,4530.7
+protected_ends,Findlay Street,Linden Avenue,,,,3581.8
+protected_ends,Beauchamp Street,Linden Avenue,,,,3445.2
+protected_ends,Taurima Street,Taurima Street,,,,3297.7
+protected_ends,Tasman Street,Tasman Street,,,,3198.2
+protected_ends,,Wakefield Street,,,,3068.4
+protected_ends,Little Palmer Street,Abel Smith Street,,,,3013.7
+protected_ends,Jervois Quay,Willeston Street,,,,2414.4
+protected_ends,Majoribanks Street,Majoribanks Street,,,,2069.1
+protected_ends,Victoria Street,Victoria Street,,,,1763.7
+protected_ends,,Taurima Street,,,,1627.4
+protected_ends,,Willis Street,,,,1588.9
+protected_ends,Park Street,Park Street,,,,1361.5
+protected_ends,Park Street,Park Street,,,,1280.2
+protected_ends,Ellice Street,Ellice Street,,,,1248.0
+protected_ends,,Vivian Street,,,,951.9
+protected_ends,Bay Road,Bay Road,,,,940.0
+protected_ends,Crofton Road,Crofton Road,,,,935.7
+protected_ends,Murphy Street,Murphy Street,,,,898.6
+protected_ends,Tawa Street,Tawa Street,,,,886.2
+protected_ends,,Helston Road,,,,814.5
+protected_ends,Maupuia Road,Maupuia Road,,,,755.5
+protected_ends,,Victoria Street,,,,708.0
+protected_ends,,Johnston Street,,,,681.3
+protected_ends,Ohiro Road,Ohiro Road,,,,622.6
+protected_ends,Taranaki Street,Taranaki Street,,,,622.5
+protected_ends,,Mount Albert Road,,,,578.0
+protected_ends,,Kingsford Smith Street,,,,533.3
+protected_ends,Brooklyn Road,Brooklyn Road,,,,526.9
+protected_ends,,Lyall Parade,,,,516.4
+protected_ends,Vivian Street,Vivian Street,,,,469.5
+protected_ends,Tawa Street,,,,,399.6
+protected_ends,Buller Street,Ghuznee Street,,,,397.6
+protected_ends,,Vivian Street,,,,375.0
+protected_ends,Ranelagh Street,Marshall Street,,,,292.2
+protected_ends,City to Sea Walkway,Liardet Street,,,,227.9
+protected_ends,Waterloo Quay,Bunny Street,,,,224.7
+protected_ends,Maupuia Walkway (Old Prison Road),Akaroa Drive,,,,180.3
+protected_ends,Harrold Street,Raroa Road,,,,163.3
+protected_ends,,Daniell Street,,,,148.9
+protected_ends,Aotea Quay,Aotea Quay,,,,145.5
+protected_ends,,Wellington Road,,,,118.6
+protected_ends,,Waipapa Road,,,,106.2
+protected_ends,Mulgrave Street,Mulgrave Street,,,,99.6
+protected_ends,Jervois Quay,Jervois Quay,,,,98.6
+protected_ends,Northland Tunnel Road,Northland Tunnel Road,,,,93.1
+protected_ends,Rongotai Road,Rongotai Road,,,,93.1
+protected_ends,Aro Street,Aro Street,,,,88.5
+protected_ends,Aro Street,Aro Street,,,,88.5
+protected_ends,Kenya Street,Kenya Street,,,,88.3
+protected_ends,Cobham Drive,,,,,77.6
+protected_ends,,Oxford Street,,,,77.3
+missing_link,,,path,1.1,,66.3
+missing_link,Europe Lane,Aurora Terrace,path,19.3,797.4,63.2
+protected_ends,,Main Road,,,,60.4
+protected_ends,,Kingsford Smith Street,,,,52.5
+protected_ends,Hutt Road,Hutt Road,,,,52.2
+missing_link,,Brooklyn Road,path,71.3,600.3,27.1
+missing_link,,The Terrace,footway,19.6,206.4,18.1
+missing_link,,Dixon Street,path,1.4,249.3,16.5
+missing_link,,Old Coach Road / Skyline Walkway - Johnsonville to Mākara Hill,path,195.7,2160.6,5.3
+missing_link,,,path,38.5,362.3,2.2
+missing_link,Mystic Portal,,cycleway,20.5,755.9,1.8
+missing_link,Orchard Street,Grosvenor Terrace,footway,2.5,890.3,1.7
+missing_link,Centennial Highway,Ngauranga Gorge Shared Path,trunk,10.5,735.7,0.0
+missing_link,Southern Walkway,Alexandra Road,path,119.0,,0.0
+missing_link,,,footway,71.0,,0.0
+missing_link,Transient,Aro Street,path,22.6,,0.0
+missing_link,,,path,3.5,,0.0
+missing_link,,,path,1.9,,0.0
+missing_link,,,path,2.6,,0.0
+missing_link,,,footway,21.8,,0.0
+missing_link,Miro,Starfish,cycleway,15.3,892.1,0.0
+missing_link,Tower 16 Connector,Upper Leaping Lizard,track,136.0,702.5,0.0
+missing_link,,Makara Road,path,59.5,582.0,0.0
+missing_link,,,path,1.1,,0.0
+missing_link,,Harris Street,path,42.4,,0.0
+missing_link,,,path,11.4,,0.0
+missing_link,,,path,10.2,,0.0
+missing_link,Mountain bike skills area,,path,10.7,,0.0
+missing_link,,,path,35.4,549.4,0.0
+missing_link,,Bute Street,path,18.7,,0.0
+missing_link,,,cycleway,3.3,,0.0
+missing_link,,,path,2.3,,0.0
+missing_link,,,path,2.3,,0.0
+missing_link,,,path,3.5,,0.0
+missing_link,,,service,10.9,,0.0
+missing_link,,Kilbirnie Crescent,path,46.8,,0.0
+missing_link,,Boscobel Lane,path,27.6,,0.0
+missing_link,Campbell Street to Wright's Hill Track,Campbell Street to Wright's Hill Track,footway,6.7,,0.0
+missing_link,,Ara Tawa,service,27.8,,0.0
+missing_link,,,path,1.5,,0.0
+missing_link,,,path,21.5,,0.0
+missing_link,,,cycleway,11.5,205.3,0.0
+missing_link,,,path,2.7,,0.0
+missing_link,,Ghuznee Street,path,56.4,,0.0
+missing_link,,Main Road,cycleway,15.3,324.1,0.0
+missing_link,,,path,90.7,,0.0
+missing_link,,,path,11.4,,0.0
+missing_link,,,path,20.5,226.8,0.0
+missing_link,Campbell Street to Wright's Hill Track,Campbell Street to Wright's Hill Track,footway,6.7,,0.0
+missing_link,,Victoria Street,path,11.1,,0.0
+missing_link,,,footway,26.0,314.8,0.0
+missing_link,Damien's,,cycleway,21.5,242.9,0.0
+missing_link,,,footway,19.6,,0.0
+missing_link,,Mountain bike skills area,track,10.7,,0.0
+missing_link,,,path,11.0,,0.0
+missing_link,,,path,11.0,,0.0
+missing_link,,Alexandra Road,cycleway,7.6,,0.0
+missing_link,,,path,1.9,,0.0
+missing_link,,,path,2.2,,0.0
+missing_link,,,path,1.5,,0.0
+missing_link,,,path,1.6,,0.0
+missing_link,,Ara Tawa,service,11.3,,0.0
+missing_link,,,path,3.4,,0.0
+missing_link,,,path,1.1,,0.0
+missing_link,Boscobel Lane,Boscobel Lane,footway,14.0,245.6,0.0
+missing_link,,,path,1.5,,0.0
+missing_link,,,footway,18.7,855.7,0.0
+missing_link,Ngaio Gorge Track,,track,6.6,,0.0
+missing_link,,,cycleway,3.3,,0.0
+missing_link,,Bute Street,path,18.4,,0.0
+missing_link,,,path,2.7,,0.0

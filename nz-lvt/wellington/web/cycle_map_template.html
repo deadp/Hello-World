@@ -64,6 +64,10 @@ h1 span{color:var(--gap)}
 .legend .w{display:inline-flex;align-items:center;gap:6px;font:12px var(--mono);color:var(--muted)}
 .legend .w i{background:var(--ink2)}
 .note{color:var(--muted);font-size:13.5px;margin:0}
+.viewlinks{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;font-size:13.5px;color:var(--ink2)}
+.viewlinks a{color:var(--focus);font-weight:600;text-decoration:none}
+.viewlinks a:hover,.viewlinks a:focus-visible{text-decoration:underline}
+.viewlinks .seglabel{margin-right:0}
 aside{background:var(--surface);border:1px solid var(--line);border-radius:6px;display:grid;grid-template-rows:auto auto minmax(0,1fr);max-height:min(88vh,900px);position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px)}
 @media (max-width:960px){aside{position:static;max-height:none}}
 .detail{padding:14px 16px;border-bottom:1px solid var(--line);display:grid;gap:8px;min-height:160px}
@@ -124,6 +128,7 @@ footer{color:var(--muted);font-size:13px;max-width:100ch}
         <div id="sortWrap"><span class="seglabel">Rank by</span><span class="seg" role="group" aria-label="Rank priorities by" id="sort"></span></div>
       </div>
       <div id="map" role="region" aria-label="Map of Wellington cycle routes"></div>
+      <div class="viewlinks" id="viewlinks"></div>
       <div class="legend" id="legend"></div>
       <p class="note" id="note"></p>
     </div>
@@ -169,6 +174,7 @@ const CORR = __CORRIDORS__;
 const S = __SUMMARY__;
 const PTS = __POINTS__;
 const PRI = __PRIORITIES__;
+const REVIEW = __REVIEW__;
 const BUILD = __BUILD__;
 
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
@@ -176,7 +182,7 @@ const fmt = v => v == null || isNaN(v) ? "–" : Math.round(v).toLocaleString("e
 const GAP_MIN = 250;
 const money = v => v == null ? "–" : v < 1 ? "$" + Math.round(v * 1000 / 10) * 10 + "k" : "$" + v.toFixed(1) + "M";
 const SCEN = {census: "Today", godutch: "Go Dutch", ebike: "E-bike", local: "Wellington habits"};
-const MODES = PRI ? {priorities: "Priorities", gaps: "Gaps", facility: "Facilities", plan: "Council plan"} : {gaps: "Gaps", facility: "Facilities", plan: "Council plan"};
+const MODES = Object.assign(PRI ? {priorities: "Priorities"} : {}, {gaps: "Gaps", facility: "Facilities", plan: "Council plan"}, REVIEW ? {check: "Check"} : {});
 const PLAN_COL = {"Built or underway": "--built", "Planned (WCC)": "--planned", "Unfunded (ex-LGWM)": "--lgwm",
   "Desired only": "--desired", "Not in plan": "--none"};
 const PROT = new Set(["track", "protected_lane", "sidepath", "seg_path", "shared_path", "shared_footway"]);
@@ -207,7 +213,7 @@ function colourFor(p) {
     if (p.plan && p.plan !== "Not in plan") return css(PLAN_COL[p.plan]);
     return PROT.has(p.facility) ? css("--protected") : css("--quiet");
   }
-  if (mode === "facility") return css(FAC_COL[p.facility] || "--quiet");
+  if (mode === "facility" || mode === "check") return css(FAC_COL[p.facility] || "--quiet");
   if (PROT.has(p.facility) && p.lts <= 2) return css("--protected");
   if (p.lts <= 2) return css("--quiet");
   if (p.gap && scen === "godutch" || (p["flow_" + scen] || 0) >= GAP_MIN) {
@@ -287,13 +293,48 @@ if (PRI) {
   });
 }
 function priShow() {
-  if (!PRI) return;
-  if (mode === "priorities") { priLayer.addTo(map); points.remove(); } else { priLayer.remove(); points.addTo(map); }
+  if (REVIEW) { if (mode === "check") reviewLayer.addTo(map); else reviewLayer.remove(); }
+  if (mode === "check") points.remove();
+  if (!PRI) { if (mode !== "check") points.addTo(map); return; }
+  if (mode === "priorities") { priLayer.addTo(map); points.remove(); } else { priLayer.remove(); if (mode !== "check") points.addTo(map); }
   priItems.forEach(([p, l]) => {
     if (l.setStyle && l instanceof L.CircleMarker) l.setStyle({fillColor: priCol(p), fillOpacity: priSel == null || priSel === p.rank ? .95 : .25});
     else l.setStyle(priStyle(p));
   });
 }
+
+// Check view: places to verify against aerial photos, and links to open this view elsewhere.
+const reviewLayer = L.layerGroup();
+function outLinks(lat, lon, z) {
+  const f = v => v.toFixed(5);
+  return `<a href="https://www.google.com/maps/@${f(lat)},${f(lon)},${z}z/data=!3m1!1e3" target="_blank" rel="noopener">Satellite (Google)</a>` +
+    `<a href="https://basemaps.linz.govt.nz/@${f(lat)},${f(lon)},z${z}?i=aerial" target="_blank" rel="noopener">Aerial (LINZ)</a>` +
+    `<a href="https://www.cyclosm.org/#map=${z}/${f(lat)}/${f(lon)}/cyclosm" target="_blank" rel="noopener">CyclOSM</a>` +
+    `<a href="https://www.openstreetmap.org/edit#map=${Math.max(z, 17)}/${f(lat)}/${f(lon)}" target="_blank" rel="noopener">Fix in OpenStreetMap</a>`;
+}
+function updateViewLinks() {
+  const c = map.getCenter();
+  document.getElementById("viewlinks").innerHTML = `<span class="seglabel">Open this view in</span>` + outLinks(c.lat, c.lng, map.getZoom());
+}
+map.on("moveend", updateViewLinks);
+updateViewLinks();
+if (REVIEW) REVIEW.features.forEach(f => {
+  const p = f.properties, [lon, lat] = f.geometry.coordinates, miss = p.kind === "missing_link";
+  const m = miss
+    ? L.circleMarker([lat, lon], {radius: 7, color: css("--painted"), weight: 3, fill: false})
+    : L.marker([lat, lon], {icon: L.divIcon({className: "", iconSize: [12, 12], html: `<div style="width:12px;height:12px;background:var(--gap);border:2px solid var(--surface)"></div>`})});
+  const what = miss
+    ? `<b>Possible missing link</b><br>${p.name || "A " + p.highway} ends ${Math.round(p.gap_m)} m from ${p.other || "another path"} without joining it${p.detour_m ? " (" + fmt(p.detour_m) + " m round by the network)" : ""}`
+    : `<b>Protected route ends</b><br>${p.name || "The path"} ends onto ${p.other || "a busy street"} (traffic stress 3–4)`;
+  m.on("mouseover", e => { tip.hidden = false; moveTip(e.originalEvent); tip.innerHTML = what + `<br>${fmt(p.trips)} Go Dutch trips/day on the approach`; });
+  m.on("mousemove", e => moveTip(e.originalEvent));
+  m.on("mouseout", () => { tip.hidden = true; });
+  m.on("click", () => { map.setView([lat, lon], Math.max(map.getZoom(), 17));
+    detail.innerHTML = `<div class="sub">${miss ? "Check: possible missing link" : "Check: protected route ends"}</div><h2>${p.name || (miss ? "Unnamed path" : "Protected route")}</h2>
+      <p class="where">${what.replace(/<b>.*?<\/b><br>/, "")}. ${miss ? "Often a path mapped in OpenStreetMap without joining the road it meets, so the model can't use it; sometimes a real kerb, barrier or steps." : "Riders continue in traffic here."}</p>
+      <div class="viewlinks">${outLinks(lat, lon, 18)}</div>`; });
+  reviewLayer.addLayer(m);
+});
 
 const tip = document.getElementById("tip");
 function moveTip(e) { tip.style.left = Math.min(e.clientX + 14, innerWidth - 280) + "px"; tip.style.top = (e.clientY + 14) + "px"; }
@@ -325,6 +366,11 @@ if (PRI) seg(document.getElementById("sort"), {score: "Best value", trips: "Most
 document.getElementById("sortWrap").hidden = !PRI || mode !== "priorities";
 
 function legend() {
+  if (mode === "check") {
+    document.getElementById("legend").innerHTML = `<span><i style="width:12px;height:12px;border-radius:50%;border:3px solid var(--painted);background:none"></i>Possible missing link</span><span><i style="width:12px;height:12px;background:var(--gap)"></i>Protected route ends onto a busy street</span><span><i style="background:var(--track)"></i>Cycle track or protected lane</span><span><i style="background:var(--protected)"></i>Path alongside</span><span><i style="background:var(--shared)"></i>Shared path</span><span><i style="background:var(--painted)"></i>Painted lane</span><span><i style="background:var(--sharrow)"></i>Sharrows</span>`;
+    document.getElementById("note").textContent = "What the model thinks is on the ground, for checking against aerial photos. Rings mark paths that stop just short of a street or path they don't join (usually a mapping gap the model can't route through). Squares mark where protected routes end in traffic. Use the links above to open the same view in satellite imagery, CyclOSM, or the OpenStreetMap editor to fix what's missing.";
+    return;
+  }
   if (mode === "priorities") {
     document.getElementById("legend").innerHTML = `<span><i style="background:var(--pri);height:8px"></i>First 10 in the build order</span><span><i style="background:var(--pri2);height:6px"></i>Other top-40 candidates</span><span><i style="width:12px;height:12px;border-radius:50%;background:var(--pri)"></i>Crossing</span><span><i style="background:var(--protected)"></i>Low-stress path or lane</span><span><i style="background:var(--quiet)"></i>Quiet street</span><span><i style="background:var(--busy)"></i>Busy street</span>`;
     document.getElementById("note").textContent = "Candidates ranked by potential trips a day newly given an all-ages route per $M. The build order re-scores after each step, so links that complete each other move up. Click one to see it.";

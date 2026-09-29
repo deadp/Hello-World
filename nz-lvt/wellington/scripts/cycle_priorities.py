@@ -21,9 +21,11 @@ order, connect the most potential trips per dollar.
    Each is extended to the same street's other level 3-4 edges within 150 m, so short low-flow
    pieces between gap runs are treated too (otherwise the treated route stays broken).
    Council plan: every unbuilt Strategic Bike Network link (planned, ex-LGWM, desired) with a
-   level 3-4 direction and not already covered above, whatever its trips. One-way streets on the
-   plan become two-way for bikes (a contraflow lane): e.g. Bunny Street, which would carry the
-   Thorndon Quay cycleway through to the waterfront in both directions.
+   busy direction and not already covered above, whatever its trips (e.g. Bunny Street, which
+   would carry the Thorndon Quay cycleway to the waterfront at Lady Elizabeth Lane). Directions
+   bikes may not ride today are not opened: Wellington's one-way streets are mostly dual
+   carriageways (Bunny Street) or one-way pairs (Molesworth/Murphy, Victoria/Willis), where the
+   other direction already exists.
    Treatment: residential/unclassified/tertiary streets with <= 3,000 vehicles/day get a quiet
    street (30 km/h and a modal filter); other roads a protected lane. Either way the treated
    directions become stress 1, and the corridor's internal junctions stress 2. Crossings: the 80 busiest junctions where
@@ -128,12 +130,7 @@ def arc_table(e):
     bw = pd.DataFrame({"u": e["v"], "v": e["u"], "edge": e.index, "dir": 1, "len": e["length_m"],
                        "up": e["up_bw"], "lts": e["lts_bw"], "cross": e["cross_u"], "ok": e["can_bw"]})
     a = pd.concat([fw, bw], ignore_index=True)
-    # Directions bikes may not ride today (one-way streets) stay in the table at stress 9, so a
-    # council-plan treatment can open them (two-way cycleway); elsewhere they are never used.
-    roads = e["highway"].isin(ROADS_ALL).values
-    a = a[a["ok"] | np.concatenate([roads, roads])].reset_index(drop=True)
-    a.loc[~a["ok"], "lts"] = BARRED
-    a = a.drop(columns="ok")
+    a = a[a["ok"]].drop(columns="ok").reset_index(drop=True)
     a["len"] = a["len"].clip(lower=0.5)
     a["eff"] = a["len"] + CLIMB_W * a["up"].fillna(0)
     return a
@@ -295,11 +292,6 @@ def candidates(a):
     # Council plan: every unbuilt link of the Strategic Bike Network with a busy direction (e.g.
     # Bunny Street), whatever its modelled trips, unless a gap corridor above already covers it.
     ep = e.copy()
-    # A one-way street on the plan becomes two-way for bikes (contraflow): its barred direction
-    # counts as needing treatment.
-    road = ep["highway"].isin(ROADS_ALL)
-    for d in ("fw", "bw"):
-        ep[f"hs_{d}"] = ep[f"hs_{d}"] | (road & ~ep[f"can_{d}"])
     ep["gap"] = ep["plan"].isin(["Planned (WCC)", "Unfunded (ex-LGWM)", "Desired only"]) & (ep["hs_fw"] | ep["hs_bw"])
     ep["gapd_fw"], ep["gapd_bw"] = ep["gap"] & ep["hs_fw"], ep["gap"] & ep["hs_bw"]
     ep["gap_dir"] = np.where(~ep["gap"], "", np.where(ep["gapd_fw"] & ep["gapd_bw"] | ~two_way, "both", "one way"))
@@ -313,7 +305,6 @@ def candidates(a):
         if ge["length_m"].sum() < 30:
             continue
         row, geom = corridor_row(a, arc_key, e, ge, r, "council plan", grid_xy, ge.index)
-        row["contraflow_m"] = ge["length_m"][(road & ~(e["can_fw"] & e["can_bw"])).reindex(ge.index)].sum()
         row["gap_rank"] = np.nan
         rows.append(row)
         geoms.append(geom)
@@ -464,7 +455,7 @@ def main():
 
     cand = cand.sort_values("score", ascending=False).reset_index(drop=True)
     cand["rank"] = np.arange(1, len(cand) + 1)
-    cols = ["rank", "rank_trips", "type", "source", "name", "where", "treatment", "length_m", "filled_m", "contraflow_m", "cost_low", "cost", "cost_high",
+    cols = ["rank", "rank_trips", "type", "source", "name", "where", "treatment", "length_m", "filled_m", "cost_low", "cost", "cost_high",
             "dT_godutch", "dT_ebike", "dT_local", "dT_census", "dK_godutch", "dT_pct_pts", "dT_per_M",
             "grid_ends", "score", "health_M_low", "health_M_high", "crashes", "crashes_serious", "plan", "facility_now", "max_adt",
             "speed", "one_way_share", "gap_rank", "rank_median", "rank_p10", "rank_p90", "top10_share",

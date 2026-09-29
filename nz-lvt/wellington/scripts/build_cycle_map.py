@@ -74,6 +74,13 @@ def main():
     html = html.replace("__POINTS__", json.dumps(pts, separators=(",", ":")))
     html = html.replace("__PRIORITIES__", json.dumps(pri, separators=(",", ":")))
     html = html.replace("__BUILD__", json.dumps(build, separators=(",", ":")))
+    rv = ROOT / "outputs" / "blocks" / "cycle_review.geojson"
+    review = None
+    if rv.exists():
+        review = json.loads(rv.read_text())
+        for f in review["features"]:
+            f["properties"] = {k: (None if isinstance(v, float) and v != v else v) for k, v in f["properties"].items()}
+    html = html.replace("__REVIEW__", json.dumps(review, separators=(",", ":")))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(html)
     print(f"wrote {OUT} ({OUT.stat().st_size / 1e6:.1f} MB); top 20 plan: {top.value_counts().to_dict()}")
