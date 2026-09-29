@@ -193,7 +193,10 @@ def crossings(e_all, e):
 
 
 def export(e, g, xing):
-    m = e[(e["flow_godutch"] >= MAP_MIN_FLOW) | e["protected"] | e["plan"].ne("Not in plan")].copy()
+    # Main roads always, so streets are not drawn broken where a short piece carries few trips.
+    major = e["highway"].isin(["primary", "primary_link", "secondary", "secondary_link", "tertiary", "tertiary_link",
+                               "trunk", "trunk_link"])
+    m = e[(e["flow_godutch"] >= MAP_MIN_FLOW) | e["protected"] | e["plan"].ne("Not in plan") | major].copy()
     m["rank"] = g["rank"].reindex(m.index)
     m = m[["geometry", "name", "flow_census", "flow_godutch", "flow_ebike", "flow_local", "flow_godutch_fw",
            "flow_godutch_bw",

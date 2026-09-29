@@ -621,7 +621,9 @@ up the most trips per dollar. The prioritisation does, in these steps:
   but it is split into islands by the arterials. The largest island holds only 17% of trip
   origins.
 - **Candidates:** 230 in total.
-  - The 150 biggest corridor gaps (any level 3–4 direction with 30+ Go Dutch trips). Each gets
+  - The 150 biggest corridor gaps (any level 3–4 direction with 30+ Go Dutch trips). Each
+    covers the street's whole busy stretch: busy pieces within 150 m with few potential trips
+    are filled in (15 km in total), so a project on Tinakori Road leaves no busy gaps. Each gets
     a treatment: a *quiet street* (30 km/h and a modal filter) where the road is local or
     collector, ≤50 km/h and ≤3,000 vehicles/day; a *protected lane* otherwise.
   - The 80 busiest unsignalised crossings of busy roads. Each gets signals where the road
@@ -649,30 +651,32 @@ up the most trips per dollar. The prioritisation does, in these steps:
 | 4 | Garden Road, Northland | Quiet street | $85k | 55 | 19.4% |
 | 5 | Takapu Road | Protected lane | $1.0M | 579 | 20.4% |
 | 6 | Whitmore Street | Protected lane | $250k | 121 | 20.6% |
-| 7 | Taranaki Street | Protected lane | $2.0M | 934 | 22.2% |
-| 8 | Friend Street, Karori | Quiet street | $80k | 34 | 22.2% |
-| 9 | Karori Road (short link) | Protected lane | $360k | 164 | 22.5% |
-| 10 | Garden Road at Glenmore Street | Raised zebra | $250k | 101 | 22.7% |
+| 7 | Tory Street at College Street | Raised zebra | $250k | 110 | 20.8% |
+| 8 | Friend Street, Karori | Quiet street | $80k | 34 | 20.8% |
+| 9 | Karori Road (short link) | Protected lane | $360k | 164 | 21.1% |
+| 10 | Garden Road at Glenmore Street | Raised zebra | $250k | 99 | 21.3% |
 
 What this shows:
-- **Cheap fixes come first.** About $4.4M (indicative) lifts connected trips from 18% to 23%.
+- **Cheap fixes come first.** About $2.6M (indicative) lifts connected trips from 18% to 21%.
   The first steps are short missing pieces: a quiet-street treatment or a short protected link
   that joins two low-stress islands.
 - **The biggest single gains are the CBD arterials:**
-  - Taranaki Street: 920 trips, $2.0M;
+  - Taranaki Street: 929 trips, $2.3M;
   - The Terrace: 913 trips, $2.9M;
   - Willis Street: 531 trips, $2.0M;
-  - Tasman, Tinakori and Tory Streets: about 300 each.
+  - Jervois Quay: 373 trips, $1.9M;
+  - Tinakori Road: 363 trips, $2.8M;
+  - Tasman and Tory Streets: about 300 each.
   The Terrace and Willis Street are the two corridors top of both the gap ranking and
   today's cycling, and both lost their funding with LGWM.
 - **How robust the order is:**
   - Over 1,000 draws of detour limit (1.15/1.25/1.5), scenario and cost, four candidates are
     in the top 10 in 80%+ of draws: Wha Street, Ellice Street, Kaiwharawhara Road and Garden
     Road.
-  - If 150 m of busy street is tolerated (Lowry et al.), 34% of trips are already connected.
-    The short-link fixes then drop out, and only one of the top 10 stays. Three larger projects
-    stay in or near the top 20 at both 150 m and 400 m: Taranaki Street, Jervois Quay and Takapu
-    Road.
+  - If 150 m of busy street is tolerated (Lowry et al.), 39% of trips are already connected.
+    The short-link fixes then drop out, and only one of the top 10 stays. These stay in the
+    top 20 at both 150 m and 400 m: Takapu Road, Taranaki Street, Willis Street, John Street,
+    Kelburn Parade, Broadway and Carlton Gore Road.
 - **Crash flag.** Crashes are counted within 30 m of each project (CAS, bicycle involved,
   since 2016). Taranaki Street has 26, The Terrace 21, Willis Street 11. They are shown on the
   map as a flag, not a weight.

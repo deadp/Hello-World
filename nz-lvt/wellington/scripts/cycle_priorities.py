@@ -18,6 +18,8 @@ order, connect the most potential trips per dollar.
 3. Candidates.
    Corridors: runs of the same street where a direction is level 3-4 and carries >= 30 Go Dutch
    trips a weekday (cycle_gaps.corridors with a lower threshold), top 150 by potential cycle-km.
+   Each is extended to the same street's other level 3-4 edges within 150 m, so short low-flow
+   pieces between gap runs are treated too (otherwise the treated route stays broken).
    Treatment: residential/unclassified/tertiary streets with <= 3,000 vehicles/day get a quiet
    street (30 km/h and a modal filter); other roads a protected lane. Either way the treated
    directions become low stress, and so do the corridor's internal junctions. Crossings: the 80 busiest junctions where
@@ -71,6 +73,7 @@ CAP0, TOL0, SCEN0 = 1.25, 0.0, "godutch"
 MIN_M = 200
 ACCESS_M = 150
 N_CORR, N_XING, MIN_DIR = 150, 80, 30
+FILL_M = 150
 GREEDY_STEPS, GREEDY_POOL = 10, 40
 N_DRAWS = 1000
 HEALTH_PER_KM, DAYS = 4.90, 250
@@ -190,8 +193,17 @@ def candidates(a):
     c = c.head(N_CORR)
     arc_key = pd.Series(np.arange(len(a)), index=pd.MultiIndex.from_arrays([a["edge"], a["dir"]]))
     rows, geoms = [], []
+    street = e["name"].fillna("(unnamed link)")
+    busy = e[e["hs_fw"] | e["hs_bw"]]
+    mid = gpd.GeoSeries(busy.geometry.interpolate(0.5, normalized=True), index=busy.index, crs=2193)
     for cid, r in c.iterrows():
-        ge = g[g["corridor"] == cid]
+        gap = g[g["corridor"] == cid]
+        # Treat the whole busy stretch, not only the edges with enough potential trips: fill in the
+        # same street's level 3-4 edges within FILL_M of the gap edges (short low-flow pieces
+        # between gaps, which would otherwise leave the treated route broken).
+        near = mid[(street.loc[mid.index] == r["street"]).values]
+        near = near[near.within(gap.buffer(FILL_M).union_all())]
+        ge = e.loc[gap.index.union(near.index)]
         keys = [(i, 0) for i in ge.index[ge["hs_fw"]]] + [(i, 1) for i in ge.index[ge["hs_bw"]]]
         idx_l = arc_key.reindex(keys).dropna().astype(int).values
         # Internal junctions (nodes shared by two of the corridor's edges) get priority for riders
@@ -200,17 +212,22 @@ def candidates(a):
         inner = nn.index[nn >= 2].values
         idx_c = np.where(a["edge"].isin(ge.index).values & np.isin(a["v"].values, inner))[0]
         roads = set(ge["highway"])
+        L = ge["length_m"]
+        length = L.sum()
+        one_way = (L * (ge["hs_fw"] != ge["hs_bw"]) * ge["can_fw"] * ge["can_bw"]).sum() / length
+        max_adt = ge["adt"].max()
         if r["road"] == "State highway":
             kind = "protected_sh"
-        elif roads <= QUIET_ROADS and r["max_adt"] <= 3000 and ge["speed"].max() <= 50:
+        elif roads <= QUIET_ROADS and max_adt <= 3000 and ge["speed"].max() <= 50:
             kind = "quiet"
         else:
             kind = "protected"
-        f = 1 - 0.4 * r["one_way_share"] if kind != "quiet" else 1.0
-        cost = [max(x * r["length_m"] / 1000 * f, m) for x, m in zip(COST[kind], MIN_COST[kind])]
+        f = 1 - 0.4 * one_way if kind != "quiet" else 1.0
+        cost = [max(x * length / 1000 * f, m) for x, m in zip(COST[kind], MIN_COST[kind])]
         rows.append(dict(type="corridor", name=r["street"], where=r["suburbs"], treatment=TREATMENT[kind],
-                         kind=kind, length_m=r["length_m"], facility_now=r["facility_now"], max_adt=r["max_adt"],
-                         speed=r["speed"], one_way_share=r["one_way_share"], plan=r["plan"],
+                         kind=kind, length_m=length, filled_m=L.drop(gap.index, errors="ignore").sum(),
+                         facility_now=r["facility_now"], max_adt=max_adt,
+                         speed=r["speed"], one_way_share=one_way, plan=r["plan"],
                          gap_rank=r["rank"], cost_low=cost[0], cost=cost[1], cost_high=cost[2],
                          idx_l=idx_l, idx_c=idx_c))
         geoms.append(ge.geometry.union_all())
@@ -348,7 +365,7 @@ def main():
 
     cand = cand.sort_values("dT_per_M", ascending=False).reset_index(drop=True)
     cand["rank"] = np.arange(1, len(cand) + 1)
-    cols = ["rank", "type", "name", "where", "treatment", "length_m", "cost_low", "cost", "cost_high",
+    cols = ["rank", "type", "name", "where", "treatment", "length_m", "filled_m", "cost_low", "cost", "cost_high",
             "dT_godutch", "dT_ebike", "dT_local", "dT_census", "dK_godutch", "dT_pct_pts", "dT_per_M",
             "health_M_low", "health_M_high", "crashes", "crashes_serious", "plan", "facility_now", "max_adt",
             "speed", "one_way_share", "gap_rank", "rank_median", "rank_p10", "rank_p90", "top10_share",
