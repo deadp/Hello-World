@@ -1,41 +1,41 @@
 node,trips,census,approach,crossing,lts,adt,speed,suburb,rank
-3156,2614.0,571.0,Wilson Street,Daniell Street,3,1830.0,40.0,Newtown,1
-661,2547.0,560.0,Wilson Street,Daniell Street,3,1880.0,40.0,Newtown,2
-3158,2507.0,503.0,Wilson Street,Coromandel Street,3,3880.0,40.0,Newtown,3
-2038,2145.0,380.0,Kedah Street,Hobart Street,3,1961.0,50.0,Miramar,4
-2319,2088.0,406.0,Brougham Street,Ellice Street,3,2670.0,50.0,Mt Victoria,5
-7061,1938.0,1012.0,Glenmore Street,Garden Road,3,2960.0,50.0,Northland,6
-1256,1810.0,12.0,Luckie Street,McLellan Street,3,2710.0,50.0,Tawa,7
-8512,1809.0,245.0,,Wakefield Street,3,4711.0,30.0,Te Aro,8
-728,1719.0,4.0,Findlay Street,Linden Avenue,4,8510.0,50.0,Tawa,9
-8428,1673.0,8.0,Beauchamp Street,Linden Avenue,4,8510.0,50.0,Tawa,10
-703,1616.0,8.0,Beauchamp Street,McLellan Street,3,2710.0,50.0,Tawa,11
-2041,1595.0,141.0,Kauri Street,Caledonia Street,3,4550.0,50.0,Miramar,12
-1937,1579.0,314.0,Tennyson Street,Tory Street,3,8650.0,30.0,Te Aro,13
-2016,1517.0,262.0,"Ellice Street, Hania Street",Hania Street,3,2900.0,50.0,Mt Victoria,14
-2051,1516.0,308.0,The Quadrant,Ira Street,3,5942.0,50.0,Miramar,15
-2360,1246.0,301.0,Little Palmer Street,Abel Smith Street,3,2780.0,50.0,Aro Valley,16
-2785,1245.0,521.0,"Park Street, Grant Road",Grant Road,3,5912.0,50.0,Thorndon,17
-2365,1206.0,177.0,Devon Street,Aro Street,3,10155.0,30.0,Aro Valley,18
-1879,1132.0,104.0,Jessie Street,Tory Street,3,8060.0,30.0,Te Aro,19
-403,1092.0,476.0,Fancourt Street,Karori Road,4,17109.0,50.0,Karori,20
-143,1070.0,253.0,Grey Street,Customhouse Quay,3,4870.0,30.0,Wellington Central,21
-458,1049.0,508.0,"Birdwood Street, Braithwaite Street",Braithwaite Street,3,4698.0,50.0,Karori,22
-56,995.0,148.0,Cuba Street,Abel Smith Street,3,4040.0,30.0,Te Aro,23
-2541,987.0,101.0,Hamilton Road,Hamilton Road,3,6708.0,50.0,Hataitai,24
-215,965.0,265.0,,Featherston Street,3,7923.0,30.0,Pipitea,25
-1880,918.0,83.0,"Ebor Street, Lorne Street",Tory Street,3,8650.0,30.0,Te Aro,26
-1882,917.0,86.0,Marion Street,Ghuznee Street,3,10488.0,30.0,Te Aro,27
-1591,898.0,379.0,Lancaster Street,Karori Road,3,16536.0,30.0,Karori,28
-9593,860.0,50.0,,Johnsonville Road,3,15484.0,50.0,Johnsonville,29
-435,838.0,334.0,Karori Road,Campbell Street,3,1691.0,50.0,Karori,30
-787,823.0,208.0,Rua Street,Queens Drive,3,3163.0,50.0,Lyall Bay,31
-2552,821.0,90.0,Goa Street,Moxham Avenue,3,5986.0,50.0,Hataitai,32
-2571,809.0,82.0,,Ruahine Street,4,34190.0,70.0,Hataitai,33
-1885,808.0,79.0,Marion Street,Vivian Street,4,21250.0,50.0,Te Aro,34
-734,804.0,51.0,Burgess Road,Johnsonville Road,3,15484.0,50.0,Johnsonville,35
-5353,792.0,69.0,Wexford Road,Southampton Road,3,2110.0,50.0,Miramar,36
-2061,787.0,68.0,Ellesmere Avenue,Devonshire Road,3,2380.0,50.0,Miramar,37
-801,787.0,68.0,Kemp Street,Kemp Street,4,10145.0,50.0,Kilbirnie,38
-156,757.0,113.0,,Boulcott Street,3,7268.0,30.0,Wellington Central,39
-867,757.0,88.0,Egmont Street,Ghuznee Street,3,7981.0,30.0,Te Aro,40
+661,2854.0,596.0,Wilson Street,Daniell Street,3,1880.0,40.0,Newtown,1
+3156,2735.0,566.0,Wilson Street,Daniell Street,3,1830.0,40.0,Newtown,2
+3158,2508.0,481.0,Wilson Street,Coromandel Street,3,3880.0,40.0,Newtown,3
+2038,2141.0,382.0,Kedah Street,Hobart Street,3,1961.0,50.0,Miramar,4
+2319,2025.0,395.0,Brougham Street,Ellice Street,3,2670.0,50.0,Mt Victoria,5
+7061,1934.0,1002.0,Glenmore Street,Garden Road,3,2960.0,50.0,Northland,6
+1256,1866.0,12.0,Luckie Street,McLellan Street,3,2710.0,50.0,Tawa,7
+1937,1802.0,386.0,Tennyson Street,Tory Street,3,8650.0,30.0,Te Aro,8
+728,1777.0,4.0,Findlay Street,Linden Avenue,4,8510.0,50.0,Tawa,9
+2041,1757.0,136.0,Kauri Street,Caledonia Street,3,4550.0,50.0,Miramar,10
+143,1747.0,480.0,Grey Street,Customhouse Quay,3,4870.0,30.0,Wellington Central,11
+8428,1738.0,8.0,Beauchamp Street,Linden Avenue,4,8510.0,50.0,Tawa,12
+703,1689.0,9.0,Beauchamp Street,McLellan Street,3,2710.0,50.0,Tawa,13
+8512,1640.0,187.0,,Wakefield Street,3,4711.0,30.0,Te Aro,14
+2051,1584.0,318.0,The Quadrant,Ira Street,3,5942.0,50.0,Miramar,15
+2016,1485.0,241.0,"Ellice Street, Hania Street",Hania Street,3,2900.0,50.0,Mt Victoria,16
+2360,1266.0,306.0,Little Palmer Street,Abel Smith Street,3,2780.0,50.0,Aro Valley,17
+2785,1244.0,510.0,"Park Street, Grant Road",Grant Road,3,5912.0,50.0,Thorndon,18
+2365,1075.0,161.0,Devon Street,Aro Street,3,10155.0,30.0,Aro Valley,19
+403,1055.0,452.0,Fancourt Street,Karori Road,4,17109.0,50.0,Karori,20
+2541,1013.0,103.0,Hamilton Road,Hamilton Road,3,6708.0,50.0,Hataitai,21
+458,1005.0,488.0,"Birdwood Street, Braithwaite Street",Braithwaite Street,3,4698.0,50.0,Karori,22
+1879,998.0,85.0,Jessie Street,Tory Street,3,8060.0,30.0,Te Aro,23
+56,994.0,138.0,Cuba Street,Abel Smith Street,3,4040.0,30.0,Te Aro,24
+215,988.0,255.0,,Featherston Street,3,7923.0,30.0,Pipitea,25
+787,911.0,229.0,Rua Street,Queens Drive,3,3163.0,50.0,Lyall Bay,26
+1591,902.0,383.0,Lancaster Street,Karori Road,3,16536.0,30.0,Karori,27
+1885,890.0,88.0,Marion Street,Vivian Street,4,21250.0,50.0,Te Aro,28
+5353,861.0,64.0,Wexford Road,Southampton Road,3,2110.0,50.0,Miramar,29
+2571,854.0,90.0,,Ruahine Street,4,34190.0,70.0,Hataitai,30
+734,847.0,52.0,Burgess Road,Johnsonville Road,3,15484.0,50.0,Johnsonville,31
+1882,846.0,76.0,Marion Street,Ghuznee Street,3,10488.0,30.0,Te Aro,32
+1880,844.0,74.0,"Ebor Street, Lorne Street",Tory Street,3,8650.0,30.0,Te Aro,33
+156,836.0,187.0,,Boulcott Street,3,7268.0,30.0,Wellington Central,34
+867,831.0,94.0,Egmont Street,Ghuznee Street,3,7981.0,30.0,Te Aro,35
+435,830.0,332.0,Karori Road,Campbell Street,3,1691.0,50.0,Karori,36
+788,821.0,215.0,Rua Street,Queens Drive,3,3160.0,50.0,Lyall Bay,37
+2552,817.0,88.0,Goa Street,Moxham Avenue,3,5986.0,50.0,Hataitai,38
+9593,806.0,50.0,,Johnsonville Road,3,15484.0,50.0,Johnsonville,39
+801,782.0,74.0,Kemp Street,Kemp Street,4,10145.0,50.0,Kilbirnie,40
