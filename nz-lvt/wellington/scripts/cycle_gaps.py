@@ -6,7 +6,7 @@ Direction matters: WCC's transitional cycleways often protect the uphill side on
 judged per direction of travel. A direction is a gap when it is stressful to ride (level of
 traffic stress 3-4 in that direction, so no protection) and carries >= 60 potential trips a
 weekday, on an edge with >= 250 potential trips in total (Go Dutch scenario). Gap edges on the
-same street that touch each other (or are < 150 m apart) form a corridor. Corridors are ranked by
+same street that touch each other (or are < 300 m apart) form a corridor. Corridors are ranked by
 potential cycle-km per weekday on their stressful directions and labelled with the council's plan
 (WCC Strategic Bike Network 2022): built or being built, planned (council stage), unfunded
 (staged under Let's Get Wellington Moving, disestablished in December 2023), "Primary desired"
@@ -91,11 +91,11 @@ def corridors(e):
     pairs = inc.merge(inc, on=["node", "street"])
     adj = coo_matrix((np.ones(len(pairs)), (pairs["edge_x"], pairs["edge_y"])), shape=(len(g), len(g)))
     _, lab = connected_components(adj, directed=False)
-    # Merge runs of the same street broken by short protected or quiet stretches (< 150 m apart).
+    # Merge runs of the same street broken by short protected or quiet stretches (< 300 m apart).
     runs = gpd.GeoDataFrame({"run": lab, "street": g["street"].values}, geometry=g.geometry.values, crs=2193)
     runs = runs.dissolve("run", aggfunc="first").rename_axis(None)
     zone = runs.copy()
-    zone["geometry"] = runs.buffer(75)
+    zone["geometry"] = runs.buffer(150)
     pairs = gpd.sjoin(zone, zone, predicate="intersects")
     pairs = pairs[pairs["street_left"] == pairs["street_right"]]
     m = coo_matrix((np.ones(len(pairs)), (pairs.index.values, pairs["index_right"].values)),
@@ -177,6 +177,7 @@ def crossings(e_all, e):
                      busy[["v", "name", "lts", "adt", "speed"]].rename(columns={"v": "node"})])
     road = inc.sort_values("adt", ascending=False).drop_duplicates("node").set_index("node")
     n = n.join(road.rename(columns={"name": "crossing"}), how="inner")
+    n = n[n["crossing"].notna()]  # unnamed pieces are mostly slip lanes and split carriageways
     nodes = pd.read_parquet(PROC / "cycle_nodes.parquet")
     pts = gpd.GeoDataFrame(n, geometry=gpd.points_from_xy(nodes.loc[n.index, "x"], nodes.loc[n.index, "y"]), crs=2193)
     city = gpd.read_file(RAW / "sa2.geojson").to_crs(2193).union_all()

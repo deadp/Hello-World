@@ -25,6 +25,7 @@ def main():
         f["properties"] = {k: (None if isinstance(v, float) and v != v else v) for k, v in p.items()
                            if k not in ("gap",)}
     c = pd.read_csv(TABLES / "cycle_corridors.csv").head(N_LIST)
+    c["suburbs"] = c["suburbs"].fillna("–")
     corr = json.loads(c[["rank", "street", "road", "suburbs", "length_m", "census_trips", "godutch_trips",
                          "ebike_trips", "max_adt", "speed", "painted_share", "facility_now", "one_way_share",
                          "plan"]].to_json(orient="records"))
@@ -33,7 +34,7 @@ def main():
     top = c.head(20)["plan"]
     summary = dict(
         scen={k: dict(share=sc[v] / sc["trips"] * 100) for k, v in
-              [("census", "bike"), ("godutch", "godutch"), ("ebike", "ebike")]},
+              [("census", "census"), ("godutch", "godutch"), ("ebike", "ebike")]},
         km=sm["cycle_km_per_day"].to_dict(), prot=sm["on_protected_%"].to_dict(),
         quiet=sm["on_quiet_streets_%"].to_dict(), stress=sm["on_high_stress_%"].to_dict(),
         top20=dict(planned=int(top.isin(["Planned (WCC)", "Unfunded (ex-LGWM)", "Desired only"]).sum()),

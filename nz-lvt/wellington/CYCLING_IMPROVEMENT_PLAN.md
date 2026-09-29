@@ -1,5 +1,15 @@
 # Wellington cycle gap analysis: improvement plan
 
+**Status (29 Sep 2026): phases 0–2 are done (version 3).** The results are in the README section
+"Where should new cycle connections go?".
+
+Changes from what's planned below:
+- Calibration compares counts per sensor, because one camera covers a road and its path.
+- The best fit is stress factors 2/3 and a climb weight of 20.
+- Agreement with the counts rose from 0.44 to 0.55.
+
+Phases 3–5 are next.
+
 This plan comes from four research reviews carried out on 2026-09-29, each checked against the current code:
 
 - cycleway classification from OSM;

@@ -1,147 +1,122 @@
-street,suburbs,length_m,godutch_cyc_km,ebike_cyc_km,census_cyc_km,godutch_trips,ebike_trips,census_trips,max_adt,speed,painted_share,road,plan,plan_share,rank
-Middleton Road,"Glenside, Churton Park, Johnsonville",4197.1,2918.5,8455.48,56.78,695.36,2014.6,13.53,6985.0,50.0,0.0,secondary,Planned (WCC),1.0,1
-Willis Street,"Te Aro, Wellington Central, Aro Valley",1232.61,1830.01,3229.22,450.78,1484.66,2619.82,365.71,11034.0,30.0,0.0,secondary,Planned (ex-LGWM),0.93,2
-Taranaki Street,"Te Aro, Mt Cook, Wellington Central",1403.96,1561.24,2608.56,329.12,1112.03,1858.0,234.42,17300.0,50.0,0.03,secondary,Planned (ex-LGWM),0.83,3
-The Terrace,"Wellington Central, Te Aro",1592.43,1539.08,3387.31,735.66,966.5,2127.14,461.98,16573.0,30.0,0.0,secondary,Planned (ex-LGWM),1.0,4
-Courtenay Place,Te Aro,876.86,909.63,1499.89,295.43,1037.36,1710.52,336.92,8700.0,30.0,0.0,tertiary,Planned (ex-LGWM),1.0,5
-Broadway,"Miramar, Strathmore Park",1511.88,895.42,1516.71,161.26,592.25,1003.19,106.67,12659.0,50.0,0.0,secondary,Planned (WCC),1.0,6
-Tory Street,Te Aro,793.15,892.89,1418.99,266.57,1125.75,1789.05,336.08,8680.0,30.0,0.0,tertiary,Planned (WCC),0.56,7
-Burma Road,"Broadmeadows, Khandallah, Johnsonville",1526.41,883.37,2087.79,67.68,578.73,1367.78,44.34,14678.0,50.0,0.0,secondary,Planned (WCC),1.0,8
-Boulcott Street,"Wellington Central, Mt Victoria, Kelburn",597.56,733.77,1414.75,303.98,1227.94,2367.54,508.71,7268.0,30.0,0.0,tertiary,Not in plan,0.81,9
-Upland Road,"Kelburn, Northland",973.73,733.19,1582.09,144.07,752.97,1624.78,147.95,10891.0,50.0,0.0,secondary,Planned (WCC),1.0,10
-Lambton Quay,"Wellington Central, Pipitea",1063.24,700.85,1191.67,154.35,659.17,1120.79,145.17,5819.0,30.0,0.0,tertiary,Planned (ex-LGWM),0.76,11
-Victoria Street,"Wellington Central, Te Aro",658.38,678.57,1133.65,175.08,1030.67,1721.87,265.93,9063.0,30.0,0.0,secondary,Planned (ex-LGWM),1.0,12
-Riddiford Street,Newtown,574.42,671.91,1156.7,225.02,1169.73,2013.7,391.75,14904.0,40.0,0.07,secondary,Planned (WCC),0.93,13
-Moxham Avenue,Hataitai,557.29,664.88,1233.76,206.33,1193.05,2213.85,370.24,8404.0,50.0,0.0,tertiary,Planned (ex-LGWM),0.88,14
-Tinakori Road,Thorndon,782.76,610.2,1423.66,139.55,779.56,1818.78,178.28,11912.0,50.0,0.21,secondary,Not in plan,0.79,15
-Takapu Road,"Tawa, Grenada North, Takapu Valley",1248.28,592.3,1354.87,0.0,474.49,1085.38,0.0,17549.0,50.0,0.0,secondary,Not in plan,0.55,16
-Wellington Road,"Hataitai, Kilbirnie",670.21,590.82,1067.28,143.81,881.55,1592.47,214.57,8914.0,50.0,0.0,State highway,Planned (ex-LGWM),0.8,17
-Ruahine Street,Hataitai,409.04,563.02,1034.9,175.12,1376.44,2530.05,428.12,,70.0,0.0,State highway,Planned (ex-LGWM),1.0,18
-Raroa Road,"Kelburn, Aro Valley",1527.96,550.96,1410.33,61.32,360.59,923.02,40.13,7670.0,50.0,0.65,secondary,Planned (WCC),1.0,19
-Newlands Road,Newlands,1447.08,514.73,1225.02,60.99,355.7,846.54,42.15,15669.0,50.0,0.0,secondary,Planned (WCC),1.0,20
-Hamilton Road,Hataitai,189.17,479.82,882.59,147.06,2536.51,4665.7,777.43,6708.0,50.0,0.0,tertiary,Planned (ex-LGWM),1.0,21
-Dixon Street,Te Aro,538.53,457.06,841.66,112.55,848.72,1562.89,209.0,5000.0,30.0,0.0,tertiary,Planned (ex-LGWM),0.91,22
-Tauhinu Road,Miramar,471.41,449.58,707.94,92.42,953.71,1501.76,196.06,7970.0,50.0,0.0,residential,Not in plan,1.0,23
-Ghuznee Street,Te Aro,638.76,437.17,762.01,76.81,684.4,1192.94,120.25,12835.0,30.0,0.0,secondary,Planned (ex-LGWM),0.53,24
-Customhouse Quay,Wellington Central,574.83,435.55,795.43,117.6,757.7,1383.75,204.57,20604.0,50.0,0.0,primary,Desired only,1.0,25
-Jervois Quay,"Wellington Central, Te Aro",718.85,432.58,702.32,156.17,601.76,977.01,217.26,19163.0,50.0,0.04,primary,Desired only,1.0,26
-Johnsonville Road,Johnsonville,410.89,431.04,1160.49,31.01,1049.03,2824.33,75.48,22000.0,50.0,0.99,secondary,Planned (WCC),0.87,27
-Wadestown Road,Thorndon,783.15,414.79,1112.86,222.39,529.64,1421.0,283.96,2334.0,50.0,1.0,residential,Planned (WCC),1.0,28
-Park Road,Miramar,756.75,375.83,549.8,48.63,496.64,726.53,64.27,6295.0,50.0,0.0,tertiary,Planned (WCC),1.0,29
-Cable Street,"Te Aro, Wellington Central",257.9,342.48,560.13,108.7,1327.96,2171.9,421.49,20170.0,50.0,0.0,primary,Desired only,1.0,30
-Willowbank Road,Tawa,463.08,336.64,958.16,5.66,726.96,2069.12,12.21,4184.0,50.0,0.0,secondary,Planned (WCC),1.0,31
-Mein Street,Newtown,275.15,323.37,557.65,77.32,1175.26,2026.75,281.01,6744.0,40.0,0.0,tertiary,Not in plan,1.0,32
-Featherston Street,Wellington Central,283.19,312.53,548.7,97.31,1103.63,1937.57,343.64,6782.0,30.0,0.0,secondary,Planned (ex-LGWM),1.0,33
-Wakefield Street,Te Aro,221.96,307.96,486.49,123.54,1387.44,2191.76,556.59,4711.0,30.0,0.0,tertiary,Not in plan,0.8,34
-Pirie Street,Mt Victoria,218.99,307.28,563.29,112.37,1403.18,2572.21,513.12,4060.0,50.0,0.0,tertiary,Not in plan,1.0,35
-Kelburn Parade,Kelburn,347.86,292.95,795.37,19.22,842.15,2286.48,55.25,12623.0,50.0,0.0,secondary,Planned (WCC),1.0,36
-Wallace Street,Mt Cook,628.14,280.71,572.18,33.75,446.89,910.91,53.73,21488.0,50.0,0.0,secondary,Planned (ex-LGWM),1.0,37
-Russell Terrace,"Berhampore, Newtown",698.6,278.89,576.19,138.33,399.21,824.77,198.0,9170.0,50.0,0.0,tertiary,Not in plan,0.67,38
-Box Hill,Khandallah,475.9,264.37,665.98,34.56,555.52,1399.44,72.61,12029.0,50.0,0.0,secondary,Planned (WCC),1.0,39
-Chaytor Street,Karori,239.59,251.87,604.55,106.96,1051.26,2523.31,446.42,16733.0,50.0,1.0,secondary,Planned (ex-LGWM),1.0,40
-Salamanca Road,"Kelburn, Wellington Central",520.04,245.33,630.76,19.41,471.76,1212.9,37.33,12111.0,50.0,0.0,secondary,Planned (WCC),0.75,41
-Miramar Avenue,Miramar,545.54,240.73,336.53,31.62,441.28,616.87,57.96,12920.0,30.0,0.0,secondary,Planned (WCC),0.54,42
-Glasgow Street,Kelburn,311.87,229.52,505.54,20.97,735.95,1621.0,67.23,10174.0,50.0,0.0,secondary,Planned (WCC),1.0,43
-Constable Street,Newtown,571.43,227.18,394.85,38.28,397.56,690.99,66.99,15270.0,50.0,0.0,secondary,Not in plan,0.93,44
-Birdwood Street,Karori,531.18,224.44,562.4,127.6,422.53,1058.79,240.22,4390.0,50.0,1.0,tertiary,Planned (WCC),1.0,45
-Manners Street,Te Aro,138.63,221.86,346.14,85.34,1600.36,2496.81,615.57,2300.0,30.0,0.0,tertiary,Planned (ex-LGWM),0.56,46
-Karori Road,Karori,200.12,208.41,484.45,73.1,1041.39,2420.77,365.3,17109.0,30.0,0.28,secondary,Planned (ex-LGWM),1.0,47
-Rintoul Street,Newtown,138.04,203.13,350.62,100.52,1471.58,2540.11,728.2,3236.0,50.0,1.0,secondary,Planned (ex-LGWM),1.0,48
-Paterson Street,Mt Victoria,109.54,195.74,358.25,61.16,1786.89,3270.36,558.29,,50.0,0.0,State highway,Not in plan,1.0,49
-Webb Street,"Mt Cook, Te Aro",289.69,192.79,417.17,23.93,665.51,1440.06,82.6,11113.0,50.0,0.0,secondary,Not in plan,0.73,50
-Abel Smith Street,"Te Aro, Aro Valley",370.48,184.37,348.71,19.52,497.66,941.24,52.7,4040.0,30.0,0.0,tertiary,Not in plan,1.0,51
-Adelaide Road,Newtown,551.95,181.06,308.29,55.46,328.04,558.56,100.49,11431.0,50.0,0.0,secondary,Not in plan,0.85,52
-Sussex Street,Mt Cook,136.56,178.98,342.95,44.63,1310.64,2511.34,326.83,,50.0,0.0,State highway,Not in plan,1.0,53
-Monorgan Road,Strathmore Park,356.68,173.65,294.45,33.62,486.85,825.55,94.27,4419.0,50.0,0.0,residential,Not in plan,1.0,54
-Para Street,Miramar,448.57,171.18,224.11,11.89,381.6,499.62,26.51,6035.0,50.0,0.0,tertiary,Not in plan,1.0,55
-Taurima Street,Hataitai,96.81,167.86,310.71,53.01,1733.94,3209.57,547.54,5887.0,30.0,0.0,tertiary,Planned (ex-LGWM),1.0,56
-Karori Road,Karori,203.5,166.37,380.49,54.09,817.57,1869.75,265.8,14793.0,30.0,0.0,secondary,Planned (ex-LGWM),1.0,57
-Aro Street,Aro Valley,104.52,161.48,359.55,17.45,1545.05,3440.07,166.94,11374.0,30.0,0.0,secondary,Planned (WCC),1.0,58
-Wakefield Street,Te Aro,361.4,161.31,250.91,28.06,446.33,694.28,77.65,14720.0,50.0,0.0,primary,Desired only,0.86,59
-Bassett Road,Johnsonville,347.45,159.37,405.35,11.1,458.69,1166.63,31.95,5383.0,50.0,0.0,tertiary,Not in plan,1.0,60
-Glenmore Street,Kelburn,245.38,150.91,362.45,93.73,614.98,1477.06,381.97,15941.0,50.0,0.75,secondary,Planned (ex-LGWM),1.0,61
-Calabar Road,Miramar,337.64,150.68,278.89,43.68,446.27,825.99,129.38,,70.0,0.0,State highway,Not in plan,1.0,62
-Rongotai Road,Kilbirnie,249.63,147.24,262.1,12.15,589.85,1049.97,48.66,8079.0,30.0,0.0,secondary,Planned (WCC),1.0,63
-Braithwaite Street,Karori,393.98,145.74,347.83,69.92,369.91,882.87,177.48,4700.0,50.0,0.52,tertiary,Planned (WCC),0.62,64
-(unnamed link),Wellington Central,142.11,142.22,249.27,62.58,1000.77,1753.98,440.38,4138.0,30.0,0.0,secondary_link,Planned (ex-LGWM),1.0,65
-Ohiro Road,Brooklyn,372.53,140.05,359.59,71.45,375.95,965.27,191.8,12695.0,40.0,0.15,secondary,Planned (WCC),1.0,66
-Majoribanks Street,Mt Victoria,269.95,139.72,258.19,40.01,517.59,956.44,148.23,6380.0,50.0,0.0,tertiary,Not in plan,1.0,67
-Caledonia Street,Miramar,324.9,139.22,256.94,41.71,428.52,790.84,128.39,4843.0,50.0,0.0,residential,Not in plan,1.0,68
-Mulgrave Street,"Pipitea, Thorndon",127.25,137.71,240.2,27.41,1082.15,1887.6,215.41,12659.0,50.0,0.0,secondary,Planned (WCC),1.0,69
-Darlington Road,Miramar,453.23,134.48,193.09,25.45,296.7,426.04,56.16,6035.0,50.0,0.0,tertiary,Not in plan,1.0,70
-Rintoul Street,Newtown,70.63,132.57,226.17,55.75,1877.05,3202.15,789.36,3892.0,50.0,0.0,secondary,Planned (ex-LGWM),1.0,71
-Garden Road,Northland,422.82,132.09,343.88,89.52,312.4,813.28,211.73,2960.0,50.0,0.0,residential,Not in plan,1.0,72
-Main Road,Tawa,338.96,125.46,218.45,8.03,370.15,644.47,23.69,17488.0,50.0,0.0,secondary,Not in plan,1.0,73
-Jessie Street,Te Aro,222.18,121.21,181.63,19.84,545.54,817.47,89.27,2360.0,30.0,0.0,unclassified,Not in plan,1.0,74
-Aitken Street,Thorndon,172.77,120.36,236.76,27.66,696.62,1370.37,160.07,2500.0,50.0,0.0,unclassified,Not in plan,1.0,75
-Kaiwharawhara Road,Kaiwharawhara,83.93,119.18,273.95,47.41,1419.89,3263.87,564.8,12374.0,50.0,1.0,secondary,Planned (WCC),1.0,76
-Adelaide Road,Berhampore,85.24,118.67,212.21,53.07,1392.12,2489.43,622.52,12944.0,30.0,0.0,secondary,Planned (ex-LGWM),1.0,77
-Oxford Street,Tawa,279.58,117.97,181.94,6.33,421.95,650.76,22.65,2130.0,50.0,0.0,unclassified,Planned (WCC),1.0,78
-Broderick Road,Johnsonville,439.32,116.86,241.29,10.76,266.02,549.24,24.49,8800.0,50.0,0.0,tertiary,Planned (WCC),1.0,79
-Ngatitoa Street,Tawa,453.44,116.76,199.46,10.96,257.5,439.87,24.16,2041.0,50.0,0.0,tertiary,Not in plan,1.0,80
-Chaytor Street,"Kelburn, Northland",92.8,109.89,262.48,61.41,1184.1,2828.37,661.75,17127.0,50.0,0.73,secondary,Planned (ex-LGWM),0.85,81
-Tinakori Road,Thorndon,286.27,108.08,262.38,34.89,377.54,916.52,121.89,12502.0,30.0,0.0,secondary,Planned (WCC),1.0,82
-Karori Road,Karori,94.16,100.89,242.96,39.94,1071.54,2580.31,424.19,19667.0,50.0,1.0,secondary,Planned (ex-LGWM),1.0,83
-Childers Terrace,Kilbirnie,276.7,100.4,175.79,25.39,362.85,635.32,91.74,8222.0,50.0,0.0,residential,Planned (WCC),1.0,84
-Mercer Street,Wellington Central,83.0,97.61,160.09,39.04,1176.04,1928.77,470.35,3980.0,30.0,0.0,tertiary,Not in plan,0.68,85
-College Street,Te Aro,219.72,96.98,146.9,18.03,441.39,668.61,82.05,2030.0,30.0,0.0,unclassified,Not in plan,1.0,86
-Hutt Road,Ngauranga,113.35,95.85,249.32,12.08,845.57,2199.55,106.56,8158.0,80.0,0.66,primary,Not in plan,1.0,87
-John Street,"Mt Cook, Newtown",236.51,95.26,192.33,4.42,402.8,813.22,18.7,21727.0,50.0,0.0,secondary,Planned (ex-LGWM),1.0,88
-Victoria Street,"Te Aro, Mt Cook",88.46,93.32,201.09,22.83,1054.95,2273.29,258.1,11356.0,50.0,0.0,secondary,Planned (WCC),1.0,89
-Karori Tunnel,Northland,78.01,91.46,218.24,51.45,1172.34,2797.44,659.53,17127.0,50.0,0.0,secondary,Planned (ex-LGWM),1.0,90
-Ottawa Road,Ngaio,345.96,91.44,218.76,17.83,264.29,632.33,51.53,12431.0,30.0,0.0,secondary,Planned (WCC),1.0,91
-Nicholson Road,Khandallah,259.57,90.38,245.28,21.92,348.17,944.91,84.46,4040.0,50.0,0.0,tertiary,Not in plan,0.8,92
-Helston Road,Johnsonville,245.99,88.32,221.78,2.79,359.05,901.59,11.33,14060.0,50.0,0.0,tertiary,Planned (WCC),1.0,93
-Bolton Street,Wellington Central,72.93,84.39,188.69,29.48,1157.2,2587.3,404.29,2030.0,50.0,0.0,tertiary,Not in plan,1.0,94
-Hill Street,Thorndon,208.5,83.92,184.02,20.16,402.47,882.57,96.67,2910.0,30.0,0.0,residential,Planned (WCC),1.0,95
-Main Road,Tawa,152.23,79.4,156.31,0.1,521.58,1026.77,0.67,17305.0,50.0,0.0,secondary,Not in plan,1.0,96
-Waitoa Road,Hataitai,248.42,78.0,147.14,25.1,313.97,592.31,101.06,4307.0,30.0,0.0,tertiary,Not in plan,1.0,97
-Adelaide Road,Newtown,196.14,73.88,143.17,24.12,376.68,729.95,123.0,10842.0,50.0,0.0,secondary,Not in plan,1.0,98
-Hunter Street,Wellington Central,70.87,70.64,120.74,20.62,996.71,1703.62,290.9,18277.0,30.0,0.0,secondary,Planned (ex-LGWM),0.8,99
-Hataitai Road,Hataitai,236.5,70.13,128.37,21.04,296.53,542.79,88.98,2627.0,40.0,0.0,tertiary,Not in plan,1.0,100
-Ellice Street,Mt Victoria,133.37,68.7,133.99,2.55,515.13,1004.59,19.15,2900.0,50.0,0.0,residential,Planned (ex-LGWM),1.0,101
-Coromandel Street,Newtown,79.58,67.61,124.93,11.73,849.58,1569.8,147.42,3880.0,40.0,0.0,tertiary,Planned (WCC),1.0,102
-MacDonald Crescent,Te Aro,181.36,66.69,156.02,7.05,367.74,860.25,38.88,3100.0,50.0,0.0,tertiary,Not in plan,1.0,103
-Ira Street,Miramar,125.44,66.49,113.3,16.88,530.04,903.24,134.58,5942.0,30.0,0.0,secondary,Planned (WCC),1.0,104
-Salamanca Road,Kelburn,119.32,65.16,187.81,13.86,546.1,1574.03,116.15,2290.0,50.0,0.0,tertiary,Not in plan,1.0,105
-Raroa Crescent,Northland,187.14,64.56,164.41,7.07,344.98,878.52,37.76,7508.0,50.0,0.0,secondary,Planned (WCC),1.0,106
-Te Wharepōuri Street,Berhampore,216.11,62.17,114.74,7.84,287.68,530.93,36.27,6290.0,50.0,0.0,tertiary,Planned (WCC),1.0,107
-Murphy Street,Thorndon,99.98,61.48,130.59,18.77,614.95,1306.11,187.71,9661.0,50.0,0.53,secondary,Planned (WCC),1.0,108
-Centennial Highway,Newlands,93.66,60.15,161.05,5.42,642.19,1719.49,57.88,,80.0,0.0,State highway,Planned (ex-LGWM),1.0,109
-Marion Street,Te Aro,180.26,57.95,87.41,2.13,321.5,484.94,11.8,2677.0,30.0,0.0,unclassified,Not in plan,1.0,110
-Brooklyn Road,Mt Cook,60.77,54.34,122.13,24.68,894.32,2009.9,406.09,11335.0,50.0,0.0,secondary,Planned (WCC),1.0,111
-The Rigi,Northland,108.95,53.4,128.69,34.22,490.15,1181.26,314.14,2310.0,50.0,0.0,residential,Not in plan,1.0,112
-Seatoun Tunnel,Strathmore Park,143.91,52.9,94.05,9.39,367.61,653.56,65.25,6500.0,50.0,0.0,secondary,Planned (WCC),1.0,113
-Clifford Road,Johnsonville,119.51,52.57,135.39,3.7,439.9,1132.9,30.95,2570.0,50.0,0.0,residential,Not in plan,1.0,114
-Moorefield Road,Johnsonville,149.73,51.55,111.96,0.11,344.31,747.78,0.71,12923.0,50.0,0.0,secondary,Planned (ex-LGWM),1.0,115
-Lyall Parade,Lyall Bay,175.08,50.63,78.97,10.69,289.18,451.04,61.08,9358.0,30.0,0.0,secondary,Planned (WCC),1.0,116
-(unnamed link),Newlands,77.81,49.97,133.79,4.5,642.19,1719.49,57.88,,80.0,0.0,State highway,Planned (ex-LGWM),1.0,117
-Onepu Road,Lyall Bay,137.17,48.76,73.5,13.46,355.47,535.79,98.14,6933.0,50.0,1.0,secondary,Planned (WCC),1.0,118
-Gee Street,Tawa,101.54,47.34,94.1,0.07,466.2,926.73,0.67,2520.0,50.0,0.0,residential,Not in plan,1.0,119
-Kelburn Viaduct,Northland,71.89,44.14,95.9,8.7,614.01,1333.85,120.95,8279.0,50.0,0.0,secondary,Planned (WCC),1.0,120
-Hobart Street,Miramar,100.08,43.79,79.59,12.98,437.61,795.28,129.66,2820.0,50.0,0.0,residential,Planned (WCC),1.0,121
-Aro Street,Aro Valley,65.81,42.79,96.0,6.15,650.17,1458.67,93.5,10193.0,50.0,1.0,secondary,Planned (WCC),1.0,122
-(unnamed link),Hataitai,72.85,41.94,75.99,12.68,575.79,1043.1,174.08,6708.0,50.0,0.0,tertiary_link,Planned (ex-LGWM),1.0,123
-Vivian Street,Te Aro,142.31,40.3,74.97,2.93,283.17,526.82,20.6,,50.0,0.0,State highway,Not in plan,0.75,124
-Elizabeth Street,Mt Victoria,149.37,39.26,55.22,3.97,262.81,369.69,26.56,3100.0,50.0,0.0,tertiary,Not in plan,1.0,125
-(unnamed link),Tawa,93.72,35.77,86.69,0.18,381.7,924.94,1.9,18647.0,50.0,0.0,secondary,Planned (WCC),1.0,126
-Moselle Street,Island Bay,112.67,35.72,69.37,12.75,316.99,615.65,113.17,4000.0,50.0,0.0,tertiary,Not in plan,1.0,127
-Everton Terrace,"Wellington Central, Mt Victoria, Kelburn",103.26,34.26,80.27,13.76,331.77,777.33,133.3,6960.0,50.0,0.0,tertiary,Not in plan,0.67,128
-Davis Street,Thorndon,119.72,33.87,73.55,3.21,282.93,614.32,26.81,2400.0,50.0,0.0,residential,Not in plan,1.0,129
-Black Rock Road,Newlands,125.32,33.72,79.62,3.23,269.03,635.31,25.79,3080.0,50.0,0.0,tertiary,Not in plan,1.0,130
-Karori Road,Karori,96.64,32.9,70.47,10.88,340.47,729.19,112.56,7514.0,50.0,0.0,secondary,Planned (WCC),0.85,131
-Willeston Street,Wellington Central,87.47,32.16,45.34,10.85,367.7,518.37,124.07,2890.0,30.0,0.0,unclassified,Planned (ex-LGWM),1.0,132
-Tawa Street,Tawa,120.62,31.57,65.05,1.75,261.72,539.34,14.51,4680.0,50.0,0.0,tertiary,Not in plan,1.0,133
-(unnamed link),Miramar,102.97,28.8,53.47,8.44,279.69,519.3,81.95,,70.0,0.0,State highway,Not in plan,1.0,134
-Bracken Road,Newlands,90.34,28.73,67.63,0.85,318.01,748.59,9.45,9721.0,50.0,0.0,tertiary,Planned (WCC),1.0,135
-Derwent Street,Island Bay,79.23,28.23,54.11,10.49,356.31,682.94,132.45,3100.0,50.0,0.0,tertiary,Not in plan,1.0,136
-Vivian Street,Te Aro,88.33,27.45,43.25,1.62,310.72,489.62,18.36,,50.0,0.0,State highway,Not in plan,0.63,137
-Hopper Street,Mt Cook,101.29,27.04,54.61,4.81,266.92,539.13,47.5,3030.0,50.0,0.0,residential,Not in plan,1.0,138
-Horokiwi Road West,Newlands,92.71,26.52,65.4,2.27,286.03,705.45,24.51,9890.0,50.0,0.0,tertiary,Not in plan,1.0,139
-Mansfield Street,Newtown,87.51,26.49,41.84,9.06,302.64,478.08,103.51,3591.0,50.0,0.0,tertiary,Planned (WCC),1.0,140
-(unnamed link),Rongotai,65.73,25.01,40.06,3.93,380.5,609.49,59.82,,70.0,0.0,State highway,Not in plan,1.0,141
-Duthie Street,Karori,72.04,23.46,53.89,10.68,325.59,748.06,148.23,3530.0,50.0,0.0,tertiary,Not in plan,1.0,142
-Crofton Road,Ngaio,60.75,22.34,54.21,11.2,367.8,892.36,184.44,2900.0,50.0,0.0,tertiary,Not in plan,1.0,143
-(unnamed link),Miramar,77.8,20.02,37.56,6.16,257.35,482.78,79.18,,50.0,0.0,State highway,Not in plan,1.0,144
-Queens Drive,Lyall Bay,69.5,19.02,30.98,7.24,273.74,445.85,104.17,5401.0,50.0,0.0,residential,Not in plan,1.0,145
-Northland Road,Northland,65.8,18.03,42.08,7.86,273.96,639.49,119.51,4600.0,30.0,0.0,tertiary,Planned (WCC),1.0,146
+street,suburbs,length_m,godutch_cyc_km,ebike_cyc_km,census_cyc_km,godutch_trips,ebike_trips,census_trips,max_adt,speed,facility_now,painted_share,one_way_share,road,plan,plan_share,rank
+Middleton Road,"Glenside, Churton Park, Johnsonville",4197.1,2814.3,7312.18,54.61,670.53,1742.2,13.01,6985.0,50.0,mixed,0.0,0.0,secondary,Planned (WCC),1.0,1
+Takapu Road,"Tawa, Grenada North, Takapu Valley",5792.35,2814.01,5554.12,0.0,485.81,958.87,0.0,17549.0,60.0,mixed,0.0,0.0,secondary,Not in plan,0.9,2
+The Terrace,Wellington Central,689.85,1624.45,2685.88,648.41,2456.06,4060.57,976.43,14579.0,30.0,mixed,0.0,0.05,secondary,Unfunded (ex-LGWM),1.0,3
+Willis Street,"Te Aro, Wellington Central",1107.75,1259.83,1912.91,213.53,1137.29,1726.84,192.76,10537.0,30.0,mixed,0.0,0.0,secondary,Unfunded (ex-LGWM),1.0,4
+Victoria Street,"Te Aro, Wellington Central, Mt Cook",1136.17,782.01,1136.64,136.75,987.79,1431.12,170.93,12326.0,30.0,sharrow,0.08,0.27,secondary,Unfunded (ex-LGWM),0.92,5
+Park Road,Miramar,931.92,530.96,681.59,64.9,569.75,731.39,69.64,6295.0,50.0,mixed,0.0,0.13,tertiary,Planned (WCC),1.0,6
+Riddiford Street,Newtown,482.82,465.97,674.93,90.78,1056.59,1537.76,209.22,14904.0,40.0,mixed,0.0,0.04,secondary,Planned (WCC),0.96,7
+Taranaki Street,"Te Aro, Wellington Central, Mt Cook",741.89,444.14,600.02,30.29,598.66,808.77,40.83,15000.0,50.0,mixed,0.05,0.27,secondary,Unfunded (ex-LGWM),0.92,8
+Rintoul Street,Newtown,208.66,408.41,627.19,155.23,2784.18,4279.5,1080.08,3892.0,50.0,sharrow,0.0,0.66,secondary,Unfunded (ex-LGWM),1.0,9
+Takapu Road,,633.43,402.05,562.86,0.0,634.72,888.59,0.0,500.0,110.0,mixed,0.0,0.0,unclassified,Not in plan,1.0,10
+Daniell Street,Newtown,515.57,386.12,579.03,75.12,748.92,1123.09,145.7,5000.0,40.0,mixed,0.0,0.12,residential,Not in plan,1.0,11
+Ghuznee Street,Te Aro,492.98,384.83,528.59,43.55,780.63,1072.24,88.33,12404.0,30.0,mixed,0.0,0.31,secondary,Not in plan,0.61,12
+Johnsonville Road,Johnsonville,399.52,384.51,930.42,27.86,962.42,2328.84,69.72,19980.0,50.0,painted_lane,1.0,0.0,secondary,Planned (WCC),0.87,13
+Rongotai Road,Kilbirnie,249.63,381.91,610.14,58.46,1529.92,2444.2,234.18,8079.0,30.0,sharrow,0.0,0.0,secondary,Planned (WCC),1.0,14
+Mein Street,Newtown,275.15,351.25,530.87,55.35,1276.59,1929.43,201.16,6744.0,40.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,15
+Boulcott Street,"Wellington Central, Mt Victoria, Kelburn",497.88,345.33,597.04,68.36,693.61,1199.18,137.3,7268.0,30.0,mixed,0.0,0.0,tertiary,Not in plan,0.77,16
+Tauhinu Road,Miramar,471.41,343.2,463.85,58.49,728.03,983.98,124.07,7970.0,50.0,mixed,0.0,0.01,residential,Not in plan,1.0,17
+Willowbank Road,Tawa,463.08,333.01,846.54,5.66,719.12,1828.08,12.21,4184.0,50.0,mixed,0.0,0.0,secondary,Planned (WCC),1.0,18
+Customhouse Quay,Wellington Central,180.05,315.13,475.94,70.96,1750.21,2643.36,394.11,4870.0,30.0,mixed,0.0,0.0,secondary,Desired only,1.0,19
+Broadway,"Strathmore Park, Miramar",610.54,306.67,482.56,61.07,502.3,790.39,100.02,9964.0,50.0,mixed,0.0,0.0,secondary,Planned (WCC),1.0,20
+Whitmore Street,Wellington Central,84.42,292.63,432.83,93.34,5015.14,7399.95,1570.42,9199.0,30.0,painted_lane,1.0,0.49,secondary,Planned (WCC),1.0,21
+Dixon Street,Te Aro,466.52,291.78,406.81,37.54,625.44,872.02,80.47,5000.0,30.0,mixed,0.0,0.0,tertiary,Unfunded (ex-LGWM),1.0,22
+Courtenay Place,Te Aro,362.03,290.18,372.69,59.56,801.54,1029.45,164.53,5676.0,30.0,bus_lane,1.0,0.0,tertiary,Unfunded (ex-LGWM),1.0,23
+Upland Road,"Kelburn, Northland",670.15,286.92,581.74,32.93,428.14,868.08,49.15,10891.0,50.0,mixed,0.0,0.0,secondary,Planned (WCC),1.0,24
+Featherston Street,"Pipitea, Wellington Central",242.59,286.12,418.9,79.03,1179.43,1726.75,325.79,7923.0,30.0,sharrow,0.41,0.0,secondary,Unfunded (ex-LGWM),1.0,25
+Newlands Road,Newlands,723.89,279.8,607.4,34.59,386.53,839.08,47.78,15669.0,50.0,mixed,0.0,0.62,secondary,Planned (WCC),1.0,26
+Karori Road,Karori,326.18,258.04,537.91,96.67,834.51,1740.32,313.79,19667.0,40.0,sharrow,0.46,0.1,secondary,Unfunded (ex-LGWM),1.0,27
+Aro Street,Aro Valley,388.84,256.18,481.31,30.76,841.11,1592.6,113.84,11995.0,30.0,sharrow,0.17,0.56,secondary,Planned (WCC),1.0,28
+Para Street,Miramar,577.68,248.09,296.21,15.55,429.46,512.75,26.91,6035.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,29
+Tasman Street,Mt Cook,179.78,222.69,374.03,15.72,1238.66,2080.45,87.43,6500.0,50.0,mixed,0.0,1.0,tertiary,Planned (WCC),1.0,30
+Wakefield Street,Te Aro,385.17,221.29,293.13,31.25,574.53,761.04,81.13,14720.0,30.0,mixed,0.0,0.0,tertiary,Desired only,0.47,31
+Abel Smith Street,"Te Aro, Aro Valley",326.3,215.29,366.93,23.62,659.8,1124.53,72.39,4040.0,30.0,mixed,0.0,0.9,tertiary,Not in plan,1.0,32
+Tory Street,Te Aro,386.52,210.09,272.2,33.06,543.56,704.24,85.54,8680.0,30.0,mixed,0.0,0.0,tertiary,Unfunded (ex-LGWM),0.72,33
+Glanmire Road,Newlands,635.3,197.29,452.24,26.06,310.55,711.85,41.02,2511.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,34
+Webb Street,"Mt Cook, Te Aro",289.69,196.5,355.78,24.7,678.3,1228.16,85.25,11113.0,50.0,mixed,0.0,0.19,secondary,Not in plan,0.73,35
+Coromandel Street,Newtown,79.58,195.64,316.34,37.71,2458.32,3975.01,473.82,3880.0,40.0,mixed,0.0,0.0,tertiary,Planned (WCC),1.0,36
+Adelaide Road,"Berhampore, Newtown",104.22,188.0,291.55,73.88,1803.81,2797.31,708.85,14240.0,40.0,sharrow,0.0,0.0,secondary,Unfunded (ex-LGWM),1.0,37
+Karori Road,Karori,227.48,179.19,359.63,61.42,787.73,1580.97,269.99,14793.0,30.0,sharrow,0.0,0.0,secondary,Unfunded (ex-LGWM),1.0,38
+Johnston Street,Wellington Central,90.83,168.58,247.12,57.65,1856.0,2720.79,634.76,20604.0,40.0,mixed,0.0,0.0,unclassified,Not in plan,0.86,39
+Bowen Street,Wellington Central,67.93,167.42,287.16,63.89,4849.22,8201.76,1853.37,11240.0,30.0,mixed,0.0,1.0,secondary,Unfunded (ex-LGWM),1.0,40
+Majoribanks Street,Mt Victoria,318.53,154.92,230.06,44.25,486.36,722.24,138.92,6380.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,41
+Pirie Street,Mt Victoria,218.99,147.11,223.7,35.12,671.77,1021.51,160.37,4060.0,50.0,mixed,0.0,0.34,tertiary,Not in plan,1.0,42
+Kelburn Parade,Kelburn,346.62,143.96,355.89,3.78,415.32,1026.74,10.9,12623.0,50.0,mixed,0.0,0.26,secondary,Planned (WCC),1.0,43
+Chaytor Street,Karori,239.59,143.69,313.05,61.83,599.72,1306.61,258.08,16733.0,50.0,painted_lane,1.0,0.0,secondary,Unfunded (ex-LGWM),1.0,44
+Monorgan Road,Strathmore Park,356.68,141.49,201.94,17.78,396.68,566.16,49.84,4419.0,50.0,mixed,0.0,0.0,residential,Not in plan,1.0,45
+Kaiwharawhara Road,Kaiwharawhara,83.93,140.51,272.44,54.42,1674.06,3245.92,648.33,12374.0,50.0,bus_lane,1.0,0.0,secondary,Planned (WCC),1.0,46
+Ira Street,Miramar,125.44,139.73,206.58,29.27,1113.93,1646.79,233.32,5942.0,30.0,mixed,0.0,0.0,secondary,Planned (WCC),1.0,47
+Mulgrave Street,"Pipitea, Thorndon",127.25,139.57,210.19,26.57,1096.81,1651.76,208.82,12659.0,50.0,sharrow,0.0,0.0,secondary,Planned (WCC),1.0,48
+Garden Road,Northland,422.82,136.06,292.0,79.6,321.79,690.59,188.25,2960.0,50.0,mixed,0.0,0.0,residential,Not in plan,1.0,49
+Severn Street,Island Bay,384.78,125.47,213.2,46.06,326.08,554.08,119.7,3101.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,50
+Miramar Avenue,Miramar,272.04,124.61,148.72,10.8,458.06,546.66,39.7,12920.0,30.0,mixed,0.0,0.0,secondary,Unfunded (ex-LGWM),0.93,51
+Darlington Road,Miramar,384.56,120.82,156.14,25.28,314.19,406.03,65.74,3170.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,52
+Burma Road,Broadmeadows,290.82,118.96,260.14,4.59,409.04,894.51,15.79,13676.0,50.0,mixed,0.0,0.0,secondary,Planned (WCC),1.0,53
+Jervois Quay,Wellington Central,183.13,116.31,168.58,38.47,635.1,920.52,210.07,16064.0,50.0,mixed,0.0,0.0,primary,Desired only,1.0,54
+Hamilton Road,Hataitai,189.17,115.16,183.28,6.79,608.76,968.87,35.89,6708.0,50.0,mixed,0.0,0.0,tertiary,Unfunded (ex-LGWM),1.0,55
+Wellington Road,Hataitai,371.89,113.14,179.77,6.67,304.23,483.4,17.94,17506.0,50.0,mixed,0.0,0.0,State highway,Unfunded (ex-LGWM),1.0,56
+Hobart Street,Miramar,313.13,109.91,123.83,3.76,350.99,395.47,12.0,2240.0,50.0,mixed,0.0,0.0,residential,Planned (WCC),1.0,57
+Birdwood Street,Karori,531.18,108.67,222.61,64.0,733.95,1554.37,428.36,4390.0,50.0,mixed,0.0,1.0,tertiary,Planned (WCC),1.0,58
+Ellice Street,Mt Victoria,171.13,106.36,178.29,8.34,621.51,1041.87,48.76,2900.0,50.0,mixed,0.0,0.0,residential,Unfunded (ex-LGWM),1.0,59
+Chaytor Street,"Kelburn, Northland",92.8,105.89,225.69,61.84,1141.01,2431.9,666.32,17127.0,50.0,painted_lane,0.73,0.0,secondary,Unfunded (ex-LGWM),0.85,60
+Bassett Road,Johnsonville,205.39,101.84,231.67,7.29,495.84,1127.91,35.49,5383.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,61
+Cashmere Avenue,Khandallah,292.93,94.61,214.61,23.66,322.97,732.61,80.76,4440.0,50.0,mixed,0.0,0.0,secondary,Planned (WCC),1.0,62
+Haumia Street,Johnsonville,301.45,93.82,185.32,0.36,311.22,614.78,1.21,3002.0,50.0,mixed,0.0,0.0,residential,Not in plan,0.92,63
+Karori Tunnel,Northland,78.01,88.62,188.87,51.83,1135.93,2420.96,664.42,17127.0,50.0,sharrow,0.0,0.0,secondary,Unfunded (ex-LGWM),1.0,64
+Owen Street,Newtown,170.66,84.0,121.81,25.61,492.21,713.73,150.07,1930.0,40.0,mixed,0.0,0.0,residential,Not in plan,1.0,65
+Taurima Street,Hataitai,87.13,80.78,133.56,20.94,927.15,1532.89,240.33,5887.0,30.0,sharrow,0.0,0.0,tertiary,Unfunded (ex-LGWM),1.0,66
+Helston Road,Johnsonville,245.99,80.39,182.86,2.41,326.81,743.37,9.79,14060.0,50.0,mixed,0.0,0.0,tertiary,Planned (WCC),1.0,67
+Elizabeth Street,Mt Victoria,213.56,76.05,99.68,7.17,356.1,466.76,33.57,3100.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,68
+Tinakori Road,Thorndon,215.19,75.5,112.93,10.51,350.85,524.8,48.85,11912.0,50.0,mixed,0.0,0.0,secondary,Not in plan,1.0,69
+The Rigi,Northland,108.95,74.12,154.37,41.08,680.36,1416.94,377.02,2310.0,50.0,mixed,0.0,1.0,residential,Not in plan,1.0,70
+Oxford Street,Tawa,279.58,71.9,91.13,2.31,257.17,325.96,8.25,2130.0,50.0,mixed,0.0,0.0,unclassified,Planned (WCC),1.0,71
+Main Road,Tawa,203.29,71.41,106.3,3.67,351.28,522.88,18.07,12470.0,50.0,mixed,0.0,0.0,secondary,Not in plan,1.0,72
+Adelaide Road,Newtown,182.77,71.3,121.39,24.17,390.12,664.16,132.25,10842.0,50.0,mixed,0.0,0.0,secondary,Not in plan,1.0,73
+Glenmore Street,Kelburn,62.01,70.43,150.11,41.2,1135.93,2420.96,664.42,15941.0,50.0,sharrow,0.0,0.0,secondary,Unfunded (ex-LGWM),1.0,74
+Paterson Street,Mt Victoria,109.54,69.5,111.15,15.93,634.45,1014.69,145.45,38328.0,50.0,mixed,0.0,0.39,State highway,Not in plan,1.0,75
+Lambton Quay,Pipitea,105.67,69.16,141.24,22.84,654.48,1336.64,216.14,3100.0,30.0,mixed,0.0,0.0,tertiary,Planned (WCC),1.0,76
+Constable Street,Newtown,219.68,68.63,99.07,12.16,312.41,450.96,55.36,9945.0,50.0,mixed,0.0,0.19,secondary,Not in plan,0.81,77
+Bolton Street,Wellington Central,72.93,67.51,110.83,20.66,925.64,1519.74,283.35,2030.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,78
+Moxham Avenue,Hataitai,162.32,62.81,103.8,17.5,386.94,639.51,107.8,8404.0,30.0,sharrow,0.0,0.0,tertiary,Unfunded (ex-LGWM),0.57,79
+Braithwaite Street,Karori,242.31,61.62,126.13,31.39,690.94,1452.45,371.08,4700.0,50.0,mixed,0.0,0.85,tertiary,Planned (WCC),1.0,80
+Collins Avenue,Tawa,192.14,57.95,83.63,0.72,301.6,435.26,3.76,8510.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,81
+Humber Street,Island Bay,116.18,56.4,91.35,20.86,485.48,786.29,179.58,1960.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,82
+Mercer Street,Wellington Central,83.0,55.47,76.69,10.07,668.31,924.02,121.33,3980.0,30.0,mixed,0.0,0.0,tertiary,Not in plan,0.68,83
+(unnamed link),Wellington Central,142.11,55.13,87.64,11.28,387.9,616.67,79.36,4138.0,30.0,mixed,0.0,0.0,secondary_link,Unfunded (ex-LGWM),1.0,84
+Salamanca Road,Kelburn,130.12,54.49,134.82,1.78,418.79,1036.13,13.69,2120.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,85
+Tinakori Road,Thorndon,161.62,54.43,92.72,5.86,336.77,573.67,36.27,9378.0,50.0,painted_lane,1.0,0.0,secondary,Unfunded (ex-LGWM),1.0,86
+Hutchison Road,Mt Cook,144.39,53.78,100.12,20.74,372.48,693.45,143.67,4000.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,0.65,87
+Park Street,Thorndon,127.79,52.53,106.21,22.67,636.15,1295.21,274.62,8279.0,50.0,sharrow,0.32,0.68,tertiary,Planned (WCC),1.0,88
+Ludlam Street,Seatoun,199.02,51.48,85.75,9.92,258.66,430.85,49.84,1929.0,50.0,mixed,0.0,0.0,residential,Not in plan,1.0,89
+Mount Albert Road,Berhampore,204.51,51.19,89.25,29.12,250.29,436.43,142.37,3111.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,90
+Seatoun Tunnel,Strathmore Park,143.91,49.0,80.42,9.2,340.47,558.84,63.96,6500.0,50.0,sharrow,0.0,0.0,secondary,Planned (WCC),1.0,91
+Moselle Street,Island Bay,112.67,46.15,76.16,16.91,409.61,675.93,150.08,4000.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,92
+Black Rock Road,Newlands,125.32,44.88,102.02,6.11,358.13,814.07,48.74,3080.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,93
+Brougham Street,Mt Victoria,78.02,42.07,65.86,10.46,539.27,844.19,134.02,1620.0,50.0,mixed,0.0,1.0,residential,Not in plan,1.0,94
+Goa Street,Hataitai,74.01,42.06,70.03,3.1,568.29,946.26,41.89,1720.0,50.0,mixed,0.0,0.0,residential,Not in plan,1.0,95
+Murphy Street,Thorndon,63.4,39.98,69.32,11.61,630.6,1093.42,183.11,9661.0,50.0,sharrow,0.25,0.64,secondary,Planned (WCC),1.0,96
+Crofton Road,Ngaio,156.21,39.7,85.77,12.81,369.95,798.49,121.76,8113.0,30.0,sharrow,0.0,0.64,secondary,Planned (WCC),1.0,97
+Awa Road,Miramar,144.87,39.55,59.98,9.02,273.03,414.06,62.25,3400.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,98
+Vivian Street,Te Aro,98.9,39.14,63.65,3.17,395.77,643.57,32.03,26556.0,50.0,mixed,0.0,0.0,State highway,Not in plan,0.63,99
+Cuba Street,Te Aro,117.97,38.05,53.41,3.44,322.51,452.72,29.13,2300.0,30.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,100
+(unnamed link),Tawa,93.72,36.2,78.22,0.18,386.22,834.66,1.9,18647.0,50.0,mixed,0.0,0.84,secondary,Planned (WCC),1.0,101
+Derwent Street,Island Bay,79.23,36.14,59.06,13.42,456.13,745.44,169.37,3100.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,102
+Everton Terrace,"Wellington Central, Mt Victoria, Kelburn",103.26,33.02,69.5,7.07,319.82,673.11,68.47,6960.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,0.67,103
+Karori Road,Karori,96.64,32.91,60.82,10.88,340.51,629.36,112.56,7514.0,50.0,sharrow,0.0,0.0,secondary,Planned (WCC),0.85,104
+Wha Street,Lyall Bay,77.73,32.63,45.61,8.8,419.83,586.82,113.21,1530.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,105
+John Street,"Mt Cook, Newtown",69.48,32.41,56.2,10.31,466.43,808.92,148.38,21727.0,50.0,mixed,0.0,0.0,secondary,Unfunded (ex-LGWM),1.0,106
+Stoke Street,Newtown,73.9,31.35,52.69,10.17,424.19,713.05,137.6,1780.0,50.0,mixed,0.0,0.0,residential,Not in plan,1.0,107
+Wexford Road,Miramar,80.15,30.06,33.43,0.57,375.07,417.12,7.08,1530.0,50.0,mixed,0.0,0.0,residential,Planned (WCC),0.8,108
+Harris Street,Wellington Central,60.88,27.6,35.63,9.02,453.31,585.29,148.2,16574.0,40.0,mixed,0.0,0.0,unclassified,Unfunded (ex-LGWM),0.79,109
+Hall Street,Newtown,80.46,26.89,43.5,1.64,334.18,540.57,20.32,4280.0,50.0,mixed,0.0,0.0,residential,Not in plan,1.0,110
+Kelburn Viaduct,Northland,71.89,26.59,54.86,3.22,369.81,763.11,44.79,8279.0,50.0,mixed,0.0,0.0,secondary,Planned (WCC),1.0,111
+Crofton Road,Ngaio,60.75,25.67,53.44,12.06,422.52,879.76,198.59,2900.0,50.0,mixed,0.0,0.0,tertiary,Not in plan,1.0,112
+Broderick Road,Johnsonville,94.45,24.21,48.02,4.26,256.31,508.48,45.15,9580.0,50.0,painted_lane,1.0,0.0,tertiary,Unfunded (ex-LGWM),1.0,113
+Main Road,Tawa,96.18,24.17,33.79,1.22,251.31,351.3,12.72,14695.0,50.0,mixed,0.0,0.0,secondary,Not in plan,1.0,114
+Brooklyn Road,Mt Cook,60.77,23.55,39.01,5.35,387.56,641.98,88.09,11335.0,50.0,mixed,0.0,0.0,secondary,Planned (WCC),1.0,115
+Waitoa Road,Hataitai,85.15,23.19,38.65,6.99,272.32,453.93,82.09,4307.0,30.0,sharrow,0.0,0.0,tertiary,Not in plan,1.0,116
+Glasgow Street,Kelburn,84.4,22.68,47.86,1.87,268.75,567.09,22.16,10174.0,50.0,mixed,0.0,0.0,secondary,Planned (WCC),1.0,117
+Broadway,Miramar,74.71,21.69,28.66,0.69,290.29,383.63,9.3,12626.0,50.0,mixed,0.0,0.06,secondary,Planned (WCC),1.0,118
+Queens Drive,Lyall Bay,69.5,19.42,25.84,6.66,279.46,371.77,95.89,5401.0,50.0,mixed,0.0,0.0,residential,Not in plan,1.0,119
+Stewart Duff Drive,Miramar,63.74,17.62,23.23,0.53,276.41,364.41,8.33,500.0,50.0,mixed,0.0,0.0,unclassified,Not in plan,1.0,120
+Northland Road,Northland,65.8,17.19,36.34,7.68,261.25,552.27,116.78,4600.0,30.0,mixed,0.0,0.0,tertiary,Planned (WCC),1.0,121

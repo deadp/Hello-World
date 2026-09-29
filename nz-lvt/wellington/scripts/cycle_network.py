@@ -318,9 +318,14 @@ def speeds(g):
     z["limit"] = pd.to_numeric(z["speedLimitZoneValue"], errors="coerce")
     z["area"] = z.geometry.area
     mid = gpd.GeoDataFrame(geometry=g.geometry.interpolate(0.5, normalized=True), index=g.index, crs=2193)
-    mid["geometry"] = mid.buffer(3)
-    j = gpd.sjoin(mid, z[["limit", "area", "geometry"]], predicate="intersects").sort_values("area")
+    # Zones containing the midpoint first (smallest wins: a 30 km/h area inside the city-wide 50);
+    # only if none, zones within 3 m (centrelines can sit just outside a corridor polygon).
+    j = gpd.sjoin(mid, z[["limit", "area", "geometry"]], predicate="within").sort_values("area")
     j = j[~j.index.duplicated()]
+    rest = mid.loc[mid.index.difference(j.index)].copy()
+    rest["geometry"] = rest.buffer(3)
+    j2 = gpd.sjoin(rest, z[["limit", "area", "geometry"]], predicate="intersects").sort_values("area")
+    j = pd.concat([j, j2[~j2.index.duplicated()]])
     g["speed"] = j["limit"].reindex(g.index)
     g["speed_src"] = np.where(g["speed"].notna(), "NSLR", None)
     osm = g["speed"].isna() & g["osm_speed"].notna()
