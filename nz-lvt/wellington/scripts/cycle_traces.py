@@ -15,6 +15,7 @@ counted as distinct trace-segments per edge. Writes:
 Run with --fetch to (re)download. Analysis alone takes a minute; no model rerun needed.
 """
 
+import subprocess
 import sys
 import time
 import xml.etree.ElementTree as ET
@@ -40,21 +41,19 @@ def fetch(max_pages=2000):
     RAW.mkdir(parents=True, exist_ok=True)
     page = len(list(RAW.glob("page_*.gpx")))
     while page < max_pages:
+        # curl: the API rate-limits python-requests from this host but not curl.
+        out = RAW / f"page_{page:05d}.gpx"
         for attempt in range(8):
-            try:
-                r = requests.get(API, params={"bbox": ",".join(map(str, BBOX)), "page": page}, timeout=120,
-                                 headers={"User-Agent": "nz-lvt-research/1.0 (cycling network analysis)"})
-                if r.status_code == 429:  # rate limited: back off
-                    time.sleep(60 * (attempt + 1))
-                    continue
-                r.raise_for_status()
+            code = subprocess.run(["curl", "-s", "--max-time", "180", "-o", str(out), "-w", "%{http_code}",
+                                   f"{API}?bbox={','.join(map(str, BBOX))}&page={page}"],
+                                  capture_output=True, text=True).stdout
+            if code == "200":
                 break
-            except requests.RequestException:
-                time.sleep(30 * (attempt + 1))
+            time.sleep(30 * (attempt + 1))
         else:
-            raise RuntimeError(f"page {page} failed")
-        (RAW / f"page_{page:05d}.gpx").write_bytes(r.content)
-        n = r.text.count("<trkpt")
+            raise RuntimeError(f"page {page} failed ({code})")
+        text = out.read_text()
+        n = text.count("<trkpt")
         if page % 50 == 0:
             print(f"page {page}: {n} points", flush=True)
         if n < 5000:
