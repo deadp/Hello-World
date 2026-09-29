@@ -18,6 +18,7 @@ The current pipeline is `fetch_cycling.py`, `cycle_network.py`, `cycle_model.py`
 | Route gradient | (climb + descent) / length, from 5 m LiDAR sampled every 10 m | Same definition as PCT, but unsmoothed. It may read hillier than PCT's smoothed CycleStreets profiles. |
 | Speed limits | OSM `maxspeed`; 17% of road length untagged and defaulted to 50 | NZTA's register has the current legal limits, including the 2024 rule changes. |
 | Traffic stress | Four crude rules | 30 km/h streets with 2–4k vehicles/day are rated as needing protection. Sharrows, buffers, lane counts, contraflow and crossings are ignored. |
+| Direction | One facility per street segment (the best side) | Transitional cycleways are often protected uphill and sharrow downhill, so the model overstates downhill protection. |
 | Facility types | Five buckets | Tracks, shared paths, buffered lanes, bus lanes and sharrows are not told apart. CyclOSM draws finer distinctions from the same OSM data. |
 | Validation | None | The council publishes hourly cyclist counts from 25+ cycle countlines. |
 | Trips | Commute and education only (~20% of all trips) | Shopping, leisure and visiting are missing. The school model is not applied. |
@@ -87,7 +88,17 @@ All sources below are public, need no key, and were tested on 2026-09-29.
    - Signalised crossings are level 2. Zebra or marked crossings of roads up to 50 km/h and 8,000 ADT are level 2. Otherwise a crossing takes the level of the road being crossed.
    - At unsignalised junctions, approaches take the highest level of the streets they cross (Conveyal's rule).
    - Cycle barriers add a time penalty.
-6. **Signed routes and plan status.**
+6. **Rate facilities by direction.**
+   - WCC's transitional programme often protects the uphill side with flexible posts or kerb separators and leaves a sharrow or nothing downhill.
+   - OSM has 562 road ways with different facilities on each side, 28 of them a separate cycleway on one side and a sharrow on the other. Only 16 ways tag the separator type (`cycleway:*:separation=flex_post`).
+   - The current `facility()` takes the best side for the whole edge, so it overstates downhill protection. Instead, set facility and traffic stress on each directed arc:
+     - on two-way ways, `cycleway:left` applies to the forward direction (the direction the way is drawn) because NZ drives on the left, and `cycleway:right` to the reverse;
+     - handle `oneway`, `oneway:bicycle=no` and `opposite_*` for contraflow.
+   - Treat flex posts, WCC "Barrier" and kerb separators as protected lanes.
+   - Downhill mixed traffic: riders descending go close to traffic speed, so on grades over about 4% use the next-lower speed band. Floor this at level 2 at 30 km/h, and don't apply it above 50 km/h.
+   - Make this a parameter and test it against directional counts (Phase 2).
+   - In the gap ranking, a street protected uphill with a low-stress descent counts as served. Flag a street as a directional gap when only one direction is low stress.
+7. **Signed routes and plan status.**
    - Add the OSM cycle route relations as a map layer: national (Tour Aotearoa, Hutt River Trail), regional (Great Harbour Way, Te Ara Tupua, Ngauranga Gorge) and about 40 local routes.
    - Relabel the council plan's `LGWM` stage as "unfunded (ex-LGWM)". LGWM was disestablished in December 2023.
    - Note which routes are built since 2022, including Te Ara Tupua, which opened on 16 May 2026.
@@ -104,8 +115,12 @@ Expected effect: busy 30/40 km/h central city streets such as Cuba Street, Lambt
    - Fit counts = k × modelled.
    - Report R², GEH and mean absolute percentage error, with residuals by corridor.
    - Expect k of about 1.5–3, because counts include trips other than commuting. k becomes the local factor for scaling commute flows to all-day flows.
-3. **Check traffic counts.** Use the car, bus and van classes on the same sensors to check council ADT on about 130 streets.
-4. **2018 vs 2023.** The census travel CSV already has `2018_*` columns on 2023 SA2 boundaries. Map where cycling grew. Early before/after evidence should come from routes such as Newtown, Kilbirnie and Thorndon.
+3. **Directional use and before/after.**
+   - Directional use: most cycle countlines record direction. Compare uphill and downhill counts on split streets (protected one way, sharrow the other) to see whether riders stay in the protected lane both ways, which may be illegal or unsafe, or ride the descent in traffic.
+   - Before/after: several countlines started when routes opened (The Parade 2025, Thorndon Quay 2025/26, Molesworth Street Feb 2026). Their counts after opening, set against modelled potential, give a local estimate of how much new infrastructure lifts cycling. Use this in Phase 3.2.
+   - E-scooters: counts show how much of the demand for bike lanes comes from micromobility.
+4. **Check traffic counts.** Use the car, bus and van classes on the same sensors to check council ADT on about 130 streets.
+5. **2018 vs 2023.** The census travel CSV already has `2018_*` columns on 2023 SA2 boundaries. Map where cycling grew. Early before/after evidence should come from routes such as Newtown, Kilbirnie and Thorndon.
 
 ## Phase 3: demand model (3–7 days)
 
