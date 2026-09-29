@@ -121,6 +121,7 @@ footer{color:var(--muted);font-size:13px;max-width:100ch}
       <div class="bar">
         <div><span class="seglabel">Trips</span><span class="seg" role="group" aria-label="Scenario" id="scen"></span></div>
         <div><span class="seglabel">Colour by</span><span class="seg" role="group" aria-label="Colour" id="mode"></span></div>
+        <div id="sortWrap"><span class="seglabel">Rank by</span><span class="seg" role="group" aria-label="Rank priorities by" id="sort"></span></div>
       </div>
       <div id="map" role="region" aria-label="Map of Wellington cycle routes"></div>
       <div class="legend" id="legend"></div>
@@ -153,7 +154,7 @@ footer{color:var(--muted);font-size:13px;max-width:100ch}
       <div><h3>Routes, checked against counters</h3><p>Trips are routed on the real streets with hills from the council's LiDAR. How much riders avoid busy streets, hills and unsignalised crossings is <span id="calText">calibrated against the council's VivaCity sensor counts</span>. Outbound and return trips are routed separately.</p></div>
       <div><h3>Who would cycle</h3><p>Go Dutch uses the Propensity to Cycle Tool's current models (commute 2020; primary and secondary school models), never less than today's cycling. E-bike removes most of the hill penalty. "Wellington habits" uses a model fitted to Wellington's own 2018 and 2023 commuting, with every route made low-stress: a cautious lower bound. "Today" shows people who cycle now (census commuters, plus other trips at each area's commute cycling rate).</p></div>
       <div><h3>Gaps and crossings</h3><p>A street is a gap where it carries 250+ potential trips a day and at least one direction is stressful with no protection. Dashed gaps are protected or calm one way only. Diamonds mark junctions where lots of potential trips arrive on quiet streets but must cross a busy road without signals.</p></div>
-      <div><h3>Priorities</h3><p>A trip is "connected" when it has a low-stress route (traffic stress 1–2, no busy unsignalised crossings) at most 25% longer than the shortest route; the first and last 150 m may be on any street. Each candidate (the 150 biggest corridor gaps with a treatment: a quiet street with 30 km/h and a filter, or a protected lane; and the 80 busiest unsignalised crossings) is added to the network and the trips it newly connects are counted exactly. The build order adds the best trips-per-dollar candidate, then re-scores the rest. Costs are indicative ranges ($0.75M/km transitional to $3.4M/km permanent for protected lanes), not engineers' estimates. Rank bands come from 1,000 draws varying the detour limit, tolerance for short busy stretches, the scenario and costs.</p></div>
+      <div><h3>Priorities</h3><p>A trip is "connected" when it has a low-stress route (traffic stress 1–2, no busy unsignalised crossings) at most 25% longer than the shortest route; the first and last 150 m may be on any street. Homes and workplaces are placed at property level (rating units), not area centroids. Each candidate (the 150 biggest corridor gaps, covering each street's whole busy stretch, plus every unbuilt council-plan link, with a treatment: a quiet street with 30 km/h and a filter, or a protected lane; and the 80 busiest unsignalised crossings) is added to the network and the trips it newly connects are counted exactly. The build order adds the best trips-per-dollar candidate, then re-scores the rest. Costs are indicative ranges ($0.75M/km transitional to $3.4M/km permanent for protected lanes), not engineers' estimates. Rank bands come from 1,000 draws varying the detour limit, tolerance for short busy stretches, the scenario and costs.</p></div>
       <div><h3>Limits</h3><p>Shopping, visiting and leisure trips are modelled from UK travel surveys, not measured in Wellington, and the counters can't confirm them. OSM tagging and the 2022 plan layer may lag recent builds, and counters mostly sit on routes that are already popular. The PCT model was fitted to English and Dutch travel, not Wellington's. Treat the rankings as a long list for engineers to test, not a design.</p></div>
     </div>
   </section>
@@ -258,14 +259,16 @@ PTS.features.forEach(f => {
 // Priorities layer: the candidates, top of the build order strongest.
 const priLayer = L.layerGroup();
 const priCol = p => p.build_step ? css("--pri") : css("--pri2");
-let priSel = null;
+let priSel = null, priSort = "score";
+const GRID_TXT = ["doesn't join the cycle network", "joins the cycle network at one end", "joins the cycle network at both ends"];
+const rankOf = p => priSort === "score" ? p.rank : p.rank_trips;
 function priStyle(p) {
   const on = priSel == null || priSel === p.rank;
   return {color: priCol(p), weight: p.build_step ? 8 : 5, opacity: on ? .95 : .25, lineCap: "round"};
 }
 const priItems = [];
 if (PRI) {
-  PRI.features.filter(f => f.properties.rank <= 40 || f.properties.build_step).sort((a, b) => b.properties.rank - a.properties.rank).forEach(f => {
+  PRI.features.filter(f => f.properties.rank <= 40 || f.properties.rank_trips <= 40 || f.properties.build_step).sort((a, b) => b.properties.rank - a.properties.rank).forEach(f => {
     const p = f.properties;
     let l;
     if (f.geometry.type === "Point") {
@@ -316,7 +319,10 @@ function seg(el, opts, cur, cb) {
   });
 }
 seg(document.getElementById("scen"), SCEN, scen, k => { scen = k; restyle(); renderDetail(); });
-seg(document.getElementById("mode"), MODES, mode, k => { mode = k; selected = null; priSel = null; restyle(); renderList(); renderDetail(); });
+seg(document.getElementById("mode"), MODES, mode, k => { mode = k; selected = null; priSel = null; restyle(); renderList(); renderDetail();
+  document.getElementById("sortWrap").hidden = mode !== "priorities"; });
+if (PRI) seg(document.getElementById("sort"), {score: "Best value", trips: "Most trips"}, priSort, k => { priSort = k; priSel = null; renderList(); renderDetail(); priShow(); });
+document.getElementById("sortWrap").hidden = !PRI || mode !== "priorities";
 
 function legend() {
   if (mode === "priorities") {
@@ -396,7 +402,7 @@ function selectPriority(rank) {
   const p = PRI.features.find(f => f.properties.rank === rank).properties;
   detail.innerHTML = `<div class="sub">Priority #${p.rank}${p.build_step ? " · build step " + p.build_step : ""}</div><h2>${p.name}</h2>
     <div class="where">${p.where || ""}</div>
-    <span class="chip" style="color:var(${PLAN_COL[p.plan] || "--none"})">${p.plan}</span>
+    <span class="chip" style="color:var(${PLAN_COL[p.plan] || "--none"})">${p.plan}${p.source === "council plan" ? " · council link" : ""}</span>
     <dl class="kv"><dt>Treatment</dt><dd style="font-family:var(--sans)">${p.treatment}</dd>
     ${p.length_m ? `<dt>Length</dt><dd>${(p.length_m / 1000).toFixed(1)} km</dd>` : ""}
     <dt>Indicative cost</dt><dd>${money(p.cost_low)}–${money(p.cost_high)}</dd>
@@ -404,6 +410,8 @@ function selectPriority(rank) {
     <dt>… with Wellington habits</dt><dd>${fmt(p.dT_local)}</dd>
     <dt>… cycled today</dt><dd>${fmt(p.dT_census)}</dd>
     <dt>Trips per $M</dt><dd>${fmt(p.dT_per_M)}</dd>
+    <dt>Existing network</dt><dd style="font-family:var(--sans)">${p.type === "crossing" ? (p.grid_ends ? "next to it" : "not next to it") : GRID_TXT[p.grid_ends]}</dd>
+    <dt>Rank by trips connected</dt><dd>${p.rank_trips}</dd>
     <dt>Rank range (10–90%)</dt><dd>${fmt(p.rank_p10)}–${fmt(p.rank_p90)}</dd>
     <dt>Bike crashes nearby since 2016</dt><dd>${p.crashes}${p.crashes_serious ? " (" + p.crashes_serious + " serious)" : ""}</dd>
     <dt>Health value if ridden, $M/yr</dt><dd>${p.health_M_low.toFixed(1)}–${p.health_M_high.toFixed(1)}</dd></dl>`;
@@ -415,11 +423,11 @@ function selectPriority(rank) {
 function renderList() {
   list.innerHTML = "";
   if (mode === "priorities") {
-    document.querySelector(".listhead h3").textContent = "Best value first";
-    document.querySelector(".listhead span").textContent = "trips per $M";
-    PRI.features.map(f => f.properties).filter(p => p.rank <= 40).forEach(p => {
+    document.querySelector(".listhead h3").textContent = priSort === "score" ? "Best value first" : "Most trips connected";
+    document.querySelector(".listhead span").textContent = priSort === "score" ? "trips per $M" : "trips/day";
+    PRI.features.map(f => f.properties).filter(p => rankOf(p) <= 40).sort((a, b) => rankOf(a) - rankOf(b)).forEach(p => {
       const b = document.createElement("button"); b.type = "button"; b.dataset.pri = p.rank;
-      b.innerHTML = `<span class="rk">${p.rank}</span><span class="nm">${p.name}</span><span class="tr">${fmt(p.dT_per_M)}</span><span class="sb">${p.treatment} · ${money(p.cost)}${p.build_step ? " · step " + p.build_step : ""}</span>${planChip(p.plan)}`;
+      b.innerHTML = `<span class="rk">${rankOf(p)}</span><span class="nm">${p.name}</span><span class="tr">${fmt(priSort === "score" ? p.dT_per_M : p.dT_godutch)}</span><span class="sb">${p.treatment} · ${money(p.cost)}${p.grid_ends === 2 && p.type !== "crossing" ? " · joins network" : ""}${p.build_step ? " · step " + p.build_step : ""}</span>${planChip(p.plan)}`;
       b.onclick = () => selectPriority(p.rank);
       list.appendChild(b);
     });
@@ -446,10 +454,11 @@ if (PRI && S.conn) {
   document.getElementById("f5s").textContent = `of potential (Go Dutch) trips have a low-stress route today, and after the first ${BUILD.length - 1} best-value projects (about $${last.cum_cost.toFixed(0)}M, indicative). Of people cycling today, ${c.census.toFixed(0)}% have one.`;
   document.getElementById("priSection").hidden = false;
   const robust = PRI.features.filter(f => f.properties.robust_top10).length;
-  document.getElementById("priText").textContent = `Candidates ranked by potential trips a weekday newly given a low-stress route per $M (Go Dutch scenario, outbound trips). "Step" is the order a greedy programme would build them, re-scoring after each one. "Range" is the 10–90% rank band across 1,000 draws of detour limit, scenario and cost; ${robust} candidates are in the top 10 in at least 80% of draws. Costs and benefits are indicative, not an NZTA business case.`;
-  const P = PRI.features.map(f => f.properties).filter(p => p.rank <= 20);
-  document.getElementById("priTbl").innerHTML = `<thead><tr><th>#</th><th style="text-align:left">Where</th><th style="text-align:left">Treatment</th><th>Cost</th><th>Trips connected</th><th>WH</th><th>Per $M</th><th>Range</th><th>Step</th><th>Crashes</th><th style="text-align:left">Plan</th></tr></thead><tbody>` +
-    P.map(p => `<tr><td class="num">${p.rank}</td><td style="text-align:left">${p.name}<br><span style="color:var(--muted);font-size:12.5px">${p.where || ""}</span></td><td style="text-align:left;color:var(--ink2)">${p.treatment}${p.length_m ? ", " + (p.length_m / 1000).toFixed(1) + " km" : ""}</td><td class="num">${money(p.cost_low)}–${money(p.cost_high)}</td><td class="num">${fmt(p.dT_godutch)}</td><td class="num">${fmt(p.dT_local)}</td><td class="num">${fmt(p.dT_per_M)}</td><td class="num">${fmt(p.rank_p10)}–${fmt(p.rank_p90)}</td><td class="num">${p.build_step || "–"}</td><td class="num">${p.crashes}</td><td style="text-align:left;color:var(${PLAN_COL[p.plan] || "--none"});font-weight:600">${p.plan}</td></tr>`).join("") + "</tbody>";
+  document.getElementById("priText").textContent = `Candidates ranked by potential trips a weekday newly given a low-stress route per $M (Go Dutch scenario, outbound trips), with a bonus for joining the existing cycle network: ×1.5 when both ends connect to it, ×1.25 for one end (a judgment for what the trip model misses: a legible, continuous network). Council-plan links such as Bunny Street are included whatever their modelled trips. "Step" is the order a greedy programme would build them, re-scoring after each one. "Range" is the 10–90% rank band across 1,000 draws of detour limit, scenario and cost; ${robust} candidates are in the top 10 in at least 80% of draws. Costs and benefits are indicative, not an NZTA business case.`;
+  const P = PRI.features.map(f => f.properties).filter(p => p.rank <= 20).sort((a, b) => a.rank - b.rank);
+  const GE = p => p.type === "crossing" ? "–" : ["–", "one end", "both"][p.grid_ends];
+  document.getElementById("priTbl").innerHTML = `<thead><tr><th>#</th><th style="text-align:left">Where</th><th style="text-align:left">Treatment</th><th>Cost</th><th>Trips connected</th><th>WH</th><th>Per $M</th><th>Joins network</th><th>Range</th><th>Step</th><th>Crashes</th><th style="text-align:left">Plan</th></tr></thead><tbody>` +
+    P.map(p => `<tr><td class="num">${p.rank}</td><td style="text-align:left">${p.name}<br><span style="color:var(--muted);font-size:12.5px">${p.where || ""}</span></td><td style="text-align:left;color:var(--ink2)">${p.treatment}${p.length_m ? ", " + (p.length_m / 1000).toFixed(1) + " km" : ""}</td><td class="num">${money(p.cost_low)}–${money(p.cost_high)}</td><td class="num">${fmt(p.dT_godutch)}</td><td class="num">${fmt(p.dT_local)}</td><td class="num">${fmt(p.dT_per_M)}</td><td class="num">${GE(p)}</td><td class="num">${fmt(p.rank_p10)}–${fmt(p.rank_p90)}</td><td class="num">${p.build_step || "–"}</td><td class="num">${p.crashes}</td><td style="text-align:left;color:var(${PLAN_COL[p.plan] || "--none"});font-weight:600">${p.plan}</td></tr>`).join("") + "</tbody>";
 }
 
 // Table

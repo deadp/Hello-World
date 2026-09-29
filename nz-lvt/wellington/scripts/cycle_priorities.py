@@ -20,6 +20,9 @@ order, connect the most potential trips per dollar.
    trips a weekday (cycle_gaps.corridors with a lower threshold), top 150 by potential cycle-km.
    Each is extended to the same street's other level 3-4 edges within 150 m, so short low-flow
    pieces between gap runs are treated too (otherwise the treated route stays broken).
+   Council plan: every unbuilt Strategic Bike Network link (planned, ex-LGWM, desired) with a
+   level 3-4 direction and not already covered above, whatever its trips (e.g. Bunny Street,
+   which would carry the Thorndon Quay cycleway through to the waterfront).
    Treatment: residential/unclassified/tertiary streets with <= 3,000 vehicles/day get a quiet
    street (30 km/h and a modal filter); other roads a protected lane. Either way the treated
    directions become low stress, and so do the corridor's internal junctions. Crossings: the 80 busiest junctions where
@@ -30,8 +33,13 @@ order, connect the most potential trips per dollar.
    low-stress distance is  d'(s,t) = min(d(s,t), min over tails a of A: d(s,a) + d_aug(a,t)),
    since any new route first joins a new arc at its tail. dT = trips newly connected per weekday
    (outbound; returns roughly double it), dK = their cycle-km.
-5. Build order: greedy, adding the candidate with the largest dT per $M (Go Dutch, cap 1.25) and
-   re-evaluating (links complement each other: a crossing can unlock a quiet street).
+5. Ranking and build order. Score = dT per $M (Go Dutch, cap 1.25) x a network bonus: 1.5 when
+   both ends of a corridor join the existing low-stress cycle network (protected facilities
+   within 30 m), 1.25 for one end (crossings: next to it). The bonus is a judgment, standing for
+   what the trip model misses (wayfinding, a legible network, riders who would go further on
+   it); the draws vary it from 0 to 1. Build order: greedy on the score, re-evaluating after
+   each step (links complement each other: a crossing can unlock a quiet street). Also
+   reported: rank by trips connected, regardless of cost.
 6. Money, indicative only (not an NZTA benefit-cost ratio). Costs per km: quiet street
    $0.1-0.3M (central 0.2), at least $0.03-0.1M a project; protected lane $0.75M (Wellington transitional, 2023) to $3.4M
    (permanent, ~4.5x), central $1.6M (quoted national average); x (1 - 0.4 x one-way share) when
@@ -42,8 +50,8 @@ order, connect the most potential trips per dollar.
 7. Safety flag: CAS crashes involving a bicycle since 2016 within 30 m of the corridor or
    crossing (not a weight: low cycling suppresses crash counts where riding feels unsafe).
 8. Uncertainty: 1,000 Monte Carlo draws of cap (1.15/1.25/1.5), scenario (Go Dutch/e-bike/
-   Wellington habits/census) and cost (uniform in each range). Each draw ranks candidates by dT
-   per $M (single-step); report median rank, 10-90% band and the share of draws in the top 10
+   Wellington habits/census), cost (uniform in each range) and network bonus (0-1). Each draw
+   ranks candidates by score (single-step); report median rank, 10-90% band and the share of draws in the top 10
    ("robust" if >= 80%). The level-3 tolerance is reported separately (rank_tol150, rank_tol400):
    it redefines the problem (forgiving short busy stretches connects most short gaps outright),
    so mixing it into the draws only reshuffles the short links.
@@ -74,6 +82,11 @@ MIN_M = 200
 ACCESS_M = 150
 N_CORR, N_XING, MIN_DIR = 150, 80, 30
 FILL_M = 150
+GRID_M = 30
+# Network bonus (a judgment, varied 0-1 in the draws): a project whose ends both join the existing
+# cycle network scores (1 + GRID_BONUS) x its trips per $M, one end (1 + GRID_BONUS / 2).
+GRID_BONUS = 0.5
+NODES_XY = None
 GREEDY_STEPS, GREEDY_POOL = 10, 40
 N_DRAWS = 1000
 HEALTH_PER_KM, DAYS = 4.90, 250
@@ -182,8 +195,50 @@ class Connectivity:
         self.refresh()
 
 
+def corridor_row(a, arc_key, e, ge, r, source, grid_xy, gap_index):
+    """Treatment, cost and treated arcs for a run of same-street edges ge."""
+    keys = [(i, 0) for i in ge.index[ge["hs_fw"]]] + [(i, 1) for i in ge.index[ge["hs_bw"]]]
+    idx_l = arc_key.reindex(keys).dropna().astype(int).values
+    # Internal junctions (nodes shared by two of the corridor's edges) get priority for riders
+    # along the corridor; its end junctions are left as they are.
+    nn = pd.Series(np.concatenate([ge["u"].values, ge["v"].values])).value_counts()
+    inner = nn.index[nn >= 2].values
+    idx_c = np.where(a["edge"].isin(ge.index).values & np.isin(a["v"].values, inner))[0]
+    roads = set(ge["highway"])
+    L = ge["length_m"]
+    length = L.sum()
+    one_way = (L * (ge["hs_fw"] != ge["hs_bw"]) * ge["can_fw"] * ge["can_bw"]).sum() / length
+    max_adt = ge["adt"].max()
+    if r["road"] == "State highway":
+        kind = "protected_sh"
+    elif roads <= QUIET_ROADS and max_adt <= 3000 and ge["speed"].max() <= 50:
+        kind = "quiet"
+    else:
+        kind = "protected"
+    f = 1 - 0.4 * one_way if kind != "quiet" else 1.0
+    cost = [max(x * length / 1000 * f, m) for x, m in zip(COST[kind], MIN_COST[kind])]
+    # Does it join the existing low-stress cycle network (protected lanes, tracks, paths)? Count the
+    # corridor's ends (nodes used by one of its edges) within GRID_M of that network.
+    ends = nn.index[nn == 1].values
+    grid_ends = int(min(2, (grid_xy.query(NODES_XY[ends], distance_upper_bound=GRID_M)[0] <= GRID_M).sum())) \
+        if len(ends) else 0
+    return dict(type="corridor", source=source, name=r["street"], where=r["suburbs"], treatment=TREATMENT[kind],
+                kind=kind, length_m=length, filled_m=L.drop(gap_index, errors="ignore").sum(),
+                facility_now=r["facility_now"], max_adt=max_adt, speed=r["speed"], one_way_share=one_way,
+                plan=r["plan"], gap_rank=r["rank"], cost_low=cost[0], cost=cost[1], cost_high=cost[2],
+                grid_ends=grid_ends, idx_l=idx_l, idx_c=idx_c), ge.geometry.union_all()
+
+
 def candidates(a):
+    from scipy.spatial import cKDTree
+    global NODES_XY
+    nodes = pd.read_parquet(PROC / "cycle_nodes.parquet")
+    NODES_XY = nodes[["x", "y"]].values
     e_all, e = CG.load()
+    # The existing low-stress cycle network: protected facilities rated level 1-2 (points every 10 m).
+    grid = e_all[e_all["facility"].isin(CG.PROTECTED) & (e_all["lts"] <= 2)]
+    gp = grid.geometry.segmentize(10).get_coordinates().values
+    grid_xy = cKDTree(gp)
     for d in ("fw", "bw"):
         e[f"gapd_{d}"] = e[f"hs_{d}"] & (e[f"flow_godutch_{d}"] >= MIN_DIR)
     e["gap"] = e["gapd_fw"] | e["gapd_bw"]
@@ -192,7 +247,7 @@ def candidates(a):
     c, g = CG.corridors(e)
     c = c.head(N_CORR)
     arc_key = pd.Series(np.arange(len(a)), index=pd.MultiIndex.from_arrays([a["edge"], a["dir"]]))
-    rows, geoms = [], []
+    rows, geoms, used = [], [], set()
     street = e["name"].fillna("(unnamed link)")
     busy = e[e["hs_fw"] | e["hs_bw"]]
     mid = gpd.GeoSeries(busy.geometry.interpolate(0.5, normalized=True), index=busy.index, crs=2193)
@@ -204,45 +259,43 @@ def candidates(a):
         near = mid[(street.loc[mid.index] == r["street"]).values]
         near = near[near.within(gap.buffer(FILL_M).union_all())]
         ge = e.loc[gap.index.union(near.index)]
-        keys = [(i, 0) for i in ge.index[ge["hs_fw"]]] + [(i, 1) for i in ge.index[ge["hs_bw"]]]
-        idx_l = arc_key.reindex(keys).dropna().astype(int).values
-        # Internal junctions (nodes shared by two of the corridor's edges) get priority for riders
-        # along the corridor; its end junctions are left as they are.
-        nn = pd.Series(np.concatenate([ge["u"].values, ge["v"].values])).value_counts()
-        inner = nn.index[nn >= 2].values
-        idx_c = np.where(a["edge"].isin(ge.index).values & np.isin(a["v"].values, inner))[0]
-        roads = set(ge["highway"])
-        L = ge["length_m"]
-        length = L.sum()
-        one_way = (L * (ge["hs_fw"] != ge["hs_bw"]) * ge["can_fw"] * ge["can_bw"]).sum() / length
-        max_adt = ge["adt"].max()
-        if r["road"] == "State highway":
-            kind = "protected_sh"
-        elif roads <= QUIET_ROADS and max_adt <= 3000 and ge["speed"].max() <= 50:
-            kind = "quiet"
-        else:
-            kind = "protected"
-        f = 1 - 0.4 * one_way if kind != "quiet" else 1.0
-        cost = [max(x * length / 1000 * f, m) for x, m in zip(COST[kind], MIN_COST[kind])]
-        rows.append(dict(type="corridor", name=r["street"], where=r["suburbs"], treatment=TREATMENT[kind],
-                         kind=kind, length_m=length, filled_m=L.drop(gap.index, errors="ignore").sum(),
-                         facility_now=r["facility_now"], max_adt=max_adt,
-                         speed=r["speed"], one_way_share=one_way, plan=r["plan"],
-                         gap_rank=r["rank"], cost_low=cost[0], cost=cost[1], cost_high=cost[2],
-                         idx_l=idx_l, idx_c=idx_c))
-        geoms.append(ge.geometry.union_all())
+        row, geom = corridor_row(a, arc_key, e, ge, r, "gap", grid_xy, gap.index)
+        used.update(ge.index)
+        rows.append(row)
+        geoms.append(geom)
+    # Council plan: every unbuilt link of the Strategic Bike Network with a busy direction (e.g.
+    # Bunny Street), whatever its modelled trips, unless a gap corridor above already covers it.
+    ep = e.copy()
+    ep["gap"] = ep["plan"].isin(["Planned (WCC)", "Unfunded (ex-LGWM)", "Desired only"]) & (ep["hs_fw"] | ep["hs_bw"])
+    ep["gapd_fw"], ep["gapd_bw"] = ep["gap"] & ep["hs_fw"], ep["gap"] & ep["hs_bw"]
+    ep["gap_dir"] = np.where(~ep["gap"], "", np.where(ep["gapd_fw"] & ep["gapd_bw"] | ~two_way, "both", "one way"))
+    cp, gp_ = CG.corridors(ep)
+    n_plan = 0
+    for cid, r in cp.iterrows():
+        ge = gp_[gp_["corridor"] == cid]
+        if ge["length_m"][ge.index.isin(list(used))].sum() >= 0.5 * ge["length_m"].sum():
+            continue
+        ge = e.loc[ge.index.difference(list(used))]
+        if ge["length_m"].sum() < 30:
+            continue
+        row, geom = corridor_row(a, arc_key, e, ge, r, "council plan", grid_xy, ge.index)
+        row["gap_rank"] = np.nan
+        rows.append(row)
+        geoms.append(geom)
+        n_plan += 1
+    print(f"council plan links added as candidates: {n_plan}")
     x = CG.crossings(e_all, e).head(N_XING)
-    nodes = pd.read_parquet(PROC / "cycle_nodes.parquet")
     for n, r in x.iterrows():
         idx_c = np.where((a["v"].values == n) & (a["cross"].values >= 3) & (a["lts"].values <= 2))[0]
         kind = "signals" if (r["adt"] > 8000 or r["speed"] > 50) else "zebra"
         plan = e.loc[(e["u"] == n) | (e["v"] == n), "plan"]
-        rows.append(dict(type="crossing", name=f"{r['crossing']} at {r['approach']}", where=r["suburb"],
-                         treatment=TREATMENT[kind], kind=kind, length_m=0.0, facility_now="unsignalised",
-                         max_adt=r["adt"], speed=r["speed"], one_way_share=0.0,
+        near_grid = grid_xy.query(NODES_XY[n], distance_upper_bound=GRID_M)[0] <= GRID_M
+        rows.append(dict(type="crossing", source="crossing", name=f"{r['crossing']} at {r['approach']}",
+                         where=r["suburb"], treatment=TREATMENT[kind], kind=kind, length_m=0.0,
+                         facility_now="unsignalised", max_adt=r["adt"], speed=r["speed"], one_way_share=0.0,
                          plan=plan.mode().iat[0] if len(plan) else "Not in plan", gap_rank=r["rank"],
                          cost_low=COST[kind][0], cost=COST[kind][1], cost_high=COST[kind][2],
-                         idx_l=np.array([], dtype=int), idx_c=idx_c))
+                         grid_ends=int(near_grid), idx_l=np.array([], dtype=int), idx_c=idx_c))
         geoms.append(gpd.points_from_xy([nodes.at[n, "x"]], [nodes.at[n, "y"]])[0])
     cand = gpd.GeoDataFrame(rows, geometry=geoms, crs=2193)
     cand = cand[(cand["idx_l"].map(len) + cand["idx_c"].map(len)) > 0].reset_index(drop=True)
@@ -308,6 +361,9 @@ def main():
         cand[f"dK_{s}"] = gains_km[:, i0, c0, j]
     cand["dT_pct_pts"] = cand["dT_godutch"] / tot0.loc[(TOL0, CAP0, SCEN0), "trips"] * 100
     cand["dT_per_M"] = cand["dT_godutch"] / cand["cost"]
+    bonus = lambda b: 1 + b * cand["grid_ends"].values / 2  # noqa: E731
+    cand["score"] = cand["dT_per_M"] * bonus(GRID_BONUS)
+    cand["rank_trips"] = cand["dT_godutch"].rank(ascending=False, method="min").astype(int)
     # Extra cycling on newly connected trips, valued at the MBCM health rate (indicative).
     for lab, s in (("low", "local"), ("high", "godutch")):
         extra_km = cand[f"dK_{s}"] - cand["dK_census"]
@@ -319,7 +375,7 @@ def main():
     for b in range(N_DRAWS):
         ci, sj = rng.integers(len(CAPS)), rng.integers(len(SCEN))
         cost = rng.uniform(cand["cost_low"], cand["cost_high"])
-        score = gains[:, i0, ci, sj] / cost
+        score = gains[:, i0, ci, sj] / cost * bonus(rng.uniform(0, 1))
         ranks[b] = pd.Series(score).rank(ascending=False, method="min").values
     cand["rank_median"] = np.median(ranks, axis=0)
     cand["rank_p10"] = np.percentile(ranks, 10, axis=0)
@@ -327,18 +383,19 @@ def main():
     cand["top10_share"] = (ranks <= 10).mean(axis=0)
     cand["robust_top10"] = cand["top10_share"] >= 0.8
     # Tolerance sensitivity: with short busy stretches forgiven, which of today's top 10 stay top 10?
-    top = set(cand["dT_per_M"].rank(ascending=False, method="first").loc[lambda x: x <= 10].index)
+    top = set(cand["score"].rank(ascending=False, method="first").loc[lambda x: x <= 10].index)
     for ti_, tol in enumerate(TOLS):
         if tol == TOL0:
             continue
-        r = pd.Series(gains[:, ti_, c0, s0] / cand["cost"]).rank(ascending=False, method="first")
+        r = pd.Series(gains[:, ti_, c0, s0] / cand["cost"] * bonus(GRID_BONUS)).rank(ascending=False, method="first")
         cand[f"rank_tol{int(tol)}"] = r.values
         print(f"tolerance {tol:.0f} m: {len(top & set(r[r <= 10].index))}/10 of the top 10 stay top 10; "
               f"connected {base.set_index(['tolerance_m', 'cap', 'scenario']).loc[(tol, CAP0, SCEN0), 'connected_pct']:.1f}%")
 
     # Greedy build order (central case), re-evaluating the best pool each step.
     C = conn[TOL0]
-    order, remaining = [], list(cand.sort_values("dT_per_M", ascending=False).index)
+    order, remaining = [], list(cand.sort_values("score", ascending=False).index)
+    grid_f = bonus(GRID_BONUS)
     tot_now = C.totals()[c0, s0]
     steps = [dict(step=0, name="Today", connected=tot_now, connected_pct=tot_now / w[:, s0].sum() * 100,
                   cum_cost=0.0)]
@@ -348,7 +405,7 @@ def main():
         best, best_score, best_gain = None, -1, 0
         for k in pool:
             g, _ = C.gain(cand.at[k, "idx_l"], cand.at[k, "idx_c"])
-            sc = g[c0, s0] / cand.at[k, "cost"]
+            sc = g[c0, s0] / cand.at[k, "cost"] * grid_f[k]
             if sc > best_score:
                 best, best_score, best_gain = k, sc, g[c0, s0]
         C.apply(cand.at[best, "idx_l"], cand.at[best, "idx_c"])
@@ -357,17 +414,19 @@ def main():
         tot_now = C.totals()[c0, s0]
         order.append(best)
         steps.append(dict(step=step, name=cand.at[best, "name"], treatment=cand.at[best, "treatment"],
-                          cost=cand.at[best, "cost"], cum_cost=cum, dT=best_gain, dT_per_M=best_score,
+                          cost=cand.at[best, "cost"], cum_cost=cum, dT=best_gain,
+                          dT_per_M=best_gain / cand.at[best, "cost"], score=best_score,
+                          grid_ends=cand.at[best, "grid_ends"],
                           connected=tot_now, connected_pct=tot_now / w[:, s0].sum() * 100))
         print(f"  step {step}: {cand.at[best, 'name']} ({cand.at[best, 'treatment']}) +{best_gain:,.0f} trips, "
               f"{tot_now / w[:, s0].sum() * 100:.1f}% connected, ${cum:.1f}M ({time.time() - t0:.0f}s)", flush=True)
     cand["build_step"] = pd.Series({k: i + 1 for i, k in enumerate(order)}).reindex(cand.index)
 
-    cand = cand.sort_values("dT_per_M", ascending=False).reset_index(drop=True)
+    cand = cand.sort_values("score", ascending=False).reset_index(drop=True)
     cand["rank"] = np.arange(1, len(cand) + 1)
-    cols = ["rank", "type", "name", "where", "treatment", "length_m", "filled_m", "cost_low", "cost", "cost_high",
+    cols = ["rank", "rank_trips", "type", "source", "name", "where", "treatment", "length_m", "filled_m", "cost_low", "cost", "cost_high",
             "dT_godutch", "dT_ebike", "dT_local", "dT_census", "dK_godutch", "dT_pct_pts", "dT_per_M",
-            "health_M_low", "health_M_high", "crashes", "crashes_serious", "plan", "facility_now", "max_adt",
+            "grid_ends", "score", "health_M_low", "health_M_high", "crashes", "crashes_serious", "plan", "facility_now", "max_adt",
             "speed", "one_way_share", "gap_rank", "rank_median", "rank_p10", "rank_p90", "top10_share",
             "robust_top10", "rank_tol150", "rank_tol400", "build_step"]
     cand[cols].round(3).to_csv(TABLES / "cycle_priorities.csv", index=False)
@@ -378,7 +437,7 @@ def main():
     out.to_crs(4326).to_file(BLOCKS / "cycle_priorities.geojson", driver="GeoJSON")
     pd.set_option("display.width", 250)
     print(cand.head(25)[["rank", "name", "treatment", "length_m", "cost", "dT_godutch", "dT_local", "dT_per_M",
-                         "crashes", "plan", "rank_median", "top10_share", "build_step"]].round(2).to_string())
+                         "grid_ends", "source", "plan", "rank_median", "top10_share", "build_step"]].round(2).to_string())
     print(f"robust top 10: {cand.loc[cand['robust_top10'], 'name'].tolist()}")
     print(json.dumps(steps[-1], default=float))
 

@@ -8,8 +8,9 @@
    no tertiary campus), split primary vs secondary by roll (contributing and full primary ->
    primary; intermediate and secondary -> secondary; composite half each); the rest are tertiary.
 2. Where trips start and end within an SA2:
-     homes: SA1 centroids weighted by 2023 census residents;
-     workplaces: SA1 centroids weighted by estimated workers (Stats NZ 2024 employee counts
+     homes: property points (rating units) weighted by residents, scaled to each SA1's 2023
+     census count (SA1 centroids outside the city);
+     workplaces: property points weighted by estimated workers (Stats NZ 2024 employee counts
        spread over commercial floor area, fiscal_v2.py);
      schools: Ministry of Education directory, weighted by roll; tertiary: OSM universities and
        colleges (other OSM education points where an SA2 has none);
@@ -193,18 +194,35 @@ def zones():
     sa1 = gpd.read_file(RAW / "sa1.geojson").to_crs(2193)
     census = gpd.read_file(RAW / "sa1_census2023.geojson", ignore_geometry=True)
     pop = pd.to_numeric(census.set_index("SA12023_V1_00")["VAR_1_3"], errors="coerce").clip(lower=0)
-    pts = gpd.GeoDataFrame({"sa1": sa1["SA12025_V1_00"]}, geometry=sa1.geometry.representative_point(), crs=2193)
     sa2 = gpd.read_parquet(RAW / "networks" / "employees_sa2.parquet").to_crs(2193)
+    # Homes and workplaces at property level (the v2 cost model's residents and workers per rating
+    # unit), so an SA1's trips start from all its streets, not one centroid snapped to one node.
+    # Residents are scaled to each SA1's census count. Units are pooled in 20 m cells per SA1.
+    units = gpd.read_parquet(PROC / "units.parquet")[["ValuationID", "geometry"]]
+    fu = pd.read_parquet(PROC / "fiscal_units_v2.parquet", columns=["residents", "workers"])
+    units = units.merge(fu, left_on="ValuationID", right_index=True)
+    up = gpd.GeoDataFrame(units[["residents", "workers"]], geometry=units.geometry.representative_point(), crs=2193)
+    up = gpd.sjoin(up, sa1[["SA12025_V1_00", "geometry"]], predicate="within").rename(
+        columns={"SA12025_V1_00": "sa1"}).drop(columns="index_right")
+    up = up[(up["residents"] > 0) | (up["workers"] > 0)]
+    up["cx"], up["cy"] = (up.geometry.x // 20).astype(int), (up.geometry.y // 20).astype(int)
+    up["x"], up["y"] = up.geometry.x, up.geometry.y
+    cells = up.groupby(["sa1", "cx", "cy"]).agg(x=("x", "mean"), y=("y", "mean"), residents=("residents", "sum"),
+                                                 workers=("workers", "sum")).reset_index()
+    tot = cells.groupby("sa1")["residents"].transform("sum")
+    census_pop = cells["sa1"].map(pop)
+    cells["residents"] = np.where((tot > 0) & census_pop.notna(), cells["residents"] / tot.where(tot > 0, 1) *
+                                  census_pop.fillna(0), cells["residents"])
+    # SA1s with no rated units (outside the city): one centroid with census residents.
+    rest = sa1[~sa1["SA12025_V1_00"].isin(cells["sa1"])]
+    rp = rest.geometry.representative_point()
+    extra = pd.DataFrame({"sa1": rest["SA12025_V1_00"].values, "x": rp.x.values, "y": rp.y.values,
+                          "residents": rest["SA12025_V1_00"].map(pop).fillna(0).values, "workers": 0.0})
+    cells = pd.concat([cells.drop(columns=["cx", "cy"]), extra], ignore_index=True)
+    pts = gpd.GeoDataFrame(cells[["sa1", "residents", "workers"]], geometry=gpd.points_from_xy(cells["x"], cells["y"]),
+                           crs=2193)
     pts = gpd.sjoin(pts, sa2[["SA22023_V1_00", "geometry"]], predicate="within").rename(
         columns={"SA22023_V1_00": "sa2"}).drop(columns="index_right")
-    pts["residents"] = pts["sa1"].map(pop).fillna(0)
-    # Workers by SA1 from the v2 cost model's unit-level estimates.
-    units = gpd.read_parquet(PROC / "units.parquet")[["ValuationID", "geometry"]]
-    w = pd.read_parquet(PROC / "fiscal_units_v2.parquet", columns=["workers"])
-    units = units.merge(w, left_on="ValuationID", right_index=True)
-    up = gpd.GeoDataFrame(units[["workers"]], geometry=units.geometry.representative_point(), crs=2193)
-    ws = gpd.sjoin(up, sa1[["SA12025_V1_00", "geometry"]], predicate="within").groupby("SA12025_V1_00")["workers"].sum()
-    pts["workers"] = pts["sa1"].map(ws).fillna(0)
     edu = json.loads((CYC / "osm_education.json").read_text())["elements"]
     ep = [(e.get("lon") or e["center"]["lon"], e.get("lat") or e["center"]["lat"], e["tags"].get("name"),
            e["tags"].get("amenity")) for e in edu if "lon" in e or "center" in e]
