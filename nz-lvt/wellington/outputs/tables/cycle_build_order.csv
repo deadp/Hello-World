@@ -8,5 +8,5 @@ step,name,connected,connected_pct,cum_cost,treatment,cost,dT,dT_per_M,score,grid
 6,Strathavon Road,11782.259,19.86,0.851,Quiet street (30 km/h + filter),0.11,436.763,3956.103,3956.103,0.0
 7,Adelaide Road,13666.286,23.035,2.171,Protected lane,1.319,1884.027,1427.919,2141.879,2.0
 8,Hill Street,13824.617,23.302,2.274,Quiet street (30 km/h + filter),0.103,158.331,1530.843,1913.554,1.0
-9,Panama Street,13915.772,23.456,2.324,Quiet street (30 km/h + filter),0.05,91.155,1823.098,1823.098,0.0
-10,Hobson Street,14100.903,23.768,2.439,Quiet street (30 km/h + filter),0.115,185.132,1611.08,1611.08,0.0
+9,Hobson Street,14007.937,23.611,2.389,Quiet street (30 km/h + filter),0.115,183.321,1595.319,1595.319,0.0
+10,Te Whiti Street,14049.905,23.682,2.439,Quiet street (30 km/h + filter),0.05,41.968,839.352,1259.028,2.0

@@ -632,10 +632,13 @@ up the most trips per dollar. The prioritisation does, in these steps:
   - The 200 biggest corridor gaps (any road direction at stress 2–4 with 30+ Go Dutch trips). Each
     covers the street's whole busy stretch: busy pieces within 150 m with few potential trips
     are filled in, so a Tinakori Road project leaves no busy gaps.
-  - 126 unbuilt council-plan links (Strategic Bike Network: planned, ex-LGWM, desired) with a
-    busy direction, whatever their modelled trips. A one-way street on the plan becomes two-way
-    for bikes. For example, Bunny Street would carry the Thorndon Quay cycleway to the
-    waterfront at Lady Elizabeth Lane both ways; today bikes may only ride it eastbound.
+  - 117 unbuilt council-plan links (Strategic Bike Network: planned, ex-LGWM, desired) with a
+    busy direction, whatever their modelled trips. For example, Bunny Street would carry the
+    Thorndon Quay cycleway to the waterfront at Lady Elizabeth Lane. It is a dual carriageway
+    with painted lanes both ways, so the project is upgrading those to protected lanes. One-way
+    streets are not opened to two-way riding: Wellington's are mostly dual carriageways or
+    one-way pairs (Molesworth/Murphy, Victoria/Willis), where the other direction already
+    exists. Molesworth Street's uphill protected lane is already in the model.
   - The 80 busiest unsignalised crossings of busy roads.
 - **Treatments.**
   - Quiet street (30 km/h and a modal filter): local or collector roads of 50 km/h or less
@@ -672,8 +675,8 @@ up the most trips per dollar. The prioritisation does, in these steps:
 | 6 | Strathavon Road, Miramar | Quiet street | $110k | 437 | – | 19.9% |
 | 7 | Adelaide Road, Mt Cook–Newtown (ex-LGWM) | Protected lane | $1.3M | 1,884 | both | 23.0% |
 | 8 | Hill Street, Thorndon | Quiet street | $100k | 158 | one end | 23.3% |
-| 9 | Panama Street, CBD | Quiet street | $50k | 91 | – | 23.5% |
-| 10 | Hobson Street, Thorndon | Quiet street | $120k | 185 | – | 23.8% |
+| 9 | Hobson Street, Thorndon | Quiet street | $120k | 183 | – | 23.6% |
+| 10 | Te Whiti Street | Quiet street | $50k | 42 | both | 23.7% |
 
 What this shows:
 - **The CBD and inner-city links carry most of the value.** The biggest single gains are:
@@ -701,6 +704,21 @@ What this shows:
   packages or "value in the complete network" would address it.
 - **Manners Street is rated a quiet street** because its general traffic count is low. It is a
   bus route, so the real treatment needs design, not just a filter.
+
+**Checking the network (`cycle_review.py`, `cycle_compare_routes.py`)**
+- **The map's "Check" view** colours streets by facility and marks two kinds of place.
+  - *Possible missing links* (68): cycleways and paths that stop within 20 m of a street or path
+    they don't join, where the way round by the network is over 200 m. These are usually
+    OpenStreetMap mapping gaps the model can't route through.
+  - *Protected routes that end onto a busy street* (56). The biggest are Whitmore Street,
+    Crawford Road, Linden Avenue, Taurima Street, Tasman Street and Wakefield Street.
+  - "Open this view in" links jump to the same spot in Google satellite, LINZ aerial imagery,
+    CyclOSM or the OpenStreetMap editor. Satellite tiles can't be shown inside the page itself.
+- **`cycle_compare_routes.py`** takes GPX, KML or GeoJSON routes (e.g. Ride with GPS exports, or
+  public Ride with GPS links) and flags three things:
+  - stretches more than 20 m from any modelled street or path (missing links);
+  - stretches ridden on streets rated stress 3–4;
+  - stretches ridden against one-way streets the model closes to bikes.
 
 Outputs: `outputs/tables/cycle_priorities.csv` (every candidate: source, treatment, cost range,
 trips newly connected by scenario, cycle-km, trips per $M, network ends joined, score, health
@@ -810,7 +828,9 @@ python scripts/cycle_validate.py  # calibrate route choice against sensor counts
 python scripts/cycle_uptake_fit.py  # Wellington uptake model (2018 + 2023 census), writes cycle_uptake_local.json
 python scripts/cycle_model.py     # all trip streams, Go Dutch / e-bike / Wellington-habits potential (uses calibration)
 python scripts/cycle_gaps.py      # gap corridors vs council plan; map data and figure
-python scripts/cycle_priorities.py  # connectivity, candidate treatments and costs, build order (~8 min)
+python scripts/cycle_priorities.py  # all-ages connectivity, candidate treatments and costs, build order (~90 min)
+python scripts/cycle_review.py      # possible missing links and protected-route ends (map "Check" view)
+python scripts/cycle_compare_routes.py [files or Ride with GPS links]  # compare real routes with the network
 python scripts/build_cycle_map.py # outputs/web/wellington_cycle_gaps.html   # incl. local cost under each sharing rule
 ```
 
