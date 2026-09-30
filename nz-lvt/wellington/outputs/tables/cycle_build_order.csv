@@ -1,12 +1,12 @@
 step,name,connected,connected_pct,cum_cost,treatment,cost,dT,dT_per_M,score,grid_ends
-0,Today,7876.107,13.276,0.0,,,,,,
-1,Stout Street,8451.728,14.246,0.072,Quiet street (30 km/h + filter),0.072,575.621,7945.824,11918.736,2.0
-2,Manners Street,8880.703,14.969,0.122,Quiet street (30 km/h + filter),0.05,428.975,8579.505,10724.381,1.0
-3,John Street,10617.069,17.896,0.545,Protected lane,0.423,1736.365,4108.679,5135.848,1.0
-4,Devon Street,11180.162,18.845,0.634,Quiet street (30 km/h + filter),0.089,563.094,6350.935,6350.935,0.0
-5,Miro Street,11345.496,19.123,0.741,Quiet street (30 km/h + filter),0.107,165.334,1541.214,2311.821,2.0
-6,Strathavon Road,11782.259,19.86,0.851,Quiet street (30 km/h + filter),0.11,436.763,3956.103,3956.103,0.0
-7,Adelaide Road,13666.286,23.035,2.171,Protected lane,1.319,1884.027,1427.919,2141.879,2.0
-8,Hill Street,13824.617,23.302,2.274,Quiet street (30 km/h + filter),0.103,158.331,1530.843,1913.554,1.0
-9,Hobson Street,14007.937,23.611,2.389,Quiet street (30 km/h + filter),0.115,183.321,1595.319,1595.319,0.0
-10,Te Whiti Street,14049.905,23.682,2.439,Quiet street (30 km/h + filter),0.05,41.968,839.352,1259.028,2.0
+0,Today,11737.273,19.751,0.0,,,,,,
+1,Stout Street,12621.256,21.239,0.072,Quiet street (30 km/h + filter),0.072,883.983,12202.422,18303.633,2.0
+2,Devon Street,13199.003,22.211,0.161,Quiet street (30 km/h + filter),0.089,577.747,6516.202,6516.202,0.0
+3,Miro Street,13379.214,22.514,0.268,Quiet street (30 km/h + filter),0.107,180.211,1679.901,2519.851,2.0
+4,Strathavon Road,13864.775,23.331,0.379,Quiet street (30 km/h + filter),0.11,485.561,4398.106,4398.106,0.0
+5,Taurima Street,14204.246,23.902,0.629,Protected lane,0.25,339.47,1357.881,2036.822,2.0
+6,Hill Street,14364.643,24.172,0.732,Quiet street (30 km/h + filter),0.103,160.397,1550.823,1938.529,1.0
+7,Hobson Street,14558.153,24.498,0.847,Quiet street (30 km/h + filter),0.115,193.51,1683.988,1683.988,0.0
+8,Bowen Street,14791.467,24.891,1.097,Protected lane,0.25,233.314,933.257,1399.886,2.0
+9,Te Whiti Street,14833.706,24.962,1.147,Quiet street (30 km/h + filter),0.05,42.239,844.778,1267.167,2.0
+10,Calcutta Street,15008.395,25.256,1.321,Quiet street (30 km/h + filter),0.174,174.689,1003.356,1254.194,1.0
