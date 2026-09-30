@@ -81,6 +81,28 @@ def main():
         for f in review["features"]:
             f["properties"] = {k: (None if isinstance(v, float) and v != v else v) for k, v in f["properties"].items()}
     html = html.replace("__REVIEW__", json.dumps(review, separators=(",", ":")))
+    def load_geo(name):
+        f = ROOT / "outputs" / "blocks" / name
+        if not f.exists():
+            return None
+        g = json.loads(f.read_text())
+        for ft in g["features"]:
+            ft["properties"] = {k: (None if isinstance(v, float) and v != v else v) for k, v in ft["properties"].items()}
+        return g
+
+    def load_json(name):
+        f = TABLES / name
+        return json.loads(f.read_text()) if f.exists() else None
+
+    hq = None
+    if (TABLES / "cycle_harbour_quays.csv").exists():
+        h = pd.read_csv(TABLES / "cycle_harbour_quays.csv")
+        cols = ["scenario", "level", "newly_connected_godutch", "cost_low_M", "cost_central_M", "cost_high_M"]
+        hq = json.loads(h[cols].astype(object).where(h[cols].notna(), None).to_json(orient="records"))
+    for key, val in (("__SCHOOLS__", load_geo("cycle_schools.geojson")), ("__SUBURBS__", load_geo("cycle_suburbs.geojson")),
+                     ("__PACKAGES__", load_geo("cycle_plan_packages.geojson")), ("__PLANSUM__", load_json("cycle_plan_summary.json")),
+                     ("__HQ__", hq)):
+        html = html.replace(key, json.dumps(val, separators=(",", ":")))
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(html)
     print(f"wrote {OUT} ({OUT.stat().st_size / 1e6:.1f} MB); top 20 plan: {top.value_counts().to_dict()}")

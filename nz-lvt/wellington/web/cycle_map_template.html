@@ -11,6 +11,8 @@
   --protected:#1d8a4e; --quiet:#a3aea8; --busy:#e9a07f; --gap:#cf3326; --painted:#e0a526;
   --planned:#2f6fd0; --lgwm:#8a63c9; --desired:#58a7c9; --none:#cf3326; --built:#1d8a4e;
   --track:#0f6b3a; --shared:#6fb98a; --sharrow:#d9772f; --bus:#8a63c9; --xing:#14201b; --counter:#1f6fd1; --pri:#d1136b; --pri2:#e98fb8; --trail:#9a7b4f;
+  --sq1:#d95f3b; --sq2:#e8b04a; --sq3:#6fb59a; --sq4:#1c7a6b;
+  --pk1:#3a1466; --pk2:#55258f; --pk3:#7440b8; --pk4:#9268d2; --pk5:#a98ee0; --pk6:#bda9e8; --pkx:#b7bcc0;
   --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --sans:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -23,6 +25,8 @@
     --protected:#34b06a; --quiet:#4d5953; --busy:#b0714f; --gap:#f0564a; --painted:#e9b440;
     --planned:#5b93e6; --lgwm:#a585dc; --desired:#6fbcdc; --none:#f0564a; --built:#34b06a;
     --track:#3fcf7e; --shared:#2f7f52; --sharrow:#e8904f; --bus:#a585dc; --xing:#eaf0ec; --counter:#6fa6ee; --pri:#ff5aa5; --pri2:#94476d; --trail:#b89466;
+    --sq1:#f0704a; --sq2:#e9b440; --sq3:#4fae93; --sq4:#2f9c88;
+    --pk1:#e6d0ff; --pk2:#cfaaff; --pk3:#b184f0; --pk4:#9563d8; --pk5:#7b4cbb; --pk6:#63409a; --pkx:#4a544f;
   }
 }
 :root[data-theme="dark"]{
@@ -32,6 +36,8 @@
   --protected:#34b06a; --quiet:#4d5953; --busy:#b0714f; --gap:#f0564a; --painted:#e9b440;
   --planned:#5b93e6; --lgwm:#a585dc; --desired:#6fbcdc; --none:#f0564a; --built:#34b06a;
     --track:#3fcf7e; --shared:#2f7f52; --sharrow:#e8904f; --bus:#a585dc; --xing:#eaf0ec; --counter:#6fa6ee; --pri:#ff5aa5; --pri2:#94476d; --trail:#b89466;
+  --sq1:#f0704a; --sq2:#e9b440; --sq3:#4fae93; --sq4:#2f9c88;
+  --pk1:#e6d0ff; --pk2:#cfaaff; --pk3:#b184f0; --pk4:#9563d8; --pk5:#7b4cbb; --pk6:#63409a; --pkx:#4a544f;
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);margin:0}
@@ -53,6 +59,7 @@ h1 span{color:var(--gap)}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
 .seg button{font:600 14px var(--sans);color:var(--ink2);background:transparent;border:0;padding:7px 12px;cursor:pointer}
 .seg button+button{border-left:1px solid var(--line)}
+@media (max-width:600px){.seg{display:flex;flex-wrap:wrap;max-width:100%}.seg button{flex:1 1 auto;border-top:1px solid var(--line);margin-top:-1px;margin-left:-1px}.bar>div{min-width:0;max-width:100%}.seglabel{display:block;margin-bottom:4px}}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
 .seg button:focus-visible,.list button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 .seglabel{font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:6px}
@@ -63,6 +70,8 @@ h1 span{color:var(--gap)}
 .legend i{display:inline-block;width:22px;height:5px;border-radius:3px;margin-right:6px;vertical-align:middle}
 .legend .w{display:inline-flex;align-items:center;gap:6px;font:12px var(--mono);color:var(--muted)}
 .legend .w i{background:var(--ink2)}
+.legend .dot{width:12px;height:12px;border-radius:50%;height:12px}
+.hl{font-weight:600;color:var(--ink)}
 .note{color:var(--muted);font-size:13.5px;margin:0}
 .viewlinks{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;font-size:13.5px;color:var(--ink2)}
 .viewlinks a{color:var(--focus);font-weight:600;text-decoration:none}
@@ -145,6 +154,12 @@ footer{color:var(--muted);font-size:13px;max-width:100ch}
     <div class="tablewrap"><table id="priTbl"></table></div>
   </section>
 
+  <section id="hqSection" hidden>
+    <h2>Harbour Quays: what the bus lanes do for cycling</h2>
+    <p id="hqText"></p>
+    <div class="tablewrap"><table id="hqTbl"></table></div>
+  </section>
+
   <section>
     <h2>Top 20 corridors and the council's plan</h2>
     <p>Busy streets without protection, ranked by potential cycle-kilometres a weekday (trips × length) in the Go Dutch scenario. "WH" is the rank under the Wellington-habits model; corridors high on both are the safest bets. "Plan" is the council's 2022 Strategic Bike Network. Links staged under Let's Get Wellington Moving lost their programme when LGWM was wound up in 2024.</p>
@@ -160,6 +175,9 @@ footer{color:var(--muted);font-size:13px;max-width:100ch}
       <div><h3>Who would cycle</h3><p>Go Dutch uses the Propensity to Cycle Tool's current models (commute 2020; primary and secondary school models), never less than today's cycling. E-bike removes most of the hill penalty. "Wellington habits" uses a model fitted to Wellington's own 2018 and 2023 commuting, with every route made low-stress: a cautious lower bound. "Today" shows people who cycle now (census commuters, plus other trips at each area's commute cycling rate).</p></div>
       <div><h3>Gaps and crossings</h3><p>A street is a gap where it carries 250+ potential trips a day and at least one direction is stressful with no protection. Dashed gaps are protected or calm one way only. Diamonds mark junctions where lots of potential trips arrive on quiet streets but must cross a busy road without signals.</p></div>
       <div><h3>Priorities</h3><p>A trip is "connected" when it has an all-ages route (traffic stress 1: protected lanes, paths, genuinely quiet streets; signals or zebras at busy roads) needing at most 25% more effort than the easiest route, where each metre climbed counts as 30 m on the flat; the first and last 150 m may be on any street. Homes and workplaces are placed at property level (rating units), not area centroids. Each candidate (the 150 biggest corridor gaps, covering each street's whole busy stretch, plus every unbuilt council-plan link, with a treatment: a quiet street with 30 km/h and a filter, or a protected lane; and the 80 busiest unsignalised crossings) is added to the network and the trips it newly connects are counted exactly. The build order adds the best trips-per-dollar candidate, then re-scores the rest. Costs are indicative ranges ($0.75M/km transitional to $3.4M/km permanent for protected lanes), not engineers' estimates. Rank bands come from 1,000 draws varying the detour limit, the scenario, costs and the network bonus.</p></div>
+      <div id="mSchools" hidden><h3>Schools</h3><p>For each school, homes within its catchment (2 km for primary, 3 km for other schools) are counted, and the share that have an all-ages route to the school gate, needing at most 25% extra effort, is shown; the same is shown for confident riders. The blockers are the streets that cut off the most homes from the school. Circle size is the roll. Schools are ranked by the number of homes with no all-ages route.</p></div>
+      <div id="mSuburbs" hidden><h3>Suburbs</h3><p>Each suburb's Go Dutch trips are routed at property level and counted as connected when they have an all-ages route within 25% extra effort. The blockers are the streets that stop the most trips from the suburb, and the suggested projects are the best-value candidates on those routes. Circle size is the suburb's Go Dutch trips a weekday.</p></div>
+      <div id="mPackages" hidden><h3>Packages</h3><p>Potential riders are split into three types: strong and fearless (6%), enthused and confident (13%), and interested but concerned (81%). Each type rides only if there is a route at their standard within 25% extra effort: the concerned need all-ages routes, the other two accept busier streets. A package is the set of projects a suburb's trips need together, taken from the complete network, with a cost range and the extra weekday riders expected once they are built. Build steps 1–6 come from the priorities build order.</p></div>
       <div><h3>Limits</h3><p>Shopping, visiting and leisure trips are modelled from UK travel surveys, not measured in Wellington, and the counters can't confirm them. OSM tagging and the 2022 plan layer may lag recent builds, and counters mostly sit on routes that are already popular. The PCT model was fitted to English and Dutch travel, not Wellington's. Treat the rankings as a long list for engineers to test, not a design.</p></div>
     </div>
   </section>
@@ -176,13 +194,21 @@ const PTS = __POINTS__;
 const PRI = __PRIORITIES__;
 const REVIEW = __REVIEW__;
 const BUILD = __BUILD__;
+const SCH = __SCHOOLS__;
+const SUB = __SUBURBS__;
+const PKG = __PACKAGES__;
+const PKGSUM = __PLANSUM__;
+const HQ = __HQ__;
 
 const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 const fmt = v => v == null || isNaN(v) ? "–" : Math.round(v).toLocaleString("en-NZ");
 const GAP_MIN = 250;
 const money = v => v == null ? "–" : v < 1 ? "$" + Math.round(v * 1000 / 10) * 10 + "k" : "$" + v.toFixed(1) + "M";
 const SCEN = {census: "Today", godutch: "Go Dutch", ebike: "E-bike", local: "Wellington habits"};
-const MODES = Object.assign(PRI ? {priorities: "Priorities"} : {}, {gaps: "Gaps", facility: "Facilities", plan: "Council plan"}, REVIEW ? {check: "Check"} : {});
+const MODES = Object.assign(PRI ? {priorities: "Priorities"} : {}, {gaps: "Gaps", facility: "Facilities", plan: "Council plan"}, REVIEW ? {check: "Check"} : {},
+  SCH ? {schools: "Schools"} : {}, SUB ? {suburbs: "Suburbs"} : {}, PKG ? {packages: "Packages"} : {});
+const FADED = new Set(["priorities", "schools", "suburbs", "packages"]);
+const OWN = new Set(["priorities", "check", "schools", "suburbs", "packages"]);
 const PLAN_COL = {"Built or underway": "--built", "Planned (WCC)": "--planned", "Unfunded (ex-LGWM)": "--lgwm",
   "Desired only": "--desired", "Not in plan": "--none"};
 const PROT = new Set(["track", "protected_lane", "sidepath", "seg_path", "shared_path", "shared_footway"]);
@@ -208,7 +234,7 @@ const map = L.map("map", {attributionControl: false, minZoom: 11, maxZoom: 18, p
 map.fitBounds([[-41.335, 174.74], [-41.165, 174.86]]);
 const width = f => { const v = f.properties["flow_" + scen] || 0; return Math.max(0.6, Math.min(11, Math.sqrt(v) / 6)); };
 function colourFor(p) {
-  if (mode === "priorities") return PROT.has(p.facility) && p.lts <= 2 ? css("--protected") : p.lts <= 2 ? css("--quiet") : css("--busy");
+  if (FADED.has(mode)) return PROT.has(p.facility) && p.lts <= 2 ? css("--protected") : p.lts <= 2 ? css("--quiet") : css("--busy");
   if (mode === "plan") {
     if (p.plan && p.plan !== "Not in plan") return css(PLAN_COL[p.plan]);
     return PROT.has(p.facility) ? css("--protected") : css("--quiet");
@@ -231,7 +257,7 @@ function styleFor(f) {
   const p = f.properties;
   const on = selected == null || p.rank === selected;
   return {color: colourFor(p), weight: width(f), dashArray: dashFor(p), lineCap: dashFor(p) ? "butt" : "round",
-    opacity: mode === "priorities" ? .45 : on ? (p["flow_" + scen] > 0 || mode !== "gaps" ? .95 : .35) : .18};
+    opacity: FADED.has(mode) ? .45 : on ? (p["flow_" + scen] > 0 || mode !== "gaps" ? .95 : .35) : .18};
 }
 GEO.features.sort((a, b) => (a.properties.flow_godutch || 0) - (b.properties.flow_godutch || 0));
 const layer = L.geoJSON(GEO, {style: styleFor, onEachFeature: (f, l) => {
@@ -293,14 +319,107 @@ if (PRI) {
   });
 }
 function priShow() {
-  if (REVIEW) { if (mode === "check") reviewLayer.addTo(map); else reviewLayer.remove(); }
-  if (mode === "check") points.remove();
-  if (!PRI) { if (mode !== "check") points.addTo(map); return; }
-  if (mode === "priorities") { priLayer.addTo(map); points.remove(); } else { priLayer.remove(); if (mode !== "check") points.addTo(map); }
+  const own = {priorities: PRI && priLayer, check: REVIEW && reviewLayer, schools: SCH && schLayer, suburbs: SUB && subLayer, packages: PKG && pkgLayer};
+  Object.entries(own).forEach(([k, l]) => { if (l) { if (mode === k) l.addTo(map); else l.remove(); } });
+  if (OWN.has(mode)) points.remove(); else points.addTo(map);
+  if (!PRI) return;
   priItems.forEach(([p, l]) => {
     if (l.setStyle && l instanceof L.CircleMarker) l.setStyle({fillColor: priCol(p), fillOpacity: priSel == null || priSel === p.rank ? .95 : .25});
     else l.setStyle(priStyle(p));
   });
+}
+
+// Schools, Suburbs and Packages layers. Circles are coloured by the share of homes or trips with an all-ages route (low = poor).
+const SQ = ["--sq1", "--sq2", "--sq3", "--sq4"], SQ_CUT = [10, 20, 30];
+const sqCol = v => css(SQ[SQ_CUT.filter(c => v >= c).length]);
+const pct = v => v == null ? "–" : v.toFixed(v < 10 ? 1 : 0) + "%";
+let schSel = null, subSel = null, pkgSel = null;
+const schLayer = L.layerGroup(), subLayer = L.layerGroup(), pkgLayer = L.layerGroup();
+const schItems = [], subItems = [], pkgItems = [];
+function circleStyle(p, r, on) { return {radius: r, color: css("--surface"), weight: 1.5, fillColor: sqCol(p.pct_all_ages), fillOpacity: on ? .85 : .25}; }
+const schR = p => Math.max(5, Math.min(16, 3 + Math.sqrt(p.roll || 0) / 3.2));
+const subR = p => Math.max(6, Math.min(24, 3 + Math.sqrt(p.trips_godutch || 0) / 6));
+if (SCH) SCH.features.forEach((f, i) => {
+  const p = f.properties; p.idx = i; const [lon, lat] = f.geometry.coordinates;
+  const l = L.circleMarker([lat, lon], circleStyle(p, schR(p), true));
+  l.on("mouseover", e => { tip.hidden = false; moveTip(e.originalEvent);
+    tip.innerHTML = `<b>${p.school}</b><br>${p.type} · roll ${fmt(p.roll)}<br>${pct(p.pct_all_ages)} of homes in ${p.catchment_km} km have an all-ages route`; });
+  l.on("mousemove", e => moveTip(e.originalEvent));
+  l.on("mouseout", () => { tip.hidden = true; });
+  l.on("click", () => selectSchool(i));
+  schItems.push([p, l]); schLayer.addLayer(l);
+});
+if (SUB) SUB.features.forEach((f, i) => {
+  const p = f.properties; p.idx = i; const [lon, lat] = f.geometry.coordinates;
+  const l = L.circleMarker([lat, lon], circleStyle(p, subR(p), true));
+  l.on("mouseover", e => { tip.hidden = false; moveTip(e.originalEvent);
+    tip.innerHTML = `<b>${p.suburb}</b><br>${fmt(p.trips_godutch)} Go Dutch trips a weekday<br>${pct(p.pct_all_ages)} have an all-ages route`; });
+  l.on("mousemove", e => moveTip(e.originalEvent));
+  l.on("mouseout", () => { tip.hidden = true; });
+  l.on("click", () => selectSuburb(i));
+  subItems.push([p, l]); subLayer.addLayer(l);
+});
+const pkgCol = p => css(p.build_step >= 1 && p.build_step <= 6 ? "--pk" + p.build_step : "--pkx");
+function pkgStyle(p) {
+  const on = pkgSel == null || pkgSel === p.idx;
+  return {color: pkgCol(p), weight: p.build_step ? 6 : 4, opacity: on ? (p.build_step ? .95 : .7) : .15, lineCap: "round"};
+}
+if (PKG) PKG.features.forEach((f, i) => {
+  const p = f.properties; p.idx = i;
+  const l = L.geoJSON(f, {style: () => pkgStyle(p)});
+  l.on("mouseover", e => { tip.hidden = false; moveTip(e.originalEvent);
+    tip.innerHTML = `<b>${p.package}</b><br>${p.suburb} · ${p.n_projects} project${p.n_projects === 1 ? "" : "s"} · ${money(p.cost_low)}–${money(p.cost_high)}<br>+${fmt(p.extra_riders)} riders a weekday${p.build_step ? "<br>Build step " + p.build_step : ""}`; });
+  l.on("mousemove", e => moveTip(e.originalEvent));
+  l.on("mouseout", () => { tip.hidden = true; });
+  l.on("click", () => selectPackage(i));
+  pkgItems.push([p, l]); pkgLayer.addLayer(l);
+});
+function selMark(sel) { list.querySelectorAll("button").forEach(b => b.classList.toggle("sel", +b.dataset.idx === sel)); }
+function selectSchool(i) {
+  schSel = schSel === i ? null : i; selMark(schSel);
+  schItems.forEach(([p, l]) => l.setStyle(circleStyle(p, schR(p), schSel == null || schSel === p.idx)));
+  if (schSel == null) { renderDetail(); return; }
+  const p = SCH.features[i].properties;
+  detail.innerHTML = `<div class="sub">School · ${p.suburb}</div><h2>${p.school}</h2>
+    <div class="where">${p.type} · roll ${fmt(p.roll)}</div>
+    <dl class="kv"><dt>Homes within ${p.catchment_km} km with an all-ages route</dt><dd>${pct(p.pct_all_ages)}</dd>
+    <dt>… with a route for confident riders</dt><dd>${pct(p.pct_confident)}</dd>
+    <dt>Residents within ${p.catchment_km} km</dt><dd>${fmt(p.residents)}</dd>
+    <dt>Residents with no all-ages route</dt><dd>${fmt(p.unconnected)}</dd></dl>
+    <div class="where"><b>Top blockers</b> (streets cutting off the most residents)</div>
+    <dl class="kv">${[1, 2, 3].filter(k => p["blocker_" + k]).map(k => `<dt>${p["blocker_" + k]}</dt><dd>${fmt(p["blocker_" + k + "_residents"])}</dd>`).join("")}</dl>`;
+  const ll = schItems[i][1].getLatLng(); map.setView(ll, Math.max(map.getZoom(), 14));
+}
+function selectSuburb(i) {
+  subSel = subSel === i ? null : i; selMark(subSel);
+  subItems.forEach(([p, l]) => l.setStyle(circleStyle(p, subR(p), subSel == null || subSel === p.idx)));
+  if (subSel == null) { renderDetail(); return; }
+  const p = SUB.features[i].properties;
+  const projs = [1, 2, 3].filter(k => p["project" + k]).map(k => `<dt>${p["project" + k]}<br><span style="color:var(--muted);font-size:12.5px">${p["project" + k + "_treatment"] || ""}</span></dt><dd>${money(p["project" + k + "_cost_m"])}</dd>`).join("");
+  detail.innerHTML = `<div class="sub">Suburb</div><h2>${p.suburb}</h2>
+    <div class="where">${p.card || ""}</div>
+    <dl class="kv"><dt>Go Dutch trips a weekday</dt><dd>${fmt(p.trips_godutch)}</dd>
+    <dt>Census trips (today)</dt><dd>${fmt(p.trips_census)}</dd>
+    <dt>With an all-ages route</dt><dd>${pct(p.pct_all_ages)}</dd>
+    <dt>With a route for confident riders</dt><dd>${pct(p.pct_confident)}</dd>
+    <dt>Trips to the CBD with an all-ages route</dt><dd>${pct(p.pct_cbd_all_ages)}</dd></dl>
+    ${[1, 2, 3].some(k => p["blocker" + k]) ? `<div class="where"><b>Main blockers</b>: ${[1, 2, 3].map(k => p["blocker" + k]).filter(Boolean).join(", ")}</div>` : ""}
+    ${projs ? `<div class="where"><b>Best-value fixes</b></div><dl class="kv">${projs}</dl>` : ""}`;
+  map.setView(subItems[i][1].getLatLng(), Math.max(map.getZoom(), 13));
+}
+function selectPackage(i) {
+  pkgSel = pkgSel === i ? null : i; selMark(pkgSel);
+  pkgItems.forEach(([p, l]) => l.setStyle(pkgStyle(p)));
+  if (pkgSel == null) { renderDetail(); return; }
+  const p = PKG.features[i].properties, names = (p.projects || "").split(";").map(x => x.trim()).filter(Boolean);
+  detail.innerHTML = `<div class="sub">Package${p.build_step ? " · build step " + p.build_step : ""}</div><h2>${p.package}</h2>
+    <div class="where">${p.suburb}</div>
+    <dl class="kv"><dt>Projects</dt><dd>${fmt(p.n_projects)}</dd>
+    <dt>Indicative cost</dt><dd>${money(p.cost_low)}–${money(p.cost_high)}</dd>
+    <dt>Extra riders a weekday</dt><dd>${fmt(p.extra_riders)}</dd>
+    <dt>Riders per $M</dt><dd>${fmt(p.riders_per_M)}</dd></dl>
+    <div class="where"><b>Projects</b>: ${names.join(", ")}</div>`;
+  const b = pkgItems[i][1].getBounds(); if (b.isValid()) map.fitBounds(b.pad(.3), {maxZoom: 15});
 }
 
 // Check view: places to verify against aerial photos, and links to open this view elsewhere.
@@ -360,7 +479,7 @@ function seg(el, opts, cur, cb) {
   });
 }
 seg(document.getElementById("scen"), SCEN, scen, k => { scen = k; restyle(); renderDetail(); });
-seg(document.getElementById("mode"), MODES, mode, k => { mode = k; selected = null; priSel = null; restyle(); renderList(); renderDetail();
+seg(document.getElementById("mode"), MODES, mode, k => { mode = k; selected = null; priSel = null; schSel = subSel = pkgSel = null; schItems.forEach(([p, l]) => l.setStyle(circleStyle(p, schR(p), true))); subItems.forEach(([p, l]) => l.setStyle(circleStyle(p, subR(p), true))); pkgItems.forEach(([p, l]) => l.setStyle(pkgStyle(p))); restyle(); renderList(); renderDetail();
   document.getElementById("sortWrap").hidden = mode !== "priorities"; });
 if (PRI) seg(document.getElementById("sort"), {score: "Best value", trips: "Most trips"}, priSort, k => { priSort = k; priSel = null; renderList(); renderDetail(); priShow(); });
 document.getElementById("sortWrap").hidden = !PRI || mode !== "priorities";
@@ -369,6 +488,22 @@ function legend() {
   if (mode === "check") {
     document.getElementById("legend").innerHTML = `<span><i style="width:12px;height:12px;border-radius:50%;border:3px solid var(--painted);background:none"></i>Possible missing link</span><span><i style="width:12px;height:12px;background:var(--gap)"></i>Protected route ends onto a busy street</span><span><i style="background:var(--track)"></i>Cycle track or protected lane</span><span><i style="background:var(--protected)"></i>Path alongside</span><span><i style="background:var(--shared)"></i>Shared path</span><span><i style="background:var(--painted)"></i>Painted lane</span><span><i style="background:var(--sharrow)"></i>Sharrows</span>`;
     document.getElementById("note").textContent = "What the model thinks is on the ground, for checking against aerial photos. Rings mark paths that stop just short of a street or path they don't join (usually a mapping gap the model can't route through). Squares mark where protected routes end in traffic. Use the links above to open the same view in satellite imagery, CyclOSM, or the OpenStreetMap editor to fix what's missing.";
+    return;
+  }
+  if (mode === "schools" || mode === "suburbs") {
+    const lab = ["under 10%", "10–20%", "20–30%", "30% or more"];
+    document.getElementById("legend").innerHTML = SQ.map((c, i) => `<span><i class="dot" style="background:var(${c})"></i>${lab[i]}</span>`).join("") + `<span><i style="background:var(--quiet)"></i>Streets, faded</span>`;
+    document.getElementById("note").textContent = mode === "schools"
+      ? "Colour shows the share of homes in each school's catchment (2 km primary, 3 km other) with an all-ages route to it, needing at most 25% extra effort. Circle size is the school roll. Click a school for its blockers."
+      : "Colour shows the share of a suburb's Go Dutch trips with an all-ages route (at most 25% extra effort). Circle size is the suburb's Go Dutch trips a weekday. Click a suburb for its blockers and best-value fixes.";
+    return;
+  }
+  if (mode === "packages") {
+    const q = PKGSUM || {}, cost = q.complete_cost;
+    document.getElementById("legend").innerHTML = [1, 2, 3, 4, 5, 6].map(k => `<span><i style="background:var(--pk${k});height:6px"></i>Step ${k}</span>`).join("") + `<span><i style="background:var(--pkx)"></i>Later or unscheduled</span>`;
+    document.getElementById("note").textContent = (q.riders_today_network != null && q.riders_complete_network != null
+      ? `With every candidate built${cost != null ? " (about $" + fmt(cost) + "M)" : ""}, expected riders rise from ${fmt(q.riders_today_network)} to ${fmt(q.riders_complete_network)} a weekday${q.godutch != null ? " (Go Dutch ceiling " + fmt(q.godutch) + ")" : ""}. ` : "") +
+      "Each package is the set of projects a suburb's trips need together. Colour is the build step; the rest are muted. Click one to see its projects.";
     return;
   }
   if (mode === "priorities") {
@@ -479,8 +614,28 @@ function renderList() {
     });
     return;
   }
-  document.querySelector(".listhead h3").textContent = "Top gap corridors";
-  document.querySelector(".listhead span").textContent = "Go Dutch trips/day";
+  const head = (h, sp) => { document.querySelector(".listhead h3").textContent = h; document.querySelector(".listhead span").textContent = sp; };
+  const row = (i, rk, nm, tr, sb, sel) => { const b = document.createElement("button"); b.type = "button"; b.dataset.idx = i;
+    b.innerHTML = `<span class="rk">${rk}</span><span class="nm">${nm}</span><span class="tr">${tr}</span><span class="sb">${sb}</span>`; b.onclick = sel; list.appendChild(b); };
+  if (mode === "schools") {
+    head("Schools by homes cut off", "% all-ages");
+    schItems.map(([p]) => p).sort((a, b) => b.unconnected - a.unconnected).forEach((p, n) =>
+      row(p.idx, n + 1, p.school, pct(p.pct_all_ages), `${p.suburb} · ${fmt(p.unconnected)} residents without a route`, () => selectSchool(p.idx)));
+    return;
+  }
+  if (mode === "suburbs") {
+    head("Suburbs by trips", "% all-ages");
+    subItems.map(([p]) => p).sort((a, b) => b.trips_godutch - a.trips_godutch).forEach((p, n) =>
+      row(p.idx, n + 1, p.suburb, pct(p.pct_all_ages), `${fmt(p.trips_godutch)} Go Dutch trips a weekday`, () => selectSuburb(p.idx)));
+    return;
+  }
+  if (mode === "packages") {
+    head("Packages by value", "riders per $M");
+    pkgItems.map(([p]) => p).sort((a, b) => (b.riders_per_M || 0) - (a.riders_per_M || 0)).forEach((p, n) =>
+      row(p.idx, n + 1, p.package, fmt(p.riders_per_M), `${p.suburb} · ${money(p.cost_low)}–${money(p.cost_high)} · +${fmt(p.extra_riders)} riders${p.build_step ? " · step " + p.build_step : ""}`, () => selectPackage(p.idx)));
+    return;
+  }
+  head("Top gap corridors", "Go Dutch trips/day");
   CORR.forEach(c => {
     const b = document.createElement("button"); b.type = "button"; b.dataset.rank = c.rank;
     b.innerHTML = `<span class="rk">${c.rank}</span><span class="nm">${c.street}</span><span class="tr">${fmt(c.godutch_trips)}</span><span class="sb">${c.suburbs}${c.road === "State highway" ? " · state highway" : ""}${c.one_way_share > .5 ? " · one direction" : ""}</span>${planChip(c.plan)}`;
@@ -505,6 +660,21 @@ if (PRI && S.conn) {
   const GE = p => p.type === "crossing" ? "–" : ["–", "one end", "both"][p.grid_ends];
   document.getElementById("priTbl").innerHTML = `<thead><tr><th>#</th><th style="text-align:left">Where</th><th style="text-align:left">Treatment</th><th>Cost</th><th>Trips connected</th><th>WH</th><th>Per $M</th><th>Joins network</th><th>Range</th><th>Step</th><th>Crashes</th><th style="text-align:left">Plan</th></tr></thead><tbody>` +
     P.map(p => `<tr><td class="num">${p.rank}</td><td style="text-align:left">${p.name}<br><span style="color:var(--muted);font-size:12.5px">${p.where || ""}</span></td><td style="text-align:left;color:var(--ink2)">${p.treatment}${p.length_m ? ", " + (p.length_m / 1000).toFixed(1) + " km" : ""}</td><td class="num">${money(p.cost_low)}–${money(p.cost_high)}</td><td class="num">${fmt(p.dT_godutch)}</td><td class="num">${fmt(p.dT_local)}</td><td class="num">${fmt(p.dT_per_M)}</td><td class="num">${GE(p)}</td><td class="num">${fmt(p.rank_p10)}–${fmt(p.rank_p90)}</td><td class="num">${p.build_step || "–"}</td><td class="num">${p.crashes}</td><td style="text-align:left;color:var(${PLAN_COL[p.plan] || "--none"});font-weight:600">${p.plan}</td></tr>`).join("") + "</tbody>";
+}
+
+// Method notes for the modes present
+[["mSchools", SCH], ["mSuburbs", SUB], ["mPackages", PKG]].forEach(([id, d]) => { document.getElementById(id).hidden = !d; });
+
+// Harbour Quays
+if (HQ) {
+  const by = {}; HQ.forEach(r => { (by[r.scenario[0]] = by[r.scenario[0]] || {})[r.level] = r; });
+  const NAME = {A: "A: bus lanes as announced", B: "B: plus protected lanes", C: "C: plus connectors (Bunny, Featherston, Taranaki Streets)"};
+  const sg = v => v == null ? "–" : "+" + fmt(v);
+  document.getElementById("hqSection").hidden = false;
+  document.getElementById("hqText").textContent = `The announced peak-hour bus lanes on the Harbour Quays streets connect no new all-ages trips (${sg(by.A.all_ages.newly_connected_godutch)}): a bus lane rates no better than the busy street it sits on. Adding protected lanes and junction priority connects about ${fmt(by.B.all_ages.newly_connected_godutch)} weekday Go Dutch trips, and adding the Bunny, Featherston and Taranaki Street connectors about ${fmt(by.C.all_ages.newly_connected_godutch)}. Cable and Wakefield Streets have road reserves of only about 20 m, which is tight for protected lanes alongside bus lanes. Trips connected measure network access, not forecast riders; costs are indicative.`;
+  const cost = r => r.cost_central_M > 0 ? `$${r.cost_central_M.toFixed(1)}M<br><span style="color:var(--muted);font-size:12.5px">${money(r.cost_low_M)}–${money(r.cost_high_M)}</span>` : "none (in the announced works)";
+  document.getElementById("hqTbl").innerHTML = `<thead><tr><th style="text-align:left">Scenario</th><th>All-ages trips newly connected</th><th>Confident trips newly connected</th><th>Indicative lane cost</th></tr></thead><tbody>` +
+    ["A", "B", "C"].filter(k => by[k]).map(k => `<tr><td style="text-align:left">${NAME[k]}</td><td class="num">${sg(by[k].all_ages.newly_connected_godutch)}</td><td class="num">${sg(by[k].confident.newly_connected_godutch)}</td><td class="num">${cost(by[k].all_ages)}</td></tr>`).join("") + "</tbody>";
 }
 
 // Table
