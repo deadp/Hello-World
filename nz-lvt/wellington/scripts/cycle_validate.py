@@ -43,8 +43,7 @@ TABLES = ROOT / "outputs" / "tables"
 COMPASS = {"N": 0, "NE": 45, "E": 90, "SE": 135, "S": 180, "SW": 225, "W": 270, "NW": 315}
 # A first pass at countline level (40 runs: stress up to 5/10, climb 5-40, two crossing penalties)
 # found the best fit near stress 2/3, climb 30, crossing 30/80; this grid refines it per sensor.
-GRID = dict(stress=[(1.1, 1.25), (1.5, 2.0), (2.0, 3.0), (3.0, 5.0)], climb=[10.0, 20.0, 30.0],
-            cross=[(30.0, 80.0)], roadside=[1.0, 1.25, 1.5])
+GRID = dict(stress=[(2.0, 3.0), (3.0, 5.0)], climb=[20.0, 30.0, 40.0], cross=[(30.0, 80.0)], roadside=[1.25])
 
 
 def counts(min_avail=95, min_days=20):
@@ -173,8 +172,15 @@ def main():
     grid.round(3).to_csv(TABLES / "cycle_calibration_grid.csv", index=False)
     sc, p, mod, vp = best
     vp.round(1).to_csv(TABLES / "cycle_counters_by_sensor.csv", index=False)
-    default = grid[(grid.stress3 == 1.1) & (grid.climb == 10.0) & (grid.cross3 == 30.0)
-                   & (grid.roadside == 1.0)].iloc[0].to_dict()
+    # The first version's guesses, for comparison (run once more if the grid no longer has them).
+    d = grid[(grid.stress3 == 1.1) & (grid.climb == 10.0) & (grid.roadside == 1.0)]
+    if len(d):
+        default = d.iloc[0].to_dict()
+    else:
+        p0 = dict(climb=10.0, stress={2: 1.0, 3: 1.1, 4: 1.25}, cross={3: 30.0, 4: 80.0}, roadside=1.0)
+        flow, arc_flow, _, arcs, _, setup = M.run(p0, scenarios=("census",), verbose=False, setup=setup)
+        sc0, _ = viewpoint_score(m, cl, arcs, arc_flow)
+        default = dict(stress3=1.1, stress4=1.25, climb=10.0, cross3=30.0, cross4=80.0, roadside=1.0, **sc0)
     (TABLES / "cycle_calibration.json").write_text(json.dumps(dict(
         best=dict(climb=p["climb"], stress=p["stress"], cross=p["cross"], roadside=p["roadside"], **sc),
         default=default, grid=GRID), indent=1, default=float))
