@@ -73,6 +73,7 @@ PROC = ROOT / "data" / "processed"
 TABLES = ROOT / "outputs" / "tables"
 PARAMS = dict(climb=10.0, stress={2: 1.0, 3: 1.1, 4: 1.25}, cross={3: 30.0, 4: 80.0}, roadside=1.0)
 MODEL = "2020"
+TRAIL_FACTOR = 1.5  # an unpaved trail metre costs 1.5 paved metres (assumed, not calibrated)
 CALIBRATION = TABLES / "cycle_calibration.json"
 UPTAKE_2020 = dict(a=-4.018, d1=-0.6369, d2=1.988, d3=0.008775, h1=-0.2555, i1=0.02006, i2=-0.1234,
                    dutch_a=2.550, dutch_d1=-0.08036, eb_d1=0.05509, eb_d3=-0.000295, eb_h1=0.1812, g0=0.78)
@@ -168,6 +169,8 @@ def graph(params=None, verbose=True):
     stress = arcs["lts"].map(p["stress"]).fillna(1.0).values
     cross = arcs["cross"].map(p["cross"]).fillna(0.0).values
     stress = stress * np.where(arcs["roadside"], p.get("roadside", 1.0), 1.0)
+    # Unpaved trails (Town Belt tracks, MTB trails): rough and often steep, so slower going.
+    stress = stress * np.where(arcs["fac"] == "trail", p.get("trail", TRAIL_FACTOR), 1.0)
     arcs["cost"] = arcs["len"] * stress + p["climb"] * arcs["up"] + cross
     arcs = arcs.sort_values("cost").drop_duplicates(["u", "v"]).reset_index(drop=True)
     n = len(nodes)

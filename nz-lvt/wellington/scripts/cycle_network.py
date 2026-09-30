@@ -88,8 +88,9 @@ PROTECTED = {"track", "protected_lane", "sidepath", "seg_path", "shared_path", "
 # protected lanes keep level 1.
 ROADSIDE_FAC = {"sidepath", "seg_path", "shared_path", "shared_footway"}
 ROADSIDE_SPEED, ROADSIDE_ADT = 70, 20000
-RANK = ["track", "protected_lane", "sidepath", "seg_path", "shared_path", "shared_footway", "buffered_lane",
-        "painted_lane", "bus_lane", "sharrow", "mixed"]
+# "trail": unpaved path or track without bike signs (not protected, not all-ages).
+RANK = ["track", "protected_lane", "sidepath", "seg_path", "shared_path", "shared_footway", "trail",
+        "buffered_lane", "painted_lane", "bus_lane", "sharrow", "mixed"]
 DEFAULT_ADT = {"residential": 500, "unclassified": 500, "service": 500, "living_street": 200, "road": 500,
                "tertiary": 3000, "tertiary_link": 3000, "secondary": 5000, "secondary_link": 5000,
                "primary": 6000, "primary_link": 6000, "trunk": 8000, "trunk_link": 8000}
@@ -107,16 +108,22 @@ def usable(t):
     if h == "cycleway":
         return True
     if h in ("path", "track", "bridleway"):
-        # Unsigned paths and tracks are mostly town belt walking and MTB trails: keep only if bikes
-        # are signed, or if the path is paved.
-        return t.get("bicycle") in BIKE_OK or t.get("surface") in ("asphalt", "concrete", "paved", "paving_stones")
+        # Unsigned paths and tracks (Town Belt tracks, reserve paths, cut-throughs, MTB trails) are
+        # open to bikes in NZ unless signed otherwise. Unpaved ones are kept as "trail" (see
+        # path_level), which is not an all-ages route.
+        return True
     if h in ("footway", "pedestrian"):
         return t.get("bicycle") in BIKE_OK
     return False
 
 
+PAVED = {"asphalt", "concrete", "paved", "paving_stones", "concrete:plates", "sett", "chipseal"}
+
+
 def path_level(t):
     h = t.get("highway")
+    if h in ("path", "track", "bridleway") and t.get("bicycle") not in BIKE_OK and t.get("surface") not in PAVED:
+        return "trail"
     if h == "cycleway" and t.get("foot") == "no" and t.get("footway") != "sidewalk":
         return "track"
     if t.get("segregated") == "yes":
@@ -405,9 +412,107 @@ MIXED_CENTRE = [[1, 2, 2, 3, 3, 3], [1, 2, 3, 3, 3, 4], [2, 2, 3, 3, 3, 4], [2, 
 ADT_BANDS = [750, 1500, 3000, 5000, 8000]
 
 
-def stress(fac, speed, adt, lanes_dir, centre, one_way, highway, downhill):
+def buses(g):
+    """Weekday peak buses per hour along each edge, per direction (Metlink GTFS; 7-9am Tuesday of
+    the feed's second week). Each bus shape counts on edges it runs along (>= 60% within 12 m),
+    in the direction of travel."""
+    gt = RAW / "gtfs"
+    g["buses_fw"], g["buses_bw"] = 0.0, 0.0
+    if not (gt / "trips.txt").exists():
+        print("no GTFS: bus frequency not used")
+        return g
+    routes = pd.read_csv(gt / "routes.txt", usecols=["route_id", "route_type"])
+    trips = pd.read_csv(gt / "trips.txt", usecols=["route_id", "service_id", "trip_id", "shape_id"])
+    cal = pd.read_csv(gt / "calendar.txt", dtype=str)
+    cd = pd.read_csv(gt / "calendar_dates.txt", dtype=str)
+    start = pd.to_datetime(cal["start_date"].min())
+    day = start + pd.Timedelta(days=(1 - start.weekday()) % 7 + 7)  # a Tuesday, a week in
+    ds = day.strftime("%Y%m%d")
+    on = set(cal[(cal["tuesday"] == "1") & (cal["start_date"] <= ds) & (cal["end_date"] >= ds)]["service_id"])
+    on |= set(cd[(cd["date"] == ds) & (cd["exception_type"] == "1")]["service_id"])
+    on -= set(cd[(cd["date"] == ds) & (cd["exception_type"] == "2")]["service_id"])
+    bus_routes = set(routes.loc[routes["route_type"].isin([3, 700, 702, 704, 711, 712]), "route_id"])
+    trips = trips[trips["service_id"].isin(on) & trips["route_id"].isin(bus_routes)]
+    st = pd.read_csv(gt / "stop_times.txt", usecols=["trip_id", "departure_time", "stop_sequence"])
+    st = st[st["trip_id"].isin(trips["trip_id"])]
+    first = st.sort_values("stop_sequence").groupby("trip_id")["departure_time"].first()
+    hh = first.str.slice(0, 2).astype(int) + first.str.slice(3, 5).astype(int) / 60
+    peak = trips[trips["trip_id"].isin(hh[(hh >= 6.75) & (hh < 8.75)].index)]
+    per_shape = peak.groupby("shape_id").size() / 2.0  # buses an hour
+    sh = pd.read_csv(gt / "shapes.txt")
+    sh = sh[sh["shape_id"].isin(per_shape.index)].sort_values(["shape_id", "shape_pt_sequence"])
+    tf = Transformer.from_crs(4326, 2193, always_xy=True)
+    sh["x"], sh["y"] = tf.transform(sh["shape_pt_lon"].values, sh["shape_pt_lat"].values)
+    lines = gpd.GeoDataFrame({"shape_id": per_shape.index, "bph": per_shape.values},
+                             geometry=[LineString(sh.loc[sh["shape_id"] == s_, ["x", "y"]].values)
+                                       for s_ in per_shape.index], crs=2193)
+    lines = lines[lines.geometry.intersects(gpd.GeoSeries(g.geometry, crs=2193).union_all().envelope)]
+    road = g["highway"].isin(ROADS)
+    mid = g.loc[road].geometry.interpolate(0.5, normalized=True)
+    tree = lines.sindex
+    for i, m in mid.items():
+        geom = g.geometry.loc[i]
+        for k in tree.query(m.buffer(12), predicate="intersects"):
+            ln = lines.geometry.iloc[k]
+            if geom.intersection(ln.buffer(12)).length < 0.6 * max(geom.length, 1):
+                continue
+            # Direction: compare edge vector with the shape's direction near the midpoint.
+            a_ = ln.project(m)
+            p0, p1 = ln.interpolate(max(a_ - 10, 0)), ln.interpolate(min(a_ + 10, ln.length))
+            c = geom.coords
+            dot = (c[-1][0] - c[0][0]) * (p1.x - p0.x) + (c[-1][1] - c[0][1]) * (p1.y - p0.y)
+            g.at[i, "buses_fw" if dot >= 0 else "buses_bw"] += lines["bph"].iloc[k]
+    busy = (g[["buses_fw", "buses_bw"]].max(axis=1) >= 10)
+    print(f"bus frequency ({ds}, 7-9am): {len(per_shape)} shapes; {g.loc[busy, 'length_m'].sum() / 1000:,.1f} km of "
+          f"road with >= 10 buses/h in a direction")
+    return g
+
+
+def reserve_width(g, reach=40):
+    """Road reserve width at each road edge's midpoint: distance between the nearest property
+    parcels either side along a perpendicular (rating units' parcels; NaN where none within
+    reach m). A feasibility guide for protected lanes, not a survey."""
+    units = gpd.read_parquet(PROC / "units.parquet")[["geometry"]]
+    bounds = units.geometry.boundary
+    tree = bounds.sindex
+    road = g["highway"].isin(ROADS) & ~g["highway"].isin(["service"])
+    out = pd.Series(np.nan, index=g.index)
+    for i in g.index[road]:
+        geom = g.geometry.loc[i]
+        if geom.length < 10:
+            continue
+        m = geom.interpolate(0.5, normalized=True)
+        p0, p1 = geom.interpolate(geom.length / 2 - 3), geom.interpolate(geom.length / 2 + 3)
+        dx, dy = p1.x - p0.x, p1.y - p0.y
+        n = np.hypot(dx, dy) or 1
+        nx, ny = -dy / n, dx / n
+        side = []
+        for sgn in (1, -1):
+            ray = LineString([(m.x, m.y), (m.x + sgn * nx * reach, m.y + sgn * ny * reach)])
+            hits = [bounds.iloc[k].intersection(ray) for k in tree.query(ray, predicate="intersects")]
+            d = [m.distance(h) for h in hits if not h.is_empty]
+            side.append(min(d) if d else np.nan)
+        out[i] = side[0] + side[1]
+    g["reserve_m"] = out
+    print(f"road reserve width measured on {out.notna().sum():,} edges; median {out.median():.1f} m")
+    return g
+
+
+def stress(fac, speed, adt, lanes_dir, centre, one_way, highway, downhill, buses=0.0):
+    if fac == "trail":
+        return 2  # no traffic, but unpaved and often steep: fine for confident riders, not all ages
     if fac in PROTECTED or highway in ("living_street", "service", "cycleway", "pedestrian"):
         return 1
+    return max(_stress(fac, speed, adt, lanes_dir, centre, one_way, highway, downhill), bus_stress(buses))
+
+
+def bus_stress(buses):
+    """Riding in a lane buses use: every 6 min or more often in the peak is level 3, every 2 min
+    or more (the Golden Mile, Manners Street) level 4."""
+    return 4 if buses >= 30 else 3 if buses >= 10 else 1
+
+
+def _stress(fac, speed, adt, lanes_dir, centre, one_way, highway, downhill):
     b = band(speed)
     eff = adt * (1.5 if one_way else 1.0)
     if fac in ("painted_lane", "buffered_lane", "bus_lane"):
@@ -503,14 +608,16 @@ def main():
     g = sidepaths(g)
     g["facility"] = [min(a, b, key=RANK.index) for a, b in zip(g["fac_fw"], g["fac_bw"])]
 
+    g = buses(g)
+    g = reserve_width(g)
     L = g["length_m"].clip(lower=1)
     grade_fw = (g["z_v"] - g["z_u"]) / L  # + = uphill travelling fw
     oneway_motor = g["motor_oneway"]
     for d, sign in (("fw", 1), ("bw", -1)):
         down = (sign * grade_fw < -0.04) & (g["speed"] <= 50)
-        g[f"lts_{d}"] = [stress(f, s, a, ln, c, o, h, dn) for f, s, a, ln, c, o, h, dn in zip(
+        g[f"lts_{d}"] = [stress(f, s, a, ln, c, o, h, dn, bu) for f, s, a, ln, c, o, h, dn, bu in zip(
             g[f"fac_{d}"], g["speed"], g["adt"].fillna(0), g["lanes_dir"], g["centre_line"], oneway_motor,
-            g["highway"], down)]
+            g["highway"], down, g[f"buses_{d}"])]
     g["lts"] = np.maximum(np.where(g["can_fw"], g["lts_fw"], 0), np.where(g["can_bw"], g["lts_bw"], 0))
     g = roadside(g)
     for d in ("fw", "bw"):

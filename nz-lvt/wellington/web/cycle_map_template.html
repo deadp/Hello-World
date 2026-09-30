@@ -10,7 +10,7 @@
   --line:#d6ddd6; --focus:#1f6fd1; --mapbg:#e4e9e3; --stroke:rgba(20,32,27,.16);
   --protected:#1d8a4e; --quiet:#a3aea8; --busy:#e9a07f; --gap:#cf3326; --painted:#e0a526;
   --planned:#2f6fd0; --lgwm:#8a63c9; --desired:#58a7c9; --none:#cf3326; --built:#1d8a4e;
-  --track:#0f6b3a; --shared:#6fb98a; --sharrow:#d9772f; --bus:#8a63c9; --xing:#14201b; --counter:#1f6fd1; --pri:#d1136b; --pri2:#e98fb8;
+  --track:#0f6b3a; --shared:#6fb98a; --sharrow:#d9772f; --bus:#8a63c9; --xing:#14201b; --counter:#1f6fd1; --pri:#d1136b; --pri2:#e98fb8; --trail:#9a7b4f;
   --display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --sans:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
@@ -22,7 +22,7 @@
     --line:#29332e; --focus:#6fa6ee; --mapbg:#111714; --stroke:rgba(234,240,236,.14);
     --protected:#34b06a; --quiet:#4d5953; --busy:#b0714f; --gap:#f0564a; --painted:#e9b440;
     --planned:#5b93e6; --lgwm:#a585dc; --desired:#6fbcdc; --none:#f0564a; --built:#34b06a;
-    --track:#3fcf7e; --shared:#2f7f52; --sharrow:#e8904f; --bus:#a585dc; --xing:#eaf0ec; --counter:#6fa6ee; --pri:#ff5aa5; --pri2:#94476d;
+    --track:#3fcf7e; --shared:#2f7f52; --sharrow:#e8904f; --bus:#a585dc; --xing:#eaf0ec; --counter:#6fa6ee; --pri:#ff5aa5; --pri2:#94476d; --trail:#b89466;
   }
 }
 :root[data-theme="dark"]{
@@ -31,7 +31,7 @@
   --line:#29332e; --focus:#6fa6ee; --mapbg:#111714; --stroke:rgba(234,240,236,.14);
   --protected:#34b06a; --quiet:#4d5953; --busy:#b0714f; --gap:#f0564a; --painted:#e9b440;
   --planned:#5b93e6; --lgwm:#a585dc; --desired:#6fbcdc; --none:#f0564a; --built:#34b06a;
-    --track:#3fcf7e; --shared:#2f7f52; --sharrow:#e8904f; --bus:#a585dc; --xing:#eaf0ec; --counter:#6fa6ee; --pri:#ff5aa5; --pri2:#94476d;
+    --track:#3fcf7e; --shared:#2f7f52; --sharrow:#e8904f; --bus:#a585dc; --xing:#eaf0ec; --counter:#6fa6ee; --pri:#ff5aa5; --pri2:#94476d; --trail:#b89466;
 }
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font:16px/1.5 var(--sans);margin:0}
@@ -187,7 +187,7 @@ const PLAN_COL = {"Built or underway": "--built", "Planned (WCC)": "--planned", 
   "Desired only": "--desired", "Not in plan": "--none"};
 const PROT = new Set(["track", "protected_lane", "sidepath", "seg_path", "shared_path", "shared_footway"]);
 const FAC_COL = {track: "--track", protected_lane: "--track", sidepath: "--protected", seg_path: "--protected",
-  shared_path: "--shared", shared_footway: "--shared", buffered_lane: "--painted", painted_lane: "--painted",
+  shared_path: "--shared", shared_footway: "--shared", trail: "--trail", buffered_lane: "--painted", painted_lane: "--painted",
   bus_lane: "--bus", sharrow: "--sharrow", mixed: "--quiet"};
 let scen = "godutch", mode = PRI ? "priorities" : "gaps", selected = null;
 
@@ -339,7 +339,7 @@ if (REVIEW) REVIEW.features.forEach(f => {
 const tip = document.getElementById("tip");
 function moveTip(e) { tip.style.left = Math.min(e.clientX + 14, innerWidth - 280) + "px"; tip.style.top = (e.clientY + 14) + "px"; }
 const FAC = {track: "Cycle track", protected_lane: "Protected lane", sidepath: "Path alongside", seg_path: "Segregated path",
-  shared_path: "Shared path", shared_footway: "Shared footpath", buffered_lane: "Buffered lane", painted_lane: "Painted lane",
+  shared_path: "Shared path", shared_footway: "Shared footpath", trail: "Unpaved trail", buffered_lane: "Buffered lane", painted_lane: "Painted lane",
   bus_lane: "Bus lane", sharrow: "Sharrows only", mixed: "No cycle facility"};
 function facText(p) {
   if (!(p.can_fw && p.can_bw) || p.fac_fw === p.fac_bw) return FAC[p.facility] || "";
