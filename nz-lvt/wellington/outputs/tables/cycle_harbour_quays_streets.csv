@@ -2,7 +2,7 @@ role,name,edges,length_m,treated_m,street_km_eq,reserve_median_m,reserve_min_m,r
 connector: Bunny Street,Bunny Street,15,393.62,343.27,0.22,24.94,24.94,1,0.17,0.36,0.76
 connector: Featherston Street,Featherston Street,10,510.13,261.93,0.13,29.44,25.1,6,0.1,0.21,0.45
 connector: Taranaki Street,Taranaki Street,13,520.06,475.51,0.48,25.61,20.07,11,0.36,0.76,1.62
-corridor,Cable Street,20,707.73,370.37,0.19,20.25,20.06,17,0.14,0.3,0.63
+corridor,Cable Street,20,707.73,346.08,0.17,20.25,20.06,17,0.13,0.28,0.59
 corridor,Cambridge Terrace,20,805.55,124.89,0.06,46.57,17.9,14,0.05,0.1,0.21
 corridor,Customhouse Quay,17,857.56,857.56,0.55,30.98,18.3,15,0.42,0.89,1.89
 corridor,Jervois Quay,30,1436.19,1210.89,0.61,30.75,28.46,21,0.45,0.97,2.06

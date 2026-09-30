@@ -6,12 +6,12 @@ Scenario analysis, Go Dutch trips (a mode-shift target) and census (today's ride
 
 | Scenario | Level | Go Dutch newly connected | Go Dutch % connected (today > after) | Census newly connected | Census % connected (today > after) | Lane cost, central (range) $M |
 |---|---|---|---|---|---|---|
-| A: bus lanes as announced | all ages (stress 1) | +0 | 2.9% > 2.9% | +0.0 | 2.8% > 2.8% | 0 (in the $11M) |
-| A: bus lanes as announced | confident riders (stress <= 2) | +0 | 24.5% > 24.5% | +0.0 | 25.5% > 25.5% | 0 (in the $11M) |
-| B: A + protected lanes and junction priority | all ages (stress 1) | +161 | 2.9% > 3.2% | +16.2 | 2.8% > 3.0% | 3.3 (1.6-7.1) |
-| B: A + protected lanes and junction priority | confident riders (stress <= 2) | +501 | 24.5% > 25.4% | +77.6 | 25.5% > 26.5% | 3.3 (1.6-7.1) |
-| C: B + connectors (Bunny St, Featherston St, Taranaki St) | all ages (stress 1) | +268 | 2.9% > 3.4% | +27.7 | 2.8% > 3.2% | 4.7 (2.2-9.9) |
-| C: B + connectors (Bunny St, Featherston St, Taranaki St) | confident riders (stress <= 2) | +771 | 24.5% > 25.9% | +116.5 | 25.5% > 27.0% | 4.7 (2.2-9.9) |
+| A: bus lanes as announced | all ages (stress 1) | +0 | 19.8% > 19.8% | +0.0 | 16.9% > 16.9% | 0 (in the $11M) |
+| A: bus lanes as announced | confident riders (stress <= 2) | +0 | 35.7% > 35.7% | +0.0 | 35.5% > 35.5% | 0 (in the $11M) |
+| B: A + protected lanes and junction priority | all ages (stress 1) | +857 | 19.8% > 21.2% | +62.2 | 16.9% > 17.7% | 3.3 (1.5-7.0) |
+| B: A + protected lanes and junction priority | confident riders (stress <= 2) | +1,183 | 35.7% > 37.6% | +126.7 | 35.5% > 37.0% | 3.3 (1.5-7.0) |
+| C: B + connectors (Bunny St, Featherston St, Taranaki St) | all ages (stress 1) | +2,004 | 19.8% > 23.1% | +270.1 | 16.9% > 20.2% | 4.6 (2.2-9.8) |
+| C: B + connectors (Bunny St, Featherston St, Taranaki St) | confident riders (stress <= 2) | +1,304 | 35.7% > 37.9% | +137.0 | 35.5% > 37.2% | 4.6 (2.2-9.8) |
 
 ## Scenario A: bus lanes as announced
 
@@ -19,20 +19,20 @@ Bike-usable peak bus lanes do not connect any new trips: +0 Go Dutch trips at al
 Of 92 on-road directions on the four bus-lane streets, 0 (0 m) get worse: every one is already level 3 (40) or level 4 (52) today, so the max(today, 3) rule changes nothing. No direction rated 1 or 2 is on an on-road lane there. A further 660 m of direction on these streets is a sidepath or protected lane and is left alone. Nothing gets better in the model either: off peak the lane is general traffic, so a level 4 direction is still level 4 outside the peaks.
 Go Dutch trips lost: 0 (confident), 0 (all ages).
 During the peak, a bike in a kerbside bus lane on a 50 km/h road is probably less stressful than sharing with two lanes of general traffic, but the model has no peak/off-peak split and buses at 30+ an hour are already rated 4. Read A as neutral for the model's standards, with a possible modest peak-hour gain for confident riders that this method cannot show.
-The waterfront shared path beside Customhouse and Jervois Quay is not changed: 83 edges, 2,737 m, stress counts by direction {1: 152, 2: 14}. It stays the all-ages route along the harbour.
+The waterfront shared path beside Customhouse and Jervois Quay is not changed: 83 edges, 2,737 m, stress counts by direction {1: 158, 2: 8}. It stays the all-ages route along the harbour.
 
 ## Scenarios B and C: adding protected lanes
 
-B (protected lanes on 2.08 street-km equivalent, signal priority at 2 internal junctions) connects +161 Go Dutch trips at all ages (+0.30 points) and +501 for confident riders (+0.92 points). Census trips: +16.2 and +77.6.
-C adds 0.83 street-km equivalent of connectors and 0 more junctions. Go Dutch: +268 at all ages (+0.49 points), +771 for confident riders. The extra over B is +107 and +270.
-Lane cost, central $1.6M a km: B $3.3M ($1.6-7.1M), C $4.7M ($2.2-9.9M). Junction priority is extra: B 2 junctions, $1.6M central ($1.0-3.0M); C 2 junctions, $1.6M ($1.0-3.0M), an upper bound as some already have signals. Go Dutch trips connected per $M of lanes at all ages: B 48, C 58.
+B (protected lanes on 2.07 street-km equivalent, signal priority at 2 internal junctions) connects +857 Go Dutch trips at all ages (+1.44 points) and +1,183 for confident riders (+1.99 points). Census trips: +62.2 and +126.7.
+C adds 0.83 street-km equivalent of connectors and 0 more junctions. Go Dutch: +2,004 at all ages (+3.37 points), +1,304 for confident riders. The extra over B is +1,147 and +121.
+Lane cost, central $1.6M a km: B $3.3M ($1.5-7.0M), C $4.6M ($2.2-9.8M). Junction priority is extra: B 2 junctions, $1.6M central ($1.0-3.0M); C 2 junctions, $1.6M ($1.0-3.0M), an upper bound as some already have signals. Go Dutch trips connected per $M of lanes at all ages: B 259, C 433.
 
 ## Where the gain goes (origin suburbs, Go Dutch trips newly connected)
 
-- B: A + protected lanes and junction priority, all ages (stress 1): Te Aro +39; Kaiwharawhara +30; Mt Victoria +30; Wellington Central +25; Pipitea +7; Kelburn +7.
-- B: A + protected lanes and junction priority, confident riders (stress <= 2): Te Aro +73; Mt Victoria +43; Wellington Central +37; Mt Cook +29; Seatoun +28; Newtown +27.
-- C: B + connectors (Bunny St, Featherston St, Taranaki St), all ages (stress 1): Te Aro +86; Kaiwharawhara +43; Wellington Central +39; Mt Victoria +33; Pipitea +22; Thorndon +12.
-- C: B + connectors (Bunny St, Featherston St, Taranaki St), confident riders (stress <= 2): Te Aro +169; Wellington Central +55; Mt Victoria +46; Pipitea +40; Thorndon +38; Mt Cook +30.
+- B: A + protected lanes and junction priority, all ages (stress 1): Te Aro +381; Mt Victoria +128; Mt Cook +103; Thorndon +59; Newtown +48; Wellington Central +35.
+- B: A + protected lanes and junction priority, confident riders (stress <= 2): Te Aro +465; Mt Victoria +135; Mt Cook +119; Thorndon +79; Newtown +72; Wellington Central +60.
+- C: B + connectors (Bunny St, Featherston St, Taranaki St), all ages (stress 1): Te Aro +664; Mt Victoria +272; Newtown +230; Mt Cook +218; Thorndon +114; Island Bay +81.
+- C: B + connectors (Bunny St, Featherston St, Taranaki St), confident riders (stress <= 2): Te Aro +469; Thorndon +155; Mt Victoria +138; Mt Cook +122; Newtown +75; Wellington Central +61.
 
 ## Why these connectors
 
@@ -63,4 +63,4 @@ Rough arithmetic, not a design: two 3.2 m general lanes each way, two 2.5 m prot
 - The trip model has no peak/off-peak split and no bus-lane effect. Connected trips are a measure of network access, not a forecast of extra riders.
 - Costs are indicative, from per-km rates, not project estimates. Junction costs are an upper bound.
 - The Featherston Street and Taranaki Street connector limits are set by coordinates (north of the Whitmore/Customhouse junction; Wakefield Street to Courtenay Place). Check on a map.
-- Runtime 146 s. Sources: metlink.org.nz project timeline for Harbour Quays; transportprojects.org.nz Harbour Quays bus priority (researched 30 Sep 2026).
+- Runtime 1,236 s. Sources: metlink.org.nz project timeline for Harbour Quays; transportprojects.org.nz Harbour Quays bus priority (researched 30 Sep 2026).
