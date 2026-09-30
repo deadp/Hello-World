@@ -41,7 +41,7 @@ import cycle_priorities as P
 TYPES = dict(fearless=0.06, confident=0.13, concerned=0.81)
 PKG_SHARE = 0.25
 MIN_SUBURB_GAIN = 20  # extra riders/weekday for a suburb package
-N_GREEDY = 12
+N_GREEDY, GREEDY_POOL = 6, 10
 
 
 def tree_paths(pred, src, attrs, keys, key_arc, n):
@@ -190,57 +190,75 @@ def main():
         if ks:
             pk.append(dict(suburb=sb, cands=sorted(ks), suburb_gain_full=sub_gain[sb]))
 
-    def evaluate(ks, base_l=None, base_c=None):
+    # Only trips that gain in the complete network can gain from any part of it, so packages are
+    # evaluated on those pairs alone (a few percent of all pairs).
+    sel = np.where((after["all_ages"] & ~now["all_ages"]) | (after["confident"] & ~now["confident"]))[0]
+    Ps = dict(si=si[sel], t=Pp["t"][sel], km=Pp["km"][sel])
+    fulls = dict(len=full["len"][sel], eff=full["eff"][sel])
+    Cs = {lv: P.Connectivity(a, n, S, Ps, w[sel], fulls, lv) for lv in C}
+    del C
+    wg_s, wc_s = w_gd[sel], w_cen[sel]
+    print(f"package evaluation on {len(sel):,} gaining pairs ({time.time() - t0:.0f}s)", flush=True)
+
+    def arcs_of(ks):
         il = np.unique(np.concatenate([cand.at[k, "idx_l"] for k in ks])).astype(int)
         ic = np.unique(np.concatenate([cand.at[k, "idx_c"] for k in ks])).astype(int)
+        return il, ic
+
+    def evaluate(ks):
+        """Extra expected riders (sum over gaining pairs) if ks are added to the current state."""
+        il, ic = arcs_of(ks)
         conn = {}
-        for lv, c in C.items():
+        for lv, c in Cs.items():
             new, _, _ = c.with_arcs(il, ic)
             conn[lv] = new <= cap * c.d_full
-        r = riders(w_gd, w_cen, conn["confident"], conn["all_ages"])
-        return r, conn
+        base = riders(wg_s, wc_s, Cs["confident"].d <= cap * Cs["confident"].d_full,
+                      Cs["all_ages"].d <= cap * Cs["all_ages"].d_full)
+        return (riders(wg_s, wc_s, conn["confident"], conn["all_ages"]) - base).sum()
 
     rows = []
-    for p_ in pk:
-        r, _ = evaluate(p_["cands"])
-        g_ = r - r_now
+    for j_, p_ in enumerate(pk):
+        g_sum = evaluate(p_["cands"])
         cost = cand.loc[p_["cands"], "cost"].sum()
+        if j_ % 5 == 0:
+            print(f"  package {j_ + 1}/{len(pk)} ({time.time() - t0:.0f}s)", flush=True)
         rows.append(dict(package=f"{p_['suburb']} routes", suburb=p_["suburb"],
                          projects="; ".join(cand.loc[p_["cands"], "name"].astype(str)),
                          n_projects=len(p_["cands"]), cost=cost,
                          cost_low=cand.loc[p_["cands"], "cost_low"].sum(),
                          cost_high=cand.loc[p_["cands"], "cost_high"].sum(),
-                         extra_riders=g_.sum(), extra_riders_suburb=g_[sub_of[si] == p_["suburb"]].sum(),
-                         riders_per_M=g_.sum() / cost, cands=p_["cands"]))
+                         extra_riders=g_sum, riders_per_M=g_sum / cost, cands=p_["cands"]))
     pkg = pd.DataFrame(rows).sort_values("riders_per_M", ascending=False).reset_index(drop=True)
     print(f"packages: {len(pkg)} ({time.time() - t0:.0f}s)", flush=True)
 
-    # Greedy over packages (re-evaluated exactly after each is built).
-    built, order, r_cur = [], [], r_now.copy()
+    # Greedy over packages: build the best extra riders per $M, update the network, re-score.
+    built, order, total = [], [], r_now.sum()
     remaining = list(pkg.index)
     for step in range(min(N_GREEDY, len(remaining))):
-        best, best_s, best_r = None, -1, None
-        for i in remaining[:25]:
-            ks = sorted(set(built) | set(pkg.at[i, "cands"]))
+        best, best_s, best_g = None, -1, 0
+        for i in remaining[:GREEDY_POOL]:
             new_ks = [k for k in pkg.at[i, "cands"] if k not in built]
             if not new_ks:
                 continue
-            r, _ = evaluate(ks)
-            cost = cand.loc[new_ks, "cost"].sum()
-            s_ = (r.sum() - r_cur.sum()) / max(cost, 0.01)
+            g_ = evaluate(new_ks)
+            s_ = g_ / max(cand.loc[new_ks, "cost"].sum(), 0.01)
             if s_ > best_s:
-                best, best_s, best_r = i, s_, r
+                best, best_s, best_g = i, s_, g_
         if best is None:
             break
         new_ks = [k for k in pkg.at[best, "cands"] if k not in built]
+        il, ic = arcs_of(new_ks)
+        for c in Cs.values():
+            c.apply(il, ic)
         built += new_ks
         remaining.remove(best)
+        remaining.sort(key=lambda i: -pkg.at[i, "riders_per_M"])
+        total += best_g
         cost = cand.loc[built, "cost"].sum()
         order.append(dict(step=step + 1, package=pkg.at[best, "package"], added=len(new_ks),
                           step_cost=cand.loc[new_ks, "cost"].sum(), cum_cost=cost,
-                          extra_riders=best_r.sum() - r_cur.sum(), riders=best_r.sum(), per_M=best_s))
-        r_cur = best_r
-        print(f"  step {step + 1}: {pkg.at[best, 'package']} +{order[-1]['extra_riders']:,.0f} riders, "
+                          extra_riders=best_g, riders=total, per_M=best_s))
+        print(f"  step {step + 1}: {pkg.at[best, 'package']} +{best_g:,.0f} riders, "
               f"${cost:.1f}M cumulative ({time.time() - t0:.0f}s)", flush=True)
     pkg["build_step"] = pkg["package"].map({o["package"]: o["step"] for o in order})
 
