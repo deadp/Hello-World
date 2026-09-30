@@ -282,7 +282,7 @@ def main():
     for k in (1, 2, 3):
         res[f"project{k}"], res[f"project{k}_treatment"], res[f"project{k}_cost_m"], res[f"project{k}_rank"] = \
             "", "", np.nan, np.nan
-    for i, s in enumerate(subs):
+    for i, s in enumerate(res["suburb"]):
         hit = set(prj.index[psindex.query(buf[s], predicate="intersects")])
         hit |= set(prj.index[prj["name"].isin([b for b in res.loc[i, ["blocker1", "blocker2", "blocker3"]] if b])])
         near = prj.loc[sorted(hit, key=lambda j: prj.at[j, "rank"])].drop_duplicates("name").head(3)

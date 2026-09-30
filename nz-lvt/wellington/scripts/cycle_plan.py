@@ -62,6 +62,15 @@ def tree_paths(pred, src, attrs, keys, key_arc, n):
     return arc, V[:, :k], V[:, k].astype(int)
 
 
+def accumulate(pred, depth, demand):
+    """As cycle_model.accumulate, tolerating a tree with no arcs."""
+    order = np.argsort(-depth)
+    order = order[depth[order] > 0]
+    if len(order) == 0:
+        return demand.copy()
+    return M.accumulate(pred, depth, demand)
+
+
 def riders(w_gd, w_cen, conn_conf, conn_all):
     r = w_gd * (TYPES["fearless"] + TYPES["confident"] * conn_conf + TYPES["concerned"] * conn_all)
     return np.maximum(r, w_cen)
@@ -148,7 +157,7 @@ def main():
         tnode = Pp["t"][rows]
         np.add.at(dem_full[:, 0], tnode, gain[rows])
         np.add.at(dem_share[:, 0], tnode, gain[rows] / np.maximum(tl[tnode], 1.0))
-        acc = M.accumulate(pred, depth, np.hstack([dem_full, dem_share]))
+        acc = accumulate(pred, depth, np.hstack([dem_full, dem_share]))
         has = arc >= 0
         ca = arc_cand[arc[has]]
         m_ = ca >= 0
