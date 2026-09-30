@@ -44,6 +44,24 @@ MIN_SUBURB_GAIN = 20  # extra riders/weekday for a suburb package
 N_GREEDY = 12
 
 
+def tree_paths(pred, src, attrs, keys, key_arc, n):
+    """As cycle_model.tree_paths, with the arc into each node looked up from sorted (u, v) keys."""
+    has = pred >= 0
+    arc = np.full(len(pred), -1)
+    idx = np.searchsorted(keys, pred[has].astype(np.int64) * n + np.where(has)[0])
+    arc[has] = key_arc[idx]
+    k = attrs.shape[1]
+    V = np.zeros((len(pred), k + 1))
+    V[has, :k] = attrs[arc[has]]
+    V[has, k] = 1
+    p = np.where(has, pred, np.arange(len(pred)))
+    p[src] = src
+    while not (p == p[p]).all():
+        V = V + V[p]
+        p = p[p]
+    return arc, V[:, :k], V[:, k].astype(int)
+
+
 def riders(w_gd, w_cen, conn_conf, conn_all):
     r = w_gd * (TYPES["fearless"] + TYPES["confident"] * conn_conf + TYPES["concerned"] * conn_all)
     return np.maximum(r, w_cen)
@@ -106,7 +124,9 @@ def main():
     mask = P.low_stress(a, "all_ages", lts_all, cross_all, C["all_ages"].access)
     sub = a[mask].sort_values("eff").drop_duplicates(["u", "v"])
     G = csr_matrix((sub["eff"].values, (sub["u"].values, sub["v"].values)), shape=(n, n))
-    A = csr_matrix((sub.index.values + 1, (sub["u"].values, sub["v"].values)), shape=(n, n))
+    order_k = np.argsort(sub["u"].values.astype(np.int64) * n + sub["v"].values)
+    keys = (sub["u"].values.astype(np.int64) * n + sub["v"].values)[order_k]
+    key_arc = sub.index.values[order_k]
     cand_len = np.where(arc_cand >= 0, arc_len, 0.0)
     attrs = cand_len[:, None]
     relied = np.zeros(len(cand))
@@ -121,7 +141,7 @@ def main():
     for o, rows in by_origin:
         rows = rows.values
         _, pred = dijkstra(G, indices=S[o], return_predecessors=True)
-        arc, V, depth = M.tree_paths(pred, S[o], attrs, A)
+        arc, V, depth = tree_paths(pred, S[o], attrs, keys, key_arc, n)
         tl = V[:, 0]
         dem_full = np.zeros((n, 1))
         dem_share = np.zeros((n, 1))
