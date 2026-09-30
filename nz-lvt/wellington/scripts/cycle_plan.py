@@ -262,9 +262,11 @@ def main():
               f"${cost:.1f}M cumulative ({time.time() - t0:.0f}s)", flush=True)
     pkg["build_step"] = pkg["package"].map({o["package"]: o["step"] for o in order})
 
-    # Outputs.
+    # Outputs (state saved first, so a slip below doesn't cost the run).
+    pd.to_pickle(dict(cand=cand.drop(columns="geometry"), pkg=pkg, order=order),
+                 P.PROC / "cycle_plan_state.pkl")
     ccols = ["name", "where", "type", "source", "treatment", "length_m", "cost_low", "cost", "cost_high", "plan",
-             "grid_ends", "dT_godutch", "relied_on_by", "shared_credit", "credit_per_M", "network_rank"]
+             "grid_ends", "relied_on_by", "shared_credit", "credit_per_M", "network_rank"]
     cand.sort_values("shared_credit", ascending=False)[ccols].round(2).to_csv(
         P.TABLES / "cycle_plan_candidates.csv", index=False)
     pkg.drop(columns="cands").round(2).to_csv(P.TABLES / "cycle_plan_packages.csv", index=False)
