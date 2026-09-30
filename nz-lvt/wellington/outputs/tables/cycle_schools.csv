@@ -1,43 +1,43 @@
 school,type,roll,suburb,catchment_km,residents,pct_all_ages,pct_confident,unconnected,blocker_1,blocker_2,blocker_3,blocker_1_residents,blocker_2_residents,blocker_3_residents,snap_m
-Wellington High School and Com Ed Centre,Secondary (Year 9-15),1650.0,Mt Cook,3.0,53318,15.0,25.5,45310.0,Wallace Street,John Street,Victoria Street,14609,13558,11228,60
-Wellington East Girls' College,Secondary (Year 9-15),1008.0,Mt Victoria,3.0,49808,16.2,23.1,41717.0,Mount Victoria Tunnel Shared Path,Paterson Street,Newtown to City Cycleway,41004,33513,12745,37
-Wellington College,Secondary (Year 9-15),1943.0,Mt Victoria,3.0,49698,16.5,31.0,41514.0,Newtown to City Cycleway,Taranaki Street,Adelaide Road,13403,10682,10279,35
+Wellington High School and Com Ed Centre,Secondary (Year 9-15),1650.0,Mt Cook,3.0,53318,18.2,25.5,43626.0,Wallace Street,John Street,Victoria Street,14239,13188,11228,60
+Wellington East Girls' College,Secondary (Year 9-15),1008.0,Mt Victoria,3.0,49808,16.9,23.1,41397.0,Paterson Street,Taranaki Street,(unnamed path),33222,10613,9123,37
 South Wellington Intermediate,Intermediate,340.0,Berhampore,3.0,43886,8.7,10.3,40064.0,Te Wharepōuri Street,Russell Terrace,(unnamed tertiary),40064,30451,27627,71
-St Patrick's College (Kilbirnie),Secondary (Year 9-15),723.0,Kilbirnie,3.0,43350,12.6,26.8,37901.0,Wellington Road,Crawford Road,Constable Street,25830,14980,13049,116
+Wellington College,Secondary (Year 9-15),1943.0,Mt Victoria,3.0,49698,21.2,31.0,39166.0,Taranaki Street,(unnamed path),Tory Street,10225,8791,8570,35
+St Patrick's College (Kilbirnie),Secondary (Year 9-15),723.0,Kilbirnie,3.0,43350,12.6,26.8,37884.0,Wellington Road,Crawford Road,Constable Street,25830,14980,13049,116
 Evans Bay Intermediate,Intermediate,334.0,Kilbirnie,3.0,34551,1.5,49.5,34040.0,Kemp Street,Wellington Road,Crawford Road,27749,16632,11149,23
 St Mary's College (Wellington),Secondary (Year 9-15),554.0,Thorndon,3.0,32099,0.0,19.2,32096.0,Hill Street,Lambton Quay,Whitmore Street,32096,15429,15378,15
 Mt Cook School (Wellington),Full Primary,303.0,Te Aro,2.0,31467,0.2,0.2,31419.0,Tory Street,(unnamed service),Taranaki Street,31419,12620,10500,20
 Wellington Hills Christian College,Composite,175.0,Johnsonville,3.0,28849,0.1,0.1,28814.0,Broderick Road,Johnsonville Road,Moorefield Road,26989,17996,13753,29
-Wellington Girls' College,Secondary (Year 9-15),1427.0,Pipitea,3.0,28258,6.5,20.4,26409.0,Pipitea Street,Lambton Quay,Whitmore Street,19411,13006,12955,43
-St Catherines College (Kilbirnie),Secondary (Year 9-15),208.0,Kilbirnie,3.0,30686,17.4,51.1,25357.0,Bourke Street,Rodrigo Road,Childers Terrace,25357,25357,25266,26
-Newtown School,Contributing,319.0,Newtown,2.0,26101,5.6,23.2,24648.0,Riddiford Street,Adelaide Road,John Street,11301,6919,5568,41
-Onslow College,Secondary (Year 9-15),1193.0,Johnsonville,3.0,23936,0.0,0.0,23932.0,Burma Road,(unnamed service),(unnamed secondary),23930,7037,6108,49
-St Mark's Church School (Mt Victoria),Full Primary,142.0,Mt Victoria,2.0,30393,21.8,38.2,23778.0,Taranaki Street,Tory Street,(unnamed service),6525,5999,5264,26
+Wellington Girls' College,Secondary (Year 9-15),1427.0,Pipitea,3.0,28258,6.7,20.4,26367.0,Pipitea Street,Lambton Quay,Whitmore Street,19411,13006,12955,43
+St Catherines College (Kilbirnie),Secondary (Year 9-15),208.0,Kilbirnie,3.0,30686,17.4,51.1,25342.0,Bourke Street,Rodrigo Road,Childers Terrace,25342,25342,25251,26
+Onslow College,Secondary (Year 9-15),1193.0,Johnsonville,3.0,23936,0.0,0.0,23932.0,Burma Road,(unnamed service),(unnamed secondary),23930,7037,6086,49
 Raroa Normal Intermediate,Intermediate,526.0,Johnsonville,3.0,24183,1.7,4.2,23771.0,Haumia Street,(unnamed secondary),Moorefield Road,23771,21590,8412,28
 St Annes School (Newtown),Full Primary,218.0,Newtown,2.0,23596,0.2,0.2,23541.0,Mein Street,Daniell Street,Riddiford Street,14027,9514,5618,38
 Scots College,Composite,1165.0,Strathmore Park,3.0,22326,0.4,3.7,22231.0,Monorgan Road,Broadway,(unnamed secondary),22231,16151,7885,29
 Newlands Intermediate,Intermediate,516.0,Paparangi,3.0,21900,0.6,0.6,21770.0,Bracken Road,(unnamed tertiary),Stewart Drive,21770,8869,8564,25
-Clyde Quay School,Full Primary,222.0,Mt Victoria,2.0,29161,27.0,43.2,21276.0,Taranaki Street,Lorne Street,Ebor Street,12776,11165,10939,31
-Te Aro School,Full Primary,219.0,Te Aro,2.0,26864,21.0,40.7,21225.0,The Terrace,Abel Smith Street,Ghuznee Street,21225,9450,7512,46
-Rongotai College,Secondary (Year 9-15),709.0,Rongotai,3.0,25442,19.3,56.8,20528.0,Coutts Street,(unnamed cycleway),Queens Drive,8290,7570,7134,22
-Samuel Marsden Collegiate School,Composite,396.0,Karori,3.0,20434,0.2,26.9,20385.0,Marsden Avenue,Lancaster Street,Karori Road,20385,20302,13661,29
+St Mark's Church School (Mt Victoria),Full Primary,142.0,Mt Victoria,2.0,30393,30.6,38.2,21079.0,Taranaki Street,Tory Street,(unnamed service),6062,5903,4449,26
+Newtown School,Contributing,319.0,Newtown,2.0,26101,19.7,23.2,20956.0,Riddiford Street,John Street,Constable Street,11301,5000,4707,41
+Rongotai College,Secondary (Year 9-15),709.0,Rongotai,3.0,25442,19.3,56.8,20528.0,Coutts Street,Queens Drive,Cruickshank Street,8290,7134,5259,22
+Samuel Marsden Collegiate School,Composite,396.0,Karori,3.0,20434,0.2,26.9,20385.0,Marsden Avenue,Lancaster Street,Karori Road,20385,20302,13280,29
 Newlands College,Secondary (Year 9-15),1264.0,Paparangi,3.0,20156,0.6,0.6,20026.0,Bracken Road,(unnamed tertiary),Stewart Drive,20026,8577,7175,62
 Altum Academy,Secondary (Year 7-15),,Northland,3.0,19632,0.0,0.0,19632.0,Curtis Street,Whitehead Road,Old Karori Road,14713,7559,7548,103
+Clyde Quay School,Full Primary,222.0,Mt Victoria,2.0,29161,33.5,43.2,19380.0,Taranaki Street,Lorne Street,Ebor Street,12081,10470,10244,31
+Te Aro School,Full Primary,219.0,Te Aro,2.0,26864,28.6,40.7,19192.0,The Terrace,Abel Smith Street,Ghuznee Street,19192,8121,6808,46
 Queen Margaret College,Composite,764.0,Thorndon,3.0,18890,0.1,19.5,18864.0,Hobson Street,Tinakori Road,Davis Street,18864,7672,6757,86
 Clifton Terrace Model School,Full Primary,76.0,Kelburn,2.0,18097,0.0,13.7,18097.0,Talavera Terrace,Everton Terrace,Boulcott Street,18097,18063,10222,95
-Johnsonville School,Contributing,349.0,Johnsonville,2.0,18725,3.8,29.1,18009.0,Ironside Road,(unnamed secondary),Helston Road,12559,6770,5506,85
+Johnsonville School,Contributing,349.0,Johnsonville,2.0,18725,3.8,29.1,18009.0,Ironside Road,(unnamed secondary),Helston Road,12559,5511,5506,85
 Brooklyn School (Wellington),Full Primary,376.0,Brooklyn,2.0,18310,8.5,16.6,16758.0,Washington Avenue,Bell Road,Heaton Terrace,12356,5317,5317,42
 Berhampore School,Contributing,273.0,Berhampore,2.0,16750,4.7,26.0,15960.0,Chilka Street,Adelaide Road,Luxford Street,15960,12681,5780,54
-Kilbirnie School,Contributing,212.0,Hataitai,2.0,19315,17.9,30.4,15863.0,Wellington Road,Crawford Road,Ruahine Street,7372,6563,6398,55
+Kilbirnie School,Contributing,212.0,Hataitai,2.0,19315,17.9,30.4,15863.0,Wellington Road,Crawford Road,Goa Street,7372,6563,6398,55
 St Brigids School (Johnsonville),Full Primary,302.0,Johnsonville,2.0,15499,2.2,30.7,15160.0,Frankmoore Avenue,Phillip Street,Broderick Road,7679,6082,5960,76
-TKKM o Nga Mokopuna,Composite,178.0,Seatoun,3.0,15823,10.0,23.3,14248.0,Dundas Street,Falkirk Avenue,Broadway,10346,10329,8550,22
+TKKM o Nga Mokopuna,Composite,178.0,Seatoun,3.0,15823,10.0,23.3,14248.0,Dundas Street,Falkirk Avenue,Ferry Street,10346,10329,8550,22
 Tawa College,Secondary (Year 9-15),1043.0,Tawa,3.0,13780,0.0,0.0,13779.0,Duncan Street,Main Road,(unnamed secondary),13779,7676,6526,41
 Rewa Rewa School,Contributing,144.0,Paparangi,2.0,14411,7.3,31.8,13353.0,Bracken Road,Trebann Street,Stewart Drive,7472,6022,5721,31
 Newlands School,Contributing,307.0,Newlands,2.0,13120,1.7,25.0,12901.0,Batchelor Street,Atkinson Street,Stewart Drive,12843,11112,10913,97
 Tawa Intermediate,Intermediate,455.0,Tawa,3.0,12656,0.8,11.7,12554.0,Ranui Terrace,McLellan Street,(unnamed tertiary),12554,10720,10621,21
 West Park School,Contributing,254.0,Johnsonville,2.0,12544,1.4,1.4,12367.0,Broderick Road,(unnamed tertiary),Bannister Avenue,10449,2981,2354,33
 Kahurangi School,Full Primary,259.0,Strathmore Park,2.0,12544,1.6,33.8,12344.0,Strathmore Avenue,(unnamed secondary),Broadway,8211,6485,5726,105
-St Patrick's School (Kilbirnie),Full Primary,128.0,Kilbirnie,2.0,16915,27.2,66.6,12315.0,Kilbirnie Crescent,Duncan Terrace,Constable Street,7400,5147,3088,56
+St Patrick's School (Kilbirnie),Full Primary,128.0,Kilbirnie,2.0,16915,27.3,66.6,12300.0,Kilbirnie Crescent,Duncan Terrace,Constable Street,7400,5147,3088,56
 Kelburn Normal School,Full Primary,275.0,Kelburn,2.0,12233,6.6,23.8,11427.0,Upland Road,(unnamed secondary),Kelburn Viaduct,11427,10289,4949,19
 St Teresa's School (Karori),Full Primary,122.0,Karori,2.0,13496,15.6,57.3,11397.0,Karori Road,Campbell Street,Allington Road,8539,1922,1375,66
 Miramar Central School,Contributing,171.0,Miramar,2.0,11996,7.3,15.0,11124.0,Park Road,(unnamed secondary),Miramar Avenue,10677,5425,2713,47
