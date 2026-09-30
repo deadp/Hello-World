@@ -1,0 +1,41 @@
+package,suburb,projects,n_projects,cost,cost_low,cost_high,extra_riders,riders_per_M,build_step
+Aro Valley routes,Aro Valley,Willis Street; Aro Street; Customhouse Quay,3,4.2,1.97,8.92,1183.51,281.84,1.0
+Rongotai routes,Rongotai,Miro Street; Kedah Street; Coutts Street; Kauri Street; Hamilton Road; Wexford Road; Taurima Street; Moxham Avenue; (unnamed link); Kupe Street,10,3.65,1.71,7.44,892.42,244.71,2.0
+Te Aro routes,Te Aro,Willis Street; Taranaki Street; Customhouse Quay; Jervois Quay,4,7.66,3.59,16.28,1642.87,214.4,
+Mt Cook routes,Mt Cook,Willis Street; Taranaki Street; Customhouse Quay; Jervois Quay,4,7.66,3.59,16.28,1642.87,214.4,
+Hataitai routes,Hataitai,Brougham Street; Wakefield Street; Pirie Street; Hataitai Road; Taurima Street; Moxham Avenue,6,4.96,2.32,10.38,898.94,181.4,
+Wellington Central routes,Wellington Central,Willis Street; Victoria Street; The Terrace; Boulcott Street; Customhouse Quay,5,9.41,4.41,20.01,1667.94,177.17,6.0
+Miramar routes,Miramar,Park Road; Miro Street; Coutts Street; Hobart Street; Tauhinu Road; Chelsea Street; Miramar Avenue; Wellington Road,8,8.64,4.12,17.44,1434.79,165.99,4.0
+Roseneath routes,Roseneath,Wakefield Street; Whitmore Street; Customhouse Quay; Jervois Quay,4,4.98,2.32,10.55,787.47,158.17,3.0
+Oriental Bay routes,Oriental Bay,Wakefield Street; Whitmore Street; Customhouse Quay; Jervois Quay,4,4.98,2.32,10.55,787.47,158.17,
+Karori routes,Karori,Willis Street; Karori Road; Chaytor Street; Aro Street; Karori Road; Raroa Road; Karori Tunnel; Glenmore Street; Raroa Crescent; (unnamed link); Karori Road at ,11,8.82,4.23,18.49,1179.04,133.61,
+Kelburn routes,Kelburn,Willis Street; Kelburn Parade; Ghuznee Street; The Terrace; Upland Road; Salamanca Road,6,10.84,5.08,23.04,1447.86,133.54,
+Karaka Bays routes,Karaka Bays,Park Road; Hobart Street; Tauhinu Road; Para Street; Awa Road; Chelsea Street; Totara Road; Miramar Avenue; Wellington Road; Nevay Road; Rex Street,11,11.67,5.55,23.55,1453.7,124.6,5.0
+Thorndon routes,Thorndon,Featherston Street; Whitmore Street; Tinakori Road; Customhouse Quay; Mulgrave Street; Jervois Quay; Murphy Street,7,7.97,3.7,16.87,971.8,121.94,
+Kilbirnie routes,Kilbirnie,Miro Street; Kedah Street; Coutts Street; Brougham Street; Hamilton Road; Taurima Street; Moxham Avenue; (unnamed link); Kupe Street,9,4.6,2.15,9.63,534.2,116.01,
+Newtown routes,Newtown,Riddiford Street; Daniell Street; Owen Street; Wakefield Street; Customhouse Quay; Jervois Quay; Cambridge Terrace,7,7.81,3.65,16.41,811.48,103.94,
+Seatoun routes,Seatoun,Tauhinu Road; Para Street; Hamilton Road; Awa Road; Wellington Road; Seatoun Heights Road; Rex Street; (unnamed link),8,7.98,3.81,15.9,810.03,101.5,
+Berhampore routes,Berhampore,Rintoul Street; Riddiford Street; Adelaide Road; Wakefield Street; Te Wharepōuri Street; Russell Terrace; Cambridge Terrace,7,5.24,2.44,11.09,476.86,91.08,
+Mt Victoria routes,Mt Victoria,Brougham Street; Wakefield Street; Customhouse Quay; Majoribanks Street; Pirie Street; Elizabeth Street; Jervois Quay; Cambridge Terrace,8,8.76,4.09,18.58,795.94,90.87,
+Ngaio routes,Ngaio,Old Porirua Road; Featherston Street; Whitmore Street; Customhouse Quay; Cockayne Road; Kaiwharawhara Road; Jervois Quay; Ngaio Gorge Road; Kaiwharawhara Road,9,9.28,4.33,19.5,730.01,78.64,
+Wadestown routes,Wadestown,Wadestown Road; Featherston Street; Whitmore Street; Tory Street; Customhouse Quay; Grant Road; Mulgrave Street; Jervois Quay; Park Street; Murphy Street; Cable Street; Cecil Road,12,12.82,5.96,27.13,992.77,77.46,
+Johnsonville routes,Johnsonville,Johnsonville Road; Broderick Road,2,3.4,1.6,7.23,219.02,64.33,
+Paparangi routes,Paparangi,Helston Road; Johnsonville Road; Beazley Avenue; (unnamed link),4,4.16,1.94,8.73,242.67,58.36,
+Tawa routes,Tawa,Oxford Street; Main Road; McLellan Street; The Drive; Duncan Street; Cambridge Street,6,3.27,1.56,6.58,188.54,57.69,
+Maupuia routes,Maupuia,Shelly Bay Road; Massey Road; Karaka Bay Road; Wellington Road,4,3.5,1.75,5.63,200.06,57.17,
+Churton Park routes,Churton Park,Johnsonville Road; Bassett Road; Chorley Grove; Churton Drive; Halswater Drive; Amesbury Drive; Hawtrey Terrace; Westchester Drive; Clifford Road; Moorefield Road; (unnamed link),11,8.49,3.97,17.7,482.53,56.83,
+Pipitea routes,Pipitea,Featherston Street; Customhouse Quay; Panama Street,3,2.54,1.2,5.4,135.9,53.44,
+Kaiwharawhara routes,Kaiwharawhara,Featherston Street; Cameron Street; Customhouse Quay; Kaiwharawhara Road,4,2.85,1.32,5.96,148.74,52.19,
+Newlands routes,Newlands,Helston Road; Newlands Road; Stewart Drive; Johnsonville Road; (unnamed link),5,8.32,3.88,17.66,412.32,49.53,
+Lyall Bay routes,Lyall Bay,Miro Street; Kedah Street; Coutts Street; Freyberg Street; Queens Drive; Lyall Parade,6,6.12,2.89,12.81,299.96,49.01,
+Grenada Village routes,Grenada Village,Helston Road; Johnsonville Road; Mark Avenue; Bracken Road; Grenada Drive; Beazley Avenue; (unnamed link); (unnamed link),8,12.05,5.62,25.47,406.32,33.72,
+Glenside routes,Glenside,Middleton Road; Johnsonville Road; (unnamed link); (unnamed link),4,7.87,3.66,16.67,263.23,33.44,
+Khandallah routes,Khandallah,Nicholson Road; Featherston Street; Cameron Street; Cashmere Avenue; Kaiwharawhara Road,5,5.3,2.47,11.16,175.55,33.15,
+Broadmeadows routes,Broadmeadows,Burma Road; Cashmere Avenue; Agra Crescent; Station Road,4,4.68,2.18,9.86,141.82,30.32,
+Wilton routes,Wilton,Upland Road; Northland Road; Mairangi Road; Pembroke Road; Kelburn Viaduct,5,4.87,2.29,9.94,129.06,26.48,
+Northland routes,Northland,Kelburn Parade; Upland Road; Garden Road; Glenmore Street; Northland Road; Glasgow Street; Kelburn Viaduct,7,7.13,3.31,14.97,180.89,25.38,
+Island Bay routes,Island Bay,Rintoul Street; Riddiford Street; Adelaide Road; Severn Street; Derwent Street; Te Wharepōuri Street,6,7.04,3.3,14.96,162.75,23.12,
+Mornington routes,Mornington,Adelaide Road; Hanson Street; King Street; Stoke Street; Farnham Street; Liardet Street,6,5.25,2.45,11.07,120.83,22.99,
+Houghton Bay routes,Houghton Bay,Rintoul Street; Riddiford Street; Adelaide Road; Queens Drive; The Esplanade; Lyall Parade,6,11.18,5.24,23.75,233.37,20.88,
+Owhiro Bay routes,Owhiro Bay,Rintoul Street; Riddiford Street; Adelaide Road; Derwent Street; The Esplanade; Happy Valley Road; Owhiro Bay Parade,7,11.96,5.61,25.42,179.17,14.98,
+Brooklyn routes,Brooklyn,Ohiro Road; Mornington Road; Farnham Street; McKinley Crescent; The Ridgeway; Liardet Street,6,5.32,2.48,11.12,67.84,12.75,

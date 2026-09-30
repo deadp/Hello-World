@@ -282,7 +282,7 @@ def main():
     (P.TABLES / "cycle_plan_summary.json").write_text(json.dumps(summary, indent=1, default=float))
     pd.set_option("display.width", 250)
     print(cand.sort_values("shared_credit", ascending=False).head(25)[
-        ["name", "where", "treatment", "cost", "dT_godutch", "relied_on_by", "shared_credit", "credit_per_M"]]
+        ["name", "where", "treatment", "cost", "relied_on_by", "shared_credit", "credit_per_M"]]
         .round(1).to_string())
     print(pkg.head(20)[["package", "projects", "cost", "extra_riders", "riders_per_M", "build_step"]].round(1)
           .to_string())

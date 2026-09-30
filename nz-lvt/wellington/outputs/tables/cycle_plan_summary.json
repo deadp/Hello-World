@@ -1,0 +1,76 @@
+{
+ "census": 8192.555363284971,
+ "riders_today_network": 20766.640072122405,
+ "riders_complete_network": 34725.216477399634,
+ "godutch": 59426.10981406498,
+ "connected_all_ages_now": 19.751037780326865,
+ "connected_all_ages_complete": 48.8219042352032,
+ "complete_cost": 281.9408373321003,
+ "types": {
+  "fearless": 0.06,
+  "confident": 0.13,
+  "concerned": 0.81
+ },
+ "greedy": [
+  {
+   "step": 1,
+   "package": "Aro Valley routes",
+   "added": 3,
+   "step_cost": 4.1992135683321425,
+   "cum_cost": 4.1992135683321425,
+   "extra_riders": 1183.5110264225318,
+   "riders": 21950.15109854494,
+   "per_M": 281.84111314266937
+  },
+  {
+   "step": 2,
+   "package": "Rongotai routes",
+   "added": 10,
+   "step_cost": 3.6468828360171974,
+   "cum_cost": 7.84609640434934,
+   "extra_riders": 909.5894151218664,
+   "riders": 22859.740513666806,
+   "per_M": 249.41558476697307
+  },
+  {
+   "step": 3,
+   "package": "Roseneath routes",
+   "added": 3,
+   "step_cost": 3.606648250195768,
+   "cum_cost": 11.452744654545107,
+   "extra_riders": 582.1456232641203,
+   "riders": 23441.886136930927,
+   "per_M": 161.4090376660717
+  },
+  {
+   "step": 4,
+   "package": "Miramar routes",
+   "added": 6,
+   "step_cost": 8.486690387228588,
+   "cum_cost": 19.939435041773695,
+   "extra_riders": 1024.2707967579656,
+   "riders": 24466.156933688893,
+   "per_M": 120.69142975916331
+  },
+  {
+   "step": 5,
+   "package": "Karaka Bays routes",
+   "added": 5,
+   "step_cost": 3.1801440548087796,
+   "cum_cost": 23.119579096582473,
+   "extra_riders": 366.09321214946107,
+   "riders": 24832.250145838356,
+   "per_M": 115.1184367248653
+  },
+  {
+   "step": 6,
+   "package": "Wellington Central routes",
+   "added": 3,
+   "step_cost": 6.037955678587459,
+   "cum_cost": 29.157534775169935,
+   "extra_riders": 648.6714998852578,
+   "riders": 25480.921645723614,
+   "per_M": 107.43230563709774
+  }
+ ]
+}

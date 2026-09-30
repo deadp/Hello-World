@@ -626,9 +626,9 @@ up the most trips per dollar. The prioritisation does, in these steps:
     streets look best.
   - Sensitivities: "confident" (stress ≤ 2, effort) and "confident_flat" (stress ≤ 2, distance:
     the earlier measure).
-- **Today:** only 13% of potential (Go Dutch) trips have an all-ages route, and 10% of trips
-  cycled today. For confident riders the figures are 35% (hill-aware) and 37% (distance only).
-- **Candidates:** 318 in total.
+- **Today:** 20% of potential (Go Dutch) trips have an all-ages route, and 17% of trips cycled today.
+  For confident riders the figures are 36% (hill-aware) and 38% (distance only).
+- **Candidates:** 397 in total.
   - The 200 biggest corridor gaps (any road direction at stress 2–4 with 30+ Go Dutch trips). Each
     covers the street's whole busy stretch: busy pieces within 150 m with few potential trips
     are filled in, so a Tinakori Road project leaves no busy gaps.
@@ -666,44 +666,45 @@ up the most trips per dollar. The prioritisation does, in these steps:
 
 | Step | Project | Treatment | Cost | Go Dutch trips newly connected | Joins network | % connected after |
 |---|---|---|---|---|---|---|
-| – | Today | | | | | 13.3% |
-| 1 | Stout Street, CBD | Quiet street | $70k | 576 | both | 14.3% |
-| 2 | Manners Street, Te Aro | Quiet street | $50k | 429 | one end | 15.0% |
-| 3 | John Street, Mt Cook (ex-LGWM) | Protected lane | $420k | 1,736 | one end | 17.9% |
-| 4 | Devon Street, Aro Valley | Quiet street | $90k | 563 | – | 18.8% |
-| 5 | Miro Street, Miramar | Quiet street | $110k | 165 | both | 19.1% |
-| 6 | Strathavon Road, Miramar | Quiet street | $110k | 437 | – | 19.9% |
-| 7 | Adelaide Road, Mt Cook–Newtown (ex-LGWM) | Protected lane | $1.3M | 1,884 | both | 23.0% |
-| 8 | Hill Street, Thorndon | Quiet street | $100k | 158 | one end | 23.3% |
-| 9 | Hobson Street, Thorndon | Quiet street | $120k | 183 | – | 23.6% |
-| 10 | Te Whiti Street | Quiet street | $50k | 42 | both | 23.7% |
+| – | Today | | | | | 19.8% |
+| 1 | Stout Street, CBD | Quiet street | $70k | 884 | both | 21.2% |
+| 2 | Devon Street, Aro Valley | Quiet street | $90k | 578 | – | 22.2% |
+| 3 | Miro Street, Miramar | Quiet street | $110k | 180 | both | 22.5% |
+| 4 | Strathavon Road, Miramar | Quiet street | $110k | 486 | – | 23.3% |
+| 5 | Taurima Street, Kilbirnie (ex-LGWM) | Protected lane | $250k | 339 | both | 23.9% |
+| 6 | Hill Street, Thorndon | Quiet street | $100k | 160 | one end | 24.2% |
+| 7 | Hobson Street, Thorndon | Quiet street | $120k | 194 | – | 24.5% |
+| 8 | Bowen Street, CBD (ex-LGWM) | Protected lane | $250k | 233 | both | 24.9% |
+| 9 | Te Whiti Street | Quiet street | $50k | 42 | both | 25.0% |
+| 10 | Calcutta Street, Khandallah | Quiet street | $170k | 175 | one end | 25.3% |
 
 What this shows:
-- **The CBD and inner-city links carry most of the value.** The biggest single gains are:
-  - Adelaide Road (3,100 trips, $1.3M);
-  - John Street (1,400);
-  - Lambton Quay (700);
-  - Willis Street (675);
-  - Jervois Quay (660);
-  - Bunny Street (607, rank 8 on value);
-  - Wakefield Street (500);
-  - Bowen Street (460).
-  Almost all join the existing network at both ends, and most were LGWM-staged links that are
-  now unfunded.
-- **About $2.4M (indicative) lifts all-ages connectivity from 13% to 24%**, mostly by joining up
-  what exists in and around the CBD.
-- **Robust picks** are in the top 10 in 80%+ of draws: Stout, Manners and Devon Streets, John
-  Street, Adelaide Road, Bowen Street and Miro Street.
-- **The standard matters.** Only 1 of the top 10 stays top 10 under the confident-rider or
+- **About $1.3M (indicative) lifts all-ages connectivity from 20% to 25%.** The early steps are cheap
+  quiet-street treatments and short protected links that join existing low-stress areas.
+- **Robust picks** (top 10 in 80%+ of draws): Stout Street, Devon Street, Bowen Street, Bunny
+  Street, Miro Street, Taurima Street and Calcutta Street.
+- **Most trips connected, cost aside:**
+
+  | Project | Trips per weekday | Indicative cost | Plan status |
+  |---|---|---|---|
+  | Lambton Quay | 1,092 | $2.5M | unfunded (ex-LGWM) |
+  | Bowen Street | 929 | $0.2M | unfunded (ex-LGWM) |
+  | Bunny Street | 928 | $0.5M | unfunded (ex-LGWM) |
+  | Stout Street | 884 | $0.1M | not in plan |
+  | Willis Street | 825 | $2.0M | unfunded (ex-LGWM) |
+  | Devon Street | 601 | $0.1M | not in plan |
+  | The Terrace | 544 | $3.2M | unfunded (ex-LGWM) |
+  | Jervois Quay | 502 | $1.9M | desired only |
+  | Wakefield Street | 393 | $1.4M | desired only |
+- **Bunny Street** is 4th on value and 3rd on trips (928 trips, about $0.5M): it joins the
+  Thorndon Quay cycleway to the waterfront.
+- **One at a time, the suburban links still score low:** Wellington Road 67 trips, Upland Road 61,
+  Riddiford Street 27, Ruahine Street 21, Wadestown Road about 1. Those routes need several links
+  built together, which the network plan below evaluates.
+- **The standard matters.** Only 3 of the top 10 stay in the top 10 under the confident-rider or
   distance-only standards.
-- **Suburban connections score low one at a time.** Wadestown Road, Upland Road and the Mt
-  Victoria tunnel's east side (Ruahine Street, Wellington Road, Waitoa Road) connect few trips
-  on their own. A Wadestown or Hataitai trip also needs its other gaps closed (Tinakori Road,
-  Bowen Street, the CBD links). Each link only pays off once the rest of its route is done, and
-  the one-at-a-time build order can't see that. This is the main remaining limitation; route
-  packages or "value in the complete network" would address it.
-- **Manners Street is rated a quiet street** because its general traffic count is low. It is a
-  bus route, so the real treatment needs design, not just a filter.
+- **Manners Street** is now rated stressful (80 buses an hour in the peak) and no longer looks
+  like a cheap quiet-street fix.
 
 **Checking the network (`cycle_review.py`, `cycle_compare_routes.py`)**
 - **Open GPS traces were tried and aren't usable yet (`cycle_traces.py`).** OpenStreetMap's
@@ -730,6 +731,73 @@ trips newly connected by scenario, cycle-km, trips per $M, network ends joined, 
 value, crashes, plan status, rank band, rank by trips, tolerance ranks, build step),
 `cycle_build_order.csv`, `cycle_connectivity.csv` and the map's "Priorities" view (rank by best
 value or most trips).
+
+**Network changes made along the way** (in `cycle_network.py`)
+- **Unpaved trails** (358 km of Town Belt and reserve paths and tracks that OpenStreetMap doesn't
+  sign against bikes) are now in the network as "trail", stress 2 and 1.5x cost. They are not
+  all-ages routes.
+- **Bus frequency** from Metlink's timetable (peak buses an hour, per direction) sets a stress
+  floor: 10+ buses an hour is level 3, 30+ level 4. Manners Street, Lambton Quay, Courtenay Place
+  and much of Willis Street and the quays now rate stressful for that reason.
+- **Road reserve width** (property boundary to boundary, across the road) is measured per road
+  edge, as a guide to whether a protected lane fits.
+- **Paths beside motorway-like roads** (70 km/h+ or 20,000+ vehicles a day: Aotea Quay, Hutt Road
+  by SH1) stay stress 1, since they are separated, but route choice charges them 1.25x their
+  length, which the counters support.
+- **Refit** with all of the above: sensor agreement is 0.63 (0.48 with the first version's
+  guesses). Best fit: level 3 costs 2x, level 4 costs 3x, each metre climbed costs 30 m.
+
+**Harbour Quays bus priority** (`cycle_harbour_quays.py`; approved by councils in September 2026,
+construction from mid-2027; sources: Metlink and Transport Projects)
+- The announced scheme is peak-hour kerbside bus lanes (Mon–Fri 6:30–9:30am and 3:30–6:30pm)
+  along Whitmore Street, Customhouse Quay, Jervois Quay, Wakefield Street and Cable Street,
+  with bikes allowed in the bus lanes. No cycle lanes are announced.
+- **As announced, it connects no new all-ages trips.** A lane shared with frequent buses is
+  stress 3 at best. All 92 on-road directions on these streets are already stress 3–4.
+- **Adding protected lanes** on the same streets connects about 860 trips (all ages) for about
+  $3.3M of lanes. **Adding connectors** (Bunny Street, Featherston Street, Taranaki Street)
+  connects about 2,000 for about $4.6M. Gains go mostly to Te Aro, Mt Victoria, Newtown and
+  Mt Cook.
+- **Road reserve is tight on Cable Street and Wakefield Street** (about 20 m). Cambridge and Kent
+  Terrace have room (about 46 m). Protected lanes would compete with the bus lanes for width.
+
+**School routes** (`cycle_schools.py`)
+- 78 schools; homes within 2 km (primary) or 3 km (others) counted. Pooled, **10% of catchment
+  residents have an all-ages route** to their school, and 26% for confident riders.
+- No all-ages route at all: St Mary's College, Onslow College, Ngaio School, Sacred Heart
+  Cathedral School, Clifton Terrace Model School. Best connected: Seatoun School (45%), Lyall Bay
+  School (36%), Clyde Quay School (34%).
+- The map's Schools view lists each school's biggest blocking streets.
+
+**Suburb report cards** (`cycle_suburbs.py`)
+- Inner suburbs are much better connected than outer ones. Share of potential trips with an
+  all-ages route: Newtown 61%, Kilbirnie 55%, Mt Victoria 53%, Mt Cook 50%, Island Bay 47%, Te Aro
+  46%, Lyall Bay 43%. Outer suburbs sit near zero: Tawa 2%, Miramar 3%, Johnsonville 3%, Karori 7%,
+  Khandallah 2%, Churton Park 1%.
+- Each card names the streets blocking most of a suburb's unconnected trips and its best-value
+  projects. Homes outside the city are pooled separately.
+
+**Network plan: rider types and packages** (`cycle_plan.py`)
+- **Rider types.** Potential riders on each trip split into strong and fearless (6%: ride
+  anything), enthused and confident (13%: need stress ≤ 2) and interested but concerned (81%: need
+  an all-ages route). Each rides a trip only if a route at their standard needs at most 25% more
+  effort than the easiest one.
+- **Today's network supports about 20,800 riders a weekday** (outbound), against 8,200 cycling now
+  and a Go Dutch ceiling of 59,400. **Building every candidate** (about $282M, indicative) would
+  give about 34,700 and lift all-ages connectivity to 49%.
+- **Packages**: for each suburb, the projects its extra riders need together (at least 25% of them
+  route through each). Best value first: Aro Valley (Willis Street, Aro Street, Customhouse Quay;
+  about $4.2M, 1,180 riders), Rongotai and Kilbirnie (Miro, Coutts, Taurima, Moxham; about $3.6M,
+  890 riders), Te Aro and Mt Cook (Willis, Taranaki, Customhouse, Jervois; about $7.7M, 1,640
+  riders), Hataitai (about $5.0M, 900), Wellington Central (about $9.4M, 1,670).
+- **Many suburbs share the same packages**, because their trips route through the same CBD links:
+  Te Aro and Mt Cook are identical, as are Roseneath and Oriental Bay. Those corridors matter to
+  many suburbs at once. A greedy build order over packages (re-scored after each) starts with Aro
+  Valley, Rongotai, Roseneath, Miramar, Karaka Bays and Wellington Central: about $29M for about
+  4,700 extra riders.
+- **Credit per link** (`cycle_plan_candidates.csv`): the links most relied on are Willis Street,
+  Jervois Quay, Customhouse Quay, Wakefield Street and Taranaki Street. Each carries trips from
+  several suburbs, so it pays off through the whole network.
 
 **Limitations**
 - **Connectivity counts outbound trips.** Return trips roughly double them, but
@@ -834,6 +902,10 @@ python scripts/cycle_uptake_fit.py  # Wellington uptake model (2018 + 2023 censu
 python scripts/cycle_model.py     # all trip streams, Go Dutch / e-bike / Wellington-habits potential (uses calibration)
 python scripts/cycle_gaps.py      # gap corridors vs council plan; map data and figure
 python scripts/cycle_priorities.py  # all-ages connectivity, candidate treatments and costs, build order (~90 min)
+python scripts/cycle_plan.py         # rider types, complete network, suburb packages (~25 min)
+python scripts/cycle_schools.py      # school routes
+python scripts/cycle_suburbs.py      # suburb report cards
+python scripts/cycle_harbour_quays.py  # Harbour Quays scenarios
 python scripts/cycle_review.py      # possible missing links and protected-route ends (map "Check" view)
 python scripts/cycle_compare_routes.py [files or Ride with GPS links]  # compare real routes with the network
 python scripts/build_cycle_map.py # outputs/web/wellington_cycle_gaps.html   # incl. local cost under each sharing rule

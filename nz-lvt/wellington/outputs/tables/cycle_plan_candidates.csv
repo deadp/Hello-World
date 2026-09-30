@@ -1,0 +1,398 @@
+name,where,type,source,treatment,length_m,cost_low,cost,cost_high,plan,grid_ends,relied_on_by,shared_credit,credit_per_M,network_rank
+Willis Street,"Te Aro, Aro Valley, Wellington Central",corridor,gap,Protected lane,1252.68,0.94,2.0,4.26,Unfunded (ex-LGWM),2,2108.4,736.81,367.62,1
+Jervois Quay,"Wellington Central, Te Aro",corridor,council plan,Protected lane,1210.89,0.91,1.94,4.12,Desired only,2,2372.74,734.88,379.31,2
+Customhouse Quay,Wellington Central,corridor,gap,Protected lane,857.56,0.64,1.37,2.92,Desired only,2,2608.52,476.56,347.33,3
+Wakefield Street,Te Aro,corridor,gap,Protected lane,887.02,0.67,1.42,3.02,Desired only,2,1950.92,443.85,312.74,4
+Taranaki Street,"Te Aro, Mt Cook, Wellington Central",corridor,gap,Protected lane,1468.0,1.1,2.35,4.99,Unfunded (ex-LGWM),2,1244.58,377.22,160.6,5
+The Terrace,"Wellington Central, Te Aro",corridor,gap,Protected lane,1997.01,1.5,3.2,6.79,Unfunded (ex-LGWM),2,933.6,309.82,96.97,6
+Moxham Avenue,Hataitai,corridor,council plan,Protected lane,616.68,0.46,0.99,2.1,Unfunded (ex-LGWM),0,1159.11,278.87,282.64,7
+Park Road,Miramar,corridor,gap,Protected lane,1308.8,0.98,2.09,4.45,Planned (WCC),0,722.82,255.84,122.17,8
+Featherston Street,"Wellington Central, Pipitea",corridor,gap,Protected lane,700.6,0.53,1.12,2.38,Unfunded (ex-LGWM),1,1107.68,232.3,207.23,9
+Dixon Street,Te Aro,corridor,gap,Protected lane,612.8,0.46,0.98,2.08,Unfunded (ex-LGWM),0,830.02,176.95,180.48,10
+Tory Street,Te Aro,corridor,gap,Protected lane,832.83,0.62,1.33,2.83,Planned (WCC),2,1051.53,175.05,131.37,11
+Tauhinu Road,Miramar,corridor,gap,Protected lane,896.56,0.67,1.43,3.05,Not in plan,1,763.45,172.78,120.45,12
+Wellington Road,"Hataitai, Kilbirnie",corridor,gap,"Protected lane (state highway, NZTA)",947.21,0.95,1.89,3.22,Unfunded (ex-LGWM),2,1097.27,170.1,89.79,13
+Miro Street,Miramar,corridor,gap,Quiet street (30 km/h + filter),536.38,0.05,0.11,0.16,Planned (WCC),2,920.13,169.24,1577.66,14
+Burma Road,"Broadmeadows, Khandallah, Johnsonville",corridor,gap,Protected lane,1526.41,1.14,2.44,5.19,Planned (WCC),1,386.44,164.16,67.22,15
+Tinakori Road,Thorndon,corridor,gap,Protected lane,1739.82,1.3,2.78,5.92,Not in plan,2,478.34,158.89,57.08,16
+Miramar Avenue,Miramar,corridor,gap,Protected lane,673.74,0.51,1.08,2.29,Planned (WCC),1,1099.91,152.72,141.67,17
+Boulcott Street,"Wellington Central, Mt Victoria, Kelburn",corridor,gap,Protected lane,597.56,0.45,0.96,2.03,Not in plan,0,652.22,149.65,156.52,18
+Victoria Street,"Te Aro, Wellington Central, Mt Cook",corridor,gap,Protected lane,1179.15,0.88,1.89,4.01,Unfunded (ex-LGWM),2,889.18,149.42,79.2,19
+Devon Street,Aro Valley,corridor,gap,Quiet street (30 km/h + filter),443.32,0.04,0.09,0.13,Not in plan,0,589.62,146.49,1652.2,20
+Kelburn Parade,Kelburn,corridor,gap,Protected lane,1216.82,0.91,1.95,4.14,Not in plan,0,815.5,145.79,74.88,21
+Brougham Street,Mt Victoria,corridor,gap,Protected lane,754.19,0.57,1.21,2.56,Not in plan,1,1187.68,144.41,119.67,22
+Hobart Street,Miramar,corridor,gap,Protected lane,1190.61,0.89,1.9,4.05,Planned (WCC),0,788.11,143.98,75.58,23
+Upland Road,"Kelburn, Northland",corridor,gap,Protected lane,1249.91,0.94,2.0,4.25,Planned (WCC),2,387.94,143.71,71.86,24
+Lambton Quay,"Wellington Central, Pipitea",corridor,gap,Protected lane,1577.44,1.18,2.52,5.36,Unfunded (ex-LGWM),2,573.4,142.43,56.43,25
+Ghuznee Street,Te Aro,corridor,gap,Protected lane,669.89,0.5,1.07,2.28,Unfunded (ex-LGWM),0,653.91,141.03,131.58,26
+Johnsonville Road,Johnsonville,corridor,gap,Protected lane,410.89,0.31,0.66,1.4,Planned (WCC),2,650.0,138.47,210.62,27
+Helston Road,"Johnsonville, Paparangi",corridor,gap,Protected lane,1958.75,1.47,3.13,6.66,Planned (WCC),2,304.2,125.31,39.98,28
+Broderick Road,Johnsonville,corridor,gap,Protected lane,1716.93,1.29,2.75,5.84,Planned (WCC),2,265.15,124.29,45.24,29
+Courtenay Place,Te Aro,corridor,gap,Protected lane,899.41,0.67,1.44,3.06,Unfunded (ex-LGWM),0,646.59,121.99,84.77,30
+Aro Street,Aro Valley,corridor,gap,Protected lane,524.41,0.39,0.82,1.75,Planned (WCC),2,968.38,115.73,140.65,31
+Para Street,Miramar,corridor,gap,Protected lane,577.68,0.43,0.92,1.96,Not in plan,0,721.14,111.78,120.94,32
+Hamilton Road,Hataitai,corridor,gap,Protected lane,856.28,0.64,1.37,2.91,Not in plan,0,1061.52,109.17,79.69,33
+Vivian Street,Te Aro,corridor,gap,"Protected lane (state highway, NZTA)",894.58,0.89,1.79,3.04,Not in plan,2,486.56,93.92,52.49,34
+Coutts Street,Rongotai,corridor,gap,Quiet street (30 km/h + filter),156.08,0.03,0.05,0.1,Planned (WCC),2,915.2,91.04,1820.79,35
+Massey Road,Maupuia,corridor,gap,Quiet street (30 km/h + filter),3098.82,0.31,0.62,0.93,Planned (WCC),0,153.65,87.49,141.17,36
+Middleton Road,"Glenside, Churton Park, Johnsonville",corridor,gap,Protected lane,4197.1,3.15,6.72,14.27,Planned (WCC),2,139.45,87.31,13.0,37
+Raroa Road,"Kelburn, Aro Valley",corridor,gap,Protected lane,1602.43,1.2,2.56,5.45,Planned (WCC),1,232.57,86.58,33.77,38
+Stone Street,Miramar,corridor,gap,Quiet street (30 km/h + filter),329.56,0.03,0.07,0.1,Not in plan,0,468.77,85.93,1303.72,39
+Riddiford Street,Newtown,corridor,gap,Protected lane,632.58,0.47,1.01,2.15,Planned (WCC),1,750.49,83.57,82.57,40
+Pirie Street,Mt Victoria,corridor,gap,Protected lane,553.59,0.42,0.89,1.88,Not in plan,2,853.11,82.69,93.36,41
+Fairlie Terrace,Kelburn,corridor,gap,Quiet street (30 km/h + filter),262.46,0.03,0.05,0.1,Not in plan,0,534.67,81.72,1556.85,42
+Rex Street,Miramar,corridor,gap,Quiet street (30 km/h + filter),479.61,0.05,0.1,0.14,Not in plan,0,543.59,81.34,848.01,43
+Cambridge Terrace,Te Aro,corridor,council plan,Protected lane,124.89,0.1,0.25,0.5,Planned (WCC),1,1272.12,78.45,313.82,44
+Darlington Road,Miramar,corridor,gap,Protected lane,1030.02,0.77,1.65,3.5,Not in plan,0,381.39,77.92,47.28,45
+Bassett Road,Johnsonville,corridor,gap,Protected lane,347.45,0.26,0.56,1.18,Not in plan,1,359.41,77.76,139.87,46
+Oxford Street,Tawa,corridor,gap,Quiet street (30 km/h + filter),1078.21,0.11,0.22,0.32,Planned (WCC),1,141.9,76.55,354.98,47
+Chelsea Street,Miramar,corridor,gap,Quiet street (30 km/h + filter),403.63,0.04,0.08,0.12,Not in plan,0,742.9,76.13,943.02,48
+Strathavon Road,Miramar,corridor,gap,Quiet street (30 km/h + filter),552.01,0.06,0.11,0.17,Not in plan,0,416.47,74.83,677.79,49
+Shelly Bay Road,"Maupuia, Miramar",corridor,gap,Quiet street (30 km/h + filter),3027.01,0.3,0.61,0.91,Planned (WCC),1,152.95,73.79,121.88,50
+Hill Street,Thorndon,corridor,gap,Quiet street (30 km/h + filter),517.14,0.05,0.1,0.16,Planned (WCC),1,319.83,72.04,696.55,51
+Hataitai Road,Hataitai,corridor,gap,Quiet street (30 km/h + filter),1036.07,0.1,0.21,0.31,Not in plan,0,248.54,70.98,342.56,52
+Taurima Street,Hataitai,corridor,council plan,Protected lane,149.12,0.11,0.25,0.51,Unfunded (ex-LGWM),2,1340.28,70.86,283.43,53
+Newlands Road,Newlands,corridor,gap,Protected lane,1517.27,1.14,2.43,5.16,Planned (WCC),1,129.42,69.79,28.75,54
+Mark Avenue,"Grenada Village, Paparangi",corridor,gap,Protected lane,2340.73,1.76,3.75,7.96,Planned (WCC),0,132.78,66.38,17.73,55
+Whitmore Street,Wellington Central,corridor,gap,Protected lane,84.42,0.1,0.25,0.5,Planned (WCC),2,1805.18,66.26,265.03,56
+Lyall Parade,Lyall Bay,corridor,gap,Protected lane,806.85,0.61,1.29,2.74,Planned (WCC),0,190.99,66.08,51.19,57
+Daniell Street,Newtown,corridor,gap,Protected lane,989.72,0.74,1.58,3.37,Not in plan,0,454.59,64.29,40.6,58
+Kauri Street,Miramar,corridor,gap,Quiet street (30 km/h + filter),618.69,0.06,0.12,0.19,Not in plan,0,519.69,62.64,506.22,59
+Awa Road,"Miramar, Seatoun",corridor,gap,Protected lane,1019.83,0.76,1.63,3.47,Not in plan,0,323.68,62.24,38.15,60
+Kedah Street,Miramar,corridor,gap,Quiet street (30 km/h + filter),291.28,0.03,0.06,0.1,Planned (WCC),0,512.17,61.56,1056.65,61
+Adelaide Road,"Newtown, Berhampore",corridor,gap,Protected lane,938.61,0.7,1.5,3.19,Not in plan,2,425.45,60.34,40.18,62
+Karaka Bay Road,"Karaka Bays, Seatoun",corridor,gap,Quiet street (30 km/h + filter),1899.39,0.19,0.38,0.57,Planned (WCC),0,141.67,60.07,158.13,63
+Stewart Drive,"Newlands, Johnsonville",corridor,gap,Protected lane,1159.52,0.87,1.86,3.94,Planned (WCC),0,116.91,59.26,31.94,64
+Hanson Street,"Mt Cook, Newtown",corridor,gap,Protected lane,989.44,0.74,1.58,3.36,Not in plan,0,201.23,56.58,35.74,65
+Nicholson Road,Khandallah,corridor,gap,Protected lane,1195.03,0.9,1.91,4.06,Planned (WCC),1,216.06,54.19,28.34,66
+Karori Road,Karori,corridor,gap,Protected lane,227.48,0.17,0.36,0.77,Unfunded (ex-LGWM),2,261.47,52.99,145.59,67
+Wexford Road,Miramar,corridor,gap,Quiet street (30 km/h + filter),625.3,0.06,0.13,0.19,Not in plan,0,576.55,52.53,420.03,68
+Ellesmere Avenue,Miramar,corridor,gap,Quiet street (30 km/h + filter),524.55,0.05,0.1,0.16,Not in plan,0,255.19,52.52,500.59,69
+Wadestown Road,"Wadestown, Thorndon",corridor,gap,Protected lane,2059.9,1.54,3.29,7.0,Planned (WCC),0,119.91,51.68,15.69,70
+Abel Smith Street,"Te Aro, Aro Valley",corridor,gap,Protected lane,580.83,0.44,0.93,1.97,Not in plan,2,508.08,51.4,55.3,71
+Hobson Street,"Thorndon, Pipitea",corridor,gap,Quiet street (30 km/h + filter),574.56,0.06,0.11,0.17,Not in plan,0,273.48,50.47,439.18,72
+Tory Street at Tennyson Street,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Unfunded (ex-LGWM),0,353.71,50.34,62.92,73
+Karori Road,Karori,corridor,gap,Protected lane,326.18,0.24,0.52,1.11,Unfunded (ex-LGWM),2,372.87,49.72,95.27,74
+Chaytor Street,"Kelburn, Northland, Karori",corridor,gap,Protected lane,380.43,0.27,0.58,1.23,Unfunded (ex-LGWM),2,468.78,49.19,85.11,75
+Northland Road,Northland,corridor,gap,Protected lane,1250.92,0.94,2.0,4.25,Planned (WCC),1,172.86,48.42,24.19,76
+The Esplanade,"Island Bay, Houghton Bay, Lyall Bay",corridor,council plan,Protected lane,1702.75,1.28,2.72,5.79,Planned (WCC),1,95.4,48.07,17.64,77
+Cameron Street,Kaiwharawhara,corridor,gap,Quiet street (30 km/h + filter),535.49,0.05,0.11,0.16,Planned (WCC),1,347.72,47.82,446.5,78
+Cable Street,"Te Aro, Wellington Central",corridor,council plan,Protected lane,346.08,0.26,0.55,1.18,Desired only,2,482.6,47.53,85.84,79
+Wallace Street,Mt Cook,corridor,council plan,Protected lane,628.14,0.47,1.01,2.14,Unfunded (ex-LGWM),0,172.74,47.12,46.88,80
+Mulgrave Street,"Pipitea, Thorndon",corridor,gap,Protected lane,159.61,0.12,0.26,0.54,Planned (WCC),2,449.34,46.51,182.12,81
+Maupuia Road,"Maupuia, Miramar",corridor,gap,Quiet street (30 km/h + filter),1040.43,0.1,0.21,0.31,Not in plan,1,111.61,45.77,219.95,82
+Severn Street,Island Bay,corridor,gap,Protected lane,1117.69,0.84,1.79,3.8,Not in plan,0,89.47,44.9,25.11,83
+Moorefield Road,Johnsonville,corridor,council plan,Protected lane,149.73,0.11,0.25,0.51,Unfunded (ex-LGWM),2,342.98,44.33,177.31,84
+Frankmoore Avenue,Johnsonville,corridor,gap,Quiet street (30 km/h + filter),493.59,0.05,0.1,0.15,Not in plan,1,136.02,44.06,446.27,85
+Rintoul Street,Newtown,corridor,gap,Protected lane,208.66,0.16,0.33,0.71,Unfunded (ex-LGWM),2,408.62,43.87,131.39,86
+Ellice Street,Mt Victoria,corridor,gap,Quiet street (30 km/h + filter),499.16,0.05,0.1,0.15,Not in plan,2,410.33,43.81,438.88,87
+Bunny Street,Pipitea,corridor,gap,Protected lane,343.27,0.26,0.55,1.17,Unfunded (ex-LGWM),2,389.79,43.31,78.86,88
+Argentine Avenue,Miramar,corridor,gap,Quiet street (30 km/h + filter),377.28,0.04,0.08,0.11,Not in plan,0,231.49,42.92,568.82,89
+Stewart Duff Drive,"Rongotai, Miramar, Moa Point",corridor,gap,Quiet street (30 km/h + filter),1694.41,0.17,0.34,0.51,Not in plan,1,184.02,42.56,125.58,90
+Calcutta Street,Khandallah,corridor,gap,Quiet street (30 km/h + filter),870.53,0.09,0.17,0.26,Not in plan,1,144.22,41.93,240.81,91
+Cashmere Avenue,Khandallah,corridor,gap,Protected lane,1191.21,0.89,1.91,4.05,Planned (WCC),0,253.2,41.85,21.96,92
+Kupe Street,Hataitai,corridor,council plan,Protected lane,103.95,0.1,0.25,0.5,Unfunded (ex-LGWM),0,989.22,41.81,167.22,93
+Willeston Street,Wellington Central,corridor,gap,Protected lane,181.82,0.14,0.29,0.62,Unfunded (ex-LGWM),1,396.48,40.97,140.82,94
+Glasgow Street,Kelburn,corridor,council plan,Protected lane,311.87,0.23,0.5,1.06,Planned (WCC),0,325.6,40.52,81.21,95
+Queens Drive,"Lyall Bay, Kilbirnie, Houghton Bay",corridor,gap,Protected lane,2785.13,2.09,4.46,9.47,Planned (WCC),0,155.1,40.13,9.0,96
+Onslow Road,Khandallah,corridor,gap,Protected lane,1834.1,1.38,2.93,6.24,Not in plan,1,58.79,38.93,13.27,97
+Bowen Street,Wellington Central,corridor,gap,Protected lane,113.35,0.1,0.25,0.5,Unfunded (ex-LGWM),2,832.76,38.49,153.95,98
+Chorley Grove,Churton Park,corridor,gap,Quiet street (30 km/h + filter),396.23,0.04,0.08,0.12,Not in plan,0,238.81,38.41,484.66,99
+Childers Terrace,Kilbirnie,corridor,council plan,Protected lane,276.7,0.21,0.44,0.94,Planned (WCC),1,265.91,38.37,86.67,100
+Amesbury Drive,Churton Park,corridor,gap,Protected lane,1743.7,1.31,2.79,5.93,Not in plan,0,110.63,38.12,13.66,101
+Mein Street,Newtown,corridor,gap,Protected lane,643.47,0.46,0.97,2.07,Not in plan,2,280.18,37.44,38.48,102
+Broadway,"Strathmore Park, Miramar",corridor,gap,Protected lane,931.03,0.7,1.49,3.17,Planned (WCC),0,170.4,37.11,24.91,103
+Freyberg Street,Lyall Bay,corridor,gap,Quiet street (30 km/h + filter),786.0,0.08,0.16,0.24,Not in plan,2,116.48,36.7,233.43,104
+Owen Street,Newtown,corridor,gap,Quiet street (30 km/h + filter),1163.39,0.12,0.23,0.35,Not in plan,1,558.04,36.1,155.17,105
+Ironside Road,Johnsonville,corridor,gap,Protected lane,1240.82,0.93,1.99,4.22,Not in plan,1,93.13,35.77,18.02,106
+Main Road,Tawa,corridor,gap,Protected lane,1655.93,1.24,2.65,5.63,Not in plan,0,105.93,35.51,13.4,107
+Rata Road,Hataitai,corridor,gap,Quiet street (30 km/h + filter),509.27,0.05,0.1,0.15,Not in plan,1,69.18,34.95,343.12,108
+Pipitea Street,"Thorndon, Pipitea",corridor,gap,Quiet street (30 km/h + filter),270.03,0.03,0.05,0.1,Not in plan,2,213.54,33.69,623.76,109
+Te Whiti Street,Kilbirnie,corridor,gap,Quiet street (30 km/h + filter),213.62,0.03,0.05,0.1,Built or underway,2,142.92,32.43,648.66,110
+Churton Drive,Churton Park,corridor,gap,Quiet street (30 km/h + filter),714.28,0.07,0.14,0.21,Not in plan,0,169.33,32.27,225.88,111
+Tasman Street,Mt Cook,corridor,gap,Protected lane,938.23,0.7,1.5,3.19,Not in plan,1,109.79,32.21,21.46,112
+Seatoun Heights Road,"Seatoun, Miramar",corridor,gap,Quiet street (30 km/h + filter),1520.01,0.15,0.3,0.46,Not in plan,0,136.25,31.86,104.79,113
+Grant Road,"Thorndon, Wadestown",corridor,gap,Protected lane,1344.35,1.01,2.15,4.57,Not in plan,2,239.84,31.61,14.7,114
+Bracken Road,"Paparangi, Newlands",corridor,gap,Protected lane,880.8,0.66,1.41,2.99,Planned (WCC),0,118.88,31.6,22.42,115
+Wilson Street,Newtown,corridor,gap,Quiet street (30 km/h + filter),308.57,0.03,0.06,0.1,Planned (WCC),0,429.26,31.18,505.23,116
+Monorgan Road,Strathmore Park,corridor,gap,Protected lane,867.77,0.65,1.39,2.95,Not in plan,0,178.18,31.08,22.39,117
+Old Porirua Road,Ngaio,corridor,gap,Quiet street (30 km/h + filter),1305.78,0.13,0.26,0.39,Not in plan,1,59.22,31.04,118.87,118
+College Street,Te Aro,corridor,gap,Quiet street (30 km/h + filter),219.72,0.03,0.05,0.1,Not in plan,1,192.24,28.81,576.13,119
+Clifford Road,Johnsonville,corridor,gap,Quiet street (30 km/h + filter),638.08,0.06,0.13,0.19,Not in plan,0,300.44,28.76,225.4,120
+Westchester Drive,Churton Park,corridor,gap,Protected lane,1165.46,0.87,1.86,3.96,Not in plan,0,131.19,28.34,15.2,121
+Elizabeth Street,Mt Victoria,corridor,gap,Protected lane,543.1,0.41,0.87,1.85,Not in plan,1,167.98,28.17,32.42,122
+Agra Crescent,Khandallah,corridor,gap,Quiet street (30 km/h + filter),394.08,0.04,0.08,0.12,Not in plan,0,185.5,27.12,344.15,123
+Waterloo Quay,Pipitea,corridor,council plan,Protected lane,400.43,0.3,0.64,1.36,Desired only,2,291.6,26.95,42.06,124
+Majoribanks Street,Mt Victoria,corridor,gap,Protected lane,511.86,0.38,0.82,1.74,Not in plan,2,256.6,26.9,32.84,125
+Murphy Street,Thorndon,corridor,council plan,Protected lane,99.98,0.1,0.25,0.5,Planned (WCC),2,379.5,26.48,105.9,126
+Halswater Drive,Churton Park,corridor,gap,Protected lane,1032.29,0.77,1.65,3.51,Not in plan,0,206.64,26.08,15.79,127
+Hawtrey Terrace,Johnsonville,corridor,gap,Quiet street (30 km/h + filter),609.06,0.06,0.12,0.18,Not in plan,0,256.3,25.9,212.65,128
+Cuba Street,Te Aro,corridor,gap,Quiet street (30 km/h + filter),498.43,0.05,0.1,0.15,Not in plan,2,178.85,25.85,259.29,129
+Salamanca Road,"Wellington Central, Kelburn",corridor,council plan,Protected lane,389.92,0.29,0.62,1.33,Planned (WCC),0,206.28,25.83,41.41,130
+King Street,Mt Cook,corridor,gap,Quiet street (30 km/h + filter),307.75,0.03,0.06,0.1,Not in plan,2,213.94,25.8,419.12,131
+The Rigi,Northland,corridor,gap,Quiet street (30 km/h + filter),380.25,0.04,0.08,0.11,Not in plan,2,153.89,25.56,336.04,132
+Beazley Avenue,Paparangi,corridor,council plan,Quiet street (30 km/h + filter),582.29,0.06,0.12,0.17,Planned (WCC),0,114.32,25.24,216.7,133
+Karori Road at ,Karori,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Unfunded (ex-LGWM),1,252.46,25.21,31.51,134
+Clifton Terrace,Kelburn,corridor,gap,Protected lane,478.02,0.36,0.76,1.63,Not in plan,0,88.35,24.81,32.43,135
+Kainui Road,Hataitai,corridor,gap,Quiet street (30 km/h + filter),504.02,0.05,0.1,0.15,Not in plan,0,117.8,24.64,244.45,136
+Karori Road,Karori,corridor,council plan,Protected lane,81.96,0.1,0.25,0.5,Planned (WCC),1,83.22,24.38,97.53,137
+Brooklyn Road,"Mt Cook, Brooklyn, Aro Valley",corridor,council plan,Protected lane,1306.53,0.63,1.34,2.84,Planned (WCC),1,191.81,22.36,16.72,138
+Onepu Road,Lyall Bay,corridor,council plan,Protected lane,349.85,0.26,0.56,1.19,Planned (WCC),1,103.29,21.94,39.2,139
+Duncan Street,Tawa,corridor,gap,Quiet street (30 km/h + filter),337.66,0.03,0.07,0.1,Planned (WCC),1,89.83,20.94,310.01,140
+Kaiwharawhara Road,Kaiwharawhara,corridor,gap,Protected lane,83.93,0.1,0.25,0.5,Planned (WCC),2,476.96,20.59,82.35,141
+Russell Terrace,Newtown,corridor,council plan,Protected lane,233.18,0.17,0.37,0.79,Planned (WCC),0,122.36,20.44,54.78,142
+Nevay Road,"Miramar, Karaka Bays",corridor,gap,Quiet street (30 km/h + filter),1303.1,0.13,0.26,0.39,Not in plan,0,80.48,20.29,77.86,143
+McLellan Street,Tawa,corridor,gap,Quiet street (30 km/h + filter),481.43,0.05,0.1,0.14,Planned (WCC),0,82.86,19.9,206.71,144
+Miramar North Road,Miramar,corridor,gap,Quiet street (30 km/h + filter),1119.54,0.11,0.22,0.34,Not in plan,0,56.67,19.18,85.65,145
+Garden Road,Northland,corridor,gap,Quiet street (30 km/h + filter),903.72,0.09,0.18,0.27,Not in plan,1,51.34,19.04,105.33,146
+Marine Parade,Seatoun,corridor,gap,Quiet street (30 km/h + filter),1231.67,0.12,0.25,0.37,Planned (WCC),0,49.21,18.85,76.53,147
+Derwent Street,Island Bay,corridor,gap,Protected lane,1285.43,0.96,2.06,4.37,Not in plan,0,176.72,18.61,9.05,148
+Haumia Street,Johnsonville,corridor,gap,Protected lane,670.68,0.5,1.07,2.28,Not in plan,2,61.87,18.6,17.33,149
+Moa Point Road,"Moa Point, Breaker Bay, Rongotai",corridor,council plan,Protected lane,2908.65,2.18,4.65,9.89,Planned (WCC),0,27.42,18.59,3.99,150
+Park Street,Thorndon,corridor,council plan,Protected lane,127.79,0.1,0.25,0.5,Planned (WCC),1,262.01,17.91,71.66,151
+Jessie Street,Te Aro,corridor,gap,Quiet street (30 km/h + filter),222.18,0.03,0.05,0.1,Not in plan,0,189.43,17.79,355.81,152
+South Karori Road,Karori,corridor,council plan,Quiet street (30 km/h + filter),1232.51,0.12,0.25,0.37,Planned (WCC),1,48.13,17.77,72.1,153
+Totara Road,Miramar,corridor,gap,Quiet street (30 km/h + filter),1337.96,0.13,0.27,0.4,Not in plan,0,100.06,17.6,65.77,154
+John Street,"Mt Cook, Newtown",corridor,council plan,Protected lane,264.13,0.2,0.42,0.9,Unfunded (ex-LGWM),1,191.14,17.28,40.89,155
+Te Wharepōuri Street,Berhampore,corridor,council plan,Protected lane,216.11,0.16,0.35,0.73,Planned (WCC),1,124.14,17.17,49.66,156
+Camperdown Road,Miramar,corridor,council plan,Protected lane,235.66,0.18,0.38,0.8,Planned (WCC),0,169.61,17.11,45.39,157
+Ngaio Gorge Road,Ngaio,corridor,council plan,Protected lane,840.23,0.63,1.34,2.86,Planned (WCC),1,44.13,16.87,12.55,158
+Ruahine Street,Hataitai,corridor,council plan,"Protected lane (state highway, NZTA)",943.12,0.94,1.89,3.21,Unfunded (ex-LGWM),1,260.37,16.69,8.85,159
+The Drive,Tawa,corridor,gap,Quiet street (30 km/h + filter),947.03,0.09,0.19,0.28,Not in plan,0,62.04,16.68,88.06,160
+Friend Street,Karori,corridor,gap,Quiet street (30 km/h + filter),636.47,0.06,0.13,0.19,Planned (WCC),0,64.31,16.54,129.95,161
+Ira Street,Miramar,corridor,gap,Protected lane,350.03,0.26,0.56,1.19,Planned (WCC),0,145.1,16.49,29.44,162
+Cockayne Road,"Khandallah, Ngaio",corridor,gap,Protected lane,1549.5,1.16,2.48,5.27,Not in plan,0,136.4,16.45,6.64,163
+Panama Street,Wellington Central,corridor,council plan,Quiet street (30 km/h + filter),160.02,0.03,0.05,0.1,Unfunded (ex-LGWM),0,382.91,16.41,328.26,164
+Brussels Street,Miramar,corridor,gap,Quiet street (30 km/h + filter),493.05,0.05,0.1,0.15,Not in plan,0,95.17,16.37,166.0,165
+Pembroke Road,"Wilton, Northland",corridor,gap,Quiet street (30 km/h + filter),1654.5,0.17,0.33,0.5,Planned (WCC),0,60.17,16.28,49.21,166
+Glenmore Street,Thorndon,corridor,gap,Protected lane,128.7,0.1,0.25,0.5,Unfunded (ex-LGWM),2,252.62,15.89,63.58,167
+Cambridge Street,Tawa,corridor,council plan,Quiet street (30 km/h + filter),190.63,0.03,0.05,0.1,Planned (WCC),0,125.83,15.69,313.71,168
+The Quadrant,Miramar,corridor,gap,Quiet street (30 km/h + filter),271.67,0.03,0.05,0.1,Not in plan,0,206.4,15.43,283.97,169
+Tacy Street,Kilbirnie,corridor,council plan,Quiet street (30 km/h + filter),85.01,0.03,0.05,0.1,Planned (WCC),2,26.63,15.39,307.8,170
+Mairangi Road,"Wadestown, Wilton",corridor,gap,Quiet street (30 km/h + filter),1455.24,0.15,0.29,0.44,Planned (WCC),0,46.15,14.99,51.52,171
+Garden Road at Glenmore Street,Northland,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Unfunded (ex-LGWM),1,190.87,14.88,59.5,172
+Birdwood Street,Karori,corridor,gap,Protected lane,531.18,0.4,0.85,1.81,Planned (WCC),1,82.65,14.41,16.96,173
+Braithwaite Street,Karori,corridor,gap,Protected lane,458.18,0.34,0.73,1.56,Planned (WCC),0,96.58,14.39,19.63,174
+Raukawa Street,Strathmore Park,corridor,gap,Quiet street (30 km/h + filter),780.88,0.08,0.16,0.23,Not in plan,0,45.42,14.2,90.92,175
+(unnamed link),"Miramar, Rongotai, Strathmore Park",corridor,gap,Protected lane,1505.09,1.13,2.41,5.12,Not in plan,0,93.71,14.13,5.87,176
+Farnham Street,Mornington,corridor,council plan,Protected lane,1122.75,0.84,1.8,3.82,Planned (WCC),0,59.65,14.13,7.87,177
+Coromandel Street,Newtown,corridor,gap,Protected lane,542.97,0.34,0.73,1.54,Not in plan,1,87.53,14.03,19.32,178
+Stout Street,"Pipitea, Wellington Central",corridor,gap,Quiet street (30 km/h + filter),362.22,0.04,0.07,0.11,Not in plan,2,133.91,13.9,191.85,179
+The Esplanade,"Houghton Bay, Island Bay",corridor,gap,Protected lane,1613.09,1.21,2.58,5.48,Planned (WCC),1,21.95,13.8,5.35,180
+Happy Valley Road,Owhiro Bay,corridor,council plan,Protected lane,2380.96,1.79,3.81,8.1,Planned (WCC),0,47.05,13.56,3.56,181
+"Tory Street at Ebor Street, Lorne Street",Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,0,80.12,12.28,15.35,182
+Jubilee Road,Khandallah,corridor,gap,Quiet street (30 km/h + filter),657.93,0.07,0.13,0.2,Not in plan,0,79.23,12.25,93.08,183
+Byron Street,Miramar,corridor,gap,Quiet street (30 km/h + filter),265.08,0.03,0.05,0.1,Not in plan,0,58.41,12.18,229.82,184
+Sar Street,"Wadestown, Pipitea",corridor,gap,Quiet street (30 km/h + filter),856.53,0.09,0.17,0.26,Not in plan,1,31.24,11.87,69.28,185
+Burbank Crescent,Churton Park,corridor,gap,Quiet street (30 km/h + filter),547.26,0.05,0.11,0.16,Not in plan,0,47.91,11.07,101.13,186
+Britomart Street,Berhampore,corridor,council plan,Protected lane,518.68,0.39,0.83,1.76,Planned (WCC),2,41.15,10.99,13.24,187
+Raroa Crescent,Northland,corridor,council plan,Protected lane,246.62,0.18,0.39,0.84,Planned (WCC),2,181.83,10.76,27.26,188
+Delhi Crescent,Khandallah,corridor,gap,Quiet street (30 km/h + filter),594.92,0.06,0.12,0.18,Not in plan,0,45.34,10.74,90.23,189
+Palmer Street,Aro Valley,corridor,gap,Quiet street (30 km/h + filter),161.8,0.03,0.05,0.1,Not in plan,2,452.58,10.49,209.78,190
+Roxburgh Street,Mt Victoria,corridor,gap,Quiet street (30 km/h + filter),560.07,0.06,0.11,0.17,Not in plan,0,67.93,10.13,90.4,191
+(unnamed link),Wellington Central,corridor,council plan,Protected lane,142.11,0.11,0.25,0.5,Unfunded (ex-LGWM),0,98.8,10.07,40.27,192
+Beauchamp Street,Tawa,corridor,gap,Quiet street (30 km/h + filter),588.72,0.06,0.12,0.18,Built or underway,2,33.06,9.99,84.87,193
+Ludlam Street,Seatoun,corridor,gap,Quiet street (30 km/h + filter),820.97,0.08,0.16,0.25,Not in plan,0,53.14,9.93,60.5,194
+Karori Tunnel,Northland,corridor,council plan,Protected lane,78.01,0.1,0.25,0.5,Unfunded (ex-LGWM),0,292.34,9.67,38.69,195
+Owhiro Bay Parade,"Owhiro Bay, Island Bay",corridor,council plan,Protected lane,326.47,0.24,0.52,1.11,Planned (WCC),0,70.76,9.63,18.43,196
+Lancaster Street,Karori,corridor,gap,Quiet street (30 km/h + filter),252.77,0.03,0.05,0.1,Planned (WCC),1,28.7,9.62,190.22,197
+Hunter Street,Wellington Central,corridor,council plan,Protected lane,116.85,0.1,0.25,0.5,Unfunded (ex-LGWM),1,276.62,9.58,38.34,198
+Brandon Street,Wellington Central,corridor,council plan,Protected lane,81.3,0.1,0.25,0.5,Unfunded (ex-LGWM),1,249.35,9.51,38.04,199
+(unnamed link),Johnsonville,corridor,council plan,Protected lane,113.45,0.1,0.25,0.5,Planned (WCC),2,541.36,9.2,36.8,200
+Lucknow Terrace,Khandallah,corridor,gap,Quiet street (30 km/h + filter),452.18,0.05,0.09,0.14,Not in plan,0,68.7,9.02,99.78,201
+Horokiwi Road West,Newlands,corridor,gap,Protected lane,766.94,0.58,1.23,2.61,Not in plan,0,39.65,9.01,7.34,202
+Webb Street,"Te Aro, Mt Cook",corridor,council plan,Protected lane,77.4,0.1,0.25,0.5,Planned (WCC),0,211.21,8.88,35.54,203
+Rua Street,Lyall Bay,corridor,gap,Quiet street (30 km/h + filter),304.66,0.03,0.06,0.1,Not in plan,0,65.97,8.88,145.78,204
+Rongotai Road,Kilbirnie,corridor,gap,Protected lane,267.66,0.2,0.43,0.91,Planned (WCC),2,61.75,8.53,19.92,205
+Glenmore Street,Kelburn,corridor,council plan,Protected lane,245.38,0.13,0.28,0.58,Unfunded (ex-LGWM),2,300.03,8.47,30.76,206
+Khandallah Road,"Ngaio, Khandallah",corridor,council plan,Protected lane,1070.46,0.8,1.71,3.64,Planned (WCC),0,31.61,8.44,4.93,207
+Station Road,Khandallah,corridor,council plan,Protected lane,108.85,0.1,0.25,0.5,Planned (WCC),0,209.46,8.27,33.08,208
+Daniell Street at Wilson Street,Newtown,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Planned (WCC),0,357.44,8.22,32.87,209
+Daniell Street at Wilson Street,Newtown,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Planned (WCC),0,70.88,7.85,31.39,210
+Kaiwharawhara Road,Kaiwharawhara,corridor,council plan,Protected lane,167.45,0.13,0.27,0.57,Planned (WCC),2,60.64,7.73,28.86,211
+Kelburn Viaduct,Northland,corridor,council plan,Protected lane,71.89,0.1,0.25,0.5,Planned (WCC),2,258.42,7.7,30.8,212
+Box Hill,Khandallah,corridor,council plan,Protected lane,475.9,0.36,0.76,1.62,Planned (WCC),0,60.76,7.67,10.08,213
+Redwood Avenue,Tawa,corridor,gap,Quiet street (30 km/h + filter),1109.59,0.11,0.22,0.33,Not in plan,0,8.02,7.61,34.31,214
+Lyndfield Lane,Newlands,corridor,gap,Quiet street (30 km/h + filter),512.22,0.05,0.1,0.15,Not in plan,1,27.5,7.39,72.17,215
+Ohiro Road,Brooklyn,corridor,gap,Protected lane,1639.73,1.21,2.59,5.49,Planned (WCC),2,35.1,7.09,2.74,216
+Mornington Road,Brooklyn,corridor,council plan,Quiet street (30 km/h + filter),918.42,0.09,0.18,0.28,Planned (WCC),0,19.56,6.85,37.3,217
+Marion Street,Te Aro,corridor,gap,Quiet street (30 km/h + filter),180.26,0.03,0.05,0.1,Not in plan,1,83.1,6.49,129.75,218
+Sutherland Road,"Melrose, Lyall Bay",corridor,gap,Quiet street (30 km/h + filter),1598.69,0.16,0.32,0.48,Not in plan,0,34.22,6.29,19.66,219
+Ranui Terrace,Tawa,corridor,gap,Quiet street (30 km/h + filter),650.99,0.07,0.13,0.2,Not in plan,0,46.87,5.98,45.94,220
+Wakely Road,Newlands,corridor,council plan,Quiet street (30 km/h + filter),148.41,0.03,0.05,0.1,Planned (WCC),1,54.48,5.93,118.66,221
+Seatoun Tunnel,Strathmore Park,corridor,council plan,Protected lane,143.91,0.11,0.25,0.5,Planned (WCC),0,92.98,5.87,23.46,222
+Boscobel Lane,Tawa,corridor,gap,Quiet street (30 km/h + filter),239.5,0.03,0.05,0.1,Planned (WCC),1,51.01,5.85,117.05,223
+Ira Street,Miramar,corridor,council plan,Protected lane,412.55,0.31,0.66,1.4,Planned (WCC),0,20.04,5.81,8.8,224
+Glamis Avenue,Strathmore Park,corridor,gap,Quiet street (30 km/h + filter),352.09,0.04,0.07,0.11,Not in plan,0,27.43,5.75,81.67,225
+(unnamed link),"Hataitai, Kilbirnie",corridor,council plan,Protected lane,203.64,0.15,0.33,0.69,Unfunded (ex-LGWM),2,869.06,5.49,16.84,226
+Stoke Street,Newtown,corridor,gap,Quiet street (30 km/h + filter),309.59,0.03,0.06,0.1,Not in plan,1,106.35,5.36,86.55,227
+Grenada Drive,Grenada Village,corridor,gap,Protected lane,1554.67,1.17,2.49,5.29,Planned (WCC),0,38.04,5.26,2.11,228
+McLellan Street at Luckie Street,Tawa,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Built or underway,1,54.25,5.02,20.07,229
+Wilton Road,"Wilton, Wadestown",corridor,council plan,Protected lane,2395.32,1.8,3.83,8.14,Planned (WCC),0,5.13,4.91,1.28,230
+Riddiford Street at Newtown Avenue,Newtown,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),0,15.57,4.55,5.69,231
+Rintoul Street,Berhampore,corridor,gap,Quiet street (30 km/h + filter),421.03,0.04,0.08,0.13,Not in plan,1,31.86,4.55,54.02,232
+Dundas Street,Seatoun,corridor,council plan,Protected lane,303.94,0.23,0.49,1.03,Planned (WCC),0,47.18,4.55,9.35,233
+Fraser Avenue,Johnsonville,corridor,gap,Protected lane,1056.16,0.79,1.69,3.59,Not in plan,0,17.31,4.42,2.61,234
+Kenya Street,Ngaio,corridor,council plan,Protected lane,500.14,0.34,0.72,1.53,Planned (WCC),0,26.18,4.41,6.13,235
+Willowbank Road,Tawa,corridor,gap,Protected lane,463.08,0.35,0.74,1.57,Planned (WCC),2,39.95,4.11,5.55,236
+Harris Street,Wellington Central,corridor,council plan,Protected lane,130.65,0.1,0.25,0.5,Unfunded (ex-LGWM),1,78.7,4.04,16.17,237
+St. Michael's Crescent,Kelburn,corridor,gap,Quiet street (30 km/h + filter),227.38,0.03,0.05,0.1,Not in plan,0,36.27,3.88,77.66,238
+McKinley Crescent,Brooklyn,corridor,council plan,Quiet street (30 km/h + filter),337.73,0.03,0.07,0.1,Planned (WCC),0,18.13,3.21,47.49,239
+Cecil Road,Wadestown,corridor,council plan,Quiet street (30 km/h + filter),190.93,0.03,0.05,0.1,Planned (WCC),0,51.97,3.05,60.98,240
+Clutha Avenue,Khandallah,corridor,gap,Quiet street (30 km/h + filter),326.15,0.03,0.07,0.1,Not in plan,0,28.65,3.04,46.58,241
+Dixon Street at Eva Street,Te Aro,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Unfunded (ex-LGWM),1,62.48,2.97,11.88,242
+Izard Road,Khandallah,corridor,council plan,Quiet street (30 km/h + filter),121.81,0.03,0.05,0.1,Planned (WCC),0,61.46,2.91,58.27,243
+Orangi Kaupapa Road,Northland,corridor,gap,Quiet street (30 km/h + filter),1643.53,0.16,0.33,0.49,Not in plan,1,21.44,2.9,8.83,244
+Ferry Street,Seatoun,corridor,council plan,Protected lane,114.2,0.1,0.25,0.5,Planned (WCC),0,92.99,2.89,11.58,245
+Alexandra Road,"Newtown, Hataitai",corridor,gap,Quiet street (30 km/h + filter),1241.4,0.12,0.25,0.37,Not in plan,2,7.57,2.88,11.61,246
+Woodman Drive,Tawa,corridor,gap,Quiet street (30 km/h + filter),1605.15,0.16,0.32,0.48,Not in plan,0,2.73,2.86,8.92,247
+Abbott Street,Ngaio,corridor,gap,Quiet street (30 km/h + filter),438.09,0.04,0.09,0.13,Not in plan,0,15.05,2.84,32.36,248
+(unnamed link),Te Aro,corridor,council plan,"Protected lane (state highway, NZTA)",89.29,0.2,0.4,0.8,Unfunded (ex-LGWM),2,62.66,2.7,6.75,249
+Chaffers Street,Te Aro,corridor,council plan,Protected lane,89.52,0.1,0.25,0.5,Planned (WCC),1,25.49,2.65,10.59,250
+Melksham Drive,Churton Park,corridor,gap,Protected lane,1492.13,1.12,2.39,5.07,Not in plan,0,10.1,2.59,1.09,251
+Ballance Street,Wellington Central,corridor,council plan,Quiet street (30 km/h + filter),97.41,0.03,0.05,0.1,Unfunded (ex-LGWM),0,80.04,2.57,51.45,252
+Bombay Street,Ngaio,corridor,gap,Quiet street (30 km/h + filter),468.86,0.05,0.09,0.14,Not in plan,0,28.35,2.56,27.26,253
+Kinghorne Street,Strathmore Park,corridor,gap,Quiet street (30 km/h + filter),888.5,0.09,0.18,0.27,Not in plan,0,19.39,2.48,13.94,254
+Taranaki Street at Martin Square,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Unfunded (ex-LGWM),0,41.96,2.47,3.09,255
+Taranaki Street at Wigan Street,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Unfunded (ex-LGWM),0,24.47,2.45,3.07,256
+Ghuznee Street at Leeds Street,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,0,44.98,2.36,2.95,257
+Molesworth Street,Thorndon,corridor,council plan,Protected lane,77.36,0.1,0.25,0.5,Planned (WCC),2,81.53,2.33,9.33,258
+Breaker Bay Road,Breaker Bay,corridor,council plan,Protected lane,2121.72,1.59,3.39,7.21,Planned (WCC),0,12.89,2.33,0.69,259
+Crofton Road,Ngaio,corridor,gap,Protected lane,610.2,0.42,0.9,1.92,Not in plan,0,38.16,2.3,2.56,260
+Lambton Quay at Waring Taylor Street,Wellington Central,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Unfunded (ex-LGWM),0,47.55,2.3,9.18,261
+Reef Street,Island Bay,corridor,council plan,Protected lane,157.88,0.12,0.25,0.54,Planned (WCC),2,19.77,2.26,8.97,262
+Padnell Crescent,Paparangi,corridor,gap,Quiet street (30 km/h + filter),315.31,0.03,0.06,0.1,Not in plan,0,20.67,2.21,34.98,263
+Curtis Street,Northland,corridor,council plan,Protected lane,1029.75,0.77,1.65,3.5,Planned (WCC),1,7.66,2.19,1.33,264
+Mansfield Street,Newtown,corridor,council plan,Protected lane,272.58,0.2,0.44,0.93,Planned (WCC),0,27.64,2.18,5.0,265
+Palm Avenue,Lyall Bay,corridor,gap,Quiet street (30 km/h + filter),429.07,0.04,0.09,0.13,Not in plan,0,9.64,2.14,24.95,266
+Collins Avenue,Tawa,corridor,gap,Protected lane,777.44,0.58,1.24,2.64,Not in plan,1,5.22,2.01,1.62,267
+Samuel Parnell Road,Karori,corridor,council plan,Quiet street (30 km/h + filter),166.67,0.03,0.05,0.1,Planned (WCC),0,4.72,1.92,38.38,268
+Tory Street at Holland Street,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Unfunded (ex-LGWM),0,10.3,1.87,2.34,269
+Marshall Street,Karori,corridor,council plan,Quiet street (30 km/h + filter),102.29,0.03,0.05,0.1,Planned (WCC),1,20.2,1.86,37.2,270
+Margaret Street,Wadestown,corridor,council plan,Quiet street (30 km/h + filter),116.72,0.03,0.05,0.1,Planned (WCC),0,47.8,1.84,36.78,271
+Moxham Avenue at Goa Street,Hataitai,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,30.57,1.65,6.58,272
+Liardet Street,Mornington,corridor,council plan,Protected lane,130.62,0.1,0.25,0.5,Planned (WCC),0,69.22,1.62,6.48,273
+Johnsonville Road at ,Johnsonville,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),1,65.76,1.57,1.96,274
+Fancourt Street,Karori,corridor,council plan,Quiet street (30 km/h + filter),142.49,0.03,0.05,0.1,Unfunded (ex-LGWM),1,28.07,1.56,31.2,275
+Hutchison Road,Mt Cook,corridor,council plan,Protected lane,96.05,0.1,0.25,0.5,Unfunded (ex-LGWM),0,18.88,1.51,6.03,276
+Adelaide Road,Newtown,corridor,council plan,Protected lane,84.54,0.1,0.25,0.5,Unfunded (ex-LGWM),1,19.98,1.5,5.98,277
+Cleveland Street,Brooklyn,corridor,council plan,Quiet street (30 km/h + filter),293.26,0.03,0.06,0.1,Planned (WCC),0,10.3,1.49,25.41,278
+Campbell Street at Karori Road,Karori,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Unfunded (ex-LGWM),1,45.03,1.48,5.91,279
+"Devonshire Road at Argentine Avenue, Torridon Road",Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,22.71,1.42,5.69,280
+Inglis Street,Seatoun,corridor,council plan,Protected lane,867.4,0.65,1.39,2.95,Planned (WCC),0,10.99,1.32,0.95,281
+Northland Tunnel Road,Northland,corridor,council plan,Quiet street (30 km/h + filter),121.15,0.03,0.05,0.1,Unfunded (ex-LGWM),2,39.06,1.31,26.25,282
+Stewart Duff Drive at ,Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,180.53,1.19,4.78,283
+Hankey Street,Mt Cook,corridor,council plan,Protected lane,71.74,0.1,0.25,0.5,Unfunded (ex-LGWM),0,29.15,1.17,4.69,284
+Sydney Street West,Thorndon,corridor,council plan,Quiet street (30 km/h + filter),242.32,0.03,0.05,0.1,Unfunded (ex-LGWM),2,11.92,1.0,20.01,285
+The Ridgeway,Mornington,corridor,council plan,Protected lane,272.86,0.2,0.44,0.93,Planned (WCC),0,17.04,1.0,2.29,286
+Sidlaw Street,Strathmore Park,corridor,gap,Quiet street (30 km/h + filter),1197.89,0.12,0.24,0.36,Not in plan,0,7.54,0.92,3.85,287
+Thompson Street,Mt Cook,corridor,gap,Quiet street (30 km/h + filter),363.98,0.04,0.07,0.11,Not in plan,0,6.0,0.88,12.12,288
+Phillip Street,Johnsonville,corridor,council plan,Quiet street (30 km/h + filter),66.58,0.03,0.05,0.1,Planned (WCC),0,16.23,0.83,16.62,289
+Omar Street,Khandallah,corridor,gap,Quiet street (30 km/h + filter),225.21,0.03,0.05,0.1,Not in plan,0,11.51,0.82,16.45,290
+Abel Smith Street at Wigan Street,Te Aro,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,22.65,0.81,3.25,291
+(unnamed link),Churton Park,corridor,council plan,Protected lane,93.16,0.1,0.25,0.5,Planned (WCC),0,60.16,0.74,2.96,292
+Rugby Street,Mt Cook,corridor,gap,Protected lane,77.74,0.1,0.25,0.5,Built or underway,1,15.28,0.72,2.89,293
+(unnamed link),Kelburn,corridor,council plan,Protected lane,62.62,0.1,0.25,0.5,Planned (WCC),1,188.64,0.67,2.68,294
+"Ranui Crescent at Izard Road, Everest Street",Khandallah,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,10.35,0.64,2.57,295
+Johnsonville Road at Burgess Road,Johnsonville,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),1,65.94,0.6,0.75,296
+(unnamed link),Broadmeadows,corridor,council plan,Protected lane,232.98,0.17,0.37,0.79,Planned (WCC),0,8.78,0.58,1.55,297
+Churchill Drive,Crofton Downs,corridor,gap,Protected lane,616.86,0.46,0.99,2.1,Planned (WCC),2,1.38,0.56,0.57,298
+Kenmore Street,Newlands,corridor,gap,Protected lane,927.99,0.7,1.48,3.16,Not in plan,0,0.72,0.56,0.38,299
+Westchester Drive,"Glenside, Churton Park, Grenada Village",corridor,council plan,Protected lane,1039.7,0.78,1.66,3.53,Planned (WCC),0,2.13,0.51,0.31,300
+(unnamed link),Te Aro,corridor,council plan,Protected lane,90.55,0.1,0.25,0.5,Planned (WCC),2,19.2,0.49,1.95,301
+Manners Street,Te Aro,corridor,council plan,Quiet street (30 km/h + filter),77.01,0.03,0.05,0.1,Unfunded (ex-LGWM),0,7.08,0.47,9.39,302
+Glen Road,Kelburn,corridor,council plan,Quiet street (30 km/h + filter),174.61,0.03,0.05,0.1,Planned (WCC),0,3.98,0.46,9.21,303
+"Grant Road at Park Street, Grant Road",Thorndon,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Planned (WCC),0,18.84,0.46,1.82,304
+Featherston Street at ,Pipitea,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Unfunded (ex-LGWM),0,16.14,0.43,1.73,305
+Mitchell Street,Brooklyn,corridor,gap,Quiet street (30 km/h + filter),1465.83,0.15,0.29,0.44,Not in plan,0,0.38,0.43,1.46,306
+Ranui Crescent,Khandallah,corridor,council plan,Quiet street (30 km/h + filter),177.56,0.03,0.05,0.1,Planned (WCC),0,5.43,0.43,8.53,307
+Churchill Drive,"Wadestown, Wilton",corridor,council plan,Protected lane,330.37,0.25,0.53,1.12,Planned (WCC),2,1.39,0.38,0.71,308
+Military Road,Northland,corridor,council plan,Quiet street (30 km/h + filter),60.86,0.03,0.05,0.1,Planned (WCC),1,14.62,0.36,7.2,309
+(unnamed link),Glenside,corridor,council plan,Protected lane,127.58,0.1,0.25,0.5,Planned (WCC),0,41.93,0.32,1.28,310
+Buckley Road,Southgate,corridor,gap,Quiet street (30 km/h + filter),1811.46,0.18,0.36,0.54,Not in plan,0,0.28,0.32,0.87,311
+Old Karori Road,Karori,corridor,council plan,Protected lane,140.43,0.11,0.25,0.5,Planned (WCC),1,18.22,0.31,1.24,312
+Lincoln Avenue,Tawa,corridor,gap,Quiet street (30 km/h + filter),525.95,0.05,0.11,0.16,Not in plan,0,0.67,0.3,2.83,313
+(unnamed link),Khandallah,corridor,council plan,Quiet street (30 km/h + filter),120.34,0.03,0.05,0.1,Planned (WCC),1,2.59,0.28,5.64,314
+Ruahine Street at ,Hataitai,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Unfunded (ex-LGWM),0,1.53,0.27,0.34,315
+Karori Road at Lancaster Street,Karori,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Unfunded (ex-LGWM),1,18.33,0.27,0.33,316
+(unnamed link),Grenada Village,corridor,council plan,Protected lane,63.98,0.1,0.25,0.5,Planned (WCC),0,36.1,0.26,1.06,317
+Rosehaugh Avenue,Karori,corridor,council plan,Quiet street (30 km/h + filter),483.4,0.05,0.1,0.15,Planned (WCC),0,1.88,0.26,2.7,318
+Hereford Street,Wilton,corridor,council plan,Quiet street (30 km/h + filter),153.26,0.03,0.05,0.1,Planned (WCC),0,5.79,0.26,5.18,319
+Findlay Street,Tawa,corridor,gap,Quiet street (30 km/h + filter),423.7,0.04,0.08,0.13,Built or underway,2,0.26,0.26,3.04,320
+Hornsey Road,Melrose,corridor,gap,Quiet street (30 km/h + filter),1180.84,0.12,0.24,0.35,Not in plan,0,1.45,0.24,1.01,321
+Vivian Street at ,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,1,11.29,0.23,0.28,322
+Pinelands Avenue,Seatoun,corridor,council plan,Quiet street (30 km/h + filter),130.53,0.03,0.05,0.1,Planned (WCC),0,3.72,0.22,4.37,323
+"Brooklyn Road at Ohiro Road, Brooklyn Road",Brooklyn,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),1,20.6,0.2,0.25,324
+Ottawa Road,Ngaio,corridor,council plan,Protected lane,373.3,0.28,0.6,1.27,Planned (WCC),0,5.52,0.17,0.28,325
+(unnamed link),Tawa,corridor,council plan,Protected lane,187.3,0.14,0.3,0.64,Planned (WCC),0,39.95,0.14,0.46,326
+Abel Smith Street at Little Palmer Street,Aro Valley,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,1,2.11,0.11,0.43,327
+Waikowhai Street,Ngaio,corridor,gap,Protected lane,667.44,0.5,1.07,2.27,Planned (WCC),0,0.13,0.1,0.09,328
+Manchester Street,Newtown,corridor,council plan,Quiet street (30 km/h + filter),90.13,0.03,0.05,0.1,Planned (WCC),0,2.89,0.1,2.01,329
+"Hania Street at Ellice Street, Hania Street",Mt Victoria,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Unfunded (ex-LGWM),1,11.18,0.09,0.38,330
+Lennel Road,Wadestown,corridor,council plan,Protected lane,155.4,0.12,0.25,0.53,Planned (WCC),0,1.7,0.09,0.37,331
+Coromandel Street at Wilson Street,Newtown,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Planned (WCC),0,0.88,0.08,0.32,332
+Manners Street at Opera House Lane,Te Aro,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,1,20.33,0.07,0.29,333
+Cockayne Road,Khandallah,corridor,council plan,Protected lane,332.76,0.25,0.53,1.13,Planned (WCC),0,0.48,0.07,0.13,334
+Roy Street,Newtown,corridor,council plan,Quiet street (30 km/h + filter),206.44,0.03,0.05,0.1,Planned (WCC),0,3.38,0.06,1.29,335
+Melville Street,Tawa,corridor,council plan,Quiet street (30 km/h + filter),60.57,0.03,0.05,0.1,Planned (WCC),0,0.66,0.05,1.03,336
+(unnamed link),Wadestown,corridor,council plan,Quiet street (30 km/h + filter),75.14,0.03,0.05,0.1,Planned (WCC),0,2.13,0.05,1.03,337
+Tanera Crescent,Brooklyn,corridor,council plan,Quiet street (30 km/h + filter),74.41,0.03,0.05,0.1,Planned (WCC),1,0.92,0.04,0.88,338
+Fernlea Avenue,Karori,corridor,council plan,Quiet street (30 km/h + filter),172.19,0.03,0.05,0.1,Planned (WCC),1,0.13,0.04,0.76,339
+Butt Street,Brooklyn,corridor,council plan,Quiet street (30 km/h + filter),62.57,0.03,0.05,0.1,Planned (WCC),0,0.61,0.03,0.58,340
+Rarangi Way,Owhiro Bay,corridor,council plan,Quiet street (30 km/h + filter),67.87,0.03,0.05,0.1,Planned (WCC),0,3.64,0.02,0.43,341
+Centennial Highway,"Newlands, Ngauranga",corridor,council plan,"Protected lane (state highway, NZTA)",621.71,0.62,1.24,2.11,Unfunded (ex-LGWM),2,0.05,0.02,0.02,342
+(unnamed link),Newlands,corridor,council plan,Quiet street (30 km/h + filter),153.29,0.03,0.05,0.1,Planned (WCC),0,0.18,0.02,0.35,343
+Wakefield Street at ,Te Aro,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,1,0.56,0.01,0.06,344
+Walworth Road,Northland,corridor,council plan,Quiet street (30 km/h + filter),192.02,0.03,0.05,0.1,Planned (WCC),0,0.18,0.01,0.27,345
+Kemp Street at Kemp Street,Kilbirnie,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,0,0.12,0.01,0.02,346
+Blackbridge Road,Wadestown,corridor,council plan,Quiet street (30 km/h + filter),408.93,0.04,0.08,0.12,Planned (WCC),0,0.06,0.01,0.15,347
+Takapu Road,"Tawa, Takapu Valley, Grenada North",corridor,gap,Protected lane,6271.87,4.7,10.03,21.32,Not in plan,1,0.01,0.01,0.0,348
+Mount Albert Road,"Berhampore, Southgate",corridor,gap,Protected lane,988.16,0.74,1.58,3.36,Not in plan,0,0.02,0.01,0.01,349
+Devonshire Road at Ellesmere Avenue,Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Hamilton Road at Hamilton Road,Hataitai,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Unfunded (ex-LGWM),0,0.0,0.0,0.0,350
+Boulcott Street at ,Wellington Central,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Bassett Road at Bassett Road,Johnsonville,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Linden Avenue at Beauchamp Street,Tawa,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,1,0.0,0.0,0.0,350
+Tory Street at Jessie Street,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Unfunded (ex-LGWM),0,0.0,0.0,0.0,350
+Vivian Street at Marion Street,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,1,0.0,0.0,0.0,350
+Aro Street at Devon Street,Aro Valley,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),0,0.0,0.0,0.0,350
+Burma Road at Rangoon Street,Broadmeadows,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),0,0.0,0.0,0.0,350
+Customhouse Quay at Grey Street,Wellington Central,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Desired only,1,0.0,0.0,0.0,350
+Tory Street at College Street,Te Aro,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Unfunded (ex-LGWM),0,0.0,0.0,0.0,350
+Queens Drive at Rua Street,Lyall Bay,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Cashmere Avenue at Delhi Crescent,Khandallah,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Planned (WCC),0,0.0,0.0,0.0,350
+Hobart Street at Chelsea Street,Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Planned (WCC),0,0.0,0.0,0.0,350
+Miramar Avenue at Chelsea Street,Miramar,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),0,0.0,0.0,0.0,350
+Wha Street at Palm Avenue,Lyall Bay,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Linden Avenue at Findlay Street,Tawa,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,1,0.0,0.0,0.0,350
+Willis Street at Palmer Street,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Unfunded (ex-LGWM),1,0.0,0.0,0.0,350
+"Braithwaite Street at Birdwood Street, Braithwaite Street",Karori,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Planned (WCC),0,0.0,0.0,0.0,350
+McLellan Street at Beauchamp Street,Tawa,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Planned (WCC),1,0.0,0.0,0.0,350
+Cockayne Road at Lucknow Terrace,Khandallah,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Tauhinu Road at Byron Street,Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Wha Street at Freyberg Street,Lyall Bay,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Upland Road at St. Michael's Crescent,Kelburn,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),0,0.0,0.0,0.0,350
+Stewart Duff Drive at ,Rongotai,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Crofton Road at Old Porirua Road,Ngaio,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Adelaide Road at Stoke Street,Newtown,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,0,0.0,0.0,0.0,350
+Southampton Road at Wexford Road,Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Main Road at Boscobel Lane,Tawa,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,0,0.0,0.0,0.0,350
+Hatton Street,Karori,corridor,council plan,Quiet street (30 km/h + filter),224.39,0.03,0.05,0.1,Planned (WCC),0,0.0,0.0,0.0,350
+Majoribanks Street at Roxburgh Street,Mt Victoria,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Park Road at Brussels Street,Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Queens Drive at Rua Street,Lyall Bay,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Victoria Street at ,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),0,0.0,0.0,0.0,350
+Broadway at Glamis Avenue,Strathmore Park,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),0,0.0,0.0,0.0,350
+Broadway at The Quadrant,Miramar,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,0,0.0,0.0,0.0,350
+Tauhinu Road at Rex Street,Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Main Road at The Drive,Tawa,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,0,0.0,0.0,0.0,350
+Boulcott Street at ,Wellington Central,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Burma Road at Fraser Avenue,Broadmeadows,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Planned (WCC),0,0.0,0.0,0.0,350
+Manners Street at ,Te Aro,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,1,0.0,0.0,0.0,350
+(unnamed link),Newlands,corridor,council plan,"Protected lane (state highway, NZTA)",77.81,0.2,0.4,0.8,Unfunded (ex-LGWM),2,0.0,0.0,0.0,350
+Hobart Street at Kedah Street,Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Planned (WCC),0,0.0,0.0,0.0,350
+Ellice Street at Brougham Street,Mt Victoria,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Caledonia Street at Kauri Street,Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Abel Smith Street at Cuba Street,Te Aro,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Not in plan,0,0.0,0.0,0.0,350
+Ghuznee Street at Marion Street,Te Aro,crossing,crossing,Signalised crossing,0.0,0.5,0.8,1.5,Not in plan,0,0.0,0.0,0.0,350
+Ira Street at The Quadrant,Miramar,crossing,crossing,Raised zebra / refuge,0.0,0.15,0.25,0.4,Planned (WCC),0,0.0,0.0,0.0,350
