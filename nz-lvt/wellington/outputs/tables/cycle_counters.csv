@@ -1,569 +1,569 @@
 COUNTLINE_ID,NAME,PRIMARY_TRANSPORT_CLASS,DIRECTION,days,weekday_avg,modelled_census,edges
-53176,Dixon St path RHS,Pedestrian,E,252,2.9,8.3,12147:0
-53177,Everton Ter path RHS,Pedestrian,SE,247,0.8,66.4,818:1
-53178,Everton Ter road inbound RHS,Car,E,247,11.8,66.4,818:1
-53179,Everton Ter road inbound LHS,Car,SE,247,4.5,66.4,818:1
-53181,Everton Ter path LHS,Pedestrian,SE,247,0.1,66.4,818:1
-53186,Coutts St path LHS,Pedestrian,SE,238,50.6,17.9,6945:0
-53187,Coutts St path,Cyclist,E,238,82.5,433.8,6386:0
-53190,Commonwealth Walkway left,Pedestrian,W,243,188.1,15.8,6203:1
-53200,Ara Moana left,Pedestrian,W,166,251.5,1173.5,11489:0;9797:0
-53201,Ara Moana path,Pedestrian,N,166,322.3,1296.3,6201:0
-53928,Herd St path,Pedestrian,NW,186,3.5,17.1,10947:1
-53929,Oriental Parade path/cycle Ln RHS,Cyclist,NW,186,371.8,17.1,9622:1
-53930,Oriental Parade path/cycle Ln LHS,Pedestrian,W,186,8.6,17.1,9622:1
-53931,Herd St road out,Car,NW,181,3.9,581.4,7792:1
-53932,Herd St road in,Car,NW,181,17.3,581.4,7792:1
-53933,Oriental Parade road,Bus,W,181,29.0,655.8,4961:1;11449:1
-53934,Oriental Parade path,Pedestrian,W,181,1.2,655.8,4961:1
-53935,Tasman St path LHS,Pedestrian,S,202,12.5,235.8,6151:0
-53936,Tasman St road,Car,S,202,197.4,235.8,6151:0
-53937,Tasman St path RHS,Pedestrian,S,202,11.5,235.8,6151:0
-53938,Lady Elizabeth Ln path LHS,Car,SW,244,310.3,266.9,11284:0
-53939,Lady Elizabeth Ln path RHS,Pedestrian,S,244,296.0,1499.4,6783:1
-53998,Middleton Rd path,Pedestrian,NE,241,1.9,0.0,8905:0
-53999,Middleton Rd road,Car,NE,241,48.4,37.7,6627:0
-54164,Thorndon Quay cycle Lane,Cyclist,N,216,505.2,835.3,6318:0
-54165,Thorndon Quay path,Pedestrian,NE,216,7.4,835.3,6318:0
-54166,Thorndon Quay road,Car,N,216,44.6,960.0,14227:1;6318:0;7327:0;139:0;11160:0
-54238,Molesworth St road,Car,SE,237,89.7,0.0,7503:1;3549:1
-54243,Hutt Rd South Cycles,Cyclist,SW,251,102.3,897.6,14241:1
-54244,Hutt Rd Roadcycles Sth,Car,N,251,196.0,1129.0,8474:1;14234:1;13036:1
-54245,Hutt Rd Roadcycles Nrth,Car,SW,251,18.9,15.3,7572:0
-54293,Murphy St Road,Car,NW,220,0.3,0.0,12970:1
-54294,Molesworth St Road,Car,NW,220,122.7,219.7,7503:0
-54295,Murphy St LHS Cycle,Cyclist,N,220,2.4,0.0,4456:1
-54296,Molesworth St RHS Cycle,Car,NW,220,104.4,219.7,7503:0
-54337,S84 Herd St path2,Pedestrian,SW,186,90.0,34.3,9622:1;10947:1
-54381,Oriental Parade path2,Pedestrian,NE,181,115.2,65.8,12330:0;13056:0
-54410,The Parade path LHS,Pedestrian,S,235,2.3,0.0,12636:1
-54411,The Parade road,Bus,S,235,7.4,430.9,12636:1;7340:0
-54412,The Parade cycle Ln,Cyclist,S,235,125.9,3.6,12651:0
-54413,The Parade path RHS,Pedestrian,SW,235,5.9,3.6,12651:0
-54461,Commonwealth Walkway path2,Pedestrian,W,244,657.5,1878.6,9786:0
-54462,Commonwealth Walkway path3,Pedestrian,N,244,221.1,305.9,9746:1
-55170,The Parade path,Cyclist,N,253,2.8,0.0,12651:1
-55175,Paterson St path LHS,Pedestrian,NW,244,0.8,11.1,1853:1
-55176,Paterson St path middle,Pedestrian,W,244,175.8,1018.9,7576:1;7575:0;12771:0;12605:1
-51725,Hutt Rd road,Cyclist,SE,249,49.6,0.3,13157:0
-51771,Johnsonville Rd road LHS,Car,W,254,5.4,0.0,5051:0
-51772,Johnsonville Rd road RHS,Car,N,254,47.5,112.2,11132:0
-51773,Johnsonville Rd path LHS,Pedestrian,N,254,3.3,0.0,5051:0
-51774,Johnsonville Rd path centre,Pedestrian,NE,254,3.1,0.0,5051:1
-51775,Johnsonville Rd path RHS,Pedestrian,W,254,4.7,104.4,11132:1
-51778,Johnsonville Rd road LHS,Car,E,241,22.9,24.8,11135:0
-51779,Johnsonville Rd road RHS,Car,S,241,57.2,82.3,11133:1
-51780,Johnsonville Rd path,Pedestrian,S,241,2.4,82.3,11133:1
-51786,Johnsonville Rd path LHS,Pedestrian,SE,241,2.3,24.8,11135:0
-51787,Johnsonville Rd path RHS,Pedestrian,S,241,0.8,82.3,11133:1
-51949,Commonwealth Walkway path LHS,Pedestrian,W,238,383.2,136.6,10957:1
-51950,Commonwealth Walkway path RHS,Pedestrian,S,238,788.4,1767.6,4156:1
-51951,Commonwealth Walkway path,Pedestrian,SW,237,250.6,1903.2,4157:1
-52147,Todman St path LHS,Pedestrian,SW,211,10.0,118.9,12784:0
-52148,Todman St path RHS,Pedestrian,S,211,21.4,62.1,5181:0
-52149,Todman St road LHS,Car,SE,211,94.5,118.9,12784:0
-52150,Todman St road centrre,Car,W,211,17.6,62.1,5181:0
-52151,Todman St road RHS,Car,S,211,91.0,120.7,12783:0
-52188,Moorefield Rd road LHS,Car,S,243,18.4,48.7,9684:1;11375:1
-52189,Moorefield Rd road RHS,Car,NW,243,4.1,47.3,2974:0
-52191,Moorefield Rd path LHS,Pedestrian,SW,243,2.8,48.5,9684:1
-52192,Moorefield Rd path RHS,Pedestrian,W,243,1.0,47.3,2901:0
-52194,Hawkestone St road LHS,Car,E,123,34.3,4.2,12397:0
-52195,Molesworth road RHS 1,Car,S,123,1.6,0.0,5672:1
-52196,Molesworth road 2,Car,S,123,8.2,0.0,5672:1;14159:1
-52197,Hawkestone St path LHS,Pedestrian,E,124,1.2,4.2,12397:0
-52198,Hawkestone St path RHS,Pedestrian,E,124,0.7,4.2,12397:0
-52603,Evans Bay road,Car,W,254,2.7,0.0,67:1;12758:1;12756:1
-52623,Evans Bay path,Pedestrian,NW,241,215.0,512.3,12762:1
-52624,Evans Bay road,Car,NW,241,11.6,0.0,5525:1;12755:1
-52625,Evans Bay path,Pedestrian,W,254,271.4,194.8,11323:1
-53060,Ara Moana path,Pedestrian,N,244,658.2,1882.8,4181:0
-53061,Commonwealth Walkway path,Pedestrian,N,244,758.7,1816.6,10867:1
-53168,Moorefield Rd road,Car,N,243,36.4,55.0,11141:0
-53169,Broderick Rd road,Car,W,243,15.9,41.2,11140:1
-53171,Willis St path LHS,Pedestrian,N,254,15.3,60.1,8438:1
-53172,Willis St road,Car,N,254,136.5,60.1,8438:1
-53173,Willis St path RHS,Pedestrian,NE,254,8.4,60.1,8438:1
-53174,Dixon St path LHS,Pedestrian,SE,252,1.8,8.3,12147:0
-53175,Dixon St road,Car,SE,252,23.4,16.2,12147:0;5776:0
-48110,Cambridge Ter path LHS,Pedestrian,S,254,8.8,66.8,4997:1
-48111,Cambridge Ter cyclepath,Cyclist,SW,254,447.8,1079.8,13933:0;13931:1
-48132,Dixon St path RHS,Pedestrian,S,251,24.1,0.0,12353:1
-48246,Lambton Quay path LHS,Pedestrian,S,252,9.0,0.0,97:1
-48247,S29 Lambton Quay road,Car,SE,252,0.0,0.0,97:1
-48294,Customhouse Quay road,Bus,SW,252,25.3,149.7,4040:1
-48296,Customhouse Quay path RHS,Pedestrian,S,252,15.5,0.0,449:1
-48297,Riddiford St road,Car,N,254,204.5,400.5,13912:1
-48298,Rintoul St road,Car,N,254,49.0,1224.2,12973:1
-48302,Courtenay Pl road Northbound,Car,NW,251,19.2,504.1,6189:0
-48303,Courtenay Pl road Westbound,Car,W,251,107.8,504.1,6189:0
-48304,Courtenay Pl road Southhbound,Car,NW,251,45.5,504.1,6189:0
-48310,Rongotai Rd path,Cyclist,W,239,75.5,21.3,12615:0
-48327,Cambridge Ter road,Car,N,253,61.7,3.0,5769:0
-48342,Hutt Rd road Northbound,Car,NE,250,6.9,0.0,8474:1
-48343,Hutt Rd road Westbound,Bus,NE,250,36.4,0.0,8036:0
-48344,Hutt Rd cyclelane,Cyclist,N,250,1.3,0.0,8036:0
-48345,Hutt Rd path,Pedestrian,NE,250,0.4,0.0,8036:0
-48346,Kaiwharawhara Rd road,Car,SE,251,252.1,587.0,11468:0
-48348,Hutt Rd cyclepath,Cyclist,SW,251,319.1,325.9,14242:1
-48801,Riddiford St road RHS,Bus,S,254,275.9,2964.5,13874:0;13868:0;5002:0
-48802,Riddiford St path RHS,Pedestrian,S,254,11.1,1077.0,13868:0
-48822,Lambton Quay path LHS,Pedestrian,N,254,7.3,0.0,7210:1
-48824,Lambton Quay path LHS,Pedestrian,S,253,8.4,0.0,7566:1
-48829,Tinakori Rd road RHS,Car,NE,237,27.5,33.7,8179:1
-48831,Park St road RHS,Car,SE,237,97.8,254.2,11162:0
-48832,Park St path RHS,Pedestrian,SE,237,4.0,254.2,11162:0
-48834,Park St path LHS,Pedestrian,SE,239,0.9,254.2,11162:0
-48873,Johnston St path LHS,Pedestrian,E,253,5.2,0.0,1953:0
-48874,Johnston St road,Car,SE,253,81.2,0.0,1953:0
-48877,Featherston St road,Car,S,253,392.8,642.1,10911:0
-48885,Johnston St path RHS,Pedestrian,E,251,4.4,0.0,1953:0
-48981,Miramar Ave path LHS,Pedestrian,W,250,240.7,307.0,11314:1
-48985,Shelly Bay Rd road,Car,S,250,30.8,44.5,9383:1
-48986,Miramar Ave road,Bus,W,250,54.8,0.5,4544:0
-48987,Miramar Ave path RHS,Pedestrian,NW,250,0.5,0.5,4544:0
-49727,Hutt Rd cycles,Cyclist,NW,251,146.1,1129.0,14234:1;13036:1
-49972,Karori Rd path LHS,Pedestrian,N,254,1.4,152.7,13422:1
-49973,Karori Rd road,Bus,NE,254,102.6,152.7,13422:1
-49974,Karori Rd path RHS,Pedestrian,N,254,5.1,152.7,13422:1
-49975,S Karori Rd road lower,Car,NW,254,48.1,62.0,4662:1
-49976,S Karori Rd road upper,Car,NW,254,7.8,5.7,4660:0
-49978,S Karori Rd road,Bus,NE,254,108.8,157.7,4662:1;3983:1
-49983,Karori Rd road,Car,E,254,145.0,56.4,14120:1;12811:1
-49984,Karori Rd path RHS,Pedestrian,NE,254,1.4,56.4,12811:1
-49985,Karori Rd road RHS,Car,N,254,17.8,63.2,1298:1
-50005,Karori Rd road LHS,Car,S,254,31.7,15.3,1283:1
-50007,Karori Rd road,Car,W,254,186.5,874.1,13016:0;13015:0;1283:0
-50009,Karori Rd path RHS,Pedestrian,W,254,2.0,390.6,13016:0
-50116,Ghuznee St path LHS,Pedestrian,SE,243,2.3,8.6,659:0
-50117,Ghuznee St road outbound,Car,E,243,0.6,8.6,659:0
-50118,Ghuznee St road inbound LHS,Car,SE,243,15.6,8.6,659:0
-50119,Ghuznee St road inbound RHS,Car,SE,243,90.0,8.6,659:0
-50120,Ghuznee St path RHS,Pedestrian,SE,243,6.4,8.6,659:0
-50129,Taranaki St path LHS,Pedestrian,SW,241,15.0,0.0,8431:1
-50132,Elizabeth St path LHS,Pedestrian,NW,244,4.0,49.1,1624:1
-50133,Elizabeth St road,Car,W,244,87.6,49.1,1624:1
-50134,Elizabeth St path RHS,Pedestrian,NW,244,7.4,49.1,1624:1
-50141,Boulcott St road Inbound LHS,Car,N,244,8.3,72.7,7585:0
-50142,Boulcott St road Inbound RHS,Car,N,244,23.6,72.7,7585:0
-50143,Boulcott St path RHS,Pedestrian,N,244,7.0,72.7,7585:0
-50144,Bowen St path LHSRamp,Pedestrian,N,216,16.9,289.0,7673:0
-50145,Bowen St path LHS,Pedestrian,NW,216,4.1,289.0,7674:0
-50147,Bowen St road Inbound LHS,Car,NW,216,12.2,289.0,7674:0
-50148,Bowen St road Inbound RHS,Car,NW,216,2.3,522.1,12992:0
-50149,Bowen St cyclepath,Cyclist,NW,226,198.0,522.1,12992:0
-50152,Waterloo Quay path LHS,Pedestrian,SW,246,21.7,0.0,11626:1
-50154,Lady Elizabeth Ln road Outbound,Car,W,244,1.4,120.6,4250:1
-50155,Lady Elizabeth Ln road Inbound LHS,Car,NW,244,9.6,120.6,4250:1
-50156,Lady Elizabeth Ln road Inbound RHS,Car,NW,244,90.8,0.0,11285:0
-50157,Waterloo Quay road Inbound1stlane,Car,SW,219,1.4,33.5,8613:0
-50158,Waterloo Quay road Inbound2ndlane,Car,SW,219,2.5,33.5,8613:0
-50159,Waterloo Quay road Inbound,Car,SW,219,6.5,149.2,8601:0;8613:0
-50160,Waterloo Quay road Turning Lane,Car,S,219,8.6,115.8,8601:0
-50161,Waterloo Quay path RHS,Pedestrian,SW,219,34.6,0.0,10304:0
-50723,Salamanca Rd path LHS,Pedestrian,NW,165,0.8,15.9,1985:1
-50725,Salamanca Rd path RHS,Pedestrian,E,165,5.4,15.9,1985:0
-50726,Salamanca Rd road RHS,Car,E,165,43.0,15.9,1985:0
-50735,Taranaki St path,Pedestrian,N,241,17.5,0.0,13477:0
-47848,Luxford St road lower,Bus,W,237,14.4,733.3,13076:1
-47851,Adelaide Rd road,Car,N,237,125.5,727.6,4121:1
-47852,Adelaide Rd road northbound,Car,N,237,122.5,727.6,4121:1
-47908,Kent Terrace cyclelanes,Cyclist,NE,252,75.7,1240.8,12344:1
-47909,Kent Terrace path,Pedestrian,NE,252,75.4,0.0,4044:1
-47925,Dixon St path LHS,Pedestrian,NE,251,9.1,0.0,12353:1
-47927,Manners St path LHS,Pedestrian,SE,251,8.1,266.5,12352:1
-47935,Manners St path RHS,Pedestrian,S,251,1.4,266.5,12352:1
-47936,Manners St road,Bus,SE,251,86.9,266.5,12352:1
-48021,Taranaki St road Southeastbound,Car,SW,251,64.0,10.6,12020:0
-48022,Taranaki St road Westbound,Car,SW,251,23.0,10.6,12020:0
-48038,Centennial Hwy road Northbound,Car,N,250,65.1,216.2,52:0
-48039,Jarden Mile road,Car,SE,250,5.6,9.2,13160:0;10312:0;13760:1;13159:0;13762:1;13761:0;10311:0;7217:1
-48040,Jarden Mile path RHS,Cyclist,SE,249,6.2,4.3,13762:1;13761:0;7217:1
-48043,Taranaki St road Westbound,Car,NE,251,41.7,0.0,5770:1
-48044,Taranaki St road Northwestbound,Car,NE,251,57.4,79.4,4103:1
-48045,Taranaki St road Northbound,Car,N,251,31.3,79.4,4103:1
-48046,Taranaki St road Eastbound,Car,N,251,18.7,79.4,4103:1
-48050,Birdwood St road,Bus,E,249,80.6,284.7,13005:1
-48051,Chaytor St road,Bus,S,249,170.0,820.3,13851:1;4391:1;13849:0;12213:0;12212:0;13850:1;4392:1
-48054,Birdwood St path RHS,Pedestrian,E,250,1.9,0.4,13849:1
-48055,Chaytor St path LHS,Pedestrian,SW,250,2.6,700.7,13849:0;13850:1;13848:0
-48056,Birdwood St path LHS,Pedestrian,SE,249,0.1,0.0,12215:0
-48057,Majoribanks St Southwestbound,Car,NW,104,81.1,223.5,10880:1
-48060,Majoribanks St path LHS,Pedestrian,W,104,4.6,313.6,12343:0
-48061,Majoribanks St path RHS,Pedestrian,NW,104,1.4,223.5,10880:1
-48062,Chaytor St road,Bus,N,251,259.2,625.4,10851:0
-48063,Featherston St road,Car,NE,253,32.7,0.0,12554:1
-48064,Whitmore St road,Car,NW,253,162.0,1655.0,13968:1
-48066,Courtenay Pl road Southeastbound,Car,SE,253,33.5,15.1,5767:0;5765:0
-48067,Courtenay Pl road Southbound,Car,E,253,28.5,15.0,5767:0
-55177,Paterson St path RHS,Pedestrian,NW,244,0.8,1.4,3662:1
-55180,Paterson St road LHS,Car,NW,241,11.1,11.1,1853:1
-55182,Paterson St road RHS,Car,NW,241,19.3,332.7,7576:1;3662:1
-55194,Gee St footpath,Pedestrian,SW,212,51.8,3.2,6138:1
-55195,Gee St path LHS,Pedestrian,N,212,3.3,3.2,6138:0
-55196,Gee St road,Car,N,212,8.1,0.6,548:0
-55197,Gee St path RHS,Pedestrian,NW,212,0.7,0.6,548:0
-55388,Onepu Rd road east RHS,Car,N,239,12.7,279.8,13999:0
-55389,Onepu Rd road east LHS,Car,N,239,7.0,187.1,12839:1;14005:0;14006:0;12838:1
-55391,Onepu Rd road north RHS,Car,NW,239,12.5,21.3,12615:0
-55392,Onepu Rd road north LHS,Car,W,239,12.7,414.6,9872:0
-55393,Onepu Rd road west,Car,NW,239,0.1,4.0,14027:1
-55399,Willowbank Rd road,Car,N,246,42.5,31.3,10037:0
-55400,Takapu Rd road,Car,W,246,8.0,4.8,1150:0
-55401,Takapu Rd path,Pedestrian,SW,246,1.0,0.0,9608:0
-55402,The Parade road,Bus,S,205,16.6,466.8,12651:0;7199:0
-55403,The Parade path,Pedestrian,S,205,91.6,3.6,12651:0
-55954,Queens Wharf road,Car,SE,246,230.4,1.0,5584:1;5582:1
-55955,Queens Wharf path1,Pedestrian,E,246,77.6,37.8,5570:1
-55956,Queens Wharf path2,Pedestrian,S,246,425.4,555.2,5582:1;5571:0;5570:0;7826:1
-56030,Aro St road,Car,NW,225,107.6,11.2,14090:0
-56032,Aro St path LHS,Pedestrian,W,235,4.0,11.2,14090:0
-56033,Aro St path RHS,Pedestrian,NW,235,4.8,11.2,14090:0
-56034,Cuba St road,Car,N,242,71.3,35.1,3552:0
-56038,Ghuznee St path LHS,Pedestrian,NW,242,0.3,19.0,7968:1
-56040,Ghuznee St path RHS,Pedestrian,W,242,3.0,22.6,7967:1
-56042,Cuba St walkway,Pedestrian,NE,248,73.3,91.0,12351:1
-56043,Cuba St path RHS,Pedestrian,E,248,15.2,129.4,12351:1;36:0
-56044,Cuba St path LHS,Pedestrian,SE,248,11.7,91.0,12351:1
-56046,Cuba St path RHS,Pedestrian,SW,248,16.1,89.6,36:1
-56047,Cuba St path LHS,Pedestrian,SW,248,14.7,89.6,36:1
-56048,Manners St path,Pedestrian,NW,248,17.6,38.4,36:0
-56049,Cuba St road,Car,SW,247,30.2,89.6,36:1
-56050,Cuba St path LHS,Pedestrian,S,248,7.3,0.0,13693:1
-56051,Vivian St path RHS,Pedestrian,SE,248,7.6,37.0,11790:0
-56052,Cuba St road,Car,S,248,20.6,0.0,13693:1
-56053,Vivian St road,Bus,SE,248,67.2,37.0,11790:0
-56063,Cuba St path,Pedestrian,NE,250,6.6,71.6,39:0
-56064,Cuba St road,Car,NE,250,97.2,71.6,39:0
-56065,Vivian St path,Pedestrian,E,250,2.1,37.0,11790:0
-56081,S91 Bowen St cycle Ln,Pedestrian,N,230,0.5,0.0,9767:1
-56082,Bowen St road RHS,Bus,NE,230,192.9,766.8,911:1
-56083,Bowen St road LHS,Car,NE,230,7.1,766.8,12992:1;911:1
-56163,Herd St path2,Pedestrian,W,186,175.4,34.3,12331:1;10947:1
-56238,Tawa St path,Pedestrian,N,240,14.1,19.4,9740:0
-56239,Tawa St road,Car,N,240,21.6,19.4,9740:0
-56248,Lambton Quay road,Car,SE,253,8.9,0.0,97:1
-56371,Tawa St path2,Pedestrian,N,240,12.4,19.4,9740:0
-56554,The Parade path,Cyclist,S,206,1.1,0.0,12637:1
-56622,Queens Wharf path3,Car,S,246,271.1,0.0,5583:1
-56651,Vivian St path LHS,Pedestrian,SE,248,2.2,37.0,11790:0
-56652,Vivian St path LHS,Pedestrian,NW,250,7.0,0.0,11791:1
-56653,Cuba St path LHS,Pedestrian,N,250,5.9,71.6,39:0
-56654,Cuba St path road top,Car,N,250,80.6,71.6,39:0
-56655,Ghuznee St road top,Car,W,242,55.1,19.0,7968:1
-56656,Ghuznee St road bottom,Car,NW,242,88.9,22.6,7967:1
-56909,The Parade road,Car,N,249,8.8,447.5,12651:1;7199:1
-56910,The Parade cycle Lane LHS,Cyclist,N,249,1.8,0.0,12651:1
-56912,The Parade path RHS,Pedestrian,N,250,4.3,54.4,12637:0
-56913,The Parade cycle Lane RHS,Cyclist,N,250,128.0,54.4,12637:0
-57228,Aro St path LHS,Pedestrian,W,230,35.1,278.6,12522:0
-57229,Aro St road LHS,Bus,W,230,26.3,278.6,12522:0
-57230,Aro St road RHS,Bus,W,230,142.4,278.6,14103:0;12522:0
-57231,Aro St path RHS,Pedestrian,W,230,4.5,0.0,14103:0
-57985,Bunny St road,Bus,NW,204,263.6,33.5,92:0;8106:1
-57988,Featherston St road,Car,NE,204,8.0,0.0,151:1
-57989,Thorndon Quay road,Car,SW,205,661.6,1175.9,57:1;12982:1
-57990,Bunny St road north,Car,W,205,26.8,287.3,11686:0
-57992,Featherston St road,Car,SW,205,121.9,0.0,13444:1
-57994,Dixon St road,Car,SE,205,3.6,0.0,11786:1
-57997,Victoria St road,Car,NE,205,33.2,64.7,451:1
-57999,Victoria St road,Bus,SW,205,290.5,273.0,5771:0
-58000,Dixon St road south Bound,Car,E,205,40.0,0.0,11785:1
-58001,Dixon St road south East Bound,Car,W,205,25.3,172.8,11785:0
-58002,Dixon St road east Bound1,Car,W,205,57.1,172.8,11785:0
-58725,Molesworth cycle RHS 1,Cyclist,S,123,1.8,0.0,14158:1
-59090,Thorndon Quay road bus Lane,Bus,SW,107,6.6,817.3,12984:1;4564:1
-59392,Thorndon Quay cycle Lane,Cyclist,S,107,587.2,0.0,12985:1
-59393,Thorndon Quay road southbound,Car,SW,107,19.5,22.1,7321:0;12054:1;5580:0;14232:1
-59394,Thorndon Quay path,Pedestrian,SW,107,2.4,0.0,12985:1
-50745,Salamanca Rd road center,Car,E,165,96.8,15.9,1985:0
-51181,Abel Smith St road,Car,E,252,15.8,72.4,1921:1
-51182,Abel Smith St path LHS,Pedestrian,SE,252,6.7,72.4,1921:1
-51186,Cuba St path RHS,Pedestrian,N,254,40.6,2.2,11881:0;6633:0
-51187,Cuba St road north south,Car,NE,254,107.0,116.1,10277:0
-51189,Cuba St road west east,Car,W,254,49.0,1088.6,10277:1;428:0;10275:0;10273:1
-51191,Cuba St path RHS,Pedestrian,NE,254,6.0,104.2,14249:1
-51238,Abel Smith St path RHS,Pedestrian,E,252,3.7,20.7,6750:0
-51671,Jarden Mile road LHS,Car,NW,232,12.1,16.3,11517:0
-51672,Jarden Mile road RHS,Car,W,232,11.8,0.0,5622:0
-51673,Jarden Mile path,Pedestrian,NW,232,157.0,78.7,11639:0
-51709,Hutt Rd road RHS,Bus,NE,250,25.6,9.2,8638:0;13157:0;13156:0;13143:1;13161:0;13144:0;8639:0;13160:1
-51710,Hutt Rd road LHS,Car,NE,250,17.2,0.0,10315:1
-51724,Hutt Rd path,Pedestrian,E,249,9.7,7.5,13143:1;13163:0;13161:0;13144:0
-53176,Dixon St path RHS,Pedestrian,W,252,1.9,8.3,12147:1
-53177,Everton Ter path RHS,Pedestrian,NW,247,1.1,21.4,818:0
-53180,Everton Ter road outbound,Car,W,247,11.1,21.4,818:0
-53181,Everton Ter path LHS,Pedestrian,NW,247,0.1,21.4,818:0
-53186,Coutts St path LHS,Pedestrian,NW,238,83.0,17.9,6945:1
-53187,Coutts St path,Cyclist,W,238,72.5,433.6,6386:1
-53190,Commonwealth Walkway left,Pedestrian,E,243,218.2,22.1,6203:0
-53200,Ara Moana left,Pedestrian,E,166,411.6,1138.5,11489:1;9797:1
-53201,Ara Moana path,Pedestrian,S,166,287.2,1275.0,6201:1
-53928,Herd St path,Pedestrian,SE,186,4.7,18.0,10947:0
-53929,Oriental Parade path/cycle Ln RHS,Cyclist,SE,186,475.8,18.0,9622:0
-53930,Oriental Parade path/cycle Ln LHS,Pedestrian,E,186,17.4,18.0,9622:0
-53931,Herd St road out,Car,SE,181,17.3,574.4,7792:0
-53932,Herd St road in,Car,SE,181,1.0,574.4,7792:0
-53933,Oriental Parade road,Bus,E,181,37.9,634.6,4961:0;11449:0
-53934,Oriental Parade path,Pedestrian,E,181,1.5,634.6,4961:0
-53935,Tasman St path LHS,Pedestrian,N,202,8.9,314.1,6151:1
-53936,Tasman St road,Car,N,202,298.7,314.1,6151:1
-53937,Tasman St path RHS,Pedestrian,N,202,8.4,314.1,6151:1
-53938,Lady Elizabeth Ln path LHS,Car,NE,244,278.3,659.6,11284:1
-53939,Lady Elizabeth Ln path RHS,Pedestrian,N,244,300.0,1381.7,6783:0
-53998,Middleton Rd path,Pedestrian,SW,241,3.1,0.0,8905:1
-53999,Middleton Rd road,Car,SW,241,50.2,37.2,6627:1
-54164,Thorndon Quay cycle Lane,Cyclist,S,216,562.5,848.9,6318:1
-54165,Thorndon Quay path,Pedestrian,SW,216,25.9,848.9,6318:1
-54166,Thorndon Quay road,Car,S,216,43.7,962.3,14227:0;6318:1;7327:1;139:1;11160:1
-54237,Adelaide Rd RHSkerb,Cyclist,E,237,25.8,0.0,13288:0;13291:0
-54243,Hutt Rd South Cycles,Cyclist,NE,251,360.5,890.4,14241:0
-54244,Hutt Rd Roadcycles Sth,Car,S,251,260.2,1143.4,8474:0;14234:0;13036:0
-54245,Hutt Rd Roadcycles Nrth,Car,NE,251,7.2,15.3,7572:1
-54293,Murphy St Road,Car,SE,220,50.9,352.8,12970:0
-54294,Molesworth St Road,Car,SE,220,0.1,0.0,7503:1
-54295,Murphy St LHS Cycle,Cyclist,S,220,55.5,10.9,4456:0
-54296,Molesworth St RHS Cycle,Car,SE,220,1.1,0.0,7503:1
-54337,S84 Herd St path2,Pedestrian,NE,186,118.6,36.0,9622:0;10947:0
-54381,Oriental Parade path2,Pedestrian,SW,181,104.7,43.0,12330:1;13056:1
-54410,The Parade path LHS,Pedestrian,N,235,13.7,32.4,12636:0
-54411,The Parade road,Bus,N,235,7.7,464.2,12636:0;7340:1
-54412,The Parade cycle Ln,Cyclist,N,235,0.9,0.0,12651:1
-54413,The Parade path RHS,Pedestrian,NE,235,4.6,0.0,12651:1
-54461,Commonwealth Walkway path2,Pedestrian,E,244,661.3,1839.8,9786:1
-54462,Commonwealth Walkway path3,Pedestrian,S,244,315.4,113.6,9746:0
-55170,The Parade path,Cyclist,S,253,119.4,3.6,12651:0
-55175,Paterson St path LHS,Pedestrian,SE,244,1.1,11.1,1853:0
-55176,Paterson St path middle,Pedestrian,E,244,170.2,1015.7,7576:0;7575:1;12771:1;12605:0
-51771,Johnsonville Rd road LHS,Car,E,254,9.9,0.0,5051:1
-51772,Johnsonville Rd road RHS,Car,S,254,59.2,104.4,11132:1
-51773,Johnsonville Rd path LHS,Pedestrian,S,254,6.4,0.0,5051:1
-51774,Johnsonville Rd path centre,Pedestrian,SW,254,7.8,0.0,5051:0
-51775,Johnsonville Rd path RHS,Pedestrian,E,254,3.9,112.2,11132:0
-51778,Johnsonville Rd road LHS,Car,W,241,16.2,13.2,11135:1
-51779,Johnsonville Rd road RHS,Car,N,241,45.5,101.7,11133:0
-51780,Johnsonville Rd path,Pedestrian,N,241,2.2,101.7,11133:0
-51786,Johnsonville Rd path LHS,Pedestrian,NW,241,2.0,13.2,11135:1
-51787,Johnsonville Rd path RHS,Pedestrian,N,241,5.7,101.7,11133:0
-51949,Commonwealth Walkway path LHS,Pedestrian,E,238,417.1,64.5,10957:0
-51950,Commonwealth Walkway path RHS,Pedestrian,N,238,814.8,1734.1,4156:0
-51951,Commonwealth Walkway path,Pedestrian,NE,237,291.3,1797.6,4157:0
-52147,Todman St path LHS,Pedestrian,NE,211,7.1,81.6,12784:1
-52148,Todman St path RHS,Pedestrian,N,211,7.8,81.2,5181:1
-52149,Todman St road LHS,Car,NW,211,126.7,81.6,12784:1
-52150,Todman St road centrre,Car,E,211,19.5,81.2,5181:1
-52151,Todman St road RHS,Car,N,211,77.8,102.4,12783:1
-52188,Moorefield Rd road LHS,Car,N,243,23.0,48.7,9684:0;11375:0
-52189,Moorefield Rd road RHS,Car,SE,243,20.5,46.5,2974:1
-52191,Moorefield Rd path LHS,Pedestrian,NE,243,0.5,48.5,9684:0
-52192,Moorefield Rd path RHS,Pedestrian,E,243,1.3,46.5,2901:1
-52194,Hawkestone St road LHS,Car,W,123,25.0,4.7,12397:1
-52195,Molesworth road RHS 1,Car,N,123,32.5,276.8,5672:0
-52196,Molesworth road 2,Car,N,123,112.8,291.1,5672:0;14159:0
-52197,Hawkestone St path LHS,Pedestrian,W,124,1.2,4.7,12397:1
-52198,Hawkestone St path RHS,Pedestrian,W,124,2.1,4.7,12397:1
-52603,Evans Bay road,Car,E,254,66.5,46.8,67:0;12758:0;12756:0
-52623,Evans Bay path,Pedestrian,SE,241,209.7,495.5,12762:0
-52624,Evans Bay road,Car,SE,241,73.6,0.0,5525:0;12755:0
-52625,Evans Bay path,Pedestrian,E,254,296.2,195.8,11323:0
-52634,Courtenay Pl road Northwestbound nzwel001,Car,NW,253,68.2,28.5,5760:0
-53060,Ara Moana path,Pedestrian,S,244,702.4,1844.0,4181:1
-53061,Commonwealth Walkway path,Pedestrian,S,244,710.2,1585.5,10867:0
-53168,Moorefield Rd road,Car,S,243,31.4,55.0,11141:1
-53169,Broderick Rd road,Car,E,243,13.0,40.4,11140:0
-53171,Willis St path LHS,Pedestrian,S,254,17.8,183.1,8438:0
-53172,Willis St road,Car,S,254,159.6,183.1,8438:0
-53173,Willis St path RHS,Pedestrian,SW,254,9.3,183.1,8438:0
-53174,Dixon St path LHS,Pedestrian,NW,252,3.8,8.3,12147:1
-53175,Dixon St road,Car,NW,252,24.9,16.2,12147:1;5776:1
-48068,Courtenay Pl road Westbound,Car,W,253,44.2,81.1,5755:0
-48110,Cambridge Ter path LHS,Pedestrian,N,254,4.5,100.1,4997:0
-48111,Cambridge Ter cyclepath,Cyclist,NE,254,391.9,1445.2,13933:1;13931:0
-48112,Cambridge Ter road,Car,N,254,34.3,1545.3,13931:0;4997:0
-48132,Dixon St path RHS,Pedestrian,N,251,6.8,368.7,12353:0
-48246,Lambton Quay path LHS,Pedestrian,N,252,6.5,32.2,97:0
-48247,S29 Lambton Quay road,Car,NW,252,0.0,32.2,97:0
-48294,Customhouse Quay road,Bus,NE,252,119.4,451.4,4040:0
-48296,Customhouse Quay path RHS,Pedestrian,N,252,6.8,360.1,449:0
-48297,Riddiford St road,Car,S,254,283.0,552.6,13912:0
-48298,Rintoul St road,Car,S,254,145.7,1216.6,12973:0
-48310,Rongotai Rd path,Cyclist,E,239,37.1,0.0,12615:1
-48345,Hutt Rd path,Pedestrian,SW,250,0.5,0.0,8036:1
-48346,Kaiwharawhara Rd road,Car,NW,251,197.0,579.9,11468:1
-48347,Hutt Rd road,Car,SW,251,21.1,0.0,8474:0
-48348,Hutt Rd cyclepath,Cyclist,NE,251,356.5,325.9,14242:0
-48800,Riddiford St road LHS,Bus,N,254,381.6,1263.1,13874:1
-48802,Riddiford St path RHS,Pedestrian,N,254,4.8,0.0,13868:1
-48821,Lambton Quay road,Car,S,254,118.1,19.5,7210:0
-48822,Lambton Quay path LHS,Pedestrian,S,254,6.7,19.5,7210:0
-48824,Lambton Quay path LHS,Pedestrian,N,253,11.9,0.0,7566:0
-48825,Lambton Quay road,Car,N,253,251.5,0.0,7566:0
-48828,Tinakori Rd road LHS,Car,SW,237,44.1,34.4,8179:0
-48830,Park St road LHS,Car,NW,237,78.9,270.2,11162:1
-48832,Park St path RHS,Pedestrian,NW,237,3.2,270.2,11162:1
-48834,Park St path LHS,Pedestrian,NW,239,7.4,270.2,11162:1
-48873,Johnston St path LHS,Pedestrian,W,253,5.1,0.0,1953:1
-48885,Johnston St path RHS,Pedestrian,W,251,9.1,0.0,1953:1
-48981,Miramar Ave path LHS,Pedestrian,E,250,245.5,307.1,11314:0
-48985,Shelly Bay Rd road,Car,N,250,50.3,44.5,9383:0
-48986,Miramar Ave road,Bus,E,250,86.3,0.5,4544:1
-48987,Miramar Ave path RHS,Pedestrian,SE,250,0.4,0.5,4544:1
-49727,Hutt Rd cycles,Cyclist,SE,251,248.7,1143.4,14234:0;13036:0
-49972,Karori Rd path LHS,Pedestrian,S,254,2.6,152.7,13422:0
-49973,Karori Rd road,Bus,SW,254,70.3,152.7,13422:0
-49974,Karori Rd path RHS,Pedestrian,S,254,6.8,152.7,13422:0
-49975,S Karori Rd road lower,Car,SE,254,10.4,65.5,4662:0
-49976,S Karori Rd road upper,Car,SE,254,6.3,0.0,4660:1
-49978,S Karori Rd road,Bus,SW,254,45.1,157.7,4662:0;3983:0
-49983,Karori Rd road,Car,W,254,192.5,56.6,14120:0;12811:0
-49984,Karori Rd path RHS,Pedestrian,SW,254,2.0,56.6,12811:0
-49985,Karori Rd road RHS,Car,S,254,8.4,91.7,1298:0
-50005,Karori Rd road LHS,Car,N,254,43.4,47.4,1283:0
-50007,Karori Rd road,Car,E,254,127.1,831.1,13016:1;13015:1;1283:1
-50009,Karori Rd path RHS,Pedestrian,E,254,1.3,401.3,13016:1
-50116,Ghuznee St path LHS,Pedestrian,NW,243,3.7,22.3,659:1
-50117,Ghuznee St road outbound,Car,W,243,62.5,22.3,659:1
-50118,Ghuznee St road inbound LHS,Car,NW,243,0.4,22.3,659:1
-50119,Ghuznee St road inbound RHS,Car,NW,243,0.2,22.3,659:1
-50120,Ghuznee St path RHS,Pedestrian,NW,243,4.3,22.3,659:1
-50129,Taranaki St path LHS,Pedestrian,NE,241,18.2,8.9,8431:0
-50130,Taranaki St road LHS,Car,N,241,31.5,8.9,10414:0;8433:0
-50131,Taranaki St road RHS,Car,NE,241,28.4,8.9,10414:0;8433:0
-50132,Elizabeth St path LHS,Pedestrian,SE,244,4.5,44.2,1624:0
-50133,Elizabeth St road,Car,E,244,67.2,44.2,1624:0
-50134,Elizabeth St path RHS,Pedestrian,SE,244,7.6,44.2,1624:0
-50140,Boulcott St road Outbound,Car,S,244,26.9,30.0,7585:1
-50143,Boulcott St path RHS,Pedestrian,S,244,1.7,30.0,7585:1
-50144,Bowen St path LHSRamp,Pedestrian,S,216,9.3,679.8,7673:1
-50145,Bowen St path LHS,Pedestrian,SE,216,11.2,679.8,7674:1
-50146,Bowen St road Outbound,Bus,E,216,177.4,679.8,7674:1
-50149,Bowen St cyclepath,Cyclist,SE,226,3.0,0.0,12992:1
-50152,Waterloo Quay path LHS,Pedestrian,NE,246,12.6,171.5,11626:0
-50153,Waterloo Quay road,Car,NE,246,38.4,171.5,11626:0
-50154,Lady Elizabeth Ln road Outbound,Car,E,244,31.7,7.2,4250:0
-50155,Lady Elizabeth Ln road Inbound LHS,Car,SE,244,10.2,7.2,4250:0
-50156,Lady Elizabeth Ln road Inbound RHS,Car,SE,244,27.2,0.0,11285:1
-50161,Waterloo Quay path RHS,Pedestrian,NE,219,44.1,0.0,10304:1
-50723,Salamanca Rd path LHS,Pedestrian,SE,165,7.7,15.9,1985:0
-50724,Salamanca Rd road LHS,Car,W,165,78.5,15.9,1985:1
-50725,Salamanca Rd path RHS,Pedestrian,W,165,3.2,15.9,1985:1
-50735,Taranaki St path,Pedestrian,S,241,11.1,0.0,13477:1
-50736,Taranaki St road LHS,Car,SW,241,39.9,24.5,8430:0
-50737,Taranaki St road center,Car,S,241,20.6,24.5,8430:0
-47847,Luxford St road upper,Car,SW,237,111.8,0.0,9049:0
-47848,Luxford St road lower,Bus,E,237,128.1,723.2,13076:0
-47851,Adelaide Rd road,Car,S,237,76.4,725.4,4121:0
-47869,Kent Terrace road,Car,SW,254,94.1,250.0,4044:0
-47908,Kent Terrace cyclelanes,Cyclist,SW,252,345.3,1072.2,12344:0
-47909,Kent Terrace path,Pedestrian,SW,252,24.3,250.0,4044:0
-47925,Dixon St path LHS,Pedestrian,SW,251,6.3,368.7,12353:0
-47926,Dixon St road,Car,NW,251,155.6,369.6,5770:0
-47927,Manners St path LHS,Pedestrian,NW,251,11.1,291.3,12352:0
-47935,Manners St path RHS,Pedestrian,N,251,1.8,291.3,12352:0
-47936,Manners St road,Bus,NW,251,70.5,291.3,12352:0
-48023,Taranaki St road Northbound,Car,N,251,149.1,8.7,12020:1
-48025,Courtenay Pl road Eastbound,Bus,SE,251,125.4,103.0,5762:0
-48037,Centennial Hwy Southbound,Car,S,250,115.3,196.1,8634:0
-48040,Jarden Mile path RHS,Cyclist,NW,249,71.2,4.3,13762:0;13761:1;7217:0
-48047,Taranaki St road Southbound,Car,S,251,126.2,56.5,4103:0
-48050,Birdwood St road,Bus,W,249,75.9,475.3,13005:0
-48051,Chaytor St road,Bus,N,249,56.3,671.5,13851:0;4391:0;13849:1;12213:1;12212:1;13850:0;4392:0
-48054,Birdwood St path RHS,Pedestrian,W,250,2.3,0.4,13849:0
-48055,Chaytor St path LHS,Pedestrian,NE,250,102.2,321.4,13849:1;13850:0;13848:1
-48056,Birdwood St path LHS,Pedestrian,NW,249,0.3,0.0,12215:1
-48058,Majoribanks St Eastbound,Car,SE,104,92.7,206.0,10880:0
-48060,Majoribanks St path LHS,Pedestrian,E,104,3.6,1235.3,12343:1
-48061,Majoribanks St path RHS,Pedestrian,SE,104,1.9,206.0,10880:0
-48062,Chaytor St road,Bus,S,251,250.4,620.1,10851:1
-48063,Featherston St road,Car,SW,253,498.4,173.2,12554:0
-48064,Whitmore St road,Car,SE,253,283.9,1000.3,13968:0
-55177,Paterson St path RHS,Pedestrian,SE,244,0.4,1.4,3662:0
-55180,Paterson St road LHS,Car,SE,241,7.6,11.1,1853:0
-55182,Paterson St road RHS,Car,SE,241,11.1,361.0,7576:0;3662:0
-55194,Gee St footpath,Pedestrian,NE,212,54.8,3.2,6138:0
-55195,Gee St path LHS,Pedestrian,S,212,3.1,3.2,6138:1
-55196,Gee St road,Car,S,212,8.8,0.4,548:1
-55197,Gee St path RHS,Pedestrian,SE,212,0.6,0.4,548:1
-55388,Onepu Rd road east RHS,Car,S,239,1.7,0.0,13999:1
-55389,Onepu Rd road east LHS,Car,S,239,46.7,434.5,12839:0;14005:1;14006:1;12838:0
-55391,Onepu Rd road north RHS,Car,SE,239,14.0,0.0,12615:1
-55392,Onepu Rd road north LHS,Car,E,239,10.5,0.0,9872:1
-55393,Onepu Rd road west,Car,SE,239,12.6,4.0,14027:0
-55399,Willowbank Rd road,Car,S,246,49.6,31.1,10037:1
-55400,Takapu Rd road,Car,E,246,8.2,4.8,1150:1
-55401,Takapu Rd path,Pedestrian,NE,246,0.6,0.0,9608:1
-55402,The Parade road,Bus,N,205,5.7,447.5,12651:1;7199:1
-55403,The Parade path,Pedestrian,N,205,0.8,0.0,12651:1
-55954,Queens Wharf road,Car,NW,246,313.4,81.7,5584:0;5582:0
-55955,Queens Wharf path1,Pedestrian,W,246,68.4,38.5,5570:0
-55956,Queens Wharf path2,Pedestrian,N,246,366.5,894.0,5582:0;5571:1;5570:1;7826:0
-56030,Aro St road,Car,SE,225,133.3,11.1,14090:1
-56032,Aro St path LHS,Pedestrian,E,235,6.2,11.1,14090:1
-56033,Aro St path RHS,Pedestrian,SE,235,4.0,11.1,14090:1
-56034,Cuba St road,Car,S,242,20.5,0.0,3552:1
-56038,Ghuznee St path LHS,Pedestrian,SE,242,0.7,98.9,7968:0
-56040,Ghuznee St path RHS,Pedestrian,E,242,2.3,98.4,7967:0
-56042,Cuba St walkway,Pedestrian,SW,248,70.4,39.8,12351:0
-56043,Cuba St path RHS,Pedestrian,W,248,21.9,129.4,12351:0;36:1
-56044,Cuba St path LHS,Pedestrian,NW,248,7.3,39.8,12351:0
-56046,Cuba St path RHS,Pedestrian,NE,248,23.3,38.4,36:0
-56047,Cuba St path LHS,Pedestrian,NE,248,22.5,38.4,36:0
-56048,Manners St path,Pedestrian,SE,248,15.2,89.6,36:1
-56049,Cuba St road,Car,NE,247,57.5,38.4,36:0
-56050,Cuba St path LHS,Pedestrian,N,248,21.2,106.0,13693:0
-56051,Vivian St path RHS,Pedestrian,NW,248,8.2,0.0,11790:1
-56052,Cuba St road,Car,N,248,102.1,106.0,13693:0
-56053,Vivian St road,Bus,NW,248,9.6,0.0,11790:1
-56063,Cuba St path,Pedestrian,SW,250,10.0,44.6,39:1
-56064,Cuba St road,Car,SW,250,43.7,44.6,39:1
-56065,Vivian St path,Pedestrian,W,250,7.2,0.0,11790:1
-56081,S91 Bowen St cycle Ln,Pedestrian,S,230,25.2,0.0,9767:0
-56082,Bowen St road RHS,Bus,SW,230,4.7,375.9,911:0
-56083,Bowen St road LHS,Car,SW,230,84.3,898.1,12992:0;911:0
-56163,Herd St path2,Pedestrian,E,186,247.6,36.0,12331:0;10947:0
-56238,Tawa St path,Pedestrian,S,240,31.8,25.4,9740:1
-56239,Tawa St road,Car,S,240,9.9,25.4,9740:1
-56248,Lambton Quay road,Car,NW,253,224.0,32.2,97:0
-56371,Tawa St path2,Pedestrian,S,240,30.1,25.4,9740:1
-56554,The Parade path,Cyclist,N,206,134.8,54.4,12637:0
-56622,Queens Wharf path3,Car,N,246,293.6,80.7,5583:0
-56651,Vivian St path LHS,Pedestrian,NW,248,6.1,0.0,11790:1
-56652,Vivian St path LHS,Pedestrian,SE,250,11.9,27.2,11791:0
-56653,Cuba St path LHS,Pedestrian,S,250,10.1,44.6,39:1
-56654,Cuba St path road top,Car,S,250,41.6,44.6,39:1
-56655,Ghuznee St road top,Car,E,242,130.2,98.9,7968:0
-56656,Ghuznee St road bottom,Car,SE,242,98.8,98.4,7967:0
-56909,The Parade road,Car,S,249,12.4,466.8,12651:0;7199:0
-56910,The Parade cycle Lane LHS,Cyclist,S,249,88.0,3.6,12651:0
-56912,The Parade path RHS,Pedestrian,S,250,6.3,0.0,12637:1
-56913,The Parade cycle Lane RHS,Cyclist,S,250,0.6,0.0,12637:1
-57228,Aro St path LHS,Pedestrian,E,230,9.5,266.9,12522:1
-57229,Aro St road LHS,Bus,E,230,150.1,266.9,12522:1
-57230,Aro St road RHS,Bus,E,230,2.5,266.9,14103:1;12522:1
-57231,Aro St path RHS,Pedestrian,E,230,2.5,0.0,14103:1
-57985,Bunny St road,Bus,SE,204,269.3,57.4,92:1;8106:0
-57988,Featherston St road,Car,SW,204,496.5,1084.7,151:0
-57989,Thorndon Quay road,Car,NE,205,391.9,893.6,57:0;12982:0
-57990,Bunny St road north,Car,E,205,135.2,46.2,11686:1
-57992,Featherston St road,Car,NE,205,4.3,715.6,13444:0
-57994,Dixon St road,Car,NW,205,125.7,95.4,11786:0
-57999,Victoria St road,Bus,NE,205,28.8,75.5,5771:1
-58725,Molesworth cycle RHS 1,Cyclist,N,123,31.2,18.7,14158:0
-59090,Thorndon Quay road bus Lane,Bus,NE,107,2.9,800.2,12984:0;4564:0
-59392,Thorndon Quay cycle Lane,Cyclist,N,107,601.5,800.6,12985:0
-59394,Thorndon Quay path,Pedestrian,NE,107,2.7,800.6,12985:0
-59395,Thorndon Quay road northbound,Car,NE,107,20.8,105.0,7321:1;12054:0;5580:1;14232:0
-50738,Taranaki St road RHS,Car,S,241,12.3,24.5,8430:0
-51181,Abel Smith St road,Car,W,252,27.6,175.9,1921:0
-51182,Abel Smith St path LHS,Pedestrian,NW,252,9.7,175.9,1921:0
-51186,Cuba St path RHS,Pedestrian,S,254,152.0,2.2,11881:1;6633:1
-51187,Cuba St road north south,Car,SW,254,80.7,149.6,10277:1
-51189,Cuba St road west east,Car,E,254,13.6,227.1,10277:0;428:1;10275:1;10273:0
-51191,Cuba St path RHS,Pedestrian,SW,254,11.4,55.2,14249:0
-51238,Abel Smith St path RHS,Pedestrian,W,252,4.5,22.6,6750:1
-51668,Jarden Mile road 1,Car,SE,248,17.3,0.3,49:0;6317:0
-51669,Jarden Mile road 2,Bus,NE,248,99.1,1.2,13140:1;3345:0
-51673,Jarden Mile path,Pedestrian,SE,232,76.6,78.4,11639:1
-51709,Hutt Rd road RHS,Bus,SW,250,5.1,7.8,8638:1;13157:1;13156:1;13143:0;13161:1;13144:1;8639:1;13160:0
-51710,Hutt Rd road LHS,Car,SW,250,69.0,185.1,10315:0
-51724,Hutt Rd path,Pedestrian,W,249,8.5,7.5,13143:0;13163:1;13161:1;13144:1
+53176,Dixon St path RHS,Pedestrian,E,252,2.9,7.6,14370:0
+53177,Everton Ter path RHS,Pedestrian,SE,247,0.8,24.1,847:1
+53178,Everton Ter road inbound RHS,Car,E,247,11.8,24.1,847:1
+53179,Everton Ter road inbound LHS,Car,SE,247,4.5,24.1,847:1
+53181,Everton Ter path LHS,Pedestrian,SE,247,0.1,24.1,847:1
+53186,Coutts St path LHS,Pedestrian,SE,238,50.6,18.2,7744:0
+53187,Coutts St path,Cyclist,E,238,82.5,431.1,7111:0
+53190,Commonwealth Walkway left,Pedestrian,W,243,188.1,20.9,6918:1
+53200,Ara Moana left,Pedestrian,W,166,251.5,1262.7,13447:0;11037:0
+53201,Ara Moana path,Pedestrian,N,166,322.3,1253.3,6916:0
+53928,Herd St path,Pedestrian,NW,186,3.5,23.8,12677:1
+53929,Oriental Parade path/cycle Ln RHS,Cyclist,NW,186,371.8,23.8,10807:1
+53930,Oriental Parade path/cycle Ln LHS,Pedestrian,W,186,8.6,23.8,10807:1
+53931,Herd St road out,Car,NW,181,3.9,623.9,8709:1
+53932,Herd St road in,Car,NW,181,17.3,623.9,8709:1
+53933,Oriental Parade road,Bus,W,181,29.0,680.6,5495:1;13361:1
+53934,Oriental Parade path,Pedestrian,W,181,1.2,680.6,5495:1
+53935,Tasman St path LHS,Pedestrian,S,202,12.5,247.3,6860:0
+53936,Tasman St road,Car,S,202,197.4,247.3,6860:0
+53937,Tasman St path RHS,Pedestrian,S,202,11.5,247.3,6860:0
+53938,Lady Elizabeth Ln path LHS,Car,SW,244,310.3,365.6,13105:0
+53939,Lady Elizabeth Ln path RHS,Pedestrian,S,244,296.0,1421.1,7578:1
+53998,Middleton Rd path,Pedestrian,NE,241,1.9,0.6,10058:0
+53999,Middleton Rd road,Car,NE,241,48.4,19.8,7417:0
+54164,Thorndon Quay cycle Lane,Cyclist,N,216,505.2,827.8,7040:0
+54165,Thorndon Quay path,Pedestrian,NE,216,7.4,827.8,7040:0
+54166,Thorndon Quay road,Car,N,216,44.6,951.7,8182:0;7040:0;144:0;16879:1;12970:0
+54238,Molesworth St road,Car,SE,237,89.7,0.0,8370:1;3885:1
+54243,Hutt Rd South Cycles,Cyclist,SW,251,102.3,871.4,16893:1
+54244,Hutt Rd Roadcycles Sth,Car,N,251,196.0,1064.3,9589:1;16886:1;15546:1
+54245,Hutt Rd Roadcycles Nrth,Car,SW,251,18.9,16.6,8443:0
+54293,Murphy St Road,Car,NW,220,0.3,0.0,15452:1
+54294,Molesworth St Road,Car,NW,220,122.7,195.0,8370:0
+54295,Murphy St LHS Cycle,Cyclist,N,220,2.4,0.0,4976:1
+54296,Molesworth St RHS Cycle,Car,NW,220,104.4,195.0,8370:0
+54337,S84 Herd St path2,Pedestrian,SW,186,90.0,47.7,10807:1;12677:1
+54381,Oriental Parade path2,Pedestrian,NE,181,115.2,61.9,14615:0;15584:0
+54410,The Parade path LHS,Pedestrian,S,235,2.3,0.0,14988:1
+54411,The Parade road,Bus,S,235,7.4,367.2,14988:1;8195:0
+54412,The Parade cycle Ln,Cyclist,S,235,125.9,4.8,15003:0
+54413,The Parade path RHS,Pedestrian,SW,235,5.9,4.8,15003:0
+54461,Commonwealth Walkway path2,Pedestrian,W,244,657.5,1867.7,11014:0
+54462,Commonwealth Walkway path3,Pedestrian,N,244,221.1,524.5,10962:1
+55170,The Parade path,Cyclist,N,253,2.8,0.0,15003:1
+55175,Paterson St path LHS,Pedestrian,NW,244,0.8,4.6,1919:1
+55176,Paterson St path middle,Pedestrian,W,244,175.8,922.9,8447:1;8446:0;15192:0;14957:1
+51725,Hutt Rd road,Cyclist,SE,249,49.6,0.7,15718:0
+51771,Johnsonville Rd road LHS,Car,W,254,5.4,0.0,5593:0
+51772,Johnsonville Rd road RHS,Car,N,254,47.5,112.9,12942:0
+51773,Johnsonville Rd path LHS,Pedestrian,N,254,3.3,0.0,5593:0
+51774,Johnsonville Rd path centre,Pedestrian,NE,254,3.1,0.0,5593:1
+51775,Johnsonville Rd path RHS,Pedestrian,W,254,4.7,105.7,12942:1
+51778,Johnsonville Rd road LHS,Car,E,241,22.9,26.9,12945:0
+51779,Johnsonville Rd road RHS,Car,S,241,57.2,81.9,12943:1
+51780,Johnsonville Rd path,Pedestrian,S,241,2.4,81.9,12943:1
+51786,Johnsonville Rd path LHS,Pedestrian,SE,241,2.3,26.9,12945:0
+51787,Johnsonville Rd path RHS,Pedestrian,S,241,0.8,81.9,12943:1
+51949,Commonwealth Walkway path LHS,Pedestrian,W,238,383.2,117.8,12687:1
+51950,Commonwealth Walkway path RHS,Pedestrian,S,238,788.4,1804.6,4657:1
+51951,Commonwealth Walkway path,Pedestrian,SW,237,250.6,1834.3,4658:1
+52147,Todman St path LHS,Pedestrian,SW,211,10.0,102.3,15205:0
+52148,Todman St path RHS,Pedestrian,S,211,21.4,70.6,5735:0
+52149,Todman St road LHS,Car,SE,211,94.5,102.3,15205:0
+52150,Todman St road centrre,Car,W,211,17.6,70.6,5735:0
+52151,Todman St road RHS,Car,S,211,91.0,134.2,15204:0
+52188,Moorefield Rd road LHS,Car,S,243,18.4,45.5,10880:1;13217:1
+52189,Moorefield Rd road RHS,Car,NW,243,4.1,44.4,3237:0
+52191,Moorefield Rd path LHS,Pedestrian,SW,243,2.8,45.4,10880:1
+52192,Moorefield Rd path RHS,Pedestrian,W,243,1.0,44.4,3162:0
+52194,Hawkestone St road LHS,Car,E,123,34.3,22.8,14697:0
+52195,Molesworth road RHS 1,Car,S,123,1.6,0.0,6259:1
+52196,Molesworth road 2,Car,S,123,8.2,0.0,6259:1;16811:1
+52197,Hawkestone St path LHS,Pedestrian,E,124,1.2,22.8,14697:0
+52198,Hawkestone St path RHS,Pedestrian,E,124,0.7,22.8,14697:0
+52603,Evans Bay road,Car,W,254,2.7,0.0,67:1;15179:1;15177:1
+52623,Evans Bay path,Pedestrian,NW,241,215.0,520.9,15183:1
+52624,Evans Bay road,Car,NW,241,11.6,0.0,15176:1;6097:1
+52625,Evans Bay path,Pedestrian,W,254,271.4,196.6,13156:1
+53060,Ara Moana path,Pedestrian,N,244,658.2,1884.4,4684:0
+53061,Commonwealth Walkway path,Pedestrian,N,244,758.7,1709.4,12524:1
+53168,Moorefield Rd road,Car,N,243,36.4,51.2,12951:0
+53169,Broderick Rd road,Car,W,243,15.9,38.8,12950:1
+53171,Willis St path LHS,Pedestrian,N,254,15.3,48.9,9553:1
+53172,Willis St road,Car,N,254,136.5,48.9,9553:1
+53173,Willis St path RHS,Pedestrian,NE,254,8.4,48.9,9553:1
+53174,Dixon St path LHS,Pedestrian,SE,252,1.8,7.6,14370:0
+53175,Dixon St road,Car,SE,252,23.4,14.4,14370:0;6374:0
+48110,Cambridge Ter path LHS,Pedestrian,S,254,8.8,58.1,5539:1
+48111,Cambridge Ter cyclepath,Cyclist,SW,254,447.8,1047.0,16585:0;16583:1
+48132,Dixon St path RHS,Pedestrian,S,251,24.1,0.7,14349:0
+48246,Lambton Quay path LHS,Pedestrian,S,252,9.0,0.0,102:1
+48247,S29 Lambton Quay road,Car,SE,252,0.0,0.0,102:1
+48294,Customhouse Quay road,Bus,SW,252,25.3,163.2,4521:1
+48296,Customhouse Quay path RHS,Pedestrian,S,252,15.5,0.0,464:1
+48297,Riddiford St road,Car,N,254,204.5,420.5,16562:1
+48298,Rintoul St road,Car,N,254,49.0,1263.8,15455:1
+48302,Courtenay Pl road Northbound,Car,NW,251,19.2,312.2,6900:0
+48303,Courtenay Pl road Westbound,Car,W,251,107.8,312.2,6900:0
+48304,Courtenay Pl road Southhbound,Car,NW,251,45.5,312.2,6900:0
+48310,Rongotai Rd path,Cyclist,W,239,75.5,21.8,14967:0
+48327,Cambridge Ter road,Car,N,253,61.7,4.3,6367:0
+48342,Hutt Rd road Northbound,Car,NE,250,6.9,0.0,9589:1
+48343,Hutt Rd road Westbound,Bus,NE,250,36.4,0.0,9057:0
+48344,Hutt Rd cyclelane,Cyclist,N,250,1.3,0.0,9057:0
+48345,Hutt Rd path,Pedestrian,NE,250,0.4,0.0,9057:0
+48346,Kaiwharawhara Rd road,Car,SE,251,252.1,555.8,13393:0
+48348,Hutt Rd cyclepath,Cyclist,SW,251,319.1,329.8,16894:1
+48801,Riddiford St road RHS,Bus,S,254,275.9,3054.8,16524:0;16518:0;5544:0
+48802,Riddiford St path RHS,Pedestrian,S,254,11.1,1117.8,16518:0
+48822,Lambton Quay path LHS,Pedestrian,N,254,7.3,0.0,8065:1
+48824,Lambton Quay path LHS,Pedestrian,S,253,8.4,0.0,8437:1
+48829,Tinakori Rd road RHS,Car,NE,237,27.5,4.2,9269:1
+48831,Park St road RHS,Car,SE,237,97.8,236.4,12972:0
+48832,Park St path RHS,Pedestrian,SE,237,4.0,236.4,12972:0
+48834,Park St path LHS,Pedestrian,SE,239,0.9,236.4,12972:0
+48873,Johnston St path LHS,Pedestrian,E,253,5.2,87.9,2020:0
+48874,Johnston St road,Car,SE,253,81.2,87.9,2020:0
+48877,Featherston St road,Car,S,253,392.8,130.1,12570:0
+48885,Johnston St path RHS,Pedestrian,E,251,4.4,87.9,2020:0
+48981,Miramar Ave path LHS,Pedestrian,W,250,240.7,298.9,13147:1
+48985,Shelly Bay Rd road,Car,S,250,30.8,43.4,10540:1
+48986,Miramar Ave road,Bus,W,250,54.8,0.6,5065:0
+48987,Miramar Ave path RHS,Pedestrian,NW,250,0.5,0.6,5065:0
+49727,Hutt Rd cycles,Cyclist,NW,251,146.1,1064.3,16886:1;15546:1
+49972,Karori Rd path LHS,Pedestrian,N,254,1.4,155.6,15995:1
+49973,Karori Rd road,Bus,NE,254,102.6,155.6,15995:1
+49974,Karori Rd path RHS,Pedestrian,N,254,5.1,3.1,13126:1
+49975,S Karori Rd road lower,Car,NW,254,48.1,56.6,5189:1
+49976,S Karori Rd road upper,Car,NW,254,7.8,5.3,5187:0
+49978,S Karori Rd road,Bus,NE,254,108.8,160.3,5189:1;4456:1
+49983,Karori Rd road,Car,E,254,145.0,51.3,16772:1;15263:1
+49984,Karori Rd path RHS,Pedestrian,NE,254,1.4,51.3,15263:1
+49985,Karori Rd road RHS,Car,N,254,17.8,61.7,1343:1
+50005,Karori Rd road LHS,Car,S,254,31.7,16.9,1328:1
+50007,Karori Rd road,Car,W,254,186.5,861.2,15515:0;15514:0;1328:0
+50009,Karori Rd path RHS,Pedestrian,W,254,2.0,376.5,15515:0
+50116,Ghuznee St path LHS,Pedestrian,SE,243,2.3,4.9,680:0
+50117,Ghuznee St road outbound,Car,E,243,0.6,4.9,680:0
+50118,Ghuznee St road inbound LHS,Car,SE,243,15.6,4.9,680:0
+50119,Ghuznee St road inbound RHS,Car,SE,243,90.0,4.9,680:0
+50120,Ghuznee St path RHS,Pedestrian,SE,243,6.4,4.9,680:0
+50129,Taranaki St path LHS,Pedestrian,SW,241,15.0,0.0,9546:1
+50132,Elizabeth St path LHS,Pedestrian,NW,244,4.0,29.5,1671:1
+50133,Elizabeth St road,Car,W,244,87.6,29.5,1671:1
+50134,Elizabeth St path RHS,Pedestrian,NW,244,7.4,29.5,1671:1
+50141,Boulcott St road Inbound LHS,Car,N,244,8.3,105.9,8456:0
+50142,Boulcott St road Inbound RHS,Car,N,244,23.6,105.9,8456:0
+50143,Boulcott St path RHS,Pedestrian,N,244,7.0,105.9,8456:0
+50144,Bowen St path LHSRamp,Pedestrian,N,216,16.9,648.2,8559:0
+50145,Bowen St path LHS,Pedestrian,NW,216,4.1,0.0,12093:1
+50147,Bowen St road Inbound LHS,Car,NW,216,12.2,648.2,8560:0
+50148,Bowen St road Inbound RHS,Car,NW,216,2.3,92.3,15474:0
+50149,Bowen St cyclepath,Cyclist,NW,226,198.0,92.3,15474:0
+50152,Waterloo Quay path LHS,Pedestrian,SW,246,21.7,0.0,13673:1
+50154,Lady Elizabeth Ln road Outbound,Car,W,244,1.4,103.8,4760:1
+50155,Lady Elizabeth Ln road Inbound LHS,Car,NW,244,9.6,103.8,4760:1
+50156,Lady Elizabeth Ln road Inbound RHS,Car,NW,244,90.8,0.0,13106:0
+50157,Waterloo Quay road Inbound1stlane,Car,SW,219,1.4,28.7,9758:0
+50158,Waterloo Quay road Inbound2ndlane,Car,SW,219,2.5,28.7,9758:0
+50159,Waterloo Quay road Inbound,Car,SW,219,6.5,110.8,9746:0;9758:0
+50160,Waterloo Quay road Turning Lane,Car,S,219,8.6,82.2,9746:0
+50161,Waterloo Quay path RHS,Pedestrian,SW,219,34.6,0.0,11807:0
+50723,Salamanca Rd path LHS,Pedestrian,NW,165,0.8,12.0,2052:1
+50725,Salamanca Rd path RHS,Pedestrian,E,165,5.4,14.0,2052:0
+50726,Salamanca Rd road RHS,Car,E,165,43.0,14.0,2052:0
+50735,Taranaki St path,Pedestrian,N,241,17.5,0.2,16063:0
+47848,Luxford St road lower,Bus,W,237,14.4,771.4,15612:1
+47851,Adelaide Rd road,Car,N,237,125.5,765.8,4603:1
+47852,Adelaide Rd road northbound,Car,N,237,122.5,765.8,4603:1
+47908,Kent Terrace cyclelanes,Cyclist,NE,252,75.7,1214.4,14629:1
+47909,Kent Terrace path,Pedestrian,NE,252,75.4,0.0,4525:1
+47925,Dixon St path LHS,Pedestrian,NE,251,9.1,0.0,14639:1
+47927,Manners St path LHS,Pedestrian,SE,251,8.1,9.6,14638:1
+47935,Manners St path RHS,Pedestrian,S,251,1.4,9.6,14638:1
+47936,Manners St road,Bus,SE,251,86.9,9.6,14638:1
+48021,Taranaki St road Southeastbound,Car,SW,251,64.0,25.5,14180:0
+48022,Taranaki St road Westbound,Car,SW,251,23.0,25.5,14180:0
+48038,Centennial Hwy road Northbound,Car,N,250,65.1,212.0,52:0
+48039,Jarden Mile road,Car,SE,250,5.6,8.4,15721:0;11815:0;16403:1;15720:0;16405:1;16404:0;11814:0;8072:1
+48040,Jarden Mile path RHS,Cyclist,SE,249,6.2,3.7,16405:1;16404:0;8072:1
+48043,Taranaki St road Westbound,Car,NE,251,41.7,0.0,6368:1
+48044,Taranaki St road Northwestbound,Car,NE,251,57.4,13.3,4585:1
+48045,Taranaki St road Northbound,Car,N,251,31.3,13.3,4585:1
+48046,Taranaki St road Eastbound,Car,N,251,18.7,13.3,4585:1
+48050,Birdwood St road,Bus,E,249,80.6,278.1,15504:1
+48051,Chaytor St road,Bus,S,249,170.0,869.3,16501:1;4909:1;16499:0;14474:0;14473:0;16500:1;4910:1
+48054,Birdwood St path RHS,Pedestrian,E,250,1.9,0.5,16499:1
+48055,Chaytor St path LHS,Pedestrian,SW,250,2.6,739.4,16499:0;16500:1;16498:0
+48056,Birdwood St path LHS,Pedestrian,SE,249,0.1,0.0,14476:0
+48057,Majoribanks St Southwestbound,Car,NW,104,81.1,222.9,12539:1
+48060,Majoribanks St path LHS,Pedestrian,W,104,4.6,308.4,14628:0
+48061,Majoribanks St path RHS,Pedestrian,NW,104,1.4,222.9,12539:1
+48062,Chaytor St road,Bus,N,251,259.2,647.8,12504:0
+48063,Featherston St road,Car,NE,253,32.7,0.0,14894:1
+48064,Whitmore St road,Car,NW,253,162.0,1341.4,16620:1
+48066,Courtenay Pl road Southeastbound,Car,SE,253,33.5,3.4,6365:0;6363:0
+48067,Courtenay Pl road Southbound,Car,E,253,28.5,3.4,6365:0
+55177,Paterson St path RHS,Pedestrian,NW,244,0.8,1.0,4088:1
+55180,Paterson St road LHS,Car,NW,241,11.1,4.6,1919:1
+55182,Paterson St road RHS,Car,NW,241,19.3,311.3,8447:1;4088:1
+55194,Gee St footpath,Pedestrian,SW,212,51.8,1.6,6846:1
+55195,Gee St path LHS,Pedestrian,N,212,3.3,1.6,6846:0
+55196,Gee St road,Car,N,212,8.1,0.5,568:0
+55197,Gee St path RHS,Pedestrian,NW,212,0.7,0.5,568:0
+55388,Onepu Rd road east RHS,Car,N,239,12.7,267.1,16651:0
+55389,Onepu Rd road east LHS,Car,N,239,7.0,183.1,15304:1;16657:0;16658:0;15303:1
+55391,Onepu Rd road north RHS,Car,NW,239,12.5,21.8,14967:0
+55392,Onepu Rd road north LHS,Car,W,239,12.7,407.9,11125:0
+55393,Onepu Rd road west,Car,NW,239,0.1,4.2,16679:1
+55399,Willowbank Rd road,Car,N,246,42.5,11.7,11355:0
+55400,Takapu Rd road,Car,W,246,8.0,5.7,1188:0
+55401,Takapu Rd path,Pedestrian,SW,246,1.0,0.0,10769:0
+55402,The Parade road,Bus,S,205,16.6,412.8,15003:0;8049:0
+55403,The Parade path,Pedestrian,S,205,91.6,4.8,15003:0
+55954,Queens Wharf road,Car,SE,246,230.4,1.1,6157:1;6155:1
+55955,Queens Wharf path1,Pedestrian,E,246,77.6,164.2,6143:1
+55956,Queens Wharf path2,Pedestrian,S,246,425.4,721.8,6155:1;6144:0;6143:0;8768:1
+56030,Aro St road,Car,NW,225,107.6,11.1,16742:0
+56032,Aro St path LHS,Pedestrian,W,235,4.0,11.1,16742:0
+56033,Aro St path RHS,Pedestrian,NW,235,4.8,11.1,16742:0
+56034,Cuba St road,Car,N,242,71.3,48.2,3893:0
+56038,Ghuznee St path LHS,Pedestrian,NW,242,0.3,92.2,8970:1
+56040,Ghuznee St path RHS,Pedestrian,W,242,3.0,101.0,8969:1
+56042,Cuba St walkway,Pedestrian,NE,248,73.3,10.5,14637:1
+56043,Cuba St path RHS,Pedestrian,E,248,15.2,20.6,14637:1;36:0
+56044,Cuba St path LHS,Pedestrian,SE,248,11.7,10.5,14637:1
+56046,Cuba St path RHS,Pedestrian,SW,248,16.1,10.1,36:1
+56047,Cuba St path LHS,Pedestrian,SW,248,14.7,10.1,36:1
+56048,Manners St path,Pedestrian,NW,248,17.6,10.2,36:0
+56049,Cuba St road,Car,SW,247,30.2,10.1,36:1
+56050,Cuba St path LHS,Pedestrian,S,248,7.3,0.0,16299:1
+56051,Vivian St path RHS,Pedestrian,SE,248,7.6,3.9,13856:0
+56052,Cuba St road,Car,S,248,20.6,0.0,16299:1
+56053,Vivian St road,Bus,SE,248,67.2,3.9,13856:0
+56063,Cuba St path,Pedestrian,NE,250,6.6,119.9,39:0
+56064,Cuba St road,Car,NE,250,97.2,119.9,39:0
+56065,Vivian St path,Pedestrian,E,250,2.1,3.9,13856:0
+56081,S91 Bowen St cycle Ln,Pedestrian,N,230,0.5,0.0,10993:1
+56082,Bowen St road RHS,Bus,NE,230,192.9,1606.5,945:1;944:1;12068:0
+56083,Bowen St road LHS,Car,NE,230,7.1,1606.5,15474:1;945:1;944:1;12068:0
+56163,Herd St path2,Pedestrian,W,186,175.4,47.7,14616:1;12677:1
+56238,Tawa St path,Pedestrian,N,240,14.1,13.0,10956:0
+56239,Tawa St road,Car,N,240,21.6,13.0,10956:0
+56248,Lambton Quay road,Car,SE,253,8.9,0.0,102:1
+56371,Tawa St path2,Pedestrian,N,240,12.4,13.0,10956:0
+56554,The Parade path,Cyclist,S,206,1.1,0.0,14989:1
+56622,Queens Wharf path3,Car,S,246,271.1,0.0,6156:1
+56651,Vivian St path LHS,Pedestrian,SE,248,2.2,3.9,13856:0
+56652,Vivian St path LHS,Pedestrian,NW,250,7.0,0.0,13857:1
+56653,Cuba St path LHS,Pedestrian,N,250,5.9,119.9,39:0
+56654,Cuba St path road top,Car,N,250,80.6,119.9,39:0
+56655,Ghuznee St road top,Car,W,242,55.1,92.2,8970:1
+56656,Ghuznee St road bottom,Car,NW,242,88.9,101.0,8969:1
+56909,The Parade road,Car,N,249,8.8,392.4,15003:1;8049:1
+56910,The Parade cycle Lane LHS,Cyclist,N,249,1.8,0.0,15003:1
+56912,The Parade path RHS,Pedestrian,N,250,4.3,51.7,14989:0
+56913,The Parade cycle Lane RHS,Cyclist,N,250,128.0,51.7,14989:0
+57228,Aro St path LHS,Pedestrian,W,230,35.1,308.0,14853:0
+57229,Aro St road LHS,Bus,W,230,26.3,308.0,14853:0
+57230,Aro St road RHS,Bus,W,230,142.4,308.0,16755:0;14853:0
+57231,Aro St path RHS,Pedestrian,W,230,4.5,0.0,16755:0
+57985,Bunny St road,Bus,NW,204,263.6,40.1,97:0;9151:1
+57988,Featherston St road,Car,NE,204,8.0,0.0,158:1
+57989,Thorndon Quay road,Car,SW,205,661.6,1137.4,57:1;15464:1
+57990,Bunny St road north,Car,W,205,26.8,489.7,13734:0
+57992,Featherston St road,Car,SW,205,121.9,0.0,16018:1
+57994,Dixon St road,Car,SE,205,3.6,0.0,13852:1
+57997,Victoria St road,Car,NE,205,33.2,18.7,466:1
+57999,Victoria St road,Bus,SW,205,290.5,94.9,6369:0
+58000,Dixon St road south Bound,Car,E,205,40.0,0.0,13851:1
+58001,Dixon St road south East Bound,Car,W,205,25.3,246.6,13851:0
+58002,Dixon St road east Bound1,Car,W,205,57.1,246.6,13851:0
+58725,Molesworth cycle RHS 1,Cyclist,S,123,1.8,0.0,16810:1
+59090,Thorndon Quay road bus Lane,Bus,SW,107,6.6,830.5,15466:1;5086:1
+59392,Thorndon Quay cycle Lane,Cyclist,S,107,587.2,0.0,15467:1
+59393,Thorndon Quay road southbound,Car,SW,107,19.5,36.4,8176:0;14230:1;6153:0;16884:1
+59394,Thorndon Quay path,Pedestrian,SW,107,2.4,0.0,15467:1
+50745,Salamanca Rd road center,Car,E,165,96.8,14.0,2052:0
+51181,Abel Smith St road,Car,E,252,15.8,76.5,1988:1
+51182,Abel Smith St path LHS,Pedestrian,SE,252,6.7,76.5,1988:1
+51186,Cuba St path RHS,Pedestrian,N,254,40.6,188.2,13962:0;7423:0
+51187,Cuba St road north south,Car,NE,254,107.0,173.2,11779:0
+51189,Cuba St road west east,Car,W,254,49.0,1357.4,11779:1;11777:0;11775:1;443:0
+51191,Cuba St path RHS,Pedestrian,NE,254,6.0,119.9,16901:1
+51238,Abel Smith St path RHS,Pedestrian,E,252,3.7,18.9,7543:0
+51671,Jarden Mile road LHS,Car,NW,232,12.1,15.9,13506:0
+51672,Jarden Mile road RHS,Car,W,232,11.8,0.0,6196:0
+51673,Jarden Mile path,Pedestrian,NW,232,157.0,78.1,13686:0
+51709,Hutt Rd road RHS,Bus,NE,250,25.6,8.4,9784:0;15718:0;15717:0;15704:1;15722:0;15705:0;9785:0;15721:1
+51710,Hutt Rd road LHS,Car,NE,250,17.2,0.0,11818:1
+51724,Hutt Rd path,Pedestrian,E,249,9.7,5.9,15704:1;15724:0;15722:0;15705:0
+53176,Dixon St path RHS,Pedestrian,W,252,1.9,7.6,14370:1
+53177,Everton Ter path RHS,Pedestrian,NW,247,1.1,17.9,847:0
+53180,Everton Ter road outbound,Car,W,247,11.1,17.9,847:0
+53181,Everton Ter path LHS,Pedestrian,NW,247,0.1,17.9,847:0
+53186,Coutts St path LHS,Pedestrian,NW,238,83.0,18.0,7744:1
+53187,Coutts St path,Cyclist,W,238,72.5,432.4,7111:1
+53190,Commonwealth Walkway left,Pedestrian,E,243,218.2,29.6,6918:0
+53200,Ara Moana left,Pedestrian,E,166,411.6,1222.2,13447:1;11037:1
+53201,Ara Moana path,Pedestrian,S,166,287.2,1310.7,6916:1
+53928,Herd St path,Pedestrian,SE,186,4.7,24.6,12677:0
+53929,Oriental Parade path/cycle Ln RHS,Cyclist,SE,186,475.8,24.6,10807:0
+53930,Oriental Parade path/cycle Ln LHS,Pedestrian,E,186,17.4,24.6,10807:0
+53931,Herd St road out,Car,SE,181,17.3,611.3,8709:0
+53932,Herd St road in,Car,SE,181,1.0,611.3,8709:0
+53933,Oriental Parade road,Bus,E,181,37.9,660.6,5495:0;13361:0
+53934,Oriental Parade path,Pedestrian,E,181,1.5,660.6,5495:0
+53935,Tasman St path LHS,Pedestrian,N,202,8.9,330.9,6860:1
+53936,Tasman St road,Car,N,202,298.7,330.9,6860:1
+53937,Tasman St path RHS,Pedestrian,N,202,8.4,330.9,6860:1
+53938,Lady Elizabeth Ln path LHS,Car,NE,244,278.3,419.4,13105:1
+53939,Lady Elizabeth Ln path RHS,Pedestrian,N,244,300.0,1288.6,7578:0
+53998,Middleton Rd path,Pedestrian,SW,241,3.1,0.6,10058:1
+53999,Middleton Rd road,Car,SW,241,50.2,19.4,7417:1
+54164,Thorndon Quay cycle Lane,Cyclist,S,216,562.5,835.6,7040:1
+54165,Thorndon Quay path,Pedestrian,SW,216,25.9,835.6,7040:1
+54166,Thorndon Quay road,Car,S,216,43.7,959.9,8182:1;7040:1;144:1;16879:0;12970:1
+54237,Adelaide Rd RHSkerb,Cyclist,E,237,25.8,1.5,15861:0;15858:0
+54243,Hutt Rd South Cycles,Cyclist,NE,251,360.5,864.8,16893:0
+54244,Hutt Rd Roadcycles Sth,Car,S,251,260.2,1078.5,9589:0;16886:0;15546:0
+54245,Hutt Rd Roadcycles Nrth,Car,NE,251,7.2,16.6,8443:1
+54293,Murphy St Road,Car,SE,220,50.9,306.9,15452:0
+54294,Molesworth St Road,Car,SE,220,0.1,0.0,8370:1
+54295,Murphy St LHS Cycle,Cyclist,S,220,55.5,5.1,4976:0
+54296,Molesworth St RHS Cycle,Car,SE,220,1.1,0.0,8370:1
+54337,S84 Herd St path2,Pedestrian,NE,186,118.6,49.3,10807:0;12677:0
+54381,Oriental Parade path2,Pedestrian,SW,181,104.7,45.0,14615:1;15584:1
+54410,The Parade path LHS,Pedestrian,N,235,13.7,32.7,14988:0
+54411,The Parade road,Bus,N,235,7.7,400.4,14988:0;8195:1
+54412,The Parade cycle Ln,Cyclist,N,235,0.9,0.0,15003:1
+54413,The Parade path RHS,Pedestrian,NE,235,4.6,0.0,15003:1
+54461,Commonwealth Walkway path2,Pedestrian,E,244,661.3,1916.9,11014:1
+54462,Commonwealth Walkway path3,Pedestrian,S,244,315.4,262.9,10962:0
+55170,The Parade path,Cyclist,S,253,119.4,4.8,15003:0
+55175,Paterson St path LHS,Pedestrian,SE,244,1.1,4.6,1919:0
+55176,Paterson St path middle,Pedestrian,E,244,170.2,939.2,8447:0;8446:1;15192:1;14957:0
+51771,Johnsonville Rd road LHS,Car,E,254,9.9,0.0,5593:1
+51772,Johnsonville Rd road RHS,Car,S,254,59.2,105.7,12942:1
+51773,Johnsonville Rd path LHS,Pedestrian,S,254,6.4,0.0,5593:1
+51774,Johnsonville Rd path centre,Pedestrian,SW,254,7.8,0.0,5593:0
+51775,Johnsonville Rd path RHS,Pedestrian,E,254,3.9,112.9,12942:0
+51778,Johnsonville Rd road LHS,Car,W,241,16.2,13.8,12945:1
+51779,Johnsonville Rd road RHS,Car,N,241,45.5,102.1,12943:0
+51780,Johnsonville Rd path,Pedestrian,N,241,2.2,102.1,12943:0
+51786,Johnsonville Rd path LHS,Pedestrian,NW,241,2.0,13.8,12945:1
+51787,Johnsonville Rd path RHS,Pedestrian,N,241,5.7,102.1,12943:0
+51949,Commonwealth Walkway path LHS,Pedestrian,E,238,417.1,113.3,12687:0
+51950,Commonwealth Walkway path RHS,Pedestrian,N,238,814.8,1766.1,4657:0
+51951,Commonwealth Walkway path,Pedestrian,NE,237,291.3,1791.3,4658:0
+52147,Todman St path LHS,Pedestrian,NE,211,7.1,54.4,15205:1
+52148,Todman St path RHS,Pedestrian,N,211,7.8,101.2,5735:1
+52149,Todman St road LHS,Car,NW,211,126.7,54.4,15205:1
+52150,Todman St road centrre,Car,E,211,19.5,101.2,5735:1
+52151,Todman St road RHS,Car,N,211,77.8,116.9,15204:1
+52188,Moorefield Rd road LHS,Car,N,243,23.0,45.5,10880:0;13217:0
+52189,Moorefield Rd road RHS,Car,SE,243,20.5,44.0,3237:1
+52191,Moorefield Rd path LHS,Pedestrian,NE,243,0.5,45.4,10880:0
+52192,Moorefield Rd path RHS,Pedestrian,E,243,1.3,44.0,3162:1
+52194,Hawkestone St road LHS,Car,W,123,25.0,26.4,14697:1
+52195,Molesworth road RHS 1,Car,N,123,32.5,245.7,6259:0
+52196,Molesworth road 2,Car,N,123,112.8,280.0,6259:0;16811:0
+52197,Hawkestone St path LHS,Pedestrian,W,124,1.2,26.4,14697:1
+52198,Hawkestone St path RHS,Pedestrian,W,124,2.1,26.4,14697:1
+52603,Evans Bay road,Car,E,254,66.5,44.1,67:0;15179:0;15177:0
+52623,Evans Bay path,Pedestrian,SE,241,209.7,502.9,15183:0
+52624,Evans Bay road,Car,SE,241,73.6,0.0,15176:0;6097:0
+52625,Evans Bay path,Pedestrian,E,254,296.2,196.9,13156:0
+52634,Courtenay Pl road Northwestbound nzwel001,Car,NW,253,68.2,12.6,6358:0
+53060,Ara Moana path,Pedestrian,S,244,702.4,1921.5,4684:1
+53061,Commonwealth Walkway path,Pedestrian,S,244,710.2,1497.1,12524:0
+53168,Moorefield Rd road,Car,S,243,31.4,51.2,12951:1
+53169,Broderick Rd road,Car,E,243,13.0,38.4,12950:0
+53171,Willis St path LHS,Pedestrian,S,254,17.8,94.3,9553:0
+53172,Willis St road,Car,S,254,159.6,94.3,9553:0
+53173,Willis St path RHS,Pedestrian,SW,254,9.3,94.3,9553:0
+53174,Dixon St path LHS,Pedestrian,NW,252,3.8,7.6,14370:1
+53175,Dixon St road,Car,NW,252,24.9,14.4,14370:1;6374:1
+48068,Courtenay Pl road Westbound,Car,W,253,44.2,4.0,6353:0
+48110,Cambridge Ter path LHS,Pedestrian,N,254,4.5,57.3,5539:0
+48111,Cambridge Ter cyclepath,Cyclist,NE,254,391.9,1366.1,16585:1;16583:0
+48112,Cambridge Ter road,Car,N,254,34.3,1423.3,16583:0;5539:0
+48132,Dixon St path RHS,Pedestrian,N,251,6.8,0.7,14349:1
+48246,Lambton Quay path LHS,Pedestrian,N,252,6.5,76.4,102:0
+48247,S29 Lambton Quay road,Car,NW,252,0.0,76.4,102:0
+48294,Customhouse Quay road,Bus,NE,252,119.4,236.2,4521:0
+48296,Customhouse Quay path RHS,Pedestrian,N,252,6.8,259.3,464:0
+48297,Riddiford St road,Car,S,254,283.0,581.3,16562:0
+48298,Rintoul St road,Car,S,254,145.7,1255.7,15455:0
+48310,Rongotai Rd path,Cyclist,E,239,37.1,0.0,14967:1
+48345,Hutt Rd path,Pedestrian,SW,250,0.5,0.0,9057:1
+48346,Kaiwharawhara Rd road,Car,NW,251,197.0,548.5,13393:1
+48347,Hutt Rd road,Car,SW,251,21.1,0.5,9589:0
+48348,Hutt Rd cyclepath,Cyclist,NE,251,356.5,330.0,16894:0
+48800,Riddiford St road LHS,Bus,N,254,381.6,1299.1,16524:1
+48802,Riddiford St path RHS,Pedestrian,N,254,4.8,0.0,16518:1
+48821,Lambton Quay road,Car,S,254,118.1,53.0,8065:0
+48822,Lambton Quay path LHS,Pedestrian,S,254,6.7,53.0,8065:0
+48824,Lambton Quay path LHS,Pedestrian,N,253,11.9,29.7,8437:0
+48825,Lambton Quay road,Car,N,253,251.5,29.7,8437:0
+48828,Tinakori Rd road LHS,Car,SW,237,44.1,4.6,9269:0
+48830,Park St road LHS,Car,NW,237,78.9,263.1,12972:1
+48832,Park St path RHS,Pedestrian,NW,237,3.2,263.1,12972:1
+48834,Park St path LHS,Pedestrian,NW,239,7.4,263.1,12972:1
+48873,Johnston St path LHS,Pedestrian,W,253,5.1,0.0,2020:1
+48885,Johnston St path RHS,Pedestrian,W,251,9.1,0.0,2020:1
+48981,Miramar Ave path LHS,Pedestrian,E,250,245.5,300.3,13147:0
+48985,Shelly Bay Rd road,Car,N,250,50.3,43.4,10540:0
+48986,Miramar Ave road,Bus,E,250,86.3,0.6,5065:1
+48987,Miramar Ave path RHS,Pedestrian,SE,250,0.4,0.6,5065:1
+49727,Hutt Rd cycles,Cyclist,SE,251,248.7,1078.0,16886:0;15546:0
+49972,Karori Rd path LHS,Pedestrian,S,254,2.6,155.6,15995:0
+49973,Karori Rd road,Bus,SW,254,70.3,155.6,15995:0
+49974,Karori Rd path RHS,Pedestrian,S,254,6.8,3.1,13126:0
+49975,S Karori Rd road lower,Car,SE,254,10.4,59.3,5189:0
+49976,S Karori Rd road upper,Car,SE,254,6.3,0.0,5187:1
+49978,S Karori Rd road,Bus,SW,254,45.1,160.3,5189:0;4456:0
+49983,Karori Rd road,Car,W,254,192.5,51.8,16772:0;15263:0
+49984,Karori Rd path RHS,Pedestrian,SW,254,2.0,51.0,15263:0
+49985,Karori Rd road RHS,Car,S,254,8.4,97.4,1343:0
+50005,Karori Rd road LHS,Car,N,254,43.4,55.1,1328:0
+50007,Karori Rd road,Car,E,254,127.1,810.8,15515:1;15514:1;1328:1
+50009,Karori Rd path RHS,Pedestrian,E,254,1.3,389.5,15515:1
+50116,Ghuznee St path LHS,Pedestrian,NW,243,3.7,23.9,680:1
+50117,Ghuznee St road outbound,Car,W,243,62.5,23.9,680:1
+50118,Ghuznee St road inbound LHS,Car,NW,243,0.4,23.9,680:1
+50119,Ghuznee St road inbound RHS,Car,NW,243,0.2,23.9,680:1
+50120,Ghuznee St path RHS,Pedestrian,NW,243,4.3,23.9,680:1
+50129,Taranaki St path LHS,Pedestrian,NE,241,18.2,9.0,9546:0
+50130,Taranaki St road LHS,Car,N,241,31.5,9.0,11917:0;9548:0
+50131,Taranaki St road RHS,Car,NE,241,28.4,9.0,11917:0;9548:0
+50132,Elizabeth St path LHS,Pedestrian,SE,244,4.5,43.0,1671:0
+50133,Elizabeth St road,Car,E,244,67.2,43.0,1671:0
+50134,Elizabeth St path RHS,Pedestrian,SE,244,7.6,43.0,1671:0
+50140,Boulcott St road Outbound,Car,S,244,26.9,67.6,8456:1
+50143,Boulcott St path RHS,Pedestrian,S,244,1.7,67.6,8456:1
+50144,Bowen St path LHSRamp,Pedestrian,S,216,9.3,720.0,8559:1
+50145,Bowen St path LHS,Pedestrian,SE,216,11.2,0.0,12093:0
+50146,Bowen St road Outbound,Bus,E,216,177.4,720.0,8560:1
+50149,Bowen St cyclepath,Cyclist,SE,226,3.0,0.0,15474:1
+50152,Waterloo Quay path LHS,Pedestrian,NE,246,12.6,117.3,13673:0
+50153,Waterloo Quay road,Car,NE,246,38.4,117.3,13673:0
+50154,Lady Elizabeth Ln road Outbound,Car,E,244,31.7,25.8,4760:0
+50155,Lady Elizabeth Ln road Inbound LHS,Car,SE,244,10.2,25.8,4760:0
+50156,Lady Elizabeth Ln road Inbound RHS,Car,SE,244,27.2,0.0,13106:1
+50161,Waterloo Quay path RHS,Pedestrian,NE,219,44.1,0.0,11807:1
+50723,Salamanca Rd path LHS,Pedestrian,SE,165,7.7,14.0,2052:0
+50724,Salamanca Rd road LHS,Car,W,165,78.5,12.0,2052:1
+50725,Salamanca Rd path RHS,Pedestrian,W,165,3.2,12.0,2052:1
+50735,Taranaki St path,Pedestrian,S,241,11.1,0.2,16063:1
+50736,Taranaki St road LHS,Car,SW,241,39.9,27.4,9545:0
+50737,Taranaki St road center,Car,S,241,20.6,27.4,9545:0
+47847,Luxford St road upper,Car,SW,237,111.8,0.0,10204:0
+47848,Luxford St road lower,Bus,E,237,128.1,761.8,15612:0
+47851,Adelaide Rd road,Car,S,237,76.4,766.2,4603:0
+47869,Kent Terrace road,Car,SW,254,94.1,247.4,4525:0
+47908,Kent Terrace cyclelanes,Cyclist,SW,252,345.3,1142.9,14629:0
+47909,Kent Terrace path,Pedestrian,SW,252,24.3,247.4,4525:0
+47925,Dixon St path LHS,Pedestrian,SW,251,6.3,239.9,14639:0
+47926,Dixon St road,Car,NW,251,155.6,237.5,6368:0
+47927,Manners St path LHS,Pedestrian,NW,251,11.1,26.2,14638:0
+47935,Manners St path RHS,Pedestrian,N,251,1.8,26.2,14638:0
+47936,Manners St road,Bus,NW,251,70.5,26.2,14638:0
+48023,Taranaki St road Northbound,Car,N,251,149.1,25.9,14180:1
+48025,Courtenay Pl road Eastbound,Bus,SE,251,125.4,6.8,6360:0
+48037,Centennial Hwy Southbound,Car,S,250,115.3,187.6,9780:0
+48040,Jarden Mile path RHS,Cyclist,NW,249,71.2,3.3,16405:0;16404:1;8072:0
+48047,Taranaki St road Southbound,Car,S,251,126.2,24.2,4585:0
+48050,Birdwood St road,Bus,W,249,75.9,480.0,15504:0
+48051,Chaytor St road,Bus,N,249,56.3,709.0,16501:0;4909:0;16499:1;14474:1;14473:1;16500:0;4910:0
+48054,Birdwood St path RHS,Pedestrian,W,250,2.3,0.5,16499:0
+48055,Chaytor St path LHS,Pedestrian,NE,250,102.2,336.2,16499:1;16500:0;16498:1
+48056,Birdwood St path LHS,Pedestrian,NW,249,0.3,0.0,14476:1
+48058,Majoribanks St Eastbound,Car,SE,104,92.7,201.4,12539:0
+48060,Majoribanks St path LHS,Pedestrian,E,104,3.6,1192.8,14628:1
+48061,Majoribanks St path RHS,Pedestrian,SE,104,1.9,201.4,12539:0
+48062,Chaytor St road,Bus,S,251,250.4,642.1,12504:1
+48063,Featherston St road,Car,SW,253,498.4,173.2,14894:0
+48064,Whitmore St road,Car,SE,253,283.9,940.9,16620:0
+55177,Paterson St path RHS,Pedestrian,SE,244,0.4,1.0,4088:0
+55180,Paterson St road LHS,Car,SE,241,7.6,4.6,1919:0
+55182,Paterson St road RHS,Car,SE,241,11.1,324.2,8447:0;4088:0
+55194,Gee St footpath,Pedestrian,NE,212,54.8,1.6,6846:0
+55195,Gee St path LHS,Pedestrian,S,212,3.1,1.6,6846:1
+55196,Gee St road,Car,S,212,8.8,0.5,568:1
+55197,Gee St path RHS,Pedestrian,SE,212,0.6,0.5,568:1
+55388,Onepu Rd road east RHS,Car,S,239,1.7,0.0,16651:1
+55389,Onepu Rd road east LHS,Car,S,239,46.7,418.4,15304:0;16657:1;16658:1;15303:0
+55391,Onepu Rd road north RHS,Car,SE,239,14.0,0.0,14967:1
+55392,Onepu Rd road north LHS,Car,E,239,10.5,0.0,11125:1
+55393,Onepu Rd road west,Car,SE,239,12.6,4.1,16679:0
+55399,Willowbank Rd road,Car,S,246,49.6,11.7,11355:1
+55400,Takapu Rd road,Car,E,246,8.2,5.7,1188:1
+55401,Takapu Rd path,Pedestrian,NE,246,0.6,0.0,10769:1
+55402,The Parade road,Bus,N,205,5.7,392.4,15003:1;8049:1
+55403,The Parade path,Pedestrian,N,205,0.8,0.0,15003:1
+55954,Queens Wharf road,Car,NW,246,313.4,76.3,6157:0;6155:0
+55955,Queens Wharf path1,Pedestrian,W,246,68.4,101.7,6143:0
+55956,Queens Wharf path2,Pedestrian,N,246,366.5,1056.4,6155:0;6144:1;6143:1;8768:0
+56030,Aro St road,Car,SE,225,133.3,11.3,16742:1
+56032,Aro St path LHS,Pedestrian,E,235,6.2,11.3,16742:1
+56033,Aro St path RHS,Pedestrian,SE,235,4.0,11.3,16742:1
+56034,Cuba St road,Car,S,242,20.5,0.0,3893:1
+56038,Ghuznee St path LHS,Pedestrian,SE,242,0.7,169.0,8970:0
+56040,Ghuznee St path RHS,Pedestrian,E,242,2.3,170.4,8969:0
+56042,Cuba St walkway,Pedestrian,SW,248,70.4,10.5,14637:0
+56043,Cuba St path RHS,Pedestrian,W,248,21.9,20.6,14637:0;36:1
+56044,Cuba St path LHS,Pedestrian,NW,248,7.3,10.5,14637:0
+56046,Cuba St path RHS,Pedestrian,NE,248,23.3,10.2,36:0
+56047,Cuba St path LHS,Pedestrian,NE,248,22.5,10.2,36:0
+56048,Manners St path,Pedestrian,SE,248,15.2,10.1,36:1
+56049,Cuba St road,Car,NE,247,57.5,10.2,36:0
+56050,Cuba St path LHS,Pedestrian,N,248,21.2,158.4,16299:0
+56051,Vivian St path RHS,Pedestrian,NW,248,8.2,0.0,13856:1
+56052,Cuba St road,Car,N,248,102.1,158.4,16299:0
+56053,Vivian St road,Bus,NW,248,9.6,0.0,13856:1
+56063,Cuba St path,Pedestrian,SW,250,10.0,60.3,39:1
+56064,Cuba St road,Car,SW,250,43.7,60.3,39:1
+56065,Vivian St path,Pedestrian,W,250,7.2,0.0,13856:1
+56081,S91 Bowen St cycle Ln,Pedestrian,S,230,25.2,0.0,10993:0
+56082,Bowen St road RHS,Bus,SW,230,4.7,1462.4,945:0;944:0;12068:1
+56083,Bowen St road LHS,Car,SW,230,84.3,1554.7,15474:0;945:0;944:0;12068:1
+56163,Herd St path2,Pedestrian,E,186,247.6,49.3,14616:0;12677:0
+56238,Tawa St path,Pedestrian,S,240,31.8,18.4,10956:1
+56239,Tawa St road,Car,S,240,9.9,18.4,10956:1
+56248,Lambton Quay road,Car,NW,253,224.0,76.4,102:0
+56371,Tawa St path2,Pedestrian,S,240,30.1,18.4,10956:1
+56554,The Parade path,Cyclist,N,206,134.8,51.7,14989:0
+56622,Queens Wharf path3,Car,N,246,293.6,75.2,6156:0
+56651,Vivian St path LHS,Pedestrian,NW,248,6.1,0.0,13856:1
+56652,Vivian St path LHS,Pedestrian,SE,250,11.9,4.2,13857:0
+56653,Cuba St path LHS,Pedestrian,S,250,10.1,60.3,39:1
+56654,Cuba St path road top,Car,S,250,41.6,60.3,39:1
+56655,Ghuznee St road top,Car,E,242,130.2,169.0,8970:0
+56656,Ghuznee St road bottom,Car,SE,242,98.8,170.4,8969:0
+56909,The Parade road,Car,S,249,12.4,412.8,15003:0;8049:0
+56910,The Parade cycle Lane LHS,Cyclist,S,249,88.0,4.8,15003:0
+56912,The Parade path RHS,Pedestrian,S,250,6.3,0.0,14989:1
+56913,The Parade cycle Lane RHS,Cyclist,S,250,0.6,0.0,14989:1
+57228,Aro St path LHS,Pedestrian,E,230,9.5,295.6,14853:1
+57229,Aro St road LHS,Bus,E,230,150.1,295.6,14853:1
+57230,Aro St road RHS,Bus,E,230,2.5,295.6,16755:1;14853:1
+57231,Aro St path RHS,Pedestrian,E,230,2.5,0.0,16755:1
+57985,Bunny St road,Bus,SE,204,269.3,58.8,97:1;9151:0
+57988,Featherston St road,Car,SW,204,496.5,1076.1,158:0
+57989,Thorndon Quay road,Car,NE,205,391.9,920.6,57:0;15464:0
+57990,Bunny St road north,Car,E,205,135.2,88.0,13734:1
+57992,Featherston St road,Car,NE,205,4.3,1055.6,16018:0
+57994,Dixon St road,Car,NW,205,125.7,175.8,13852:0
+57999,Victoria St road,Bus,NE,205,28.8,21.2,6369:1
+58725,Molesworth cycle RHS 1,Cyclist,N,123,31.2,39.6,16810:0
+59090,Thorndon Quay road bus Lane,Bus,NE,107,2.9,808.3,15466:0;5086:0
+59392,Thorndon Quay cycle Lane,Cyclist,N,107,601.5,808.7,15467:0
+59394,Thorndon Quay path,Pedestrian,NE,107,2.7,808.7,15467:0
+59395,Thorndon Quay road northbound,Car,NE,107,20.8,125.4,8176:1;14230:0;6153:1;16884:0
+50738,Taranaki St road RHS,Car,S,241,12.3,27.4,9545:0
+51181,Abel Smith St road,Car,W,252,27.6,186.1,1988:0
+51182,Abel Smith St path LHS,Pedestrian,NW,252,9.7,186.1,1988:0
+51186,Cuba St path RHS,Pedestrian,S,254,152.0,292.7,13962:1;7423:1
+51187,Cuba St road north south,Car,SW,254,80.7,254.0,11779:1
+51189,Cuba St road west east,Car,E,254,13.6,357.2,11779:0;11777:1;11775:0;443:1
+51191,Cuba St path RHS,Pedestrian,SW,254,11.4,68.5,16901:0
+51238,Abel Smith St path RHS,Pedestrian,W,252,4.5,18.7,7543:1
+51668,Jarden Mile road 1,Car,SE,248,17.3,0.3,49:0;7039:0
+51669,Jarden Mile road 2,Bus,NE,248,99.1,0.5,15701:1;3644:0
+51673,Jarden Mile path,Pedestrian,SE,232,76.6,78.1,13686:1
+51709,Hutt Rd road RHS,Bus,SW,250,5.1,7.8,9784:1;15718:1;15717:1;15704:0;15722:1;15705:1;9785:1;15721:0
+51710,Hutt Rd road LHS,Car,SW,250,69.0,178.6,11818:0
+51724,Hutt Rd path,Pedestrian,W,249,8.5,6.5,15704:0;15724:1;15722:1;15705:1
