@@ -48,6 +48,7 @@ from scipy.spatial import cKDTree
 import cycle_priorities as CP
 
 PROC, TABLES, BLOCKS = CP.PROC, CP.TABLES, CP.BLOCKS
+OUTSIDE, OUTSIDE_M = "Outside the city", 400  # origins over 400 m from any city property
 CBD = ["Wellington Central", "Te Aro", "Pipitea"]
 MIN_TRIPS = 200
 DEST_M = 250
@@ -205,7 +206,10 @@ def main():
     sub_id = pd.Index(subs).get_indexer(units["Suburb"])
     tree = cKDTree(np.column_stack([units.geometry.centroid.x, units.geometry.centroid.y]))
     dist_o, i_o = tree.query(xy[S])
-    sub_o = sub_id[i_o]
+    # Homes outside the city (Lower Hutt, Porirua) snap to the city's edge nodes; they are not
+    # Horokiwi's or Takapu Valley's residents, so pool them as "Outside the city".
+    subs = np.append(subs, OUTSIDE)
+    sub_o = np.where(dist_o > OUTSIDE_M, len(subs) - 1, sub_id[i_o])
     dist_d, i_d = tree.query(xy[D])
     sub_d = np.where(dist_d <= DEST_M, sub_id[i_d], -1)
     cbd_id = [int(np.flatnonzero(subs == s)[0]) for s in CBD]
@@ -268,6 +272,9 @@ def main():
     # Projects near each suburb.
     prj = gpd.read_file(BLOCKS / "cycle_priorities.geojson").to_crs(2193).sort_values("rank")
     units["geometry"] = units.geometry.make_valid()
+    out = res[res["suburb"] == OUTSIDE].iloc[0]
+    print(f"outside the city: {out['trips_godutch']:,.0f} Go Dutch trips, {out['pct_all_ages']:.1f}% all-ages connected")
+    res = res[res["suburb"] != OUTSIDE].reset_index(drop=True)
     area = units.dissolve(by="Suburb")
     rep = gpd.GeoSeries(area.geometry.representative_point(), crs=2193)
     buf = area.geometry.buffer(AREA_BUFFER_M)
