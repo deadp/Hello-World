@@ -46,9 +46,10 @@ Per edge:
       design code (30 km/h streets up to ~3,000 vehicles/day are fine to share; 3,000-5,000 is
       level 2 without a centre line). One-way streets count at 1.5 x ADT. Downhill at > 4% on
       streets <= 50 km/h, mixed traffic is rated one speed band lower (riders descend near traffic
-      speed), but no better than level 2. Protected facilities are level 1, except shared paths,
-      sidepaths and footways beside a road of >= 70 km/h or >= 20,000 vehicles/day (e.g. Aotea
-      Quay, Hutt Road by SH1): level 2 (side_speed, side_adt, roadside_fw/bw; see roadside()).
+      speed), but no better than level 2. Protected facilities are level 1. Shared paths, sidepaths
+      and footways beside a road of >= 70 km/h or >= 20,000 vehicles/day (e.g. Aotea Quay, Hutt
+      Road by SH1) are flagged roadside_fw/bw (side_speed, side_adt; see roadside()): still level
+      1, since they are separated, but less pleasant; cycle_model.py routes them at 1.25x length.
   cross_u, cross_v
       stress of crossing at each end node: at an unsignalised junction, the highest LTS of the
       other roads meeting there (Conveyal's rule); 2 where signals are within 25 m, or where a
@@ -619,10 +620,10 @@ def main():
             g[f"fac_{d}"], g["speed"], g["adt"].fillna(0), g["lanes_dir"], g["centre_line"], oneway_motor,
             g["highway"], down, g[f"buses_{d}"])]
     g["lts"] = np.maximum(np.where(g["can_fw"], g["lts_fw"], 0), np.where(g["can_bw"], g["lts_bw"], 0))
+    # Paths beside motorway-like roads stay stress 1 (separated from traffic, so fine for all ages)
+    # but are flagged: routing counts them 1.25x their length (calibrated), for the noise and
+    # exposure ("a footpath next to a motorway").
     g = roadside(g)
-    for d in ("fw", "bw"):
-        g.loc[g[f"roadside_{d}"], f"lts_{d}"] = g.loc[g[f"roadside_{d}"], f"lts_{d}"].clip(lower=2)
-    g["lts"] = np.maximum(np.where(g["can_fw"], g["lts_fw"], 0), np.where(g["can_bw"], g["lts_bw"], 0))
     g = junctions(g, nodes)
 
     road = g["highway"].isin(ROADS)
